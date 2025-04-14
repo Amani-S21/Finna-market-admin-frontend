@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import { Montserrat } from "next/font/google";
-import "./theme-config.css"
+import "./theme-config.css";
 
 import "./globals.css";
 import ReduxProvider from "@/providers/ReduxProvider";
 import QueryProvider from "@/providers/QueryProvider";
+import NextSessionProvider from "@/providers/NextSessionProvider";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -26,11 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} antialiased`}>
-        <QueryProvider>
-          <ReduxProvider>
-            <Theme>{children}</Theme>
-          </ReduxProvider>
-        </QueryProvider>
+        <NextSessionProvider>
+          <QueryProvider>
+            <ReduxProvider>
+              <Theme>{children}</Theme>
+            </ReduxProvider>
+          </QueryProvider>
+        </NextSessionProvider>
       </body>
     </html>
   );
