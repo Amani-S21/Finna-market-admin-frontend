@@ -11,8 +11,6 @@ interface Props {
 const SigninPage = ({ searchParams }: Props) => {
   const { callbackUrl } = use(searchParams);
 
-  
-
   const onSubmit = async () => {
     await signIn("credentials", {
       phone: "+243971945367",
@@ -23,7 +21,7 @@ const SigninPage = ({ searchParams }: Props) => {
   };
 
   return (
-    <Card>
+    <Card className="drop-shadow-2xl">
       <Flex
         direction="column"
         className="items-center min-w-sm p-4"
