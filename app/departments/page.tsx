@@ -1,7 +1,13 @@
-import { Box, Card, Grid } from "@radix-ui/themes";
+"use client"
+
+import {  Card, Grid } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
+
 import React from "react";
 
 const DepartmentsPage = () => {
+  const router = useRouter();
+
   return (
     <div className="h-screen flex flex-col container mx-auto pb-16">
       <div className="py-8 flex gap-4 items-center justify-end">
@@ -15,7 +21,10 @@ const DepartmentsPage = () => {
           columns={{ initial: "1", md: "3" }}
           className="max-w-3xl my-auto"
         >
-          <Card className="hover:cursor-pointer hover:bg-gray-300">
+          <Card
+            className="hover:cursor-pointer hover:bg-gray-300"
+            onClick={() => router.push("/departments/market")}
+          >
             <p>Super marché</p>
             <p className="text-sm">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem
