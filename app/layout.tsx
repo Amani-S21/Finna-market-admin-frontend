@@ -30,7 +30,11 @@ export default function RootLayout({
         <NextSessionProvider>
           <QueryProvider>
             <ReduxProvider>
-              <Theme>{children}</Theme>
+              <Theme>
+                <main className="bg-[#f9fafb] min-h-screen flex items-center justify-center">
+                  {children}
+                </main>
+              </Theme>
             </ReduxProvider>
           </QueryProvider>
         </NextSessionProvider>
