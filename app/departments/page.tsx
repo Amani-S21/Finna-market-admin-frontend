@@ -9,7 +9,7 @@ const DepartmentsPage = () => {
   const router = useRouter();
 
   return (
-    <div className="h-screen flex flex-col container mx-auto pb-16">
+    <div className="h-screen flex flex-col container mx-auto pb-32">
       <div className="py-8 flex gap-4 items-center justify-end">
         <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center">
           <p>GE</p>
