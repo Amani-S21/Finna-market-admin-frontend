@@ -13,7 +13,6 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<SigninSchema>({ resolver: zodResolver(signinSchema) });
 
@@ -22,7 +21,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
       phone: data.phone,
       password: data.password,
       redirect: true,
-      callbackUrl: "/departments",
+      callbackUrl: "/",
     });
   };
 
@@ -35,6 +34,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
         <p className="text-sm font-bold">Numero de téléphone</p>
         <TextField.Root
           {...register("phone")}
+          defaultValue="+243971945367"
           placeholder="Numero de téléphone"
         />
         <ErrorMessage>{errors.phone?.message}</ErrorMessage>
@@ -43,6 +43,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
         <p className="text-sm font-bold">Mot de passe</p>
         <TextField.Root
           {...register("password")}
+          defaultValue="12345"
           type="password"
           placeholder="Mot de passe"
         />
