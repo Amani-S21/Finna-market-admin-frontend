@@ -1,3 +1,5 @@
+"use client"
+
 import { SigninSchema } from "@/app/types";
 import { signinSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";

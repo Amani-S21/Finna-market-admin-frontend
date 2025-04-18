@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, Flex, Text } from "@radix-ui/themes";
 import { use } from "react";
 import SigninForm from "./_components/SigninForm";
