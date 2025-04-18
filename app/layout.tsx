@@ -31,7 +31,7 @@ export default function RootLayout({
           <QueryProvider>
             <ReduxProvider>
               <Theme>
-                <main className="bg-[#f9fafb] min-h-screen flex items-center justify-center">
+                <main className="bg-[#f9fafb]">
                   {children}
                 </main>
               </Theme>
