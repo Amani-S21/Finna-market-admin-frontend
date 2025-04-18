@@ -1,6 +1,7 @@
 "use client";
 
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import Spinner from "@/app/_components/Spinner";
 import { SigninSchema } from "@/app/types";
 import { signinSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +48,9 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
         />
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
       </div>
-      <Button mt="5">Enregistrer</Button>
+      <Button disabled={isSubmitting} mt="5">
+        Connection {isSubmitting && <Spinner />}
+      </Button>
     </form>
   );
 };
