@@ -4,7 +4,7 @@ import { Card, Flex } from "@radix-ui/themes";
 import { use } from "react";
 import SigninForm from "./_components/SigninForm";
 
-interface Props {
+type Props = {
   searchParams: Promise<{ callbackUrl: string }>;
 }
 
