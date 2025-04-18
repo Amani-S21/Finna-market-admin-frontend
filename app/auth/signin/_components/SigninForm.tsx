@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import ErrorMessage from "@/app/_components/ErrorMessage";
 import { SigninSchema } from "@/app/types";
 import { signinSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,11 +36,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
           {...register("phone")}
           placeholder="Numero de téléphone"
         />
-        {errors.phone && (
-          <Text color="red" size="1" as="p">
-            {errors.phone.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.phone?.message}</ErrorMessage>
       </div>
       <div className="flex flex-col space-y-2 mt-5">
         <p className="text-sm font-bold">Mot de passe</p>
@@ -48,11 +45,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
           type="password"
           placeholder="Mot de passe"
         />
-        {errors.password && (
-          <Text color="red" size="1" as="p">
-            {errors.password.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.password?.message}</ErrorMessage>
       </div>
       <Button mt="5">Enregistrer</Button>
     </form>
