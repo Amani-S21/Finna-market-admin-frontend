@@ -2,7 +2,7 @@
 
 import classNames from "classnames";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { GrDeliver } from "react-icons/gr";
 import { IoStorefrontOutline } from "react-icons/io5";
 
@@ -23,7 +23,7 @@ const NavLinks = () => {
     { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
 
     {
-      href: "/market/shops",
+      href: "/market/shops?page=1",
       label: "Boutiques",
       icon: <IoStorefrontOutline />,
     },

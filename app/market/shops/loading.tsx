@@ -1,4 +1,4 @@
-import { Skeleton, Table } from "@radix-ui/themes";
+import { Flex, Skeleton, Table } from "@radix-ui/themes";
 import "react-loading-skeleton/dist/skeleton.css";
 import ShopsToolBar from "./_components/ShopsToolBar";
 
@@ -44,6 +44,10 @@ const LoadingShopspPage = () => {
           ))}
         </Table.Body>
       </Table.Root>
+      <div className="flex gap-4">
+        <Skeleton className="mt-4 w-[100px]" />
+        <Skeleton className="mt-4 w-[100px]" />
+      </div>
     </div>
   );
 };

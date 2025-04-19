@@ -9,7 +9,7 @@ const NewShopPage = () => {
     <div>
       <div className="mb-2">
         <div className="flex cursor-pointer items-center justify-center bg-white border border-gray-200 rounded-full h-10 w-10 mb-5">
-          <Link href="/market/shops">
+          <Link href="/market/shops?page=1">
             <X />
           </Link>
         </div>
