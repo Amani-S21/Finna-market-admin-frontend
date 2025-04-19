@@ -1,40 +1,32 @@
 "use client";
 
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Button, Flex, Table, Text } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { GrMoreVertical } from "react-icons/gr";
-import { IoStorefrontOutline } from "react-icons/io5";
+import ShopsToolBar from "./_components/ShopsToolBar";
+import LoadingShopspPage from "./loading";
 
 const ShopsPage = () => {
   const axios = useAxiosAuth();
 
-  const { data: shopsResponse, error } = useQuery<ShopsListResponse>({
+  const {
+    data: shopsResponse,
+    isLoading,
+    error,
+  } = useQuery<ShopsListResponse>({
     queryKey: ["shops"],
     queryFn: () => axios.get("/shops?page=1&limit=100").then((res) => res.data),
     staleTime: 60 * 1000,
   });
 
+  if (isLoading) return <LoadingShopspPage />;
+
   if (error) return;
 
-   return (
+  return (
     <div>
-      <Flex justify="between">
-        <div>
-          <div className="flex items-center space-x-4">
-            <IoStorefrontOutline />
-            <span className="font-bold">Boutiques</span>
-          </div>
-          <Text as="p" size="2" mb="4">
-            Toutes les boutiques disponibles dans l'entreprise
-          </Text>
-        </div>
-
-        <Button mt="2">
-          <span className="text-xs">Nouvelle Boutique</span>
-        </Button>
-      </Flex>
+      <ShopsToolBar />
 
       <Table.Root variant="surface">
         <Table.Header>
