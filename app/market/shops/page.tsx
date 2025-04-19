@@ -7,9 +7,15 @@ import { GrMoreVertical } from "react-icons/gr";
 import ShopsToolBar from "./_components/ShopsToolBar";
 import LoadingShopspPage from "./loading";
 import Pagination from "@/app/_components/Pagination";
+import { use } from "react";
 
-const ShopsPage = () => {
+const ShopsPage = ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string }>;
+}) => {
   const axios = useAxiosAuth();
+  const { page } = use(searchParams);
 
   const {
     data: shopsResponse,
@@ -57,9 +63,9 @@ const ShopsPage = () => {
         </Table.Body>
       </Table.Root>
       <Pagination
-        pageSize={2}
-        currentPage={1}
-        itemCount={10}
+        pageSize={10}
+        currentPage={parseInt(page)}
+        itemCount={100}
         className="mt-4"
       />
     </div>
