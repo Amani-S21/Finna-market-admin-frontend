@@ -10,6 +10,6 @@ export default withAuth({
 export const config = {
   matcher: [
     "/",
-    "/dashboard/:path*",   // protect API routes too
+    "/market/:path*",   // protect API routes too
   ],
 };

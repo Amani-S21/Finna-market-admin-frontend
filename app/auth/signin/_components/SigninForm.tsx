@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Text, TextField } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
+import { Key, Phone } from "lucide-react";
 
 const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const {
@@ -36,7 +37,11 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
           {...register("phone")}
           defaultValue="+243971945367"
           placeholder="Numero de téléphone"
-        />
+        >
+          <TextField.Slot>
+            <Phone size={15}/>
+          </TextField.Slot>
+        </TextField.Root>
         <ErrorMessage>{errors.phone?.message}</ErrorMessage>
       </div>
       <div className="flex flex-col space-y-2 mt-5">
@@ -46,7 +51,11 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
           defaultValue="12345"
           type="password"
           placeholder="Mot de passe"
-        />
+        >
+          <TextField.Slot>
+            <Key size={15}/>
+          </TextField.Slot>
+        </TextField.Root>
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
       </div>
       <Button disabled={isSubmitting} mt="5">
