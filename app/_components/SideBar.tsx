@@ -4,7 +4,6 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GrDeliver } from "react-icons/gr";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
 
 const SideBar = () => {
@@ -24,7 +23,7 @@ const NavLinks = () => {
     { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
 
     {
-      href: "/market/stores",
+      href: "/market/shops",
       label: "Boutiques",
       icon: <IoStorefrontOutline />,
     },

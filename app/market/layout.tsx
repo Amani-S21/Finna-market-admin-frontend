@@ -9,7 +9,7 @@ const MarketPage = ({ children }: { children: ReactNode }) => {
       <SideBar />
       <div className="flex flex-col w-full bg-gray-50">
         <NavBar />
-        <div className="p-6">{children}</div>
+        <div className="p-8">{children}</div>
       </div>
     </Flex>
   );
