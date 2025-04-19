@@ -1,5 +1,4 @@
 import { Skeleton, Table } from "@radix-ui/themes";
-import { GrMoreVertical } from "react-icons/gr";
 import "react-loading-skeleton/dist/skeleton.css";
 import ShopsToolBar from "./_components/ShopsToolBar";
 
@@ -9,7 +8,6 @@ const LoadingShopspPage = () => {
   return (
     <div>
       <ShopsToolBar />
-
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>

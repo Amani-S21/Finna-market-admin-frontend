@@ -1,7 +1,7 @@
 "use client";
 
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Table } from "@radix-ui/themes";
+import { IconButton, Table } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import { GrMoreVertical } from "react-icons/gr";
 import ShopsToolBar from "./_components/ShopsToolBar";
@@ -27,7 +27,6 @@ const ShopsPage = () => {
   return (
     <div>
       <ShopsToolBar />
-
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -48,7 +47,9 @@ const ShopsPage = () => {
               <Table.Cell>Yala</Table.Cell>
               <Table.Cell>{shop.createdAt}</Table.Cell>
               <Table.Cell>
-                <GrMoreVertical />
+                <IconButton variant="ghost" ml="4">
+                <GrMoreVertical color="black" />
+                </IconButton>
               </Table.Cell>
             </Table.Row>
           ))}

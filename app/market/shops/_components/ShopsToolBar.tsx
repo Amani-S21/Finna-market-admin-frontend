@@ -1,11 +1,12 @@
 import { Button, Flex, Text } from "@radix-ui/themes";
+import Link from "next/link";
 import React from "react";
 import { IoStorefrontOutline } from "react-icons/io5";
 
 const ShopsToolBar = () => {
   return (
     <Flex justify="between">
-      <div>
+      <div className="mb-2">
         <div className="flex items-center space-x-4">
           <IoStorefrontOutline />
           <span className="font-bold">Boutiques</span>
@@ -15,8 +16,10 @@ const ShopsToolBar = () => {
         </Text>
       </div>
 
-      <Button mt="2">
-        <span className="text-xs">Nouvelle Boutique</span>
+      <Button>
+        <Link href="/market/shops/new">
+          <span className="text-xs">Nouvelle Boutique</span>
+        </Link>
       </Button>
     </Flex>
   );
