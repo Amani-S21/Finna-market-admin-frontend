@@ -12,15 +12,17 @@ const SigninPage = ({ searchParams }: Props) => {
   return (
     <div className="h-screen flex justify-center items-center">
       <Card className="drop-shadow-2xl w-full max-w-[400px] mx-4">
-      <Flex direction="column" className="items-center p-4 pb-8">
-        <p className="text-xl font-bold mt-4">Connexion</p>
-        <p className="text-xs my-2">
-          Veuillez entrer vos identifiants pour continuer
-        </p>
-        <SigninForm callbackUrl={callbackUrl} />
-        <Text size="1" color="gray" my="4">Powered by ksoft</Text>
-      </Flex>
-    </Card>
+        <Flex direction="column" className="items-center p-4 pb-8">
+          <p className="text-xl font-bold mt-4">Connexion</p>
+          <p className="text-xs my-2">
+            Veuillez entrer vos identifiants pour continuer
+          </p>
+          <SigninForm callbackUrl={callbackUrl} />
+          <Text size="1" color="gray" my="4">
+            Powered by ksoft <span className="text-xs align-top">&copy;</span>
+          </Text>
+        </Flex>
+      </Card>
     </div>
   );
 };
