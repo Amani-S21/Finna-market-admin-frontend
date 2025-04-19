@@ -36,7 +36,7 @@ const NavLinks = () => {
           <Link
             href={link.href}
             className={classNames({
-              "text-blue-400 font-bold": link.href === currentPath,
+              "text-blue-700 font-bold": link.href === currentPath,
             })}
           >
             <div className="mt-5 flex items-center space-x-4">

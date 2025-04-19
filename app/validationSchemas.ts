@@ -6,3 +6,8 @@ export const signinSchema = z.object({
     .string()
     .min(5, "Le mot de passe doit etre au minimum 5 caracteres"),
 });
+
+export const shopSchema = z.object({
+  name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
+  address: z.string().min(5, "L'addrèsse doit avoir au minimum 5 caracteres"),
+});

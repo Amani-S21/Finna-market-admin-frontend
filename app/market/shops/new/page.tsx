@@ -1,16 +1,8 @@
-import ErrorMessage from "@/app/_components/ErrorMessage";
-import { IoIosArrowRoundBack } from "react-icons/io";
-import {
-  Button,
-  IconButton,
-  Text,
-  TextArea,
-  TextField,
-} from "@radix-ui/themes";
-import React from "react";
-import { IoArrowBackCircleOutline, IoStorefrontOutline } from "react-icons/io5";
+import { Text } from "@radix-ui/themes";
 import { X } from "lucide-react";
 import Link from "next/link";
+import { IoStorefrontOutline } from "react-icons/io5";
+import ShopForm from "./_components/ShopForm";
 
 const NewShopPage = () => {
   return (
@@ -30,19 +22,7 @@ const NewShopPage = () => {
         </Text>
       </div>
 
-      <form className="max-w-xl">
-        <div className="flex flex-col space-y-2 mt-6">
-          <p className="text-sm font-bold">Boutique</p>
-          <TextField.Root placeholder="Nom de la boutique"></TextField.Root>
-          {/* <ErrorMessage>{errors.phone?.message}</ErrorMessage> */}
-        </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Addrèsse</p>
-          <TextArea placeholder="Addrèsse de la boutique"></TextArea>
-          {/* <ErrorMessage>{errors.phone?.message}</ErrorMessage> */}
-        </div>
-        <Button mt="4">Enregistrer</Button>
-      </form>
+      <ShopForm />
     </div>
   );
 };
