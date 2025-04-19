@@ -1,14 +1,13 @@
-const MarketPage = () => {
-  return (
-    <div>
-      <p>MarketPage</p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quibusdam
-        exercitationem illo id aperiam iure consectetur aliquam culpa omnis?
-        Quod deserunt alias culpa voluptatem pariatur in nisi error illo eum!
-      </p>
-    </div>
-  );
-};
+import React, { PropsWithChildren } from 'react'
 
-export default MarketPage;
+const MarketHomePage = () => {
+  return (
+    <div className='p-4'>
+        <p className='text2xl mb-4'>MarketHomePage</p>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At est, eos autem tempora animi, vitae minus veniam minima quo, itaque aut ut aspernatur ipsum provident ea ab quasi inventore quidem!</p>
+        
+    </div>
+  )
+}
+
+export default MarketHomePage
