@@ -20,7 +20,7 @@ export default function Home() {
           <LogOut size={15} />
           <span className="text-xs">Déconnection</span>
         </Button>
-        <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center">
+        <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
           <p>GE</p>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default function Home() {
           className="max-w-3xl my-auto"
         >
           <Card
-            className="hover:cursor-pointer hover:bg-gray-300"
+            className="hover:cursor-pointer hover:bg-gray-300 transition-colors"
             onClick={() => router.push("/market")}
           >
             <div className="flex flex-col items-center justify-center h-full gap-4 py-4 px-6">
