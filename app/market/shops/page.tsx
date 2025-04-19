@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { GrMoreVertical } from "react-icons/gr";
 import ShopsToolBar from "./_components/ShopsToolBar";
 import LoadingShopspPage from "./loading";
+import Pagination from "@/app/_components/Pagination";
 
 const ShopsPage = () => {
   const axios = useAxiosAuth();
@@ -48,13 +49,19 @@ const ShopsPage = () => {
               <Table.Cell>{shop.createdAt}</Table.Cell>
               <Table.Cell>
                 <IconButton variant="ghost" ml="4">
-                <GrMoreVertical color="black" />
+                  <GrMoreVertical color="black" />
                 </IconButton>
               </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        pageSize={2}
+        currentPage={1}
+        itemCount={10}
+        className="mt-4"
+      />
     </div>
   );
 };
