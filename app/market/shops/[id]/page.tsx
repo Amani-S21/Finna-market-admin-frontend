@@ -34,7 +34,9 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
       <BackButton />
       <Grid columns="2" mt="4">
         <div>
-          <Heading className="lowercase first-letter:uppercase">{shop?.name}</Heading>
+          <Heading className="lowercase first-letter:uppercase">
+            {shop?.name}
+          </Heading>
           <Text size="2">{shop?.createdAt}</Text>
           <Card mt="4">
             <Flex align="center" gap="2">
@@ -46,11 +48,18 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
                 <p className="lowercase first-letter:uppercase">
                   {shop?.users?.fullName}
                 </p>
-                <p className="text-sm font-bold text-gray-600">{shop?.users?.phone}</p>
+                <p className="text-sm font-bold text-gray-600">
+                  {shop?.users?.phone}
+                </p>
               </Flex>
             </Flex>
           </Card>
-          <Card mt="4">{shop?.address}</Card>
+          <Card mt="4">
+            <Text size="2" className="text-gray-600 font-bold">
+              Addrèsse
+            </Text>
+            <p className="mt-2">{shop?.address}</p>
+          </Card>
         </div>
         <div>
           <Button>Modifier</Button>
