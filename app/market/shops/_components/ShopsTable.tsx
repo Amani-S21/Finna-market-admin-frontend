@@ -1,3 +1,4 @@
+import { formattedDate } from "@/app/lib/tools";
 import { ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
@@ -36,8 +37,10 @@ const ShopsTable = ({
           <Table.Row key={shop.id}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{shop.name}</Table.Cell>
-            <Table.Cell>{shop.address}</Table.Cell>
-            <Table.Cell>{shop.createdAt}</Table.Cell>
+            <Table.Cell className="truncate max-w-[300px]">
+              {shop.address}
+            </Table.Cell>
+            <Table.Cell>{formattedDate(shop.createdAt)}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
