@@ -33,8 +33,8 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div>
       <BackButton />
-      <Grid columns="2" mt="4">
-        <div>
+      <Grid columns="3" mt="4">
+        <div className="col-span-2">
           <Heading className="lowercase first-letter:uppercase">
             {shop?.name}
           </Heading>
@@ -55,7 +55,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </Flex>
             </Flex>
           </Card>
-          <Card mt="4">
+          <Card mt="4" variant="ghost">
             <Text size="2" className="text-gray-600 font-bold">
               Addrèsse
             </Text>
