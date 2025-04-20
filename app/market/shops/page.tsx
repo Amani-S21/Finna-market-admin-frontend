@@ -24,7 +24,7 @@ const ShopsPage = ({
   } = useQuery<ShopsListResponse>({
     queryKey: ["shops", page],
     queryFn: () =>
-      axios.get(`/shops?page=${page}&limit=20`).then((res) => res.data),
+      axios.get(`/shops?page=${page}&limit=10`).then((res) => res.data),
     staleTime: 60 * 1000,
   });
 
@@ -37,7 +37,7 @@ const ShopsPage = ({
       <ShopsToolBar />
       {shopsResponse && <ShopsTable shopsResponse={shopsResponse} />}
       <Pagination
-        pageSize={20}
+        pageSize={10}
         currentPage={parseInt(page)}
         itemCount={shopsResponse?.count ?? 0}
         className="mt-4"
