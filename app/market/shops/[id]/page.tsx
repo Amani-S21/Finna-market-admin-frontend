@@ -34,7 +34,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
       <BackButton />
       <Grid columns="2" mt="4">
         <div>
-          <Heading>{shop?.name}</Heading>
+          <Heading className="lowercase first-letter:uppercase">{shop?.name}</Heading>
           <Text size="2">{shop?.createdAt}</Text>
           <Card mt="4">
             <Flex align="center" gap="2">
