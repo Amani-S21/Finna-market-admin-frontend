@@ -16,11 +16,11 @@ const ShopsToolBar = () => {
         </Text>
       </div>
 
-      <Button>
-        <Link href="/market/shops/new">
+      <Link href="/market/shops/new">
+        <Button>
           <span className="text-xs">Nouvelle Boutique</span>
-        </Link>
-      </Button>
+        </Button>
+      </Link>
     </Flex>
   );
 };
