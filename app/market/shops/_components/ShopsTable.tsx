@@ -42,7 +42,7 @@ const ShopsTable = ({
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push("/market/shops/details")}
+                onClick={() => router.push(`/market/shops/${shop.id}`)}
               >
                 <GrMoreVertical color="black" />
               </IconButton>
