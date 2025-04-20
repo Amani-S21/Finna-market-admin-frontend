@@ -1,5 +1,6 @@
 import { ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { GrMoreVertical } from "react-icons/gr";
 
@@ -8,6 +9,7 @@ const ShopsTable = ({
 }: {
   shopsResponse: ShopsListResponse;
 }) => {
+  const router = useRouter();
   const columns: {
     label: string;
   }[] = [
@@ -37,7 +39,11 @@ const ShopsTable = ({
             <Table.Cell>{shop.address}</Table.Cell>
             <Table.Cell>{shop.createdAt}</Table.Cell>
             <Table.Cell>
-              <IconButton variant="ghost" ml="4">
+              <IconButton
+                variant="ghost"
+                ml="4"
+                onClick={() => router.push("/market/shops/details")}
+              >
                 <GrMoreVertical color="black" />
               </IconButton>
             </Table.Cell>

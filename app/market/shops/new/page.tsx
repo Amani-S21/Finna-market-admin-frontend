@@ -1,6 +1,7 @@
+"use client";
+
+import BackButton from "@/app/_components/BackButton";
 import { Text } from "@radix-ui/themes";
-import { X } from "lucide-react";
-import Link from "next/link";
 import { IoStorefrontOutline } from "react-icons/io5";
 import ShopForm from "./_components/ShopForm";
 
@@ -8,12 +9,8 @@ const NewShopPage = () => {
   return (
     <div>
       <div className="mb-2">
-        <div className="flex cursor-pointer items-center justify-center bg-white border border-gray-200 rounded-full h-10 w-10 mb-5">
-          <Link href="/market/shops?page=1">
-            <X />
-          </Link>
-        </div>
-        <div className="flex items-center space-x-4">
+        <BackButton />
+        <div className="flex items-center space-x-4 mt-5">
           <IoStorefrontOutline />
           <span className="font-bold">Boutique</span>
         </div>
