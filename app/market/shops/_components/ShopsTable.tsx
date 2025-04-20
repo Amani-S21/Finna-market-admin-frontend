@@ -2,8 +2,7 @@ import { formattedDate } from "@/app/lib/tools";
 import { ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import React from "react";
-import { GrMoreVertical } from "react-icons/gr";
+import { FiEdit } from "react-icons/fi";
 
 const ShopsTable = ({
   shopsResponse,
@@ -47,7 +46,7 @@ const ShopsTable = ({
                 ml="4"
                 onClick={() => router.push(`/market/shops/${shop.id}`)}
               >
-                <GrMoreVertical color="black" />
+                <FiEdit color="black" />
               </IconButton>
             </Table.Cell>
           </Table.Row>

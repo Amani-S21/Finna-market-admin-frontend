@@ -1,4 +1,4 @@
-import { Flex, Skeleton, Table } from "@radix-ui/themes";
+import { Skeleton, Table } from "@radix-ui/themes";
 import "react-loading-skeleton/dist/skeleton.css";
 import ShopsToolBar from "./_components/ShopsToolBar";
 
