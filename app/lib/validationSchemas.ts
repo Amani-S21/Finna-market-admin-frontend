@@ -8,6 +8,7 @@ export const signinSchema = z.object({
 });
 
 export const shopSchema = z.object({
+  userName : z.string().min(1, "Veuillez selectionner un utilisateur"),
   name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
   address: z.string().min(5, "L'addrèsse doit avoir au minimum 5 caracteres"),
 });

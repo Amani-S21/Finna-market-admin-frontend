@@ -1,4 +1,4 @@
-import { shopSchema, signinSchema } from "@/app/validationSchemas";
+import { shopSchema, signinSchema } from "@/app/lib/validationSchemas";
 import { z } from "zod";
 
 export type SigninSchema = z.infer<typeof signinSchema>;

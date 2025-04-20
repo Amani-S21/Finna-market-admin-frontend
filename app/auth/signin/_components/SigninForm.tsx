@@ -3,7 +3,7 @@
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import Spinner from "@/app/_components/Spinner";
 import { SigninSchema } from "@/app/types";
-import { signinSchema } from "@/app/validationSchemas";
+import { signinSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, TextField } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
@@ -39,7 +39,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
           placeholder="Numero de téléphone"
         >
           <TextField.Slot>
-            <Phone size={15}/>
+            <Phone size={15} />
           </TextField.Slot>
         </TextField.Root>
         <ErrorMessage>{errors.phone?.message}</ErrorMessage>
@@ -53,7 +53,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
           placeholder="Mot de passe"
         >
           <TextField.Slot>
-            <Key size={15}/>
+            <Key size={15} />
           </TextField.Slot>
         </TextField.Root>
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
