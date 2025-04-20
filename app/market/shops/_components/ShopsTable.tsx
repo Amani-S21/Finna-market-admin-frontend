@@ -1,3 +1,4 @@
+import { ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
 import React from "react";
 import { GrMoreVertical } from "react-icons/gr";
@@ -13,8 +14,7 @@ const ShopsTable = ({
     { label: "N" },
     { label: "Boutique" },
     { label: "Addrèsse" },
-    { label: "Proprietaire" },
-    { label: "Créé le" },
+    { label: "Date" },
     { label: "Action" },
   ];
 
@@ -35,7 +35,6 @@ const ShopsTable = ({
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{shop.name}</Table.Cell>
             <Table.Cell>{shop.address}</Table.Cell>
-            <Table.Cell>Yala</Table.Cell>
             <Table.Cell>{shop.createdAt}</Table.Cell>
             <Table.Cell>
               <IconButton variant="ghost" ml="4">
