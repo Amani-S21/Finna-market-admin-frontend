@@ -16,17 +16,17 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
     data: shop,
     isLoading,
     error,
-    isError,
   } = useQuery<Shop>({
     queryKey: ["shop", id],
     queryFn: async () =>
       await axios.get(`/shops/${id}`).then((res) => res.data),
     staleTime: 60 * 1000,
+    retry: 3,
   });
 
   if (isLoading) return <LoadingShopDetails />;
 
-  if (error) return <LoadingShopDetails />;
+  if (error) notFound();
 
   return (
     <Grid columns="2">
