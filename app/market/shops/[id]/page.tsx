@@ -8,6 +8,7 @@ import React, { use } from "react";
 import LoadingShopDetails from "./loading";
 import { notFound } from "next/navigation";
 import BackButton from "@/app/_components/BackButton";
+import Link from "next/link";
 
 const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
@@ -62,7 +63,9 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
           </Card>
         </div>
         <div>
-          <Button>Modifier</Button>
+          <Link href={`/market/shops/${shop?.id}/edit`}>
+            <Button>Modifier</Button>
+          </Link>
         </div>
       </Grid>
     </div>

@@ -12,7 +12,12 @@ type Props = {
   setSelectedId: (value: string) => void;
 };
 
-const SearUserTextField = ({ value, onChange, onBlur, setSelectedId }: Props) => {
+const SearUserTextField = ({
+  value,
+  onChange,
+  onBlur,
+  setSelectedId,
+}: Props) => {
   const [isManuallySelected, setIsManuallySelected] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -53,8 +58,8 @@ const SearUserTextField = ({ value, onChange, onBlur, setSelectedId }: Props) =>
 
   useEffect(() => {
     if (isManuallySelected) {
-      setIsManuallySelected(false); // reset
-      return; // skip refetch
+      setIsManuallySelected(false);
+      return;
     }
 
     if (debouncedSearchTerm) {
@@ -71,6 +76,10 @@ const SearUserTextField = ({ value, onChange, onBlur, setSelectedId }: Props) =>
     onChange(item.fullName);
     setIsDropdownVisible(false);
   };
+
+  useEffect(() => {
+    setIsDropdownVisible(false);
+  }, []);
 
   return (
     <div className="relative w-full" ref={dropdownRef}>

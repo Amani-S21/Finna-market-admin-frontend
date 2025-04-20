@@ -1,18 +1,18 @@
 "use client";
 
 import ErrorMessage from "@/app/_components/ErrorMessage";
-import { ShopSchema, SubmitShop } from "@/app/lib/types";
+import { Shop, ShopSchema, SubmitShop } from "@/app/lib/types";
 import { shopSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField, TextArea, Button, Spinner } from "@radix-ui/themes";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import SearUserTextField from "./SearchUserField";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "@/app/lib/axios";
 import { useRouter } from "next/navigation";
 
-const ShopForm = () => {
+const ShopForm = ({ shop }: { shop?: Shop }) => {
   const [userId, setUserId] = useState("");
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -25,25 +25,33 @@ const ShopForm = () => {
   } = useForm<ShopSchema>({
     resolver: zodResolver(shopSchema),
     defaultValues: {
-      userName: "",
+      userName: shop?.users.fullName ?? "",
     },
   });
 
+  useEffect(() => {
+    if (shop) setUserId(shop?.users.id ?? "");
+  }, []);
+
   const createShop = async (data: SubmitShop) => {
-    const res = await axios.post("/shops", data);
+    const res = shop
+      ? await axios.patch("/shops", data)
+      : await axios.post("/shops", data);
     return res.data;
   };
 
   const { mutateAsync } = useMutation({
     mutationFn: createShop,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shop"] });
       queryClient.invalidateQueries({ queryKey: ["shops"] });
     },
   });
 
   const onSubmit = (data: ShopSchema) => {
-    mutateAsync({ userId, ...data });
-    router.push("/market/shops?page=1");
+    if (shop) mutateAsync({ id: shop.id, userId, ...data });
+    else mutateAsync({ userId, ...data });
+    router.back();
   };
 
   return (
@@ -63,6 +71,7 @@ const ShopForm = () => {
         <p className="text-sm font-bold">Nom</p>
         <TextField.Root
           {...register("name")}
+          defaultValue={shop?.name}
           placeholder="Nom de la boutique"
         />
         <ErrorMessage>{errors.name?.message}</ErrorMessage>
@@ -71,12 +80,13 @@ const ShopForm = () => {
         <p className="text-sm font-bold">Addrèsse</p>
         <TextArea
           {...register("address")}
+          defaultValue={shop?.address}
           placeholder="Addrèsse de la boutique"
         />
         <ErrorMessage>{errors.address?.message}</ErrorMessage>
       </div>
       <Button disabled={isSubmitting} mt="4">
-        Enregistrer {isSubmitting && <Spinner />}
+        {shop ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
       </Button>
     </form>
   );
