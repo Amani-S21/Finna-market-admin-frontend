@@ -2,11 +2,12 @@
 
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Shop } from "@/app/lib/types";
-import { Button, Card, Grid } from "@radix-ui/themes";
+import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import React, { use } from "react";
 import LoadingShopDetails from "./loading";
 import { notFound } from "next/navigation";
+import BackButton from "@/app/_components/BackButton";
 
 const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
@@ -29,17 +30,33 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
   if (error) notFound();
 
   return (
-    <Grid columns="2">
-      <div>
-        <p>{shop?.name}</p>
-        <p>{shop?.createdAt}</p>
-        <Card>{shop?.address}</Card>
-        <Card>{shop?.users?.fullName}</Card>
-      </div>
-      <div>
-        <Button>Modifier</Button>
-      </div>
-    </Grid>
+    <div>
+      <BackButton />
+      <Grid columns="2" mt="4">
+        <div>
+          <Heading>{shop?.name}</Heading>
+          <Text size="2">{shop?.createdAt}</Text>
+          <Card mt="4">
+            <Flex align="center" gap="2">
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${shop?.users?.fullName.substring(
+                0,
+                1
+              )}`}</div>
+              <Flex direction="column">
+                <p className="lowercase first-letter:uppercase">
+                  {shop?.users?.fullName}
+                </p>
+                <p className="text-sm font-bold text-gray-600">{shop?.users?.phone}</p>
+              </Flex>
+            </Flex>
+          </Card>
+          <Card mt="4">{shop?.address}</Card>
+        </div>
+        <div>
+          <Button>Modifier</Button>
+        </div>
+      </Grid>
+    </div>
   );
 };
 

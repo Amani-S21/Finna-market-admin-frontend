@@ -17,7 +17,6 @@ export type SubmitShop = {
   userId?: string;
 };
 
-
 export type Shop = {
   id: string;
   name: string;
@@ -31,6 +30,7 @@ export type User = {
   id: string;
   fullName: string;
   role: string;
+  phone: string;
   emailAddress: string;
   createdAt: string;
   updatedAt: string;
