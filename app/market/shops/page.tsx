@@ -7,6 +7,7 @@ import { use } from "react";
 import ShopsTable from "./_components/ShopsTable";
 import ShopsToolBar from "./_components/ShopsToolBar";
 import LoadingShopspPage from "./loading";
+import { ShopsListResponse } from "@/app/lib/types";
 
 const ShopsPage = ({
   searchParams,
