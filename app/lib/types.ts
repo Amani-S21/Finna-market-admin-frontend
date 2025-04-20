@@ -10,6 +10,14 @@ export type ShopsListResponse = {
   data: Shop[];
 };
 
+export type SubmitShop = {
+  id?: string;
+  name: string;
+  address: string;
+  userId?: string;
+};
+
+
 export type Shop = {
   id: string;
   name: string;

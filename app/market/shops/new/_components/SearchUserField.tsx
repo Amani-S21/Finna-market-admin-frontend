@@ -4,7 +4,6 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { User } from "@/app/lib/types";
 import { TextField } from "@radix-ui/themes";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
-import { setUser } from "@/redux/features/userSlice";
 
 type Props = {
   value: string;

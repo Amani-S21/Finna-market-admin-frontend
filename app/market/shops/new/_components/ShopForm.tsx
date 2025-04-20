@@ -1,16 +1,21 @@
 "use client";
 
 import ErrorMessage from "@/app/_components/ErrorMessage";
-import { ShopSchema } from "@/app/lib/types";
+import { ShopSchema, SubmitShop } from "@/app/lib/types";
 import { shopSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField, TextArea, Button, Spinner } from "@radix-ui/themes";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import SearUserTextField from "./SearchUserField";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "@/app/lib/axios";
+import { useRouter } from "next/navigation";
 
 const ShopForm = () => {
   const [userId, setUserId] = useState("");
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const {
     register,
@@ -24,9 +29,21 @@ const ShopForm = () => {
     },
   });
 
+  const createShop = async (data: SubmitShop) => {
+    const res = await axios.post("/shops", data);
+    return res.data;
+  };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: createShop,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shops"] });
+    },
+  });
+
   const onSubmit = (data: ShopSchema) => {
-    console.log(userId);
-    console.log(JSON.stringify(data));
+    mutateAsync({ userId, ...data });
+    router.push("/market/shops?page=1");
   };
 
   return (
