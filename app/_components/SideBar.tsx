@@ -1,5 +1,6 @@
 "use client";
 
+import { AiOutlineProduct } from "react-icons/ai";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -20,8 +21,8 @@ const NavLinks = () => {
   const currentPath = usePathname();
 
   const links = [
+    { href: "/market/products", label: "Produits", icon: <AiOutlineProduct /> },
     { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
-
     {
       href: "/market/shops?page=1",
       label: "Boutiques",
