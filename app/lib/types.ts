@@ -1,9 +1,11 @@
-import { shopSchema, signinSchema } from "@/app/lib/validationSchemas";
+import { productSchema, shopSchema, signinSchema } from "@/app/lib/validationSchemas";
 import { z } from "zod";
 
 export type SigninSchema = z.infer<typeof signinSchema>;
 
 export type ShopSchema = z.infer<typeof shopSchema>;
+
+export type ProductSchema = z.infer<typeof productSchema>;
 
 export type ShopsListResponse = {
   count: number;
