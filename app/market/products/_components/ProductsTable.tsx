@@ -47,7 +47,7 @@ const ProductsTable = ({
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/market/shops/${product.id}`)}
+                onClick={() => router.push(`/market/products/${product.id}`)}
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>

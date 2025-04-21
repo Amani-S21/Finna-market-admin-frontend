@@ -31,7 +31,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
   if (error) notFound();
 
   return (
-    <div>
+    <>
       <BackButton />
       <Grid columns="3" mt="4">
         <div className="col-span-2">
@@ -59,7 +59,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
             <Text size="2" className="text-gray-600 font-bold">
               Addrèsse
             </Text>
-            <p className="mt-2">{shop?.address}</p>
+            <p className="mt-1">{shop?.address}</p>
           </Card>
         </div>
         <div>
@@ -68,7 +68,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
           </Link>
         </div>
       </Grid>
-    </div>
+    </>
   );
 };
 
