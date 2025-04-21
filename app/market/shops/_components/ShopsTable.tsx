@@ -2,7 +2,7 @@ import { formattedDate } from "@/app/lib/tools";
 import { ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { FiEdit } from "react-icons/fi";
+import { IoIosMore } from "react-icons/io";
 
 const ShopsTable = ({
   shopsResponse,
@@ -46,7 +46,7 @@ const ShopsTable = ({
                 ml="4"
                 onClick={() => router.push(`/market/shops/${shop.id}`)}
               >
-                <FiEdit color="black" />
+                <IoIosMore size={20} color="black" />
               </IconButton>
             </Table.Cell>
           </Table.Row>
