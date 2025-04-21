@@ -4,10 +4,9 @@ import Pagination from "@/app/_components/Pagination";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useQuery } from "@tanstack/react-query";
 import { use } from "react";
-import ShopsTable from "./_components/ShopsTable";
-import ShopsToolBar from "./_components/ShopsToolBar";
 import LoadingShopspPage from "./loading";
 import { ShopsListResponse } from "@/app/lib/types";
+import { ShopsTable, ShopsToolBar } from "./_components";
 
 const ShopsPage = ({
   searchParams,
