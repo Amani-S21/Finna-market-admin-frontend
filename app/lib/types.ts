@@ -36,7 +36,7 @@ export type User = {
   updatedAt: string;
 };
 
-export type ProductResponse = {
+export type ProductsListResponse = {
   count: number;
   data: Product[];
 };

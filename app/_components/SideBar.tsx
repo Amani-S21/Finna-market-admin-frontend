@@ -21,7 +21,11 @@ const NavLinks = () => {
   const currentPath = usePathname();
 
   const links = [
-    { href: "/market/products", label: "Produits", icon: <AiOutlineProduct /> },
+    {
+      href: "/market/products?page=1",
+      label: "Produits",
+      icon: <AiOutlineProduct />,
+    },
     { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
     {
       href: "/market/shops?page=1",

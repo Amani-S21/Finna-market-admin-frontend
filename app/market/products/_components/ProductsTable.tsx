@@ -1,16 +1,16 @@
 "use client";
 
 import { formattedDate } from "@/app/lib/tools";
-import { ProductResponse } from "@/app/lib/types";
+import { ProductsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { IoIosMore } from "react-icons/io";
 
 const ProductsTable = ({
   productsResponse,
 }: {
-  productsResponse: ProductResponse;
+  productsResponse: ProductsListResponse;
 }) => {
   const router = useRouter();
   const columns: {
