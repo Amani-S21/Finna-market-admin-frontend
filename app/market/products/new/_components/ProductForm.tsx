@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addAndRemoveFeaturePrices,
   addFeature,
+  resetList,
 } from "@/redux/features/productSlice";
 import { RootState } from "@/redux/store";
 
@@ -186,6 +187,9 @@ const ProductForm = () => {
                 featureValues: featureValuePrices!,
               })
             );
+
+            // restore features values list
+            dispatch(resetList());
           }}
         >
           <p className="text-sm font-bold">Caractéristiques</p>
@@ -234,14 +238,14 @@ const ProductForm = () => {
                 />
               ))}
             </div>
-            {featureValuePrices?.length! < 1 && (
-              <ErrorMessage>
-                Les caractéristiques du produit sont obligatoires
-              </ErrorMessage>
-            )}
           </>
         )}
         {features?.length! > 0 && <FeaturesToPostTable features={features!} />}
+        {features?.length! < 1 && (
+          <ErrorMessage>
+            Les caractéristiques du produit sont obligatoires
+          </ErrorMessage>
+        )}
       </div>
       <Button disabled={isSubmitting} mt="6">
         Enregistrer {isSubmitting && <Spinner />}

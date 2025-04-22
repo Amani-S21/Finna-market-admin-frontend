@@ -47,8 +47,13 @@ const productSlice = createSlice({
         state.featureValuePrices?.push(action.payload);
       }
     },
+
+    resetList: (state) => {
+      state.featureValuePrices = [];
+    },
   },
 });
 
-export const { addFeature, addAndRemoveFeaturePrices } = productSlice.actions;
+export const { addFeature, resetList, addAndRemoveFeaturePrices } =
+  productSlice.actions;
 export default productSlice.reducer;
