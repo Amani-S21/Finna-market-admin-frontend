@@ -7,16 +7,14 @@ import {
   Flex,
   Switch,
   TextArea,
-  TextField,
-  Text,
+  TextField
 } from "@radix-ui/themes";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
-import FeaturesToPostTable from "./FeaturesToPostTable";
-import { TiInputCheckedOutline } from "react-icons/ti";
-import SearchCategoryTextField from "../../_components/SearchCategoryField";
-import { useState } from "react";
 import { SelectSearchItem } from "../../_components";
+import SearchCategoryTextField from "../../_components/SearchCategoryField";
+import FeaturesToPostTable from "./FeaturesToPostTable";
 
 const ProductForm = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
@@ -107,16 +105,6 @@ const ProductForm = () => {
             editable={false}
             title="Téléphone"
           />
-          // <div
-          //   style={{
-          //     borderColor: index === 1 ? "blue" : "#D1D5DB",
-          //   }}
-          //   className="flex items-center gap-1 border border-gray-300 rounded-full px-4"
-          //   key={index}
-          // >
-          //   <p>Téléphone</p>
-          //   {index === 1 && <TiInputCheckedOutline color="blue" size={25} />}
-          // </div>
         ))}
       </div>
       <ErrorMessage>Veuillez séléctionner des sous catégorie</ErrorMessage>
