@@ -9,14 +9,14 @@ type Props = {
   value: string;
   onChange: (value: string) => void;
   onBlur?: () => void;
-  setSelectedFeatureId: (value: string) => void;
+  setSelectedFeature: (value: Feature) => void;
 };
 
 const SearchFeatureTextField = ({
   value,
   onChange,
   onBlur,
-  setSelectedFeatureId,
+  setSelectedFeature,
 }: Props) => {
   const [isManuallySelected, setIsManuallySelected] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -72,7 +72,7 @@ const SearchFeatureTextField = ({
 
   const handleSelect = (item: Feature) => {
     setIsManuallySelected(true);
-    setSelectedFeatureId(item.id);
+    setSelectedFeature(item);
     onChange(item.name);
     setIsDropdownVisible(false);
   };

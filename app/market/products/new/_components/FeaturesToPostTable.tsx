@@ -1,7 +1,12 @@
 import { Table, Text } from "@radix-ui/themes";
 import { SelectSearchItem } from "../../_components";
+import { FeatureWithValues } from "@/app/lib/types";
 
-const FeaturesToPostTable = () => {
+const FeaturesToPostTable = ({
+  features,
+}: {
+  features: FeatureWithValues[];
+}) => {
   const columns: {
     label: string;
   }[] = [{ label: "N" }, { label: "Caractéristique" }, { label: "Valeurs" }];
@@ -18,16 +23,21 @@ const FeaturesToPostTable = () => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {[...Array(2)].map((feature, index) => (
-          <Table.Row key={index}>
+        {features.map((feature, index) => (
+          <Table.Row key={feature.featureId}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
-              <p>Capacités</p>
+              <p>{feature.name}</p>
             </Table.Cell>
             <Table.Cell>
               <div className="flex flex-wrap gap-2">
-                {[...Array(3)].map((value, index) => (
-                  <SelectSearchItem key={index} title="10Gb 50 Usd"/>
+                {feature.featureValues.map((value) => (
+                  <SelectSearchItem
+                    key={value.featureValueId}
+                    title={value.name}
+                    valuePrice={value.price}
+                    currency="Usd"
+                  />
                 ))}
               </div>
             </Table.Cell>

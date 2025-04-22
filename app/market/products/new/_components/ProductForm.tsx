@@ -2,6 +2,8 @@
 
 import { ErrorMessage, Spinner } from "@/app/_components";
 import {
+  Feature,
+  FeatureValuePrice,
   FeatureValuesByFeatureResponse,
   ProductSchema,
   SubCategoriesResponse,
@@ -17,11 +19,22 @@ import SearchCategoryTextField from "../../_components/SearchCategoryField";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addAndRemoveFeaturePrices,
+  addFeature,
+} from "@/redux/features/productSlice";
+import { RootState } from "@/redux/store";
 
 const ProductForm = () => {
   const axios = useAxiosAuth();
+  const { featureValuePrices } = useSelector(
+    (state: RootState) => state.product
+  );
+  const { features } = useSelector((state: RootState) => state.product);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const [selectedFeatureId, setSelectedFeatureId] = useState("");
+  const [selectedFeature, setSelectedFeature] = useState<Feature | undefined>();
+  const dispatch = useDispatch();
   const {
     register,
     control,
@@ -48,15 +61,21 @@ const ProductForm = () => {
 
   const { data: featuresByValueResponse } =
     useQuery<FeatureValuesByFeatureResponse>({
-      queryKey: ["features-values-by-feauture", selectedFeatureId],
+      queryKey: ["features-values-by-feauture", selectedFeature],
       queryFn: () =>
         axios
           .get(
-            `/feature-values/by-feature/${selectedFeatureId}?page=1&limit=20`
+            `/feature-values/by-feature/${selectedFeature?.id}?page=1&limit=20`
           )
           .then((res) => res.data),
       staleTime: 60 * 1000,
     });
+
+  const featurePriceExist = (featureValueId: string) => {
+    return featureValuePrices?.some(
+      (item) => item.featureValueId === featureValueId
+    );
+  };
 
   const onSubmit = (data: ProductSchema) => {
     console.log(JSON.stringify(data));
@@ -137,7 +156,7 @@ const ProductForm = () => {
               />
             ))}
           </div>
-          <ErrorMessage>Veuillez séléctionner des sous catégorie</ErrorMessage>
+          <ErrorMessage>Veuillez séléctionner une sous catégorie</ErrorMessage>
         </>
       )}
 
@@ -157,7 +176,18 @@ const ProductForm = () => {
       </div>
       <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
       <div className="flex flex-col  mt-4">
-        <Flex justify="between">
+        <Flex
+          justify="between"
+          onClick={() => {
+            dispatch(
+              addFeature({
+                featureId: `${selectedFeature?.id}`,
+                name: `${selectedFeature?.name}`,
+                featureValues: featureValuePrices!,
+              })
+            );
+          }}
+        >
           <p className="text-sm font-bold">Caractéristiques</p>
           <Flex align="center">
             <IoIosAdd size={20} />
@@ -173,28 +203,45 @@ const ProductForm = () => {
             <div className="flex flex-col space-y-2 mt-2">
               <SearchFeatureField
                 {...field}
-                setSelectedFeatureId={setSelectedFeatureId}
+                setSelectedFeature={setSelectedFeature}
               />
               <ErrorMessage>{errors.feature?.message}</ErrorMessage>
             </div>
           )}
         />
-
-        <p className="text-sm font-bold mt-4">Valeurs des caractéristiques</p>
-        <div className="flex flex-wrap gap-2 mt-2 text-sm mb-4">
-          {featuresByValueResponse?.data.map((feature, index) => (
-            <SelectSearchItem
-              key={feature.featureValueId}
-              title={feature.featureValues.value}
-              editable={true}
-              isSelected={index !== 0}
-            />
-          ))}
-        </div>
-        <ErrorMessage>
-          Les caractéristiques du produit sont obligatoires
-        </ErrorMessage>
-        <FeaturesToPostTable />
+        {selectedFeature && (
+          <>
+            <p className="text-sm font-bold mt-4">
+              Valeurs des caractéristiques
+            </p>
+            <div className="flex flex-wrap gap-2 mt-2 text-sm mb-2">
+              {featuresByValueResponse?.data.map((feature) => (
+                <SelectSearchItem
+                  key={feature.featureValueId}
+                  title={feature.featureValues.value}
+                  editable={true}
+                  isSelected={featurePriceExist(feature.featureValueId)}
+                  currency="Usd"
+                  onClick={(price) => {
+                    dispatch(
+                      addAndRemoveFeaturePrices({
+                        featureValueId: feature.featureValueId,
+                        name: feature.featureValues.value,
+                        price: price,
+                      })
+                    );
+                  }}
+                />
+              ))}
+            </div>
+            {featureValuePrices?.length! < 1 && (
+              <ErrorMessage>
+                Les caractéristiques du produit sont obligatoires
+              </ErrorMessage>
+            )}
+          </>
+        )}
+        {features?.length! > 0 && <FeaturesToPostTable features={features!} />}
       </div>
       <Button disabled={isSubmitting} mt="6">
         Enregistrer {isSubmitting && <Spinner />}
