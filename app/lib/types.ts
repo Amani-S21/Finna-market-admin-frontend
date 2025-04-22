@@ -1,4 +1,8 @@
-import { productSchema, shopSchema, signinSchema } from "@/app/lib/validationSchemas";
+import {
+  productSchema,
+  shopSchema,
+  signinSchema,
+} from "@/app/lib/validationSchemas";
 import { z } from "zod";
 
 export type SigninSchema = z.infer<typeof signinSchema>;
@@ -61,6 +65,11 @@ export type Product = {
   featuresAffectations: FeatureAffectation[];
 };
 
+export type SubCategoriesResponse = {
+  count: number;
+  data: SubCategory[];
+};
+
 export type SubCategory = {
   id: string;
   name: string;
@@ -109,4 +118,3 @@ export type FeatureValue = {
   createdAt: string;
   updatedAt: string;
 };
-

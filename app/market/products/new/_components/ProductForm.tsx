@@ -1,5 +1,7 @@
-import { ErrorMessage } from "@/app/_components";
-import { ProductSchema } from "@/app/lib/types";
+"use client";
+
+import { ErrorMessage, Spinner } from "@/app/_components";
+import { ProductSchema, SubCategoriesResponse } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
@@ -9,8 +11,11 @@ import { IoIosAdd } from "react-icons/io";
 import { SelectSearchItem } from "../../_components";
 import SearchCategoryTextField from "../../_components/SearchCategoryField";
 import FeaturesToPostTable from "./FeaturesToPostTable";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 
 const ProductForm = () => {
+  const axios = useAxiosAuth();
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const {
     register,
@@ -22,6 +27,21 @@ const ProductForm = () => {
     defaultValues: {
       category: "",
     },
+  });
+
+  const {
+    data: categoriesResponse,
+    isLoading,
+    error,
+  } = useQuery<SubCategoriesResponse>({
+    queryKey: ["sub-categories", selectedCategoryId],
+    queryFn: () =>
+      axios
+        .get(
+          `/sub-categories/by-category/${selectedCategoryId}?page=1&limit=20`
+        )
+        .then((res) => res.data),
+    staleTime: 60 * 1000,
   });
 
   const onSubmit = (data: ProductSchema) => {
@@ -90,18 +110,23 @@ const ProductForm = () => {
           </div>
         )}
       />
-      <p className="text-sm font-bold mt-4 mb-2">Sous catégorie</p>
-      <div className="flex flex-wrap gap-2 mb-2">
-        {[...Array(3)].map((value, index) => (
-          <SelectSearchItem
-            key={index}
-            isSelected={index === 1}
-            editable={false}
-            title="Téléphone"
-          />
-        ))}
-      </div>
-      <ErrorMessage>Veuillez séléctionner des sous catégorie</ErrorMessage>
+      {categoriesResponse?.data && (
+        <>
+          <p className="text-sm font-bold mt-4 mb-2">Sous catégorie</p>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {categoriesResponse?.data.map((value) => (
+              <SelectSearchItem
+                key={value.id}
+                isSelected={false}
+                editable={false}
+                title={value.name}
+              />
+            ))}
+          </div>
+          <ErrorMessage>Veuillez séléctionner des sous catégorie</ErrorMessage>
+        </>
+      )}
+
       <div className="flex flex-col space-y-2 mt-4 mb-2">
         <p className="text-sm font-bold">Photos</p>
         <Flex gap="4">
@@ -143,7 +168,9 @@ const ProductForm = () => {
         </ErrorMessage>
         <FeaturesToPostTable />
       </div>
-      <Button mt="6">Enregistrer</Button>
+      <Button disabled={isSubmitting} mt="6">
+        Enregistrer {isSubmitting && <Spinner />}
+      </Button>
     </form>
   );
 };
