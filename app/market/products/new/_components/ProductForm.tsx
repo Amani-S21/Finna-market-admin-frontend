@@ -7,14 +7,20 @@ import {
   FeatureValuesByFeatureResponse,
   ProductSchema,
   SubCategoriesResponse,
+  SubCategory,
 } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
+import { CiTrash } from "react-icons/ci";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
-import { SearchFeatureField, SelectSearchItem } from "../../_components";
+import {
+  ProductImage,
+  SearchFeatureField,
+  SelectSearchItem,
+} from "../../_components";
 import SearchCategoryTextField from "../../_components/SearchCategoryField";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 import { useQuery } from "@tanstack/react-query";
@@ -26,6 +32,8 @@ import {
   resetList,
 } from "@/redux/features/productSlice";
 import { RootState } from "@/redux/store";
+import LogoArea from "../../_components/ProductImage";
+import { Delete } from "lucide-react";
 
 const ProductForm = () => {
   const axios = useAxiosAuth();
@@ -34,7 +42,16 @@ const ProductForm = () => {
   );
   const { features } = useSelector((state: RootState) => state.product);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
+  // Images
+  const [image1, setImage1] = useState<string | undefined>();
+  const [image2, setImage2] = useState<string | undefined>();
+  const [image3, setImage3] = useState<string | undefined>();
+
   const [selectedFeature, setSelectedFeature] = useState<Feature | undefined>();
+  const [selectedSubCategory, setSelectedSubCategory] = useState<
+    SubCategory | undefined
+  >();
   const dispatch = useDispatch();
   const {
     register,
@@ -76,6 +93,13 @@ const ProductForm = () => {
     return featureValuePrices?.some(
       (item) => item.featureValueId === featureValueId
     );
+  };
+
+  const testImageSelection = () => {
+    if (!image1 || !image2 || !image3) {
+      return false;
+    }
+    return true;
   };
 
   const onSubmit = (data: ProductSchema) => {
@@ -151,31 +175,49 @@ const ProductForm = () => {
             {categoriesResponse?.data.map((value) => (
               <SelectSearchItem
                 key={value.id}
-                isSelected={false}
+                isSelected={value.id === selectedSubCategory?.id}
                 editable={false}
                 title={value.name}
+                onClick={() => {
+                  setSelectedSubCategory(value);
+                }}
               />
             ))}
           </div>
-          <ErrorMessage>Veuillez séléctionner une sous catégorie</ErrorMessage>
+          {!selectedSubCategory && (
+            <ErrorMessage>
+              Veuillez séléctionner une sous catégorie
+            </ErrorMessage>
+          )}
         </>
       )}
 
       <div className="flex flex-col space-y-2 mt-4 mb-2">
-        <p className="text-sm font-bold">Photos</p>
+        <Flex justify="between">
+          <p className="text-sm font-bold">Photos</p>
+          <Flex
+            align="center"
+            onClick={() => {
+              setImage1(undefined);
+              setImage2(undefined);
+              setImage3(undefined);
+            }}
+          >
+            <CiTrash size={16} />
+            <p className="text-sm underline hover:cursor-default">
+              Réinitialiser
+            </p>
+          </Flex>
+        </Flex>
         <Flex gap="4">
-          <div className="h-[80px]  w-[100px] flex justify-center items-center rounded-md bg-white relative">
-            <IoIosAdd size={20} />
-          </div>
-          <div className="h-[80px]  w-[100px] flex justify-center items-center rounded-md bg-white relative">
-            <IoIosAdd size={20} />
-          </div>
-          <div className="h-[80px]  w-[100px] flex justify-center items-center rounded-md bg-white relative">
-            <IoIosAdd size={20} />
-          </div>
+          <ProductImage setImage={setImage1} image={image1!} />
+          <ProductImage setImage={setImage2} image={image2!} />
+          <ProductImage setImage={setImage3} image={image3!} />
         </Flex>
       </div>
-      <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
+      {testImageSelection() === false && (
+        <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
+      )}
       <div className="flex flex-col  mt-4">
         <Flex
           justify="between"
