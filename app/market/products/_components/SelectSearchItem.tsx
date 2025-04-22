@@ -14,7 +14,14 @@ const SelectSearchItem = ({ title, isSelected, editable = false }: Props) => {
       }}
       className="flex items-center gap-1 border border-gray-300 rounded-full px-4"
     >
-      <p className="mr-1">{title}</p>
+      {title.startsWith("#") ? (
+        <div
+          style={{ backgroundColor: title }}
+          className="h-[20px] w-[50px] rounded-sm border border-gray-300 mr-1"
+        />
+      ) : (
+        <p className="mr-1">{title}</p>
+      )}
       {isSelected && (
         <Flex align="center">
           {editable && (
