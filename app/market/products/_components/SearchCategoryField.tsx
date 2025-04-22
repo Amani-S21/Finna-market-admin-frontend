@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { User } from "@/app/lib/types";
+import { Category, User } from "@/app/lib/types";
 import { TextField } from "@radix-ui/themes";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 
@@ -26,14 +26,14 @@ const SearchCategoryTextField = ({
   const debouncedSearchTerm = useDebounce(value, 300);
 
   const {
-    data: users,
+    data: categories,
     isLoading,
     refetch,
-  } = useQuery<User[]>({
+  } = useQuery<Category[]>({
     queryKey: ["shops", debouncedSearchTerm],
     queryFn: () =>
       axios
-        .get(`/users/search?term=${debouncedSearchTerm}`)
+        .get(`/categories/search?term=${debouncedSearchTerm}`)
         .then((res) => res.data),
     enabled: !!debouncedSearchTerm,
     staleTime: 60 * 1000,
@@ -70,10 +70,10 @@ const SearchCategoryTextField = ({
     }
   }, [debouncedSearchTerm, refetch]);
 
-  const handleSelect = (item: User) => {
+  const handleSelect = (item: Category) => {
     setIsManuallySelected(true);
     setSelectedCategoryId(item.id);
-    onChange(item.fullName);
+    onChange(item.name);
     setIsDropdownVisible(false);
   };
 
@@ -89,22 +89,22 @@ const SearchCategoryTextField = ({
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => value && setIsDropdownVisible(true)}
         onBlur={onBlur}
-        placeholder="Chercher un client"
+        placeholder="Chercher une catégorie"
       />
 
       {isDropdownVisible && (
         <div className="absolute w-full bg-white shadow mt-1 max-h-40 overflow-auto z-10">
           {isLoading ? (
             <div className="p-2">Chargement...</div>
-          ) : users && users.length > 0 ? (
+          ) : categories && categories.length > 0 ? (
             <ul>
-              {users.map((item: User) => (
+              {categories.map((item: Category) => (
                 <li
                   key={item.id}
                   onClick={() => handleSelect(item)}
                   className="p-2 hover:bg-gray-200 cursor-pointer"
                 >
-                  {item.fullName}
+                  {item.name}
                 </li>
               ))}
             </ul>
