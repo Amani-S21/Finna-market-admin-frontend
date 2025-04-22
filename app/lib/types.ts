@@ -102,6 +102,17 @@ export type Feature = {
   updatedAt: string;
 };
 
+export type FeatureValuesByFeatureResponse = {
+  count: number;
+  data: FeatureValueByFeature[];
+};
+
+export type FeatureValueByFeature = {
+  featureId: string;
+  featureValueId: string;
+  featureValues: FeatureValue;
+};
+
 export type FeatureAffectationValue = {
   price: number;
   featureAffectationProductId: string;

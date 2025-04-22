@@ -1,7 +1,11 @@
 "use client";
 
 import { ErrorMessage, Spinner } from "@/app/_components";
-import { ProductSchema, SubCategoriesResponse } from "@/app/lib/types";
+import {
+  FeatureValuesByFeatureResponse,
+  ProductSchema,
+  SubCategoriesResponse,
+} from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
@@ -31,9 +35,7 @@ const ProductForm = () => {
     },
   });
 
-  const {
-    data: categoriesResponse,
-  } = useQuery<SubCategoriesResponse>({
+  const { data: categoriesResponse } = useQuery<SubCategoriesResponse>({
     queryKey: ["sub-categories", selectedCategoryId],
     queryFn: () =>
       axios
@@ -43,6 +45,18 @@ const ProductForm = () => {
         .then((res) => res.data),
     staleTime: 60 * 1000,
   });
+
+  const { data: featuresByValueResponse } =
+    useQuery<FeatureValuesByFeatureResponse>({
+      queryKey: ["features-values-by-feauture", selectedFeatureId],
+      queryFn: () =>
+        axios
+          .get(
+            `/feature-values/by-feature/${selectedFeatureId}?page=1&limit=20`
+          )
+          .then((res) => res.data),
+      staleTime: 60 * 1000,
+    });
 
   const onSubmit = (data: ProductSchema) => {
     console.log(JSON.stringify(data));
@@ -168,12 +182,12 @@ const ProductForm = () => {
 
         <p className="text-sm font-bold mt-4">Valeurs des caractéristiques</p>
         <div className="flex flex-wrap gap-2 mt-2 text-sm mb-4">
-          {[...Array(5)].map((feature, index) => (
+          {featuresByValueResponse?.data.map((feature, index) => (
             <SelectSearchItem
-              key={index}
-              title="10Gb"
+              key={feature.featureValueId}
+              title={feature.featureValues.value}
               editable={true}
-              isSelected={index !== 0 && index !== 2}
+              isSelected={index !== 0}
             />
           ))}
         </div>
