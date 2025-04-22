@@ -2,13 +2,7 @@ import { ErrorMessage } from "@/app/_components";
 import { ProductSchema } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Flex,
-  Switch,
-  TextArea,
-  TextField
-} from "@radix-ui/themes";
+import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
@@ -50,7 +44,7 @@ const ProductForm = () => {
         <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage>
       </div>
       <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Ancien prix</p>
+        <p className="text-sm font-bold">Ancien prix de vente</p>
         <TextField.Root
           {...register("oldPrice")}
           placeholder="Veuillez saisir l'ancien prix"
@@ -58,7 +52,7 @@ const ProductForm = () => {
         <ErrorMessage>{errors.oldPrice?.message}</ErrorMessage>
       </div>
       <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Prix courant</p>
+        <p className="text-sm font-bold">Prix de vente courant</p>
         <TextField.Root
           {...register("currentPrice")}
           placeholder="Veuillez saisir le prix courant du produit"
