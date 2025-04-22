@@ -18,8 +18,12 @@ const ProductForm = () => {
     resolver: zodResolver(productSchema),
   });
 
+  const onSubmit = (data: ProductSchema) => {
+    console.log(JSON.stringify(data));
+  };
+
   return (
-    <form className="">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col space-y-2 mt-4">
         <p className="text-sm font-bold">Nom</p>
         <TextField.Root {...register("name")} placeholder="Nom du produit" />
