@@ -129,3 +129,15 @@ export type FeatureValue = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type FeatureWithValues = {
+  featureId: string;
+  name: string;
+  featureValues: FeatureValuePrice[];
+};
+
+export type FeatureValuePrice = {
+  featureValueId: string;
+  name: string;
+  price: number;
+};
