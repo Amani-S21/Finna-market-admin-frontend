@@ -54,7 +54,7 @@ const SearUserTextField = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onblur]);
+  }, []);
 
   useEffect(() => {
     if (isManuallySelected) {

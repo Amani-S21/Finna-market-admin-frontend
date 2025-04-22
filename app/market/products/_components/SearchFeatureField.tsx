@@ -54,7 +54,7 @@ const SearchFeatureTextField = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onblur]);
+  }, []);
 
   useEffect(() => {
     if (isManuallySelected) {

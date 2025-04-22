@@ -33,8 +33,6 @@ const ProductForm = () => {
 
   const {
     data: categoriesResponse,
-    isLoading,
-    error,
   } = useQuery<SubCategoriesResponse>({
     queryKey: ["sub-categories", selectedCategoryId],
     queryFn: () =>
@@ -114,7 +112,7 @@ const ProductForm = () => {
       />
       {categoriesResponse?.data && (
         <>
-          <p className="text-sm font-bold mt-4 mb-2">Sous catégorie</p>
+          <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
           <div className="flex flex-wrap gap-2 mb-2">
             {categoriesResponse?.data.map((value) => (
               <SelectSearchItem
@@ -144,21 +142,21 @@ const ProductForm = () => {
         </Flex>
       </div>
       <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
-      <div className="flex flex-col space-y-2 mt-4">
+      <div className="flex flex-col  mt-4">
+        <Flex justify="between">
+          <p className="text-sm font-bold">Caractéristiques</p>
+          <Flex align="center">
+            <IoIosAdd size={20} />
+            <p className="text-sm underline hover:cursor-default">
+              Ajoutrer a la liste
+            </p>
+          </Flex>
+        </Flex>
         <Controller
           control={control}
           name="feature"
           render={({ field }) => (
-            <div className="flex flex-col space-y-2 mt-6">
-              <Flex justify="between">
-                <p className="text-sm font-bold">Caractéristiques</p>
-                <Flex align="center">
-                  <IoIosAdd size={20} />
-                  <p className="text-sm underline hover:cursor-default">
-                    Ajoutrer a la liste
-                  </p>
-                </Flex>
-              </Flex>
+            <div className="flex flex-col space-y-2 mt-2">
               <SearchFeatureField
                 {...field}
                 setSelectedFeatureId={setSelectedFeatureId}
@@ -168,6 +166,7 @@ const ProductForm = () => {
           )}
         />
 
+        <p className="text-sm font-bold mt-4">Valeurs des caractéristiques</p>
         <div className="flex flex-wrap gap-2 mt-2 text-sm mb-4">
           {[...Array(5)].map((feature, index) => (
             <SelectSearchItem

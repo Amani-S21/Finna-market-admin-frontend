@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Category, User } from "@/app/lib/types";
-import { TextField } from "@radix-ui/themes";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Category } from "@/app/lib/types";
+import { TextField } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   value: string;
@@ -54,7 +54,7 @@ const SearchCategoryTextField = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onblur]);
+  }, []);
 
   useEffect(() => {
     if (isManuallySelected) {
