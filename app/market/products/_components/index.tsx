@@ -1,3 +1,5 @@
 export { default as ProductsToolBar } from "./ProductsToolBar";
 export { default as ProductsTable } from "./ProductsTable";
-export {default as ProductsFeaturesTable} from "./ProductsFeaturesTable";
+export { default as ProductsFeaturesTable } from "./ProductsFeaturesTable";
+export { default as SearchCategoryTextField } from "./SearchCategoryField";
+export { default as SelectSearchItem } from "./SelectSearchItem";

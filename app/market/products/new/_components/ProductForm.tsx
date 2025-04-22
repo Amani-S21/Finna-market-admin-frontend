@@ -2,13 +2,24 @@ import { ErrorMessage } from "@/app/_components";
 import { ProductSchema } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
-import { useForm } from "react-hook-form";
+import {
+  Button,
+  Flex,
+  Switch,
+  TextArea,
+  TextField,
+  Text,
+} from "@radix-ui/themes";
+import { Controller, useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 import { TiInputCheckedOutline } from "react-icons/ti";
+import SearchCategoryTextField from "../../_components/SearchCategoryField";
+import { useState } from "react";
+import { SelectSearchItem } from "../../_components";
 
 const ProductForm = () => {
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const {
     register,
     control,
@@ -16,6 +27,9 @@ const ProductForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
+    defaultValues: {
+      category: "",
+    },
   });
 
   const onSubmit = (data: ProductSchema) => {
@@ -70,23 +84,43 @@ const ProductForm = () => {
           }}
         />
       </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Catégorie</p>
-        <TextField.Root
-          {...register("category")}
-          placeholder="Veuillez entrer la catégorie du produit"
-        />
-        <ErrorMessage>{errors.category?.message}</ErrorMessage>
+      <Controller
+        control={control}
+        name="category"
+        render={({ field }) => (
+          <div className="flex flex-col space-y-2 mt-6">
+            <p className="text-sm font-bold">Catégorie</p>
+            <SearchCategoryTextField
+              {...field}
+              setSelectedCategoryId={setSelectedCategoryId}
+            />
+            <ErrorMessage>{errors.category?.message}</ErrorMessage>
+          </div>
+        )}
+      />
+      <p className="text-sm font-bold mt-4 mb-2">Sous catégorie</p>
+      <div className="flex flex-wrap gap-2 mb-2">
+        {[...Array(3)].map((value, index) => (
+          <SelectSearchItem
+            key={index}
+            isSelected={index === 1}
+            editable={false}
+            title="Téléphone"
+          />
+          // <div
+          //   style={{
+          //     borderColor: index === 1 ? "blue" : "#D1D5DB",
+          //   }}
+          //   className="flex items-center gap-1 border border-gray-300 rounded-full px-4"
+          //   key={index}
+          // >
+          //   <p>Téléphone</p>
+          //   {index === 1 && <TiInputCheckedOutline color="blue" size={25} />}
+          // </div>
+        ))}
       </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Sous catégorie</p>
-        <TextField.Root
-          {...register("subCategory")}
-          placeholder="Veuillez entrer la sous-catégorie du produit"
-        />
-        <ErrorMessage>{errors.subCategory?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
+      <ErrorMessage>Veuillez séléctionner des sous catégorie</ErrorMessage>
+      <div className="flex flex-col space-y-2 mt-4 mb-2">
         <p className="text-sm font-bold">Photos</p>
         <Flex gap="4">
           <div className="h-[80px]  w-[100px] flex justify-center items-center rounded-md bg-white relative">
@@ -100,6 +134,7 @@ const ProductForm = () => {
           </div>
         </Flex>
       </div>
+      <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
       <div className="flex flex-col space-y-2 mt-4">
         <Flex justify="between">
           <p className="text-sm font-bold">Caractéristiques</p>
@@ -113,22 +148,17 @@ const ProductForm = () => {
         <TextField.Root placeholder="Veuillez saisir une caractéristique" />
         <div className="flex flex-wrap gap-2 mt-2 text-sm mb-4">
           {[...Array(5)].map((feature, index) => (
-            <div
+            <SelectSearchItem
               key={index}
-              style={{
-                borderColor: index !== 0 && index !== 2 ? "blue" : "gray",
-              }}
-              className="border border-dotted rounded-md px-4 py-1 flex items-center"
-            >
-              <p className="mr-1">10Gb</p>
-              <TextField.Root className="w-[50px] h-[20px] border-gray-50" />
-              <p className="ml-1 mr-2">Usd</p>
-              {index !== 0 && index !== 2 && (
-                <TiInputCheckedOutline color="blue" size={30} />
-              )}
-            </div>
+              title="10Gb"
+              editable={true}
+              isSelected={index !== 0 && index !== 2}
+            />
           ))}
         </div>
+        <ErrorMessage>
+          Les caractéristiques du produit sont obligatoires
+        </ErrorMessage>
         <FeaturesToPostTable />
       </div>
       <Button mt="6">Enregistrer</Button>

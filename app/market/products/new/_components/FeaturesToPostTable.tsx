@@ -1,4 +1,5 @@
-import { Table } from "@radix-ui/themes";
+import { Table, Text } from "@radix-ui/themes";
+import { SelectSearchItem } from "../../_components";
 
 const FeaturesToPostTable = () => {
   const columns: {
@@ -26,12 +27,7 @@ const FeaturesToPostTable = () => {
             <Table.Cell>
               <div className="flex flex-wrap gap-2">
                 {[...Array(3)].map((value, index) => (
-                  <div
-                    className="flex border border-gray-300 rounded-full px-4 py-1"
-                    key={index}
-                  >
-                    <p>10Gb</p>
-                  </div>
+                  <SelectSearchItem key={index} title="10Gb 50 Usd"/>
                 ))}
               </div>
             </Table.Cell>

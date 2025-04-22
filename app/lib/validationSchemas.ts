@@ -10,7 +10,7 @@ export const signinSchema = z.object({
 export const shopSchema = z.object({
   userName: z.string().min(1, "Veuillez selectionner un utilisateur"),
   name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
-  address : z.string().min(1, "Veuillez saisir l'addrèsse"),
+  address: z.string().min(1, "Veuillez saisir l'addrèsse"),
 });
 
 export const productSchema = z.object({
@@ -20,9 +20,6 @@ export const productSchema = z.object({
   currentPrice: z.string().min(5, "Veuillez saisir le prix courant"),
   description: z
     .string()
-    .min(5, "L'addrèsse doit avoir au minimum 5 caracteres"),
-  category: z.string().min(5, "L'addrèsse doit avoir au minimum 5 caracteres"),
-  subCategory: z
-    .string()
-    .min(5, "L'addrèsse doit avoir au minimum 5 caracteres"),
+    .min(5, "La déscription doit avoir au minimum 5 caracteres"),
+  category: z.string().min(5, "Veuillez sélectionner la catégorie"),
 });
