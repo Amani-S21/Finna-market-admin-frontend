@@ -8,7 +8,7 @@ import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
-import { SelectSearchItem } from "../../_components";
+import { SearchFeatureField, SelectSearchItem } from "../../_components";
 import SearchCategoryTextField from "../../_components/SearchCategoryField";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 import { useQuery } from "@tanstack/react-query";
@@ -17,6 +17,7 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 const ProductForm = () => {
   const axios = useAxiosAuth();
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [selectedFeatureId, setSelectedFeatureId] = useState("");
   const {
     register,
     control,
@@ -26,6 +27,7 @@ const ProductForm = () => {
     resolver: zodResolver(productSchema),
     defaultValues: {
       category: "",
+      feature: "",
     },
   });
 
@@ -143,16 +145,29 @@ const ProductForm = () => {
       </div>
       <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
       <div className="flex flex-col space-y-2 mt-4">
-        <Flex justify="between">
-          <p className="text-sm font-bold">Caractéristiques</p>
-          <Flex align="center">
-            <IoIosAdd size={20} />
-            <p className="text-sm underline hover:cursor-default">
-              Ajoutrer a la liste
-            </p>
-          </Flex>
-        </Flex>
-        <TextField.Root placeholder="Veuillez saisir une caractéristique" />
+        <Controller
+          control={control}
+          name="feature"
+          render={({ field }) => (
+            <div className="flex flex-col space-y-2 mt-6">
+              <Flex justify="between">
+                <p className="text-sm font-bold">Caractéristiques</p>
+                <Flex align="center">
+                  <IoIosAdd size={20} />
+                  <p className="text-sm underline hover:cursor-default">
+                    Ajoutrer a la liste
+                  </p>
+                </Flex>
+              </Flex>
+              <SearchFeatureField
+                {...field}
+                setSelectedFeatureId={setSelectedFeatureId}
+              />
+              <ErrorMessage>{errors.feature?.message}</ErrorMessage>
+            </div>
+          )}
+        />
+
         <div className="flex flex-wrap gap-2 mt-2 text-sm mb-4">
           {[...Array(5)].map((feature, index) => (
             <SelectSearchItem

@@ -1,22 +1,22 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Category, User } from "@/app/lib/types";
-import { TextField } from "@radix-ui/themes";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Feature } from "@/app/lib/types";
+import { TextField } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   value: string;
   onChange: (value: string) => void;
   onBlur?: () => void;
-  setSelectedCategoryId: (value: string) => void;
+  setSelectedFeatureId: (value: string) => void;
 };
 
-const SearchCategoryTextField = ({
+const SearchFeatureTextField = ({
   value,
   onChange,
   onBlur,
-  setSelectedCategoryId,
+  setSelectedFeatureId,
 }: Props) => {
   const [isManuallySelected, setIsManuallySelected] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -26,14 +26,14 @@ const SearchCategoryTextField = ({
   const debouncedSearchTerm = useDebounce(value, 300);
 
   const {
-    data: categories,
+    data: features,
     isLoading,
     refetch,
-  } = useQuery<Category[]>({
-    queryKey: ["shops", debouncedSearchTerm],
+  } = useQuery<Feature[]>({
+    queryKey: ["features", debouncedSearchTerm],
     queryFn: () =>
       axios
-        .get(`/categories/search?term=${debouncedSearchTerm}`)
+        .get(`/features/search?term=${debouncedSearchTerm}`)
         .then((res) => res.data),
     enabled: !!debouncedSearchTerm,
     staleTime: 60 * 1000,
@@ -70,9 +70,9 @@ const SearchCategoryTextField = ({
     }
   }, [debouncedSearchTerm, refetch]);
 
-  const handleSelect = (item: Category) => {
+  const handleSelect = (item: Feature) => {
     setIsManuallySelected(true);
-    setSelectedCategoryId(item.id);
+    setSelectedFeatureId(item.id);
     onChange(item.name);
     setIsDropdownVisible(false);
   };
@@ -89,16 +89,16 @@ const SearchCategoryTextField = ({
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => value && setIsDropdownVisible(true)}
         onBlur={onBlur}
-        placeholder="Veuillez saisir une caractéristique"
+        placeholder="Chercher une catégorie"
       />
 
       {isDropdownVisible && (
         <div className="absolute w-full bg-white shadow mt-1 max-h-40 overflow-auto z-10">
           {isLoading ? (
             <div className="p-2">Chargement...</div>
-          ) : categories && categories.length > 0 ? (
+          ) : features && features.length > 0 ? (
             <ul>
-              {categories.map((item: Category) => (
+              {features.map((item: Feature) => (
                 <li
                   key={item.id}
                   onClick={() => handleSelect(item)}
@@ -117,4 +117,4 @@ const SearchCategoryTextField = ({
   );
 };
 
-export default SearchCategoryTextField;
+export default SearchFeatureTextField;

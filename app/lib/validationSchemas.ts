@@ -22,5 +22,6 @@ export const productSchema = z.object({
   description: z
     .string()
     .min(5, "La déscription doit avoir au minimum 5 caracteres"),
-  category: z.string().min(5, "Veuillez sélectionner la catégorie"),
+  category: z.string().min(1, "Veuillez sélectionner la catégorie"),
+  feature: z.string().min(1, "Veuillez sélectionner la catégorie"),
 });
