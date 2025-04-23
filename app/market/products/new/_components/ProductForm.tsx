@@ -1,21 +1,29 @@
 "use client";
 
 import { ErrorMessage, Spinner } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   Feature,
-  FeatureValuePrice,
   FeatureValuesByFeatureResponse,
   ProductSchema,
   SubCategoriesResponse,
   SubCategory,
 } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
-import { CiTrash } from "react-icons/ci";
+import {
+  addAndRemoveFeaturePrices,
+  addFeature,
+  resetList,
+} from "@/redux/features/productSlice";
+import { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { CiTrash } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ProductImage,
   SearchFeatureField,
@@ -23,17 +31,6 @@ import {
 } from "../../_components";
 import SearchCategoryTextField from "../../_components/SearchCategoryField";
 import FeaturesToPostTable from "./FeaturesToPostTable";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addAndRemoveFeaturePrices,
-  addFeature,
-  resetList,
-} from "@/redux/features/productSlice";
-import { RootState } from "@/redux/store";
-import LogoArea from "../../_components/ProductImage";
-import { Delete } from "lucide-react";
 
 const ProductForm = () => {
   const axios = useAxiosAuth();
@@ -143,7 +140,7 @@ const ProductForm = () => {
           {...register("description")}
           placeholder="Veuillez saisir déscription du produit"
         />
-        <ErrorMessage>{errors.name?.message}</ErrorMessage>
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
       </div>
       <div className="flex flex-col space-y-2 mt-4">
         <p className="text-sm font-bold">Publié</p>

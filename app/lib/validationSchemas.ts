@@ -17,7 +17,6 @@ export const productSchema = z.object({
   name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
   purchasedPrice: z.string().min(1, "Veuillez saisir le prix d'achat"),
   oldPrice: z.string().min(1, "Veuillez saisir l'ancien prix"),
-  newPrice: z.string().min(1, "Veuillez saisir l'ancien prix"),
   currentPrice: z.string().min(1, "Veuillez saisir le prix courant"),
   description: z
     .string()
