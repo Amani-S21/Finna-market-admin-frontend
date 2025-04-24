@@ -7,7 +7,7 @@ import { ProductForm } from "./_components";
 
 const NewProductPage = () => {
   return (
-    <div className="max-w-xl">
+    <div className="max-w-xl mx-auto">
       <div className="mb-2">
         <BackButton />
         <div className="flex items-center space-x-4 mt-5">

@@ -6,7 +6,7 @@ import NavBar from "../_components/NavBar";
 const MarketPage = ({ children }: { children: ReactNode }) => {
   return (
     <Flex>
-      <SideBar />
+      {/* <SideBar /> */}
       <div className="flex flex-col w-full bg-gray-50">
         <NavBar />
         <div className="p-8">{children}</div>

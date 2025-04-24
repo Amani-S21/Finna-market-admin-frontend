@@ -100,7 +100,7 @@ const ProductForm = () => {
   };
 
   const onSubmit = (data: ProductSchema) => {
-    console.log(JSON.stringify(data));
+    console.log(JSON.stringify({ ...data, features }));
   };
 
   return (
