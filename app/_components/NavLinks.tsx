@@ -26,7 +26,7 @@ const NavLinks = () => {
   ];
 
   return (
-    <ul className="space-x-8 flex">
+    <ul className="space-y-6 flex flex-col">
       {links.map((link) => (
         <li key={link.href}>
           <Link

@@ -1,11 +1,3 @@
-"use client";
-
-import { AiOutlineProduct } from "react-icons/ai";
-import classNames from "classnames";
-import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { GrDeliver } from "react-icons/gr";
-import { IoStorefrontOutline } from "react-icons/io5";
 import NavLinks from "./NavLinks";
 
 const SideBar = () => {

@@ -231,7 +231,7 @@ const ProductForm = () => {
             dispatch(resetList());
           }}
         >
-          <p className="text-sm font-bold">Caractéristiques</p>
+          <p className="text-sm font-bold ">Caractéristiques</p>
           <Flex align="center">
             <IoIosAdd size={20} />
             <p className="text-sm underline hover:cursor-default">
