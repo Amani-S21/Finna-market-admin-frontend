@@ -1,27 +1,23 @@
 "use client";
 
 import { ErrorMessage, Spinner } from "@/app/_components";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   Feature,
   FeatureValuesByFeatureResponse,
   ProductSchema,
   SubCategoriesResponse,
-  SubCategory,
-  UploadFileResponse,
+  SubCategory
 } from "@/app/lib/types";
-import { productSchema } from "@/app/lib/validationSchemas";
 import {
   addAndRemoveFeaturePrices,
   addFeature,
   resetList,
 } from "@/redux/features/productSlice";
 import { RootState } from "@/redux/store";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useRef, useState } from "react";
+import { Controller } from "react-hook-form";
 import { CiTrash } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,10 +27,11 @@ import {
   SelectSearchItem,
 } from "../../_components";
 import SearchCategoryTextField from "../../_components/SearchCategoryField";
+import { fetchFeatureValueByFeature, fetchSubCategories, uploadUrl } from "../features/api";
+import { useProductForm } from "../features/hooks";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 
 const ProductForm = () => {
-  const axios = useAxiosAuth();
   const { featureValuePrices } = useSelector(
     (state: RootState) => state.product
   );
@@ -43,11 +40,12 @@ const ProductForm = () => {
 
   // Product images urls
   const productImageUrls: string[] = [];
+  const productImageFiles = useRef<File[]>([]);
 
   // Images
-  const [file1, setFile1] = useState<File | undefined>();
-  const [file2, setFile2] = useState<File | undefined>();
-  const [file3, setFile3] = useState<File | undefined>();
+  const [image1, setImage1] = useState<string | undefined>();
+  const [image2, setImage2] = useState<string | undefined>();
+  const [image3, setImage3] = useState<string | undefined>();
 
   const [selectedFeature, setSelectedFeature] = useState<Feature | undefined>();
   const [selectedSubCategory, setSelectedSubCategory] = useState<
@@ -59,53 +57,25 @@ const ProductForm = () => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ProductSchema>({
-    resolver: zodResolver(productSchema),
-    defaultValues: {
-      category: "",
-      feature: "",
-    },
-  });
-
-  const uploadUrl = async (image: File) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", image);
-
-      const res = await axios.post<UploadFileResponse>(`/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      return res.data;
-    } catch (error) {}
-  };
+  } = useProductForm();
 
   const { mutateAsync: uploadProductPicture } = useMutation({
     mutationFn: uploadUrl,
-    // onSuccess: () => {},
+    retry : 3,
   });
 
   const { data: categoriesResponse } = useQuery<SubCategoriesResponse>({
     queryKey: ["sub-categories", selectedCategoryId],
-    queryFn: () =>
-      axios
-        .get(
-          `/sub-categories/by-category/${selectedCategoryId}?page=1&limit=20`
-        )
-        .then((res) => res.data),
+    queryFn: () => fetchSubCategories(selectedCategoryId),
+    retry : 3,
     staleTime: 60 * 1000,
   });
 
   const { data: featuresByValueResponse } =
     useQuery<FeatureValuesByFeatureResponse>({
       queryKey: ["features-values-by-feauture", selectedFeature],
-      queryFn: () =>
-        axios
-          .get(
-            `/feature-values/by-feature/${selectedFeature?.id}?page=1&limit=20`
-          )
-          .then((res) => res.data),
+      queryFn: () => fetchFeatureValueByFeature(`${selectedFeature?.id}`),
+      retry : 3,
       staleTime: 60 * 1000,
     });
 
@@ -116,23 +86,38 @@ const ProductForm = () => {
   };
 
   const testImageSelection = () => {
-    if (!file1 || !file2 || !file3) {
+    if (!image1 || !image2 || !image3) {
       return false;
     }
     return true;
   };
 
-  // const onSubmit = async (data: ProductSchema) => {
-  const onSubmit = async () => {
-    const imageFiles: File[] = [file1!, file2!, file3!];
-    for (let i = 0; i < imageFiles.length; i++) {
-      const data = await uploadProductPicture(imageFiles[i]);
+  const pushFileToList = (
+    indexFileToRemove: number | undefined,
+    fileToAdd: File
+  ) => {
+    // Remove a given file
+    switch (indexFileToRemove) {
+      case 0:
+        productImageFiles.current.splice(0, 1, fileToAdd);
+        break;
+      case 1:
+        productImageFiles.current.splice(1, 1, fileToAdd);
+        break;
+
+      default:
+      case 2:
+        productImageFiles.current.splice(2, 1, fileToAdd);
+        break;
+    }
+  };
+
+  const onSubmit = async (data: ProductSchema) => {
+    for (let i = 0; i < productImageFiles.current.length; i++) {
+      const data = await uploadProductPicture(productImageFiles.current[i]);
       productImageUrls.push(`${data?.url}`);
       if (productImageUrls.length === 3) return;
     }
-
-    console.log(JSON.stringify(productImageUrls));
-    // console.log(JSON.stringify({ ...data, features }));
   };
 
   return (
@@ -221,16 +206,16 @@ const ProductForm = () => {
           )}
         </>
       )}
-
       <div className="flex flex-col space-y-2 mt-4 mb-2">
         <Flex justify="between">
           <p className="text-sm font-bold">Photos</p>
           <Flex
             align="center"
             onClick={() => {
-              setFile1(undefined);
-              setFile2(undefined);
-              setFile3(undefined);
+              productImageFiles.current = [];
+              setImage1(undefined);
+              setImage2(undefined);
+              setImage3(undefined);
             }}
           >
             <CiTrash size={16} />
@@ -240,9 +225,27 @@ const ProductForm = () => {
           </Flex>
         </Flex>
         <Flex gap="4">
-          <ProductImage setFile={setFile1} />
-          <ProductImage setFile={setFile2} />
-          <ProductImage setFile={setFile3} />
+          <ProductImage
+            image={image1!}
+            setImage={setImage1}
+            setFile={(fileToAdd) => {
+              pushFileToList(0, fileToAdd);
+            }}
+          />
+          <ProductImage
+            image={image2!}
+            setImage={setImage2}
+            setFile={(fileToAdd) => {
+              pushFileToList(1, fileToAdd);
+            }}
+          />
+          <ProductImage
+            image={image3!}
+            setImage={setImage3}
+            setFile={(fileToAdd) => {
+              pushFileToList(2, fileToAdd);
+            }}
+          />
         </Flex>
       </div>
       {testImageSelection() === false && (
@@ -319,10 +322,10 @@ const ProductForm = () => {
           </ErrorMessage>
         )}
       </div>
-      <Button onClick={onSubmit}>Click here</Button>
-      {/* <Button disabled={isSubmitting} mt="6">
+
+      <Button disabled={isSubmitting} mt="6">
         Enregistrer {isSubmitting && <Spinner />}
-      </Button> */}
+      </Button>
     </form>
   );
 };

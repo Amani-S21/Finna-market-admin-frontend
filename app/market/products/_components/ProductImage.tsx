@@ -4,10 +4,11 @@ import { IoIosAdd } from "react-icons/io";
 
 type Props = {
   setFile: (val: File) => void;
+  image : string;
+  setImage : (val : string) => void;
 };
 
-const ProductImage = ({ setFile }: Props) => {
-  const [image, setImage] = useState<string | undefined>();
+const ProductImage = ({ setFile, setImage, image }: Props) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
