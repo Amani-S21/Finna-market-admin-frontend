@@ -3,18 +3,17 @@ import { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 
 type Props = {
-  setImage: (val: string) => void;
-  image: string;
+  setFile: (val: File) => void;
 };
 
-const ProductImage = ({ image, setImage }: Props) => {
-  
-
+const ProductImage = ({ setFile }: Props) => {
+  const [image, setImage] = useState<string | undefined>();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    
+
     if (file) {
       const reader = new FileReader();
+      setFile(file);
       reader.onload = () => {
         setImage(reader.result as string);
       };

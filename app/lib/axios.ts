@@ -1,5 +1,6 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:3033/v1";
+// const BASE_URL = "http://localhost:3033/v1";
+const BASE_URL = "https://finna-api.buy-one-store.com/v1";
 
 export default axios.create({
   baseURL: BASE_URL,

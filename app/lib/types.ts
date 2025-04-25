@@ -141,3 +141,8 @@ export type FeatureValuePrice = {
   name: string;
   price: number;
 };
+
+export type UploadFileResponse = {
+  message: string;
+  url: string;
+};
