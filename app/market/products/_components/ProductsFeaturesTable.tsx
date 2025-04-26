@@ -1,7 +1,7 @@
 import { formattedDate } from "@/app/lib/tools";
 import { FeatureAffectation } from "@/app/lib/types";
-import { Badge, Table } from "@radix-ui/themes";
-import React from "react";
+import { Table } from "@radix-ui/themes";
+import SelectSearchItem from "./SelectSearchItem";
 
 const ProductsFeaturesTable = ({
   featureAffectations,
@@ -39,13 +39,12 @@ const ProductsFeaturesTable = ({
             <Table.Cell>
               <div className="flex flex-wrap gap-2">
                 {feature.featuresAffectationsHasValues.map((value) => (
-                  <div className="flex" key={value.featureValue.id}>
-                    <div
-                      style={{ backgroundColor: value.featureValue.value }}
-                      className="h-[20px] w-[50px] rounded-sm border border-gray-300 mr-1"
-                    />
-                    <span>{`, ${value.price}`}</span>
-                  </div>
+                  <SelectSearchItem
+                    key={value.featureValueId}
+                    title={value.featureValue.value}
+                    valuePrice={value.price}
+                    currency="Usd"
+                  />
                 ))}
               </div>
             </Table.Cell>

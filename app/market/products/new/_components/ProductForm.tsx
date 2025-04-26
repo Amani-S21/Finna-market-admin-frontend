@@ -1,12 +1,14 @@
 "use client";
 
 import { ErrorMessage, Spinner } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   Feature,
   FeatureValuesByFeatureResponse,
   ProductSchema,
   SubCategoriesResponse,
-  SubCategory
+  SubCategory,
+  SubmitProduct,
 } from "@/app/lib/types";
 import {
   addAndRemoveFeaturePrices,
@@ -16,6 +18,8 @@ import {
 import { RootState } from "@/redux/store";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { AxiosInstance } from "axios";
+import { useSession } from "next-auth/react";
 import { useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { CiTrash } from "react-icons/ci";
@@ -27,11 +31,18 @@ import {
   SelectSearchItem,
 } from "../../_components";
 import SearchCategoryTextField from "../../_components/SearchCategoryField";
-import { fetchFeatureValueByFeature, fetchSubCategories, uploadUrl } from "../features/api";
+import {
+  createProduct,
+  fetchFeatureValueByFeature,
+  fetchSubCategories,
+  uploadUrl,
+} from "../features/api";
 import { useProductForm } from "../features/hooks";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 
 const ProductForm = () => {
+  const { data: session } = useSession();
+  const axios = useAxiosAuth();
   const { featureValuePrices } = useSelector(
     (state: RootState) => state.product
   );
@@ -47,6 +58,8 @@ const ProductForm = () => {
   const [image2, setImage2] = useState<string | undefined>();
   const [image3, setImage3] = useState<string | undefined>();
 
+  const [isPublished, setIsPublished] = useState(true);
+
   const [selectedFeature, setSelectedFeature] = useState<Feature | undefined>();
   const [selectedSubCategory, setSelectedSubCategory] = useState<
     SubCategory | undefined
@@ -60,22 +73,26 @@ const ProductForm = () => {
   } = useProductForm();
 
   const { mutateAsync: uploadProductPicture } = useMutation({
-    mutationFn: uploadUrl,
-    retry : 3,
+    mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
+      uploadUrl(axios, file),
+    retry: 0,
   });
 
   const { data: categoriesResponse } = useQuery<SubCategoriesResponse>({
     queryKey: ["sub-categories", selectedCategoryId],
-    queryFn: () => fetchSubCategories(selectedCategoryId),
-    retry : 3,
+    queryFn: () => fetchSubCategories(axios, selectedCategoryId),
+    enabled: !!selectedCategoryId,
+    retry: 3,
     staleTime: 60 * 1000,
   });
 
   const { data: featuresByValueResponse } =
     useQuery<FeatureValuesByFeatureResponse>({
       queryKey: ["features-values-by-feauture", selectedFeature],
-      queryFn: () => fetchFeatureValueByFeature(`${selectedFeature?.id}`),
-      retry : 3,
+      queryFn: () =>
+        fetchFeatureValueByFeature(axios, `${selectedFeature?.id}`),
+      enabled: !!selectedFeature?.id,
+      retry: 3,
       staleTime: 60 * 1000,
     });
 
@@ -104,7 +121,6 @@ const ProductForm = () => {
       case 1:
         productImageFiles.current.splice(1, 1, fileToAdd);
         break;
-
       default:
       case 2:
         productImageFiles.current.splice(2, 1, fileToAdd);
@@ -112,12 +128,52 @@ const ProductForm = () => {
     }
   };
 
+  const { mutateAsync: createProductMutation } = useMutation({
+    mutationFn: ({
+      axios,
+      product,
+    }: {
+      axios: AxiosInstance;
+      product: SubmitProduct;
+    }) => createProduct(axios, product),
+    retry: 0,
+  });
+
   const onSubmit = async (data: ProductSchema) => {
     for (let i = 0; i < productImageFiles.current.length; i++) {
-      const data = await uploadProductPicture(productImageFiles.current[i]);
+      const data = await uploadProductPicture({
+        axios,
+        file: productImageFiles.current[i],
+      });
       productImageUrls.push(`${data?.url}`);
-      if (productImageUrls.length === 3) return;
+      if (productImageUrls.length === 3) {
+      }
     }
+
+    // Post product
+    const { name, purchasedPrice, oldPrice, currentPrice, description } = data;
+    createProductMutation({
+      axios,
+      product: {
+        name,
+        purchasedPrice: Number(purchasedPrice),
+        oldPrice: Number(oldPrice),
+        currentPrice: Number(currentPrice),
+        description,
+        userId: `${session?.data.id}`,
+        categoryId: selectedCategoryId,
+        subCategoryId: `${selectedSubCategory?.id}`,
+        published: isPublished,
+        pictures: productImageUrls,
+        features: (features ?? []).map((feature) => ({
+          featureId: feature.featureId,
+          featureValues: feature.featureValues.map((fv) => ({
+            featureValueId: fv.featureValueId,
+            price: fv.price,
+          })),
+        })),
+      },
+    });
   };
 
   return (
@@ -164,7 +220,7 @@ const ProductForm = () => {
         <Switch
           defaultChecked
           onCheckedChange={(value) => {
-            // console.log(value);
+            setIsPublished(value);
           }}
         />
       </div>

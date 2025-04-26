@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
+import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./theme-config.css";
 
-import "./globals.css";
-import ReduxProvider from "@/providers/ReduxProvider";
-import QueryProvider from "@/providers/QueryProvider";
 import NextSessionProvider from "@/providers/NextSessionProvider";
+import QueryProvider from "@/providers/QueryProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
+import "./globals.css";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -21,8 +21,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: any;
 }>) {
   return (
     <html lang="en">
@@ -31,9 +33,7 @@ export default function RootLayout({
           <QueryProvider>
             <ReduxProvider>
               <Theme>
-                <main className="bg-[#f9fafb]">
-                  {children}
-                </main>
+                <main className="bg-[#f9fafb]">{children}</main>
               </Theme>
             </ReduxProvider>
           </QueryProvider>

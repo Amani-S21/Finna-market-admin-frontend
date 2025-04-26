@@ -2,11 +2,12 @@
 
 import { Button, Card, Grid, Heading } from "@radix-ui/themes";
 import { BadgeDollarSign, BedSingle, LogOut, Plane } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+  // const { data: session } = useSession();
 
   return (
     <div className="h-screen flex flex-col container mx-auto pb-32">
@@ -20,9 +21,9 @@ export default function Home() {
           <LogOut size={15} />
           <span className="text-xs">Déconnection</span>
         </Button>
-        <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
-          <p>GE</p>
-        </div>
+        {/* <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
+          <p>{session?.data.fullName.substring(0, 2)}</p>
+        </div> */}
       </div>
       <div className="flex justify-center items-center my-auto">
         <Grid

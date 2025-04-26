@@ -74,20 +74,21 @@ const ProductsDetailsPage = ({
             Photos
           </Text>
           <Flex mt="2" gap="4">
-            {product?.pictures.map((picture) => (
-              <div
-                key={picture}
-                className="h-[80px] w-[100px] flex justify-center items-center rounded-md bg-white relative"
-              >
-                <Image
-                  height={80}
-                  width={100}
-                  alt="product image"
-                  src={picture}
-                  className="object-cover rounded-md"
-                />
-              </div>
-            ))}
+            {(product?.pictures ?? []).length > 0 &&
+              product?.pictures.map((picture) => (
+                <div
+                  key={picture}
+                  className="h-[80px] w-[100px] flex justify-center items-center rounded-md bg-white relative"
+                >
+                  <Image
+                    height={80}
+                    width={100}
+                    alt="product image"
+                    src={picture}
+                    className="object-cover rounded-md"
+                  />
+                </div>
+              ))}
           </Flex>
           <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
@@ -109,7 +110,7 @@ const ProductsDetailsPage = ({
                 Sous Catgégorie
               </Text>
               <p className="mt-1 lowercase first-letter:uppercase">
-                {product?.subCategory?.name}
+                {product?.subCategory.name}
               </p>
             </Card>
           </Flex>

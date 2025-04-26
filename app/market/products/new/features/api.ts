@@ -1,9 +1,7 @@
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { UploadFileResponse } from "@/app/lib/types";
+import { SubmitProduct, UploadFileResponse } from "@/app/lib/types";
+import { AxiosInstance } from "axios";
 
-const axios = useAxiosAuth();
-
-export const uploadUrl = async (image: File) => {
+export const uploadUrl = async (axios: AxiosInstance, image: File) => {
   try {
     const formData = new FormData();
     formData.append("file", image);
@@ -17,7 +15,10 @@ export const uploadUrl = async (image: File) => {
   } catch (error) {}
 };
 
-export const fetchFeatureValueByFeature = async (featureId: string) => {
+export const fetchFeatureValueByFeature = async (
+  axios: AxiosInstance,
+  featureId: string
+) => {
   try {
     const res = await axios.get(
       `/feature-values/by-feature/${featureId}?page=1&limit=20`
@@ -27,11 +28,24 @@ export const fetchFeatureValueByFeature = async (featureId: string) => {
   } catch (error) {}
 };
 
-export const fetchSubCategories = async (selectedCategoryId: string) => {
+export const fetchSubCategories = async (
+  axios: AxiosInstance,
+  selectedCategoryId: string
+) => {
   try {
     const res = await axios.get(
       `/sub-categories/by-category/${selectedCategoryId}?page=1&limit=20`
     );
+    return res.data;
+  } catch (error) {}
+};
+
+export const createProduct = async (
+  axios: AxiosInstance,
+  product: SubmitProduct
+) => {
+  try {
+    const res = await axios.post(`/products`, product);
     return res.data;
   } catch (error) {}
 };

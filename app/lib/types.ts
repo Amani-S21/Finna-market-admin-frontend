@@ -48,7 +48,7 @@ export type ProductsListResponse = {
 };
 
 export type Product = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   oldPrice: number;
@@ -60,7 +60,7 @@ export type Product = {
   updatedAt: string;
   userId: string;
   subCategoryId: string;
-  user: User;
+  user?: User;
   subCategory: SubCategory;
   featuresAffectations: FeatureAffectation[];
 };
@@ -145,4 +145,30 @@ export type FeatureValuePrice = {
 export type UploadFileResponse = {
   message: string;
   url: string;
+};
+
+
+export type SubmitProduct = {
+  id? : string;
+  name: string;
+  purchasedPrice: number;
+  oldPrice: number;
+  currentPrice: number;
+  published: boolean;
+  userId: string;
+  pictures: string[];
+  description: string;
+  categoryId: string;
+  subCategoryId: string;
+  features: SubmitFeature[];
+};
+
+type SubmitFeature = {
+  featureId: string;
+  featureValues: SubmitFeatureValue[];
+};
+
+type SubmitFeatureValue = {
+  featureValueId: string;
+  price: number;
 };
