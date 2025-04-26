@@ -102,7 +102,7 @@ const ProductsDetailsPage = ({
                 Catégorie
               </Text>
               <p className="mt-1 lowercase first-letter:uppercase">
-                {product?.subCategory.name}
+                {product?.subCategory.category.name}
               </p>
             </Card>
             <Card mt="4" variant="ghost">
