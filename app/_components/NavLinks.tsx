@@ -30,6 +30,11 @@ const NavLinks = () => {
       label: "Catégories",
       icon: <TbCategoryMinus />,
     },
+    {
+      href: "/market/features?page=1",
+      label: "Caractéristiques",
+      icon: <MdOutlineFeaturedPlayList />,
+    },
   ];
 
   return (
