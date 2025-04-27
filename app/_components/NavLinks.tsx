@@ -7,6 +7,8 @@ import React from "react";
 import { AiOutlineProduct } from "react-icons/ai";
 import { GrDeliver } from "react-icons/gr";
 import { IoStorefrontOutline } from "react-icons/io5";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
+import { TbCategoryMinus } from "react-icons/tb";
 
 const NavLinks = () => {
   const currentPath = usePathname();
@@ -22,6 +24,11 @@ const NavLinks = () => {
       href: "/market/shops?page=1",
       label: "Boutiques",
       icon: <IoStorefrontOutline />,
+    },
+    {
+      href: "/market/categories?page=1",
+      label: "Catégories",
+      icon: <TbCategoryMinus />,
     },
   ];
 
