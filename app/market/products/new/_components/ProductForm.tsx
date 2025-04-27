@@ -220,6 +220,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
         <TextArea
           {...register("description")}
           defaultValue={product?.description}
+          rows={6}
           placeholder="Veuillez saisir déscription du produit"
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
