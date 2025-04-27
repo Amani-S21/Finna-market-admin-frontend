@@ -10,6 +10,7 @@ import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { TbCategoryMinus } from "react-icons/tb";
+import { VscAccount } from "react-icons/vsc";
 
 const NavLinks = () => {
   const currentPath = usePathname();
@@ -40,6 +41,11 @@ const NavLinks = () => {
       href: "/market/features?page=1",
       label: "Caractéristiques",
       icon: <MdOutlineFeaturedPlayList />,
+    },
+    {
+      href: "/market/profile?page=1",
+      label: "Profile",
+      icon: <VscAccount />,
     },
   ];
 
