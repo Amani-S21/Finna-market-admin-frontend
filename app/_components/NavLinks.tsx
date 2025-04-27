@@ -8,6 +8,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { GrDeliver } from "react-icons/gr";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
+import { AiOutlineOrderedList } from "react-icons/ai";
 import { TbCategoryMinus } from "react-icons/tb";
 
 const NavLinks = () => {
@@ -20,6 +21,11 @@ const NavLinks = () => {
       icon: <AiOutlineProduct />,
     },
     { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
+    {
+      href: "/market/orders",
+      label: "Commandes",
+      icon: <AiOutlineOrderedList />,
+    },
     {
       href: "/market/shops?page=1",
       label: "Boutiques",
