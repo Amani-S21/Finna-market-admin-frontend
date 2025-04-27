@@ -1,3 +1,5 @@
+"use client"
+
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Feature } from "@/app/lib/types";

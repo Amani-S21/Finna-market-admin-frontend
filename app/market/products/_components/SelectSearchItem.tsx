@@ -1,3 +1,5 @@
+"use client"
+
 import { Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { TiInputCheckedOutline } from "react-icons/ti";

@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 
 type Props = {
   setFile: (val: File) => void;
-  image : string;
-  setImage : (val : string) => void;
+  image: string;
+  setImage: (val: string) => void;
 };
 
 const ProductImage = ({ setFile, setImage, image }: Props) => {
