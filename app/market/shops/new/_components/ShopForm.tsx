@@ -80,6 +80,7 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
         <p className="text-sm font-bold">Addrèsse</p>
         <TextArea
           {...register("address")}
+          rows={6}
           defaultValue={shop?.address}
           placeholder="Addrèsse de la boutique"
         />
