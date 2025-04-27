@@ -5,6 +5,7 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   Feature,
   FeatureValuesByFeatureResponse,
+  Product,
   ProductSchema,
   SubCategoriesResponse,
   SubCategory,
@@ -40,7 +41,7 @@ import {
 import { useProductForm } from "../features/hooks";
 import FeaturesToPostTable from "./FeaturesToPostTable";
 
-const ProductForm = () => {
+const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
   const axios = useAxiosAuth();
   const { featureValuePrices } = useSelector(
@@ -70,7 +71,7 @@ const ProductForm = () => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useProductForm();
+  } = useProductForm({ product });
 
   const { mutateAsync: uploadProductPicture } = useMutation({
     mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
@@ -180,7 +181,11 @@ const ProductForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col space-y-2 mt-4">
         <p className="text-sm font-bold">Nom</p>
-        <TextField.Root {...register("name")} placeholder="Nom du produit" />
+        <TextField.Root
+          {...register("name")}
+          placeholder="Nom du produit"
+          defaultValue={product?.name}
+        />
         <ErrorMessage>{errors.name?.message}</ErrorMessage>
       </div>
       <div className="flex flex-col space-y-2 mt-4">
@@ -188,6 +193,7 @@ const ProductForm = () => {
         <TextField.Root
           {...register("purchasedPrice")}
           placeholder="Saisissez le prix d'achat"
+          defaultValue={product?.purchasedPrice}
         />
         <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage>
       </div>
@@ -195,6 +201,7 @@ const ProductForm = () => {
         <p className="text-sm font-bold">Ancien prix de vente</p>
         <TextField.Root
           {...register("oldPrice")}
+          defaultValue={product?.oldPrice}
           placeholder="Veuillez saisir l'ancien prix"
         />
         <ErrorMessage>{errors.oldPrice?.message}</ErrorMessage>
@@ -203,6 +210,7 @@ const ProductForm = () => {
         <p className="text-sm font-bold">Prix de vente courant</p>
         <TextField.Root
           {...register("currentPrice")}
+          defaultValue={product?.currentPrice}
           placeholder="Veuillez saisir le prix courant du produit"
         />
         <ErrorMessage>{errors.currentPrice?.message}</ErrorMessage>
@@ -211,6 +219,7 @@ const ProductForm = () => {
         <p className="text-sm font-bold">Déscription</p>
         <TextArea
           {...register("description")}
+          defaultValue={product?.description}
           placeholder="Veuillez saisir déscription du produit"
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
