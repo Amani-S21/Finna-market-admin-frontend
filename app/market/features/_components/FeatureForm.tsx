@@ -3,7 +3,10 @@
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import { Feature, FeatureSchema } from "@/app/lib/types";
 import { featureSchema } from "@/app/lib/validationSchemas";
-import { addFeatureValue } from "@/redux/features/featureSlice";
+import {
+  addFeatureValue,
+  removeFeatureValue,
+} from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Spinner, TextField } from "@radix-ui/themes";
@@ -67,7 +70,13 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
       {(featureValues ?? []).length > 0 && (
         <div className="mt-4 flex flex-wrap gap-4">
           {featureValues?.map((v, index) => (
-            <SelectSearchItem key={v.value + index} title={v.value} />
+            <SelectSearchItem
+              key={v.value + index}
+              title={v.value}
+              onClick={() => {
+                dispatch(removeFeatureValue({ feature: v.value }));
+              }}
+            />
           ))}
         </div>
       )}

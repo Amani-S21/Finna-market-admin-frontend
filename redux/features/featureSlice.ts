@@ -42,6 +42,14 @@ const featureSlice = createSlice({
     addFeatureValue: (state, action: PayloadAction<FeatureValue>) => {
       state.featureValues?.push(action.payload);
     },
+
+    removeFeatureValue: (state, action: PayloadAction<{ feature: string }>) => {
+      state.featureValues =
+        state.featureValues?.filter(
+          (v) => v.value !== action.payload.feature
+        ) ?? [];
+    },
+
     addAndRemoveFeaturePrices: (
       state,
       action: PayloadAction<FeatureValuePrice>
@@ -78,6 +86,7 @@ export const {
   addFeatureValue,
   resetList,
   removeFeature,
+  removeFeatureValue,
   addFeatures,
   addAndRemoveFeaturePrices,
 } = featureSlice.actions;
