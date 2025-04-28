@@ -1,15 +1,27 @@
 import { Table, Text } from "@radix-ui/themes";
 import { SelectSearchItem } from "../../_components";
 import { FeatureWithValues } from "@/app/lib/types";
+import { RiDeleteBin4Line } from "react-icons/ri";
+import {
+  addAndRemoveFeaturePrices,
+  removeFeature,
+} from "@/redux/features/productSlice";
+import { useDispatch } from "react-redux";
 
 const FeaturesToPostTable = ({
   features,
 }: {
   features: FeatureWithValues[];
 }) => {
+  const dispatch = useDispatch();
   const columns: {
     label: string;
-  }[] = [{ label: "N" }, { label: "Caractéristique" }, { label: "Valeurs" }];
+  }[] = [
+    { label: "N" },
+    { label: "Caractéristique" },
+    { label: "Valeurs" },
+    { label: "Supprimer" },
+  ];
 
   return (
     <Table.Root>
@@ -40,6 +52,19 @@ const FeaturesToPostTable = ({
                   />
                 ))}
               </div>
+            </Table.Cell>
+            <Table.Cell>
+              <RiDeleteBin4Line
+                size={20}
+                className="ml-auto"
+                onClick={() => {
+                  dispatch(
+                    removeFeature({
+                      featureId: feature.featureId,
+                    })
+                  );
+                }}
+              />
             </Table.Cell>
           </Table.Row>
         ))}
