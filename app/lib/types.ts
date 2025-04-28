@@ -162,6 +162,11 @@ export type FeatureHasFeatureValue = {
   featureValues: FeatureValue;
 };
 
+export type SubmitFeatureWithValues = {
+  name : string,
+  featureValues : FeatureValue[],
+}
+
 export type SubmitProduct = {
   id?: string;
   name: string;

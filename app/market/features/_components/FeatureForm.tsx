@@ -9,13 +9,17 @@ import {
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, Spinner, TextField } from "@radix-ui/themes";
+import { Button, Flex, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
+import { useCreateFeatures } from "../_features/hooks";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Spinner } from "@/app/_components";
 
 const FeatureForm = ({ feature }: { feature?: Feature }) => {
+  const axios = useAxiosAuth();
   const dispatch = useDispatch();
   const { featureValues } = useSelector((state: RootState) => state.feature);
   const {
@@ -28,7 +32,17 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
     resolver: zodResolver(featureSchema),
   });
 
-  const onSubmit = (data: FeatureSchema) => {};
+  const { mutateAsync: createFeature } = useCreateFeatures({ axios });
+
+  const onSubmit = async (data: FeatureSchema) => {
+    await createFeature({
+      name: data.name,
+      featureValues:
+        featureValues?.map((v) => ({
+          value: v.value,
+        })) ?? [],
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl">
