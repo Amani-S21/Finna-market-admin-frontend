@@ -16,7 +16,7 @@ import {
   addFeature,
   addFeatures,
   resetList,
-} from "@/redux/features/productSlice";
+} from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -45,16 +45,15 @@ import { useProductForm } from "../features/hooks";
 import { useRouter } from "next/navigation";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
 
-
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
   const axios = useAxiosAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { featureValuePrices } = useSelector(
-    (state: RootState) => state.product
+    (state: RootState) => state.feature
   );
-  const { features } = useSelector((state: RootState) => state.product);
+  const { features } = useSelector((state: RootState) => state.feature);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
   // Product images urls

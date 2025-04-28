@@ -1,7 +1,5 @@
 import { FeatureWithValues } from "@/app/lib/types";
-import {
-  removeFeature
-} from "@/redux/features/productSlice";
+import { removeFeature } from "@/redux/features/featureSlice";
 import { Table } from "@radix-ui/themes";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";

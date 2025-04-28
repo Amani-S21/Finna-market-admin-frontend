@@ -1,18 +1,18 @@
 import { FeatureValuePrice, FeatureWithValues } from "@/app/lib/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ProductState {
+interface FeatureState {
   features: FeatureWithValues[] | null;
   featureValuePrices: FeatureValuePrice[] | null;
 }
 
-const initialState: ProductState = {
+const initialState: FeatureState = {
   features: [],
   featureValuePrices: [],
 };
 
-const productSlice = createSlice({
-  name: "product",
+const featureSlice = createSlice({
+  name: "feature",
   initialState,
   reducers: {
     addFeatures: (state, action: PayloadAction<FeatureWithValues[]>) => {
@@ -70,5 +70,5 @@ export const {
   removeFeature,
   addFeatures,
   addAndRemoveFeaturePrices,
-} = productSlice.actions;
-export default productSlice.reducer;
+} = featureSlice.actions;
+export default featureSlice.reducer;
