@@ -15,6 +15,9 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
+    addFeatures: (state, action: PayloadAction<FeatureWithValues[]>) => {
+      state.features = action.payload;
+    },
     addFeature: (state, action: PayloadAction<FeatureWithValues>) => {
       const { featureId } = action.payload;
 
@@ -54,6 +57,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { addFeature, resetList, addAndRemoveFeaturePrices } =
+export const { addFeature, resetList, addFeatures, addAndRemoveFeaturePrices } =
   productSlice.actions;
 export default productSlice.reducer;

@@ -14,6 +14,7 @@ import {
 import {
   addAndRemoveFeaturePrices,
   addFeature,
+  addFeatures,
   resetList,
 } from "@/redux/features/productSlice";
 import { RootState } from "@/redux/store";
@@ -84,6 +85,21 @@ const ProductForm = ({ product }: { product?: Product }) => {
       // Category relating
       setSelectedCategoryId(product.subCategory.category.id);
       setSelectedSubCategory(product.subCategory);
+
+      // Features
+      dispatch(
+        addFeatures(
+          product.featuresAffectations.map((feat) => ({
+            featureId: feat.feature.id,
+            name: feat.feature.name,
+            featureValues: feat.featuresAffectationsHasValues.map((val) => ({
+              featureValueId: val.featureValue.id,
+              name: val.featureValue.value,
+              price: val.price,
+            })),
+          }))
+        )
+      );
     }
   }, [product]);
 
