@@ -39,8 +39,8 @@ import {
   fetchSubCategories,
   updateProduct,
   uploadUrl,
-} from "../features/api";
-import { useProductForm } from "../features/hooks";
+} from "../_features/api";
+import { useProductForm } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";

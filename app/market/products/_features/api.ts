@@ -1,6 +1,13 @@
 import { SubmitProduct, UploadFileResponse } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 
+export const fetchProducts = async (axios: AxiosInstance, page: string) => {
+  try {
+    const res = await axios.get(`/products?page=${page}&limit=20`);
+    return res.data;
+  } catch (error) {}
+};
+
 export const uploadUrl = async (axios: AxiosInstance, image: File) => {
   try {
     const formData = new FormData();

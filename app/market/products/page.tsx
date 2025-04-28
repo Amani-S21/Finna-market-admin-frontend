@@ -1,12 +1,11 @@
 "use client";
 
-import React, { use } from "react";
-import { ProductsTable, ProductsToolBar } from "./_components";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useQuery } from "@tanstack/react-query";
-import { ProductsListResponse } from "@/app/lib/types";
-import LoadingProductsPage from "./loading";
 import { Pagination } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { use } from "react";
+import { ProductsTable, ProductsToolBar } from "./_components";
+import { useFetchProducts } from "./_features/hooks";
+import LoadingProductsPage from "./loading";
 
 const ProductsPage = ({
   searchParams,
@@ -20,12 +19,7 @@ const ProductsPage = ({
     data: productsResponse,
     isLoading,
     error,
-  } = useQuery<ProductsListResponse>({
-    queryKey: ["products", page],
-    queryFn: () =>
-      axios.get(`/products?page=${page}&limit=10`).then((res) => res.data),
-    staleTime: 60 * 1000,
-  });
+  } = useFetchProducts({ axios, page });
 
   if (isLoading) return <LoadingProductsPage />;
 
