@@ -40,6 +40,7 @@ export const useFetchProducts = ({ axios, page }: UseFetchProduct) => {
     queryKey: ["products", page],
     queryFn: () => fetchProducts(axios, page),
     staleTime: 60 * 1000 * 60,
+    retry : 3,
   });
 };
 

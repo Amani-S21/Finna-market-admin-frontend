@@ -1,4 +1,5 @@
 import {
+  featureSchema,
   productSchema,
   shopSchema,
   signinSchema,
@@ -8,6 +9,8 @@ import { z } from "zod";
 export type SigninSchema = z.infer<typeof signinSchema>;
 
 export type ShopSchema = z.infer<typeof shopSchema>;
+
+export type FeatureSchema = z.infer<typeof featureSchema>;
 
 export type ProductSchema = z.infer<typeof productSchema>;
 
@@ -130,10 +133,10 @@ export type FeatureAffectationValue = {
 };
 
 export type FeatureValue = {
-  id: string;
+  id?: string;
   value: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type FeatureWithValues = {

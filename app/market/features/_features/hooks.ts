@@ -13,5 +13,6 @@ export const useFetchFeatures = ({ axios, page }: UseFetchFeatures) => {
     queryKey: ["features", page],
     queryFn: () => fetchFeatures(axios, page),
     staleTime: 60 * 1000 * 60,
+    retry: 3,
   });
 };

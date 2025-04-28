@@ -106,7 +106,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
             featureId: feat.feature.id,
             name: feat.feature.name,
             featureValues: feat.featuresAffectationsHasValues.map((val) => ({
-              featureValueId: val.featureValue.id,
+              featureValueId: val.featureValue.id!,
               name: val.featureValue.value,
               price: val.price,
             })),

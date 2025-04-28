@@ -1,13 +1,19 @@
-import { FeatureValuePrice, FeatureWithValues } from "@/app/lib/types";
+import {
+  FeatureValue,
+  FeatureValuePrice,
+  FeatureWithValues,
+} from "@/app/lib/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FeatureState {
   features: FeatureWithValues[] | null;
+  featureValues: FeatureValue[] | null;
   featureValuePrices: FeatureValuePrice[] | null;
 }
 
 const initialState: FeatureState = {
   features: [],
+  featureValues: [],
   featureValuePrices: [],
 };
 
@@ -32,6 +38,9 @@ const featureSlice = createSlice({
       } else {
         state.features?.push(action.payload);
       }
+    },
+    addFeatureValue: (state, action: PayloadAction<FeatureValue>) => {
+      state.featureValues?.push(action.payload);
     },
     addAndRemoveFeaturePrices: (
       state,
@@ -66,6 +75,7 @@ const featureSlice = createSlice({
 
 export const {
   addFeature,
+  addFeatureValue,
   resetList,
   removeFeature,
   addFeatures,

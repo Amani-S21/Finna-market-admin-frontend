@@ -1,3 +1,5 @@
+"use client"
+
 import { formattedDate } from "@/app/lib/tools";
 import { FeaturesResponse, ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
