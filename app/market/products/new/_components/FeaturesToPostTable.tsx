@@ -1,12 +1,11 @@
-import { Table, Text } from "@radix-ui/themes";
-import { SelectSearchItem } from "../../_components";
 import { FeatureWithValues } from "@/app/lib/types";
-import { RiDeleteBin4Line } from "react-icons/ri";
 import {
-  addAndRemoveFeaturePrices,
-  removeFeature,
+  removeFeature
 } from "@/redux/features/productSlice";
+import { Table } from "@radix-ui/themes";
+import { RiDeleteBin4Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
+import { SelectSearchItem } from "../../_components";
 
 const FeaturesToPostTable = ({
   features,
