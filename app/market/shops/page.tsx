@@ -2,11 +2,10 @@
 
 import Pagination from "@/app/_components/Pagination";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useQuery } from "@tanstack/react-query";
 import { use } from "react";
-import LoadingShopspPage from "./loading";
-import { ShopsListResponse } from "@/app/lib/types";
 import { ShopsTable, ShopsToolBar } from "./_components";
+import { useFetchShops } from "./_features/hooks";
+import LoadingShopspPage from "./loading";
 
 const ShopsPage = ({
   searchParams,
@@ -20,12 +19,7 @@ const ShopsPage = ({
     data: shopsResponse,
     isLoading,
     error,
-  } = useQuery<ShopsListResponse>({
-    queryKey: ["shops", page],
-    queryFn: () =>
-      axios.get(`/shops?page=${page}&limit=10`).then((res) => res.data),
-    staleTime: 60 * 1000,
-  });
+  } = useFetchShops({ axios, page });
 
   if (isLoading) return <LoadingShopspPage />;
 

@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 
 export const fetchProducts = async (axios: AxiosInstance, page: string) => {
   try {
-    const res = await axios.get(`/products?page=${page}&limit=20`);
+    const res = await axios.get(`/products?page=${page}&limit=10`);
     return res.data;
   } catch (error) {}
 };

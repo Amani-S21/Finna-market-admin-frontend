@@ -13,18 +13,18 @@ const FeaturesPage = ({
 }: {
   searchParams: Promise<{ page: string }>;
 }) => {
-  const { page } = use(searchParams);
   const axios = useAxiosAuth();
+  const { page } = use(searchParams);
 
   const {
     data: featuresResponse,
     isLoading,
-    isError,
+    error,
   } = useFetchFeatures({ axios, page });
 
   if (isLoading) return LoadingFeatures();
 
-  if (isError) return null;
+  if (error) return;
 
   return (
     <>
