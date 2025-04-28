@@ -103,7 +103,7 @@ export type Feature = {
   featuresHasFeatureValues: FeatureHasFeatureValue[];
 };
 
-export type FeatureResponse = {
+export type FeaturesResponse = {
   count: number;
   data: Feature[];
 };

@@ -32,7 +32,7 @@ const SearchFeatureTextField = ({
     isLoading,
     refetch,
   } = useQuery<Feature[]>({
-    queryKey: ["features", debouncedSearchTerm],
+    queryKey: ["search-features", debouncedSearchTerm],
     queryFn: () =>
       axios
         .get(`/features/search?term=${debouncedSearchTerm}`)

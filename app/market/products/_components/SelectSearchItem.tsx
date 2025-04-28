@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
@@ -33,16 +33,16 @@ const SelectSearchItem = ({
       style={{
         borderColor: isSelected ? "blue" : "#D1D5DB",
       }}
-      className="flex items-center gap-1 border border-gray-300 rounded-full px-4"
+      className="flex items-center border border-gray-300 rounded-full px-4"
       onClick={handleClick}
     >
       {title.startsWith("#") ? (
         <>
           <div
             style={{ backgroundColor: title }}
-            className="h-[20px] w-[50px] rounded-sm border border-gray-300 mr-1"
+            className="h-[20px] w-[50px]  rounded-sm border border-gray-300"
           />
-          <p className="mr-1">{valuePrice}</p>
+          {valuePrice && <p className="mx-1">{valuePrice}</p>}
         </>
       ) : (
         <p className="mr-1">{title}</p>
