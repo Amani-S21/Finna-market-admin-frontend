@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchFeatures } from "./api";
-import { AxiosInstance } from "axios";
 import { FeaturesResponse } from "@/app/lib/types";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosInstance } from "axios";
+import { fetchFeatures } from "./api";
 
 type UseFetchFeatures = {
   axios: AxiosInstance;
@@ -12,6 +12,6 @@ export const useFetchFeatures = ({ axios, page }: UseFetchFeatures) => {
   return useQuery<FeaturesResponse>({
     queryKey: ["features", page],
     queryFn: () => fetchFeatures(axios, page),
-    staleTime: 60 * 1000,
+    staleTime: 60 * 1000 * 60,
   });
 };

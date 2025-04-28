@@ -12,6 +12,6 @@ export const useFetchShops = ({ axios, page }: UseFetchShops) => {
   return useQuery<ShopsListResponse>({
     queryKey: ["shops", page],
     queryFn: () => fetchShops(axios, page),
-    staleTime: 60 * 1000,
+    staleTime: 60 * 1000 * 60,
   });
 };

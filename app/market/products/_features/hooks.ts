@@ -39,7 +39,7 @@ export const useFetchProducts = ({ axios, page }: UseFetchProduct) => {
   return useQuery<ProductsListResponse>({
     queryKey: ["products", page],
     queryFn: () => fetchProducts(axios, page),
-    staleTime: 60 * 1000,
+    staleTime: 60 * 1000 * 60,
   });
 };
 
