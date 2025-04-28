@@ -3,13 +3,13 @@
 import { BackButton } from "@/app/_components";
 import React, { use } from "react";
 import { AiOutlineProduct } from "react-icons/ai";
-import { ProductForm } from "../../new/_components";
 import { Text } from "@radix-ui/themes";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/app/lib/types";
 import LoadingEditProductPage from "./loading";
 import { notFound } from "next/navigation";
+import { ProductForm } from "../../_components";
 
 const EditProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);

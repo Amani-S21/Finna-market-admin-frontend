@@ -3,7 +3,7 @@
 import { BackButton } from "@/app/_components";
 import { Text } from "@radix-ui/themes";
 import { AiOutlineProduct } from "react-icons/ai";
-import { ProductForm } from "./_components";
+import { ProductForm } from "../_components";
 
 const NewProductPage = () => {
   return (

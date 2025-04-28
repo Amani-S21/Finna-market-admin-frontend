@@ -31,8 +31,8 @@ import {
   ProductImage,
   SearchFeatureField,
   SelectSearchItem,
-} from "../../_components";
-import SearchCategoryTextField from "../../_components/SearchCategoryField";
+} from "../_components";
+import SearchCategoryTextField from "../_components/SearchCategoryField";
 import {
   createProduct,
   fetchFeatureValueByFeature,
@@ -41,9 +41,10 @@ import {
   uploadUrl,
 } from "../features/api";
 import { useProductForm } from "../features/hooks";
-import FeaturesToPostTable from "./FeaturesToPostTable";
+
 import { useRouter } from "next/navigation";
-import { current } from "@reduxjs/toolkit";
+import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
+
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();

@@ -1,2 +1,2 @@
-export { default as ProductForm } from "./ProductForm";
+export { default as FeaturesToPostTable } from "./FeaturesToPostTable";
 
