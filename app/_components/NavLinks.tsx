@@ -11,6 +11,8 @@ import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { TbCategoryMinus } from "react-icons/tb";
 import { VscAccount } from "react-icons/vsc";
+import { IoIosExit } from "react-icons/io";
+
 
 const NavLinks = () => {
   const currentPath = usePathname();

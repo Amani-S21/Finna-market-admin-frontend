@@ -21,7 +21,7 @@ import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { CiTrash } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
@@ -78,6 +78,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
       uploadUrl(axios, file),
     retry: 0,
   });
+
+  useEffect(() => {
+    if (product) {
+      // Category relating
+      setSelectedCategoryId(product.subCategory.category.id);
+      setSelectedSubCategory(product.subCategory);
+    }
+  }, [product]);
 
   const { data: categoriesResponse } = useQuery<SubCategoriesResponse>({
     queryKey: ["sub-categories", selectedCategoryId],
