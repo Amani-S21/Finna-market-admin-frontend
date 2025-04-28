@@ -49,3 +49,13 @@ export const createProduct = async (
     return res.data;
   } catch (error) {}
 };
+
+export const updateProduct = async (
+  axios: AxiosInstance,
+  product: SubmitProduct
+) => {
+  try {
+    const res = await axios.patch(`/products`, product);
+    return res.data;
+  } catch (error) {}
+};

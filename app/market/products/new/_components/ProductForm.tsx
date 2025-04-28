@@ -19,7 +19,7 @@ import {
 } from "@/redux/features/productSlice";
 import { RootState } from "@/redux/store";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
@@ -37,14 +37,19 @@ import {
   createProduct,
   fetchFeatureValueByFeature,
   fetchSubCategories,
+  updateProduct,
   uploadUrl,
 } from "../features/api";
 import { useProductForm } from "../features/hooks";
 import FeaturesToPostTable from "./FeaturesToPostTable";
+import { useRouter } from "next/navigation";
+import { current } from "@reduxjs/toolkit";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
   const axios = useAxiosAuth();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { featureValuePrices } = useSelector(
     (state: RootState) => state.product
   );
@@ -52,7 +57,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
   // Product images urls
-  const productImageUrls: string[] = [];
+  const productImageUrls = useRef<string[]>([]);
   const productImageFiles = useRef<File[]>([]);
 
   // Images
@@ -85,6 +90,10 @@ const ProductForm = ({ product }: { product?: Product }) => {
       // Category relating
       setSelectedCategoryId(product.subCategory.category.id);
       setSelectedSubCategory(product.subCategory);
+
+      // Images
+      productImageUrls.current = [];
+      productImageUrls.current.push(...product.pictures);
 
       // Features
       dispatch(
@@ -162,43 +171,72 @@ const ProductForm = ({ product }: { product?: Product }) => {
       product: SubmitProduct;
     }) => createProduct(axios, product),
     retry: 0,
+    onSuccess: () => {
+      router.back();
+    },
+  });
+
+  const { mutateAsync: patchProductMutation } = useMutation({
+    mutationFn: ({
+      axios,
+      product,
+    }: {
+      axios: AxiosInstance;
+      product: SubmitProduct;
+    }) => updateProduct(axios, product),
+    retry: 0,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      router.back();
+    },
   });
 
   const onSubmit = async (data: ProductSchema) => {
-    for (let i = 0; i < productImageFiles.current.length; i++) {
-      const data = await uploadProductPicture({
-        axios,
-        file: productImageFiles.current[i],
-      });
-      productImageUrls.push(`${data?.url}`);
-      if (productImageUrls.length === 3) {
+    if (productImageUrls.current.length < 3)
+      for (let i = 0; i < productImageFiles.current.length; i++) {
+        const data = await uploadProductPicture({
+          axios,
+          file: productImageFiles.current[i],
+        });
+        productImageUrls.current.push(`${data?.url}`);
       }
-    }
 
     // Post product
     const { name, purchasedPrice, oldPrice, currentPrice, description } = data;
-    createProductMutation({
-      axios,
-      product: {
-        name,
-        purchasedPrice: Number(purchasedPrice),
-        oldPrice: Number(oldPrice),
-        currentPrice: Number(currentPrice),
-        description,
-        userId: `${session?.data.id}`,
-        categoryId: selectedCategoryId,
-        subCategoryId: `${selectedSubCategory?.id}`,
-        published: isPublished,
-        pictures: productImageUrls,
-        features: (features ?? []).map((feature) => ({
-          featureId: feature.featureId,
-          featureValues: feature.featureValues.map((fv) => ({
-            featureValueId: fv.featureValueId,
-            price: fv.price,
-          })),
+    const productSubmit = {
+      name,
+      purchasedPrice: Number(purchasedPrice),
+      oldPrice: Number(oldPrice),
+      currentPrice: Number(currentPrice),
+      description,
+      userId: `${session?.data.id}`,
+      categoryId: selectedCategoryId,
+      subCategoryId: `${selectedSubCategory?.id}`,
+      published: isPublished,
+      pictures: [...productImageUrls.current],
+      features: (features ?? []).map((feature) => ({
+        featureId: feature.featureId,
+        featureValues: feature.featureValues.map((fv) => ({
+          featureValueId: fv.featureValueId,
+          price: fv.price,
         })),
-      },
-    });
+      })),
+    };
+    if (product) {
+      patchProductMutation({
+        axios,
+        product: {
+          id: product?.id,
+          ...productSubmit,
+        },
+      });
+    } else {
+      createProductMutation({
+        axios,
+        product: productSubmit,
+      });
+    }
   };
 
   return (

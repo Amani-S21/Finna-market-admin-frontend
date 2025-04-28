@@ -45,13 +45,13 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["shop"] });
       queryClient.invalidateQueries({ queryKey: ["shops"] });
+      router.back();
     },
   });
 
   const onSubmit = (data: ShopSchema) => {
     if (shop) mutateAsync({ id: shop.id, userId, ...data });
     else mutateAsync({ userId, ...data });
-    router.back();
   };
 
   return (
