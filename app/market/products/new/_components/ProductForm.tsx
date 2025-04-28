@@ -410,6 +410,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
             <div className="flex flex-col space-y-2 mt-2">
               <SearchFeatureField
                 {...field}
+                value={field.value || ""}
                 setSelectedFeature={setSelectedFeature}
               />
               <ErrorMessage>{errors.feature?.message}</ErrorMessage>
@@ -452,7 +453,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       </div>
 
       <Button disabled={isSubmitting} mt="6">
-        Enregistrer {isSubmitting && <Spinner />}
+        {product ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
       </Button>
     </form>
   );
