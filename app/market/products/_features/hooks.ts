@@ -1,4 +1,5 @@
 import {
+  FeatureValuesByFeatureResponse,
   Product,
   ProductSchema,
   ProductsListResponse,
@@ -9,7 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
-import { fetchProducts, fetchSubCategories } from "./api";
+import {
+  fetchFeatureValueByFeature,
+  fetchProducts,
+  fetchSubCategories,
+} from "./api";
 
 export const useProductForm = ({
   product,
@@ -51,6 +56,24 @@ export const useFetchCategories = ({
     queryKey: ["sub-categories", selectedCategoryId],
     queryFn: () => fetchSubCategories(axios, selectedCategoryId),
     enabled: !!selectedCategoryId,
+    retry: 3,
+    staleTime: 60 * 1000,
+  });
+};
+
+type UseFetchFeaturesByValue = {
+  axios: AxiosInstance;
+  selectedFeatureId: string;
+};
+
+export const useFetchFeaturesByValue = ({
+  axios,
+  selectedFeatureId,
+}: UseFetchFeaturesByValue) => {
+  return useQuery<FeatureValuesByFeatureResponse>({
+    queryKey: ["features-values-by-feauture", selectedFeatureId],
+    queryFn: () => fetchFeatureValueByFeature(axios, `${selectedFeatureId}`),
+    enabled: !!selectedFeatureId,
     retry: 3,
     staleTime: 60 * 1000,
   });

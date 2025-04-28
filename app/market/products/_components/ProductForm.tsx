@@ -40,7 +40,11 @@ import {
   updateProduct,
   uploadUrl,
 } from "../_features/api";
-import { useFetchCategories, useProductForm } from "../_features/hooks";
+import {
+  useFetchCategories,
+  useFetchFeaturesByValue,
+  useProductForm,
+} from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
@@ -117,15 +121,10 @@ const ProductForm = ({ product }: { product?: Product }) => {
     selectedCategoryId,
   });
 
-  const { data: featuresByValueResponse } =
-    useQuery<FeatureValuesByFeatureResponse>({
-      queryKey: ["features-values-by-feauture", selectedFeature],
-      queryFn: () =>
-        fetchFeatureValueByFeature(axios, `${selectedFeature?.id}`),
-      enabled: !!selectedFeature?.id,
-      retry: 3,
-      staleTime: 60 * 1000,
-    });
+  const { data: featuresByValueResponse } = useFetchFeaturesByValue({
+    axios,
+    selectedFeatureId: `${selectedFeature?.id}`,
+  });
 
   const featurePriceExist = (featureValueId: string) => {
     return featureValuePrices?.some(
