@@ -100,6 +100,12 @@ export type Feature = {
   name: string;
   createdAt: string;
   updatedAt: string;
+  featuresHasFeatureValues: FeatureHasFeatureValue[];
+};
+
+export type FeatureResponse = {
+  count: number;
+  data: Feature[];
 };
 
 export type FeatureValuesByFeatureResponse = {
@@ -147,9 +153,14 @@ export type UploadFileResponse = {
   url: string;
 };
 
+export type FeatureHasFeatureValue = {
+  featureId: string;
+  featureValueId: string;
+  featureValues: FeatureValue;
+};
 
 export type SubmitProduct = {
-  id? : string;
+  id?: string;
   name: string;
   purchasedPrice: number;
   oldPrice: number;
