@@ -40,7 +40,7 @@ import {
   updateProduct,
   uploadUrl,
 } from "../_features/api";
-import { useProductForm } from "../_features/hooks";
+import { useFetchCategories, useProductForm } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
@@ -112,12 +112,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
     }
   }, [product]);
 
-  const { data: categoriesResponse } = useQuery<SubCategoriesResponse>({
-    queryKey: ["sub-categories", selectedCategoryId],
-    queryFn: () => fetchSubCategories(axios, selectedCategoryId),
-    enabled: !!selectedCategoryId,
-    retry: 3,
-    staleTime: 60 * 1000,
+  const { data: categoriesResponse } = useFetchCategories({
+    axios,
+    selectedCategoryId,
   });
 
   const { data: featuresByValueResponse } =
