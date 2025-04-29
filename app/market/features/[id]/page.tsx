@@ -50,7 +50,7 @@ const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
         <div>
-          <Link href={`/market/features/${feature?.id}/edit`}>
+          <Link href={`/market/features/edit/${feature?.id}`}>
             <Button>Modifier</Button>
           </Link>
         </div>

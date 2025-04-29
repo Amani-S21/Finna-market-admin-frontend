@@ -1,18 +1,20 @@
 "use client";
 
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import FeaturesToolBar from "./_components/FeaturesToolBar";
-import { useFetchFeatures } from "./_features/hooks";
-import { use } from "react";
-import LoadingFeatures from "./loading";
 import { Pagination } from "@/app/_components";
-import FeaturesTable from "./_components/FeaturesTable";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { useSession } from "next-auth/react";
+import { use } from "react";
+import FeaturesTable from "../_components/FeaturesTable";
+import FeaturesToolBar from "../_components/FeaturesToolBar";
+import { useFetchFeatures } from "../_features/hooks";
+import LoadingFeatures from "./loading";
 
 const FeaturesPage = ({
   searchParams,
 }: {
   searchParams: Promise<{ page: string }>;
 }) => {
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const { page } = use(searchParams);
 
@@ -20,11 +22,15 @@ const FeaturesPage = ({
     data: featuresResponse,
     isLoading,
     error,
-  } = useFetchFeatures({ axios, page });
+  } = useFetchFeatures({
+    axios,
+    page,
+    enabled: status === "authenticated",
+  });
 
-  if (isLoading) return LoadingFeatures();
+  if (status === "loading" || isLoading) return LoadingFeatures();
 
-  if (error) return;
+  if (error) return <p>Erreur</p>;
 
   return (
     <>

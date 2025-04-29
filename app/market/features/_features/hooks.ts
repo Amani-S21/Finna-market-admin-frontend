@@ -5,25 +5,31 @@ import {
 } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
+import { useRouter } from "next/navigation";
 import {
   createFeatures,
   fetchFeatureById,
   fetchFeatures,
   updateFeatures,
 } from "./api";
-import { useRouter } from "next/navigation";
 
 type UseFetchFeatures = {
   axios: AxiosInstance;
   page: string;
+  enabled: boolean;
 };
 
-export const useFetchFeatures = ({ axios, page }: UseFetchFeatures) => {
+export const useFetchFeatures = ({
+  axios,
+  page,
+  enabled,
+}: UseFetchFeatures) => {
   return useQuery<FeaturesResponse>({
     queryKey: ["features", page],
     queryFn: () => fetchFeatures(axios, page),
-    // staleTime: 60 * 1000 * 60,
+    staleTime: 60 * 1000 * 5,
     retry: 3,
+    enabled,
   });
 };
 
@@ -39,8 +45,8 @@ export const useFetchFeatureById = ({
   return useQuery<Feature>({
     queryKey: ["features-by-id", featureId],
     queryFn: () => fetchFeatureById(axios, featureId),
-    // staleTime: 60 * 1000 * 60,
-    // retry: 3,
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
   });
 };
 

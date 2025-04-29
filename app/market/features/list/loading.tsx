@@ -1,5 +1,5 @@
 import LoadingTable from "@/app/_components/LoadingTable";
-import FeaturesToolBar from "./_components/FeaturesToolBar";
+import { FeaturesToolBar } from "../_components";
 
 const LoadingFeatures = () => {
   return (
