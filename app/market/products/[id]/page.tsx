@@ -119,7 +119,7 @@ const ProductsDetailsPage = ({
           />
         </div>
         <div>
-          <Link href={`/market/products/${product?.id}/edit`}>
+          <Link href={`/market/products/edit/${product?.id}`}>
             <Button>Modifier</Button>
           </Link>
         </div>
