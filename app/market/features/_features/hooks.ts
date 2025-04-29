@@ -1,7 +1,16 @@
-import { Feature, FeaturesResponse, SubmitFeatureWithValues } from "@/app/lib/types";
+import {
+  Feature,
+  FeaturesResponse,
+  SubmitFeatureWithValues,
+} from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { createFeatures, fetchFeatureById, fetchFeatures, updateFeatures } from "./api";
+import {
+  createFeatures,
+  fetchFeatureById,
+  fetchFeatures,
+  updateFeatures,
+} from "./api";
 import { useRouter } from "next/navigation";
 
 type UseFetchFeatures = {
@@ -18,17 +27,20 @@ export const useFetchFeatures = ({ axios, page }: UseFetchFeatures) => {
   });
 };
 
-type UseFetchFeatureById  = {
-  axios : AxiosInstance,
-  featureId : string,
-}
+type UseFetchFeatureById = {
+  axios: AxiosInstance;
+  featureId: string;
+};
 
-export const useFetchFeatureById = ({ axios, featureId }: UseFetchFeatureById) => {
+export const useFetchFeatureById = ({
+  axios,
+  featureId,
+}: UseFetchFeatureById) => {
   return useQuery<Feature>({
     queryKey: ["features-by-id", featureId],
     queryFn: () => fetchFeatureById(axios, featureId),
     // staleTime: 60 * 1000 * 60,
-    retry: 3,
+    // retry: 3,
   });
 };
 

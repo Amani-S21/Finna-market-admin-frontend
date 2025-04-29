@@ -72,6 +72,18 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
           })) ?? [],
       });
     }
+
+    console.log(
+      JSON.stringify({
+        id: feature?.id,
+        name: data.name,
+        featureValues:
+          featureValues?.map((v) => ({
+            id: v.id,
+            value: v.value,
+          })) ?? [],
+      })
+    );
   };
 
   return (

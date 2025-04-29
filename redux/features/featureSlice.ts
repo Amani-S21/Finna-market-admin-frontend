@@ -44,6 +44,7 @@ const featureSlice = createSlice({
     },
 
     addFeatureValues: (state, action: PayloadAction<FeatureValue[]>) => {
+      state.featureValues = [];
       state.featureValues?.push(...action.payload);
     },
 
