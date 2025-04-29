@@ -6,12 +6,14 @@ import { use } from "react";
 import LoadingProductsPage from "./loading";
 import { ProductsToolBar, ProductsTable } from "../_components";
 import { useFetchProducts } from "../_features/hooks";
+import { useSession } from "next-auth/react";
 
 const ProductsPage = ({
   searchParams,
 }: {
   searchParams: Promise<{ page: string }>;
 }) => {
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const { page } = use(searchParams);
 
@@ -19,9 +21,9 @@ const ProductsPage = ({
     data: productsResponse,
     isLoading,
     error,
-  } = useFetchProducts({ axios, page });
+  } = useFetchProducts({ axios, page, enabled: status === "authenticated" });
 
-  if (isLoading) return <LoadingProductsPage />;
+  if (isLoading || status === "loading") return <LoadingProductsPage />;
 
   if (error) return;
 

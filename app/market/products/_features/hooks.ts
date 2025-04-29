@@ -33,14 +33,16 @@ export const useProductForm = ({
 type UseFetchProduct = {
   axios: AxiosInstance;
   page: string;
+  enabled : boolean
 };
 
-export const useFetchProducts = ({ axios, page }: UseFetchProduct) => {
+export const useFetchProducts = ({ axios, page, enabled }: UseFetchProduct) => {
   return useQuery<ProductsListResponse>({
     queryKey: ["products", page],
     queryFn: () => fetchProducts(axios, page),
     staleTime: 60 * 1000 * 60,
     retry : 3,
+    enabled
   });
 };
 
