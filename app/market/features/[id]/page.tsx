@@ -8,8 +8,10 @@ import { useFetchFeatureById } from "../_features/hooks";
 import { SelectSearchItem } from "../../products/_components";
 import LoadingFeatureDetails from "./loading";
 import { notFound } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const { id } = use(params);
   const {
@@ -19,9 +21,10 @@ const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {
   } = useFetchFeatureById({
     axios,
     featureId: id,
+    enabled: status === "authenticated",
   });
 
-  if (isLoading) return <LoadingFeatureDetails />;
+  if (isLoading || status === "loading") return <LoadingFeatureDetails />;
 
   if (error) notFound();
 

@@ -36,17 +36,20 @@ export const useFetchFeatures = ({
 type UseFetchFeatureById = {
   axios: AxiosInstance;
   featureId: string;
+  enabled : boolean,
 };
 
 export const useFetchFeatureById = ({
   axios,
   featureId,
+  enabled
 }: UseFetchFeatureById) => {
   return useQuery<Feature>({
     queryKey: ["features-by-id", featureId],
     queryFn: () => fetchFeatureById(axios, featureId),
     staleTime: 60 * 1000 * 5,
     retry: 3,
+    enabled,
   });
 };
 
