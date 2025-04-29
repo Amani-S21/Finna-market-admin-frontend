@@ -1,10 +1,13 @@
 "use client";
 
+import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Feature, FeatureSchema } from "@/app/lib/types";
 import { featureSchema } from "@/app/lib/validationSchemas";
 import {
   addFeatureValue,
+  addFeatureValues,
   removeFeatureValue,
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
@@ -15,13 +18,25 @@ import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
 import { useCreateFeatures } from "../_features/hooks";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Spinner } from "@/app/_components";
+import { useEffect } from "react";
 
 const FeatureForm = ({ feature }: { feature?: Feature }) => {
   const axios = useAxiosAuth();
   const dispatch = useDispatch();
   const { featureValues } = useSelector((state: RootState) => state.feature);
+
+  useEffect(() => {
+    if (feature) {
+      dispatch(
+        addFeatureValues([
+          ...(feature.featuresHasFeatureValues?.map((v) => ({
+            value: v.featureValues.value,
+          })) ?? []),
+        ])
+      );
+    }
+  }, [feature]);
+
   const {
     register,
     resetField,
@@ -50,6 +65,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
         <p className="text-sm font-bold">Nom</p>
         <TextField.Root
           {...register("name")}
+          defaultValue={feature?.name}
           placeholder="Nom de la caractéristique"
         />
         <ErrorMessage>{errors.name?.message}</ErrorMessage>

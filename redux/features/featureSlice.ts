@@ -43,6 +43,10 @@ const featureSlice = createSlice({
       state.featureValues?.push(action.payload);
     },
 
+    addFeatureValues: (state, action: PayloadAction<FeatureValue[]>) => {
+      state.featureValues?.push(...action.payload);
+    },
+
     removeFeatureValue: (state, action: PayloadAction<{ feature: string }>) => {
       state.featureValues =
         state.featureValues?.filter(
@@ -84,6 +88,7 @@ const featureSlice = createSlice({
 export const {
   addFeature,
   addFeatureValue,
+  addFeatureValues,
   resetList,
   removeFeature,
   removeFeatureValue,
