@@ -1,5 +1,5 @@
 import LoadingTable from "@/app/_components/LoadingTable";
-import { ProductsToolBar } from "./_components";
+import { ProductsToolBar } from "../_components";
 
 const LoadingProductsPage = () => {
   

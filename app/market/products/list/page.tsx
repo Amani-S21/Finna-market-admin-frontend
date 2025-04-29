@@ -3,9 +3,9 @@
 import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { use } from "react";
-import { ProductsTable, ProductsToolBar } from "./_components";
-import { useFetchProducts } from "./_features/hooks";
 import LoadingProductsPage from "./loading";
+import { ProductsToolBar, ProductsTable } from "../_components";
+import { useFetchProducts } from "../_features/hooks";
 
 const ProductsPage = ({
   searchParams,
