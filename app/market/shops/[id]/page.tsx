@@ -1,16 +1,17 @@
 "use client";
 
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Shop } from "@/app/lib/types";
-import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import React, { use } from "react";
-import LoadingShopDetails from "./loading";
-import { notFound } from "next/navigation";
 import BackButton from "@/app/_components/BackButton";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { use } from "react";
+import { useFetchShopsById } from "../_features/hooks";
+import LoadingShopDetails from "./loading";
 
 const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { status } = useSession();
   const { id } = use(params);
   const axios = useAxiosAuth();
 
@@ -18,15 +19,13 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
     data: shop,
     isLoading,
     error,
-  } = useQuery<Shop>({
-    queryKey: ["shop", id],
-    queryFn: async () =>
-      await axios.get(`/shops/${id}`).then((res) => res.data),
-    staleTime: 60 * 1000,
-    retry: 3,
+  } = useFetchShopsById({
+    axios,
+    shopId: id,
+    enabled: status === "authenticated",
   });
 
-  if (isLoading) return <LoadingShopDetails />;
+  if (isLoading || status === "loading") return <LoadingShopDetails />;
 
   if (error) notFound();
 
