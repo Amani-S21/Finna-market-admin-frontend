@@ -6,7 +6,7 @@ import { Button, Grid, Heading, Link, Text } from "@radix-ui/themes";
 import { use } from "react";
 import { useFetchFeatureById } from "../_features/hooks";
 import { SelectSearchItem } from "../../products/_components";
-import LoadingFeatureDetails from "./loding";
+import LoadingFeatureDetails from "./loading";
 import { notFound } from "next/navigation";
 
 const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {

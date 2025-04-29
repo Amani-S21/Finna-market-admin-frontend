@@ -8,7 +8,7 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { notFound } from "next/navigation";
 import { use } from "react";
 import { useFetchFeatureById } from "../../_features/hooks";
-import LoadingFeatureDetails from "../../[id]/loding";
+import LoadingFeatureDetails from "../../[id]/loading";
 
 const EditFeaturePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const axios = useAxiosAuth();
