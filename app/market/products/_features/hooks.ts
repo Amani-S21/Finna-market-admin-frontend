@@ -4,18 +4,22 @@ import {
   ProductSchema,
   ProductsListResponse,
   SubCategoriesResponse,
+  SubmitProduct,
 } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import {
+  createProduct,
   fetchFeatureValueByFeature,
   fetchProductById,
   fetchProducts,
   fetchSubCategories,
+  updateProduct,
 } from "./api";
+import { useRouter } from "next/router";
 
 export const useProductForm = ({
   product,
@@ -27,6 +31,38 @@ export const useProductForm = ({
     defaultValues: {
       category: product?.subCategory.category.name,
       feature: "",
+    },
+  });
+};
+
+type UseCreateProduct = {
+  axios: AxiosInstance;
+};
+
+export const useCreateProduct = ({ axios }: UseCreateProduct) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation<void, Error, SubmitProduct>({
+    mutationFn: (data: SubmitProduct) => createProduct(axios, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+      router.back();
+    },
+  });
+};
+
+export const useUpdateProduct = ({ axios }: UseCreateProduct) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation<void, Error, SubmitProduct>({
+    mutationFn: (data: SubmitProduct) => updateProduct(axios, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+      router.back();
     },
   });
 };
@@ -59,7 +95,7 @@ export const useFetchProductById = ({
   enabled,
 }: UseFetchProductById) => {
   return useQuery<Product>({
-    queryKey: ["product", productId],
+    queryKey: ["product-by-id", productId],
     queryFn: () => fetchProductById(axios, productId),
     staleTime: 60 * 1000 * 5,
     retry: 3,

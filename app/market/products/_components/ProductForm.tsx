@@ -4,10 +4,8 @@ import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   Feature,
-  FeatureValuesByFeatureResponse,
   Product,
   ProductSchema,
-  SubCategoriesResponse,
   SubCategory,
   SubmitProduct,
 } from "@/app/lib/types";
@@ -19,7 +17,7 @@ import {
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
@@ -33,17 +31,13 @@ import {
   SelectSearchItem,
 } from "../_components";
 import SearchCategoryTextField from "../_components/SearchCategoryField";
+import { createProduct, updateProduct, uploadUrl } from "../_features/api";
 import {
-  createProduct,
-  fetchFeatureValueByFeature,
-  fetchSubCategories,
-  updateProduct,
-  uploadUrl,
-} from "../_features/api";
-import {
+  useCreateProduct,
   useFetchCategories,
   useFetchFeaturesByValue,
   useProductForm,
+  useUpdateProduct,
 } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
@@ -158,35 +152,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
     }
   };
 
-  const { mutateAsync: createProductMutation } = useMutation({
-    mutationFn: ({
-      axios,
-      product,
-    }: {
-      axios: AxiosInstance;
-      product: SubmitProduct;
-    }) => createProduct(axios, product),
-    retry: 0,
-    onSuccess: () => {
-      router.back();
-    },
-  });
+  const { mutateAsync: createProductMutation } = useCreateProduct({ axios });
 
-  const { mutateAsync: patchProductMutation } = useMutation({
-    mutationFn: ({
-      axios,
-      product,
-    }: {
-      axios: AxiosInstance;
-      product: SubmitProduct;
-    }) => updateProduct(axios, product),
-    retry: 0,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["product"] });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      router.back();
-    },
-  });
+  const { mutateAsync: patchProductMutation } = useUpdateProduct({ axios });
 
   const onSubmit = async (data: ProductSchema) => {
     if (productImageUrls.current.length < 3)
@@ -221,17 +189,11 @@ const ProductForm = ({ product }: { product?: Product }) => {
     };
     if (product) {
       patchProductMutation({
-        axios,
-        product: {
-          id: product?.id,
-          ...productSubmit,
-        },
+        id: product?.id,
+        ...productSubmit,
       });
     } else {
-      createProductMutation({
-        axios,
-        product: productSubmit,
-      });
+      createProductMutation(productSubmit);
     }
   };
 
