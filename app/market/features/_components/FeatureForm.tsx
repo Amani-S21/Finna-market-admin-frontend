@@ -118,7 +118,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
             <SelectSearchItem
               key={v.value + index}
               title={v.value}
-              onClick={() => {
+              onDeleteClick={() => {
                 dispatch(removeFeatureValue({ feature: v.value }));
               }}
             />

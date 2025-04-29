@@ -1,21 +1,25 @@
 "use client";
 
-import { Flex, Text } from "@radix-ui/themes";
+import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { TiInputCheckedOutline } from "react-icons/ti";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 type Props = {
   isSelected?: boolean | undefined;
   editable?: boolean | undefined;
+
   title: string;
   valuePrice?: number;
   currency?: string;
   onClick?: (price: number) => void;
+  onDeleteClick?: () => void;
 };
 const SelectSearchItem = ({
   title,
   isSelected,
   valuePrice,
+  onDeleteClick,
   currency,
   editable = false,
   onClick,
@@ -33,7 +37,7 @@ const SelectSearchItem = ({
       style={{
         borderColor: isSelected ? "blue" : "#D1D5DB",
       }}
-      className="flex items-center border border-gray-300 rounded-full px-4"
+      className="flex items-center border border-gray-300 rounded-full px-4 hover:cursor-default"
       onClick={handleClick}
     >
       {title.startsWith("#") ? (
@@ -62,6 +66,11 @@ const SelectSearchItem = ({
         )}
         {currency && <Text>{currency}</Text>}
         {isSelected && <TiInputCheckedOutline color="blue" size={25} />}
+        {onDeleteClick && (
+          <IconButton variant="ghost" ml="2" onClick={onDeleteClick}>
+            <IoIosCloseCircleOutline />
+          </IconButton>
+        )}
       </Flex>
     </div>
   );
