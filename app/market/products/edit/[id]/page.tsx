@@ -1,33 +1,32 @@
 "use client";
 
 import { BackButton } from "@/app/_components";
-import React, { use } from "react";
-import { AiOutlineProduct } from "react-icons/ai";
-import { Text } from "@radix-ui/themes";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useQuery } from "@tanstack/react-query";
-import { Product } from "@/app/lib/types";
-import LoadingEditProductPage from "./loading";
+import { Text } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
 import { notFound } from "next/navigation";
+import { use } from "react";
+import { AiOutlineProduct } from "react-icons/ai";
 import { ProductForm } from "../../_components";
+import { useFetchProductById } from "../../_features/hooks";
+import LoadingEditProductPage from "./loading";
 
 const EditProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = use(params);
+  const { status } = useSession();
   const axios = useAxiosAuth();
+  const { id } = use(params);
 
   const {
     data: product,
     isLoading,
     error,
-  } = useQuery<Product>({
-    queryKey: ["product", id],
-    queryFn: async () =>
-      await axios.get(`/products/${id}`).then((res) => res.data),
-    staleTime: 60 * 1000,
-    retry: 3,
+  } = useFetchProductById({
+    axios,
+    productId: id,
+    enabled: status === "authenticated",
   });
 
-  if (isLoading) return <LoadingEditProductPage />;
+  if (isLoading || status === "loading") return <LoadingEditProductPage />;
 
   if (error) notFound();
   return (

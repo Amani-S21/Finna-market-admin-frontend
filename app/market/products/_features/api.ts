@@ -8,6 +8,13 @@ export const fetchProducts = async (axios: AxiosInstance, page: string) => {
   } catch (error) {}
 };
 
+export const fetchProductById = async (axios: AxiosInstance, productId: string) => {
+  try {
+    const res = await axios.get(`/products/${productId}`);
+    return res.data;
+  } catch (error) {}
+};
+
 export const uploadUrl = async (axios: AxiosInstance, image: File) => {
   try {
     const formData = new FormData();

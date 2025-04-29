@@ -12,6 +12,7 @@ import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import {
   fetchFeatureValueByFeature,
+  fetchProductById,
   fetchProducts,
   fetchSubCategories,
 } from "./api";
@@ -33,7 +34,7 @@ export const useProductForm = ({
 type UseFetchProduct = {
   axios: AxiosInstance;
   page: string;
-  enabled : boolean
+  enabled: boolean;
 };
 
 export const useFetchProducts = ({ axios, page, enabled }: UseFetchProduct) => {
@@ -41,8 +42,28 @@ export const useFetchProducts = ({ axios, page, enabled }: UseFetchProduct) => {
     queryKey: ["products", page],
     queryFn: () => fetchProducts(axios, page),
     staleTime: 60 * 1000 * 60,
-    retry : 3,
-    enabled
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseFetchProductById = {
+  axios: AxiosInstance;
+  productId: string;
+  enabled: boolean;
+};
+
+export const useFetchProductById = ({
+  axios,
+  productId,
+  enabled,
+}: UseFetchProductById) => {
+  return useQuery<Product>({
+    queryKey: ["product", productId],
+    queryFn: () => fetchProductById(axios, productId),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
   });
 };
 
