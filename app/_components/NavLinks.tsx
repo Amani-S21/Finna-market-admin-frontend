@@ -30,7 +30,7 @@ const NavLinks = () => {
       icon: <AiOutlineOrderedList />,
     },
     {
-      href: "/market/shops?page=1",
+      href: "/market/shops/list?page=1",
       label: "Boutiques",
       icon: <IoStorefrontOutline />,
     },

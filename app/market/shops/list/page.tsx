@@ -3,15 +3,17 @@
 import Pagination from "@/app/_components/Pagination";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { use } from "react";
-import { ShopsTable, ShopsToolBar } from "./_components";
-import { useFetchShops } from "./_features/hooks";
 import LoadingShopspPage from "./loading";
+import { useFetchShops } from "../_features/hooks";
+import { ShopsToolBar, ShopsTable } from "../_components";
+import { useSession } from "next-auth/react";
 
 const ShopsPage = ({
   searchParams,
 }: {
   searchParams: Promise<{ page: string }>;
 }) => {
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const { page } = use(searchParams);
 
@@ -19,9 +21,9 @@ const ShopsPage = ({
     data: shopsResponse,
     isLoading,
     error,
-  } = useFetchShops({ axios, page });
+  } = useFetchShops({ axios, page, enabled: status === "authenticated" });
 
-  if (isLoading) return <LoadingShopspPage />;
+  if (isLoading || status === "loading") return <LoadingShopspPage />;
 
   if (error) return;
 
