@@ -33,3 +33,15 @@ export const createFeatures = async (
     return { count: 0, data: [] };
   }
 };
+
+export const updateFeatures = async (
+  axios: AxiosInstance,
+  data: SubmitFeatureWithValues
+) => {
+  try {
+    const res = await axios.patch(`/features`, data);
+    return res.data;
+  } catch (error) {
+    return { count: 0, data: [] };
+  }
+};

@@ -1,7 +1,7 @@
 import { Feature, FeaturesResponse, SubmitFeatureWithValues } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { createFeatures, fetchFeatureById, fetchFeatures } from "./api";
+import { createFeatures, fetchFeatureById, fetchFeatures, updateFeatures } from "./api";
 import { useRouter } from "next/navigation";
 
 type UseFetchFeatures = {
@@ -42,6 +42,20 @@ export const useCreateFeatures = ({ axios }: UseCreateFeatures) => {
 
   return useMutation<void, Error, SubmitFeatureWithValues>({
     mutationFn: (data: SubmitFeatureWithValues) => createFeatures(axios, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["features"] });
+      queryClient.invalidateQueries({ queryKey: ["features-by-id"] });
+      router.back();
+    },
+  });
+};
+
+export const useUpdateFeatures = ({ axios }: UseCreateFeatures) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation<void, Error, SubmitFeatureWithValues>({
+    mutationFn: (data: SubmitFeatureWithValues) => updateFeatures(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["features"] });
       queryClient.invalidateQueries({ queryKey: ["features-by-id"] });

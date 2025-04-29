@@ -163,6 +163,7 @@ export type FeatureHasFeatureValue = {
 };
 
 export type SubmitFeatureWithValues = {
+  id? : string,
   name : string,
   featureValues : FeatureValue[],
 }

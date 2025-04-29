@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
-import { useCreateFeatures } from "../_features/hooks";
+import { useCreateFeatures, useUpdateFeatures } from "../_features/hooks";
 import { useEffect } from "react";
 
 const FeatureForm = ({ feature }: { feature?: Feature }) => {
@@ -30,6 +30,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
       dispatch(
         addFeatureValues([
           ...(feature.featuresHasFeatureValues?.map((v) => ({
+            id: v.featureValueId,
             value: v.featureValues.value,
           })) ?? []),
         ])
@@ -49,14 +50,28 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
 
   const { mutateAsync: createFeature } = useCreateFeatures({ axios });
 
+  const { mutateAsync: updateFeature } = useUpdateFeatures({ axios });
+
   const onSubmit = async (data: FeatureSchema) => {
-    await createFeature({
-      name: data.name,
-      featureValues:
-        featureValues?.map((v) => ({
-          value: v.value,
-        })) ?? [],
-    });
+    if (feature) {
+      await updateFeature({
+        id: feature.id,
+        name: data.name,
+        featureValues:
+          featureValues?.map((v) => ({
+            id: v.id,
+            value: v.value,
+          })) ?? [],
+      });
+    } else {
+      await createFeature({
+        name: data.name,
+        featureValues:
+          featureValues?.map((v) => ({
+            value: v.value,
+          })) ?? [],
+      });
+    }
   };
 
   return (
