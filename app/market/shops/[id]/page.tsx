@@ -62,7 +62,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
           </Card>
         </div>
         <div>
-          <Link href={`/market/shops/${shop?.id}/edit`}>
+          <Link href={`/market/shops/edit/${shop?.id}`}>
             <Button>Modifier</Button>
           </Link>
         </div>
