@@ -43,6 +43,21 @@ const featureSlice = createSlice({
       state.featureValues?.push(action.payload);
     },
 
+    updateFeatureValue: (state, action: PayloadAction<FeatureValue>) => {
+      const index =
+        state.featureValues?.findIndex(
+          (v) => v.index === action.payload.index
+        ) ?? 0;
+
+      console.log(JSON.stringify(index));
+
+      state.featureValues![index] = {
+        id: action.payload.id,
+        index: action.payload.index,
+        value: action.payload.value,
+      };
+    },
+
     addFeatureValues: (state, action: PayloadAction<FeatureValue[]>) => {
       state.featureValues = [];
       state.featureValues?.push(...action.payload);
@@ -88,6 +103,7 @@ const featureSlice = createSlice({
 
 export const {
   addFeature,
+  updateFeatureValue,
   addFeatureValue,
   addFeatureValues,
   resetList,

@@ -134,6 +134,7 @@ export type FeatureAffectationValue = {
 
 export type FeatureValue = {
   id?: string;
+  index?: string;
   value: string;
   createdAt?: string;
   updatedAt?: string;
@@ -163,10 +164,10 @@ export type FeatureHasFeatureValue = {
 };
 
 export type SubmitFeatureWithValues = {
-  id? : string,
-  name : string,
-  featureValues : FeatureValue[],
-}
+  id?: string;
+  name: string;
+  featureValues: FeatureValue[];
+};
 
 export type SubmitProduct = {
   id?: string;

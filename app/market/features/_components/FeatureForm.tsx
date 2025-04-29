@@ -12,7 +12,14 @@ import {
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Dialog,
+  DropdownMenu,
+  Flex,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,8 +36,9 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
     if (feature) {
       dispatch(
         addFeatureValues([
-          ...(feature.featuresHasFeatureValues?.map((v) => ({
+          ...(feature.featuresHasFeatureValues?.map((v, index) => ({
             id: v.featureValueId,
+            index: `${index}`,
             value: v.featureValues.value,
           })) ?? []),
         ])
@@ -105,6 +113,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
             onClick={() => {
               dispatch(
                 addFeatureValue({
+                  index: `${featureValues?.length}`,
                   value: watch("type") ?? "",
                 })
               );
@@ -129,7 +138,9 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
           {featureValues?.map((v, index) => (
             <SelectSearchItem
               key={v.value + index}
+              id={v.id}
               title={v.value}
+              index={`${index}`}
               onDeleteClick={() => {
                 dispatch(removeFeatureValue({ feature: v.value }));
               }}
@@ -137,6 +148,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
           ))}
         </div>
       )}
+
       <Button disabled={isSubmitting} mt="4">
         {feature ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
       </Button>
