@@ -19,7 +19,7 @@ const NavLinks = () => {
 
   const links = [
     {
-      href: "/market/products?page=1",
+      href: "/market/products/list?page=1",
       label: "Produits",
       icon: <AiOutlineProduct />,
     },

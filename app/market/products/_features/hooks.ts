@@ -13,13 +13,12 @@ import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import {
   createProduct,
-  fetchFeatureValueByFeature,
   fetchProductById,
   fetchProducts,
   fetchSubCategories,
   updateProduct,
 } from "./api";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export const useProductForm = ({
   product,
@@ -105,7 +104,7 @@ export const useFetchProductById = ({
 
 type UseFetchCategories = {
   axios: AxiosInstance;
-  selectedCategoryId: string;
+  selectedCategoryId: string | undefined;
 };
 
 export const useFetchCategories = ({
@@ -114,26 +113,8 @@ export const useFetchCategories = ({
 }: UseFetchCategories) => {
   return useQuery<SubCategoriesResponse>({
     queryKey: ["sub-categories", selectedCategoryId],
-    queryFn: () => fetchSubCategories(axios, selectedCategoryId),
+    queryFn: () => fetchSubCategories(axios, `${selectedCategoryId}`),
     enabled: !!selectedCategoryId,
-    retry: 3,
-    staleTime: 60 * 1000,
-  });
-};
-
-type UseFetchFeaturesByValue = {
-  axios: AxiosInstance;
-  selectedFeatureId: string;
-};
-
-export const useFetchFeaturesByValue = ({
-  axios,
-  selectedFeatureId,
-}: UseFetchFeaturesByValue) => {
-  return useQuery<FeatureValuesByFeatureResponse>({
-    queryKey: ["features-values-by-feauture", selectedFeatureId],
-    queryFn: () => fetchFeatureValueByFeature(axios, `${selectedFeatureId}`),
-    enabled: !!selectedFeatureId,
     retry: 3,
     staleTime: 60 * 1000,
   });

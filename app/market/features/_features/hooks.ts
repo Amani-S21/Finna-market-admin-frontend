@@ -1,6 +1,7 @@
 import {
   Feature,
   FeaturesResponse,
+  FeatureValuesByFeatureResponse,
   SubmitFeatureWithValues,
 } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -10,6 +11,7 @@ import {
   createFeatures,
   fetchFeatureById,
   fetchFeatures,
+  fetchFeatureValueByFeature,
   updateFeatures,
 } from "./api";
 
@@ -36,13 +38,13 @@ export const useFetchFeatures = ({
 type UseFetchFeatureById = {
   axios: AxiosInstance;
   featureId: string;
-  enabled : boolean,
+  enabled: boolean;
 };
 
 export const useFetchFeatureById = ({
   axios,
   featureId,
-  enabled
+  enabled,
 }: UseFetchFeatureById) => {
   return useQuery<Feature>({
     queryKey: ["features-by-id", featureId],
@@ -82,5 +84,23 @@ export const useUpdateFeatures = ({ axios }: UseCreateFeatures) => {
       queryClient.invalidateQueries({ queryKey: ["features-by-id"] });
       router.back();
     },
+  });
+};
+
+type UseFetchFeaturesByValue = {
+  axios: AxiosInstance;
+  selectedFeatureId: string | undefined;
+};
+
+export const useFetchFeaturesByValue = ({
+  axios,
+  selectedFeatureId,
+}: UseFetchFeaturesByValue) => {
+  return useQuery<FeatureValuesByFeatureResponse>({
+    queryKey: ["features-values-by-feauture", selectedFeatureId],
+    queryFn: () => fetchFeatureValueByFeature(axios, `${selectedFeatureId}`),
+    enabled: !!selectedFeatureId,
+    retry: 3,
+    staleTime: 60 * 1000,
   });
 };

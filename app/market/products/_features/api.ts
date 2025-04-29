@@ -29,18 +29,6 @@ export const uploadUrl = async (axios: AxiosInstance, image: File) => {
   } catch (error) {}
 };
 
-export const fetchFeatureValueByFeature = async (
-  axios: AxiosInstance,
-  featureId: string
-) => {
-  try {
-    const res = await axios.get(
-      `/feature-values/by-feature/${featureId}?page=1&limit=20`
-    );
-
-    return res.data;
-  } catch (error) {}
-};
 
 export const fetchSubCategories = async (
   axios: AxiosInstance,

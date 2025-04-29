@@ -35,13 +35,13 @@ import { createProduct, updateProduct, uploadUrl } from "../_features/api";
 import {
   useCreateProduct,
   useFetchCategories,
-  useFetchFeaturesByValue,
   useProductForm,
   useUpdateProduct,
 } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
+import { useFetchFeaturesByValue } from "../../features/_features/hooks";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
@@ -117,7 +117,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const { data: featuresByValueResponse } = useFetchFeaturesByValue({
     axios,
-    selectedFeatureId: `${selectedFeature?.id}`,
+    selectedFeatureId: selectedFeature?.id,
   });
 
   const featurePriceExist = (featureValueId: string) => {
