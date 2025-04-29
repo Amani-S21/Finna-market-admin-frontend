@@ -25,7 +25,7 @@ const NavLinks = () => {
     },
     { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
     {
-      href: "/market/orders",
+      href: "/market/orders/list?page=1",
       label: "Commandes",
       icon: <AiOutlineOrderedList />,
     },
