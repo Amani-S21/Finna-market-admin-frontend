@@ -6,14 +6,24 @@ import { Button, Grid, Heading, Link, Text } from "@radix-ui/themes";
 import { use } from "react";
 import { useFetchFeatureById } from "../_features/hooks";
 import { SelectSearchItem } from "../../products/_components";
+import LoadingFeatureDetails from "./loding";
+import { notFound } from "next/navigation";
 
 const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {
   const axios = useAxiosAuth();
   const { id } = use(params);
-  const { data: feature, isLoading, error } = useFetchFeatureById({
+  const {
+    data: feature,
+    isLoading,
+    error,
+  } = useFetchFeatureById({
     axios,
     featureId: id,
   });
+
+  if (isLoading) return <LoadingFeatureDetails />;
+
+  if (error) notFound();
 
   return (
     <>
