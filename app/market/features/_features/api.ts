@@ -10,6 +10,18 @@ export const fetchFeatures = async (axios: AxiosInstance, page: string) => {
   }
 };
 
+export const fetchFeatureById = async (
+  axios: AxiosInstance,
+  featureId: string
+) => {
+  try {
+    const res = await axios.get(`/features/${featureId}`);
+    return res.data;
+  } catch (error) {
+    return { count: 0, data: [] };
+  }
+};
+
 export const createFeatures = async (
   axios: AxiosInstance,
   data: SubmitFeatureWithValues
