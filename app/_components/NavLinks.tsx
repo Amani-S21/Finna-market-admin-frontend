@@ -13,7 +13,6 @@ import { TbCategoryMinus } from "react-icons/tb";
 import { VscAccount } from "react-icons/vsc";
 import { IoIosExit } from "react-icons/io";
 
-
 const NavLinks = () => {
   const currentPath = usePathname();
 
@@ -35,7 +34,7 @@ const NavLinks = () => {
       icon: <IoStorefrontOutline />,
     },
     {
-      href: "/market/categories?page=1",
+      href: "/market/categories/list?page=1",
       label: "Catégories",
       icon: <TbCategoryMinus />,
     },

@@ -73,20 +73,12 @@ export type SubCategoriesResponse = {
   data: SubCategory[];
 };
 
-export type SubCategory = {
-  id: string;
-  name: string;
-  categoryId: string;
-  createdAt: string;
-  updatedAt: string;
-  category: Category;
-};
-
 export type Category = {
   id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
+  subCategories: SubCategory[];
 };
 
 export type FeatureAffectation = {
@@ -192,4 +184,17 @@ type SubmitFeature = {
 type SubmitFeatureValue = {
   featureValueId: string;
   price: number;
+};
+
+export type CategoriesResponse = {
+  count: number;
+  data: Category[];
+};
+
+export type SubCategory = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  category: Category[];
 };
