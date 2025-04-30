@@ -1,18 +1,11 @@
+"use client";
+
 import { formattedDate } from "@/app/lib/tools";
 import { ShopsListResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-
-export const shopsColumns: {
-  label: string;
-}[] = [
-  { label: "N" },
-  { label: "Boutique" },
-  { label: "Addrèsse" },
-  { label: "Date" },
-  { label: "Action" },
-];
+import { shopsColumns } from "../list/loading";
 
 const ShopsTable = ({
   shopsResponse,
@@ -20,7 +13,6 @@ const ShopsTable = ({
   shopsResponse: ShopsListResponse;
 }) => {
   const router = useRouter();
-  
 
   return (
     <Table.Root variant="surface">

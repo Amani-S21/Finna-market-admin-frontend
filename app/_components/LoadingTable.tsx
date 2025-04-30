@@ -13,12 +13,11 @@ const LoadingTable = ({ columns }: Props) => {
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>N</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Boutique</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Addrèsse</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Proprietaire</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Créé le</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
+            {columns.map((col) => (
+              <Table.ColumnHeaderCell key={col.label}>
+                {col.label}
+              </Table.ColumnHeaderCell>
+            ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>

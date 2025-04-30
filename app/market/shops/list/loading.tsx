@@ -1,7 +1,16 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ShopsToolBar } from "../_components";
-import { shopsColumns } from "../_components/ShopsTable";
+
+export const shopsColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Boutique" },
+  { label: "Addrèsse" },
+  { label: "Date" },
+  { label: "Action" },
+];
 
 const LoadingShopspPage = () => {
   return (
