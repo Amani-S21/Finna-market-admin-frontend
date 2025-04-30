@@ -1,6 +1,16 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import { FeaturesToolBar } from "../_components";
-import { featuresColumns } from "../_components/FeaturesTable";
+
+
+export  const featuresColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Nom" },
+  { label: "Date" },
+  { label: "Valeurs" },
+  { label: "Action" },
+];
 
 const LoadingFeatures = () => {
   return (

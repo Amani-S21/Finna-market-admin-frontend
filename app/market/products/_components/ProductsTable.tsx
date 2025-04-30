@@ -6,16 +6,9 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { IoIosMore } from "react-icons/io";
+import { productColumns } from "../list/loading";
 
-export const productColumns: {
-  label: string;
-}[] = [
-  { label: "N" },
-  { label: "Boutique" },
-  { label: "Addrèsse" },
-  { label: "Date" },
-  { label: "Action" },
-];
+
 
 const ProductsTable = ({
   productsResponse,

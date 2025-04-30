@@ -1,6 +1,16 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import { ProductsToolBar } from "../_components";
-import { productColumns } from "../_components/ProductsTable";
+
+
+export const productColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Boutique" },
+  { label: "Addrèsse" },
+  { label: "Date" },
+  { label: "Action" },
+];
 
 const LoadingProductsPage = () => {
   

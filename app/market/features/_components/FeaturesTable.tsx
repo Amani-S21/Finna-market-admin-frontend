@@ -6,16 +6,8 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
+import { featuresColumns } from "../list/loading";
 
-export  const featuresColumns: {
-  label: string;
-}[] = [
-  { label: "N" },
-  { label: "Nom" },
-  { label: "Date" },
-  { label: "Valeurs" },
-  { label: "Action" },
-];
 
 const FeaturesTable = ({
   featuresResponse,
