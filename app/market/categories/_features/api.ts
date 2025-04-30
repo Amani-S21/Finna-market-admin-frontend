@@ -6,3 +6,10 @@ export const fetchCategories = async (axios: AxiosInstance, page: string) => {
     return res.data;
   } catch (error) {}
 };
+
+export const fetchCategoryById = async (axios: AxiosInstance, categoryId: string) => {
+  try {
+    const res = await axios.get(`/categories/${categoryId}`);
+    return res.data;
+  } catch (error) {}
+};
