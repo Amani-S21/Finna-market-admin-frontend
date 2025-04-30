@@ -7,27 +7,29 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
 
+export  const featuresColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Nom" },
+  { label: "Date" },
+  { label: "Valeurs" },
+  { label: "Action" },
+];
+
 const FeaturesTable = ({
   featuresResponse,
 }: {
   featuresResponse: FeaturesResponse;
 }) => {
   const router = useRouter();
-  const columns: {
-    label: string;
-  }[] = [
-    { label: "N" },
-    { label: "Nom" },
-    { label: "Date" },
-    { label: "Valeurs" },
-    { label: "Action" },
-  ];
+ 
 
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {columns.map((column) => (
+          {featuresColumns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
               {column.label}
             </Table.ColumnHeaderCell>
