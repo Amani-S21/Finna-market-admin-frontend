@@ -44,12 +44,12 @@ const featureSlice = createSlice({
     },
 
     updateFeatureValue: (state, action: PayloadAction<FeatureValue>) => {
+      console.log("vcvcvcvcv 99999 ===" + action.payload.value);
+
       const index =
         state.featureValues?.findIndex(
           (v) => v.index === action.payload.index
         ) ?? 0;
-
-      
 
       state.featureValues![index] = {
         id: action.payload.id,

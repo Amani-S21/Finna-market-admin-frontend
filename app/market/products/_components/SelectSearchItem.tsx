@@ -17,7 +17,7 @@ type Props = {
   currency?: string;
   onClick?: (price: number) => void;
   onDeleteClick?: () => void;
-  onDialogSave?: () => void;
+  onDialogSave?: (textValue: string) => void;
 };
 const SelectSearchItem = ({
   id,
@@ -32,8 +32,6 @@ const SelectSearchItem = ({
   onDialogSave,
 }: Props) => {
   const [price, setPrice] = useState(0);
-
-  const dispatch = useDispatch();
 
   const handleClick = () => {
     if (onClick) {

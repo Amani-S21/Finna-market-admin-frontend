@@ -6,7 +6,7 @@ import { MdOutlineEdit } from "react-icons/md";
 
 type Props = {
   defaultFieldText: string;
-  onSave: () => void;
+  onSave: (textValue : string) => void;
 };
 
 const SelectSearchItemDialog = ({ defaultFieldText, onSave }: Props) => {
@@ -40,7 +40,7 @@ const SelectSearchItemDialog = ({ defaultFieldText, onSave }: Props) => {
             </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button onClick={onSave}>Enregistrer</Button>
+            <Button onClick={()=> onSave(fieldValue)}>Enregistrer</Button>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>

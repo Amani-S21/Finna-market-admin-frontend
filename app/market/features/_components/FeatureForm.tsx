@@ -126,12 +126,12 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
               onDeleteClick={() => {
                 dispatch(removeFeatureValue({ feature: v.value }));
               }}
-              onDialogSave={() => {
+              onDialogSave={(textValue) => {
                 dispatch(
                   updateFeatureValue({
                     id: v.id,
                     index: v.index,
-                    value: v.value,
+                    value: textValue,
                   })
                 );
               }}

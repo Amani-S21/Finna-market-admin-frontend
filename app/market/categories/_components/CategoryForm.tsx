@@ -4,7 +4,12 @@ import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Category, CategorySchema, FeatureSchema } from "@/app/lib/types";
-import { addSubCategories, addSubCategory, removeSubCategory } from "@/redux/features/categorySlice";
+import {
+  addSubCategories,
+  addSubCategory,
+  removeSubCategory,
+  updateSubCategory,
+} from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
 import { Button, Flex, TextField } from "@radix-ui/themes";
 import { useEffect } from "react";
@@ -38,11 +43,11 @@ const CategoryForm = ({ category }: { category?: Category }) => {
     watch,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useCategoryForm()
+  } = useCategoryForm();
 
   const { mutateAsync: createCategory } = useCreateCategories({ axios });
 
-//   const { mutateAsync: updateFeature } = usOeUpdateFeatures({ axios });
+  //   const { mutateAsync: updateFeature } = usOeUpdateFeatures({ axios });
 
   const onSubmit = async (data: CategorySchema) => {
     // if (feature) {
@@ -56,15 +61,14 @@ const CategoryForm = ({ category }: { category?: Category }) => {
     //       })) ?? [],
     //   });
     // } else {
-      await createCategory({
-        name: data.name,
-        subCategories:
-          subCategories?.map((v) => ({
-            name: v.name,
-          })) ?? [],
-      });
+    await createCategory({
+      name: data.name,
+      subCategories:
+        subCategories?.map((v) => ({
+          name: v.name,
+        })) ?? [],
+    });
     // }
-
   };
 
   return (
@@ -116,6 +120,15 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               index={`${index}`}
               onDeleteClick={() => {
                 dispatch(removeSubCategory({ category: v.name }));
+              }}
+              onDialogSave={(textValue) => {
+                dispatch(
+                  updateSubCategory({
+                    id: v.id,
+                    index: v.index,
+                    name: textValue,
+                  })
+                );
               }}
             />
           ))}
