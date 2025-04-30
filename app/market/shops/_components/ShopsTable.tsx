@@ -4,27 +4,29 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 
+export const shopsColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Boutique" },
+  { label: "Addrèsse" },
+  { label: "Date" },
+  { label: "Action" },
+];
+
 const ShopsTable = ({
   shopsResponse,
 }: {
   shopsResponse: ShopsListResponse;
 }) => {
   const router = useRouter();
-  const columns: {
-    label: string;
-  }[] = [
-    { label: "N" },
-    { label: "Boutique" },
-    { label: "Addrèsse" },
-    { label: "Date" },
-    { label: "Action" },
-  ];
+  
 
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {columns.map((column) => (
+          {shopsColumns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
               {column.label}
             </Table.ColumnHeaderCell>
