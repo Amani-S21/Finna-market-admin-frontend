@@ -1,5 +1,6 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import { ProductsToolBar } from "../_components";
+import { productColumns } from "../_components/ProductsTable";
 
 const LoadingProductsPage = () => {
   
@@ -7,7 +8,7 @@ const LoadingProductsPage = () => {
   return (
     <div>
       <ProductsToolBar />
-      <LoadingTable />
+      <LoadingTable columns={productColumns} />
     </div>
   );
 };

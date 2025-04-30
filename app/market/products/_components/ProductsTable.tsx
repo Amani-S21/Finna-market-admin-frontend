@@ -7,27 +7,27 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { IoIosMore } from "react-icons/io";
 
+export const productColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Boutique" },
+  { label: "Addrèsse" },
+  { label: "Date" },
+  { label: "Action" },
+];
+
 const ProductsTable = ({
   productsResponse,
 }: {
   productsResponse: ProductsListResponse;
 }) => {
   const router = useRouter();
-  const columns: {
-    label: string;
-  }[] = [
-    { label: "N" },
-    { label: "Boutique" },
-    { label: "Addrèsse" },
-    { label: "Date" },
-    { label: "Action" },
-  ];
-
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {columns.map((column) => (
+          {productColumns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
               {column.label}
             </Table.ColumnHeaderCell>
