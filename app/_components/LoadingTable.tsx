@@ -1,9 +1,13 @@
 import { Skeleton, Table } from "@radix-ui/themes";
 import React from "react";
 
-const LoadingTable = () => {
-  const tableArray = [...Array(5)];
+type Props = {
+  columns: {
+    label: string;
+  }[];
+};
 
+const LoadingTable = ({ columns }: Props) => {
   return (
     <>
       <Table.Root variant="surface">
@@ -18,7 +22,7 @@ const LoadingTable = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {tableArray.map((_, index) => (
+          {columns.map((_, index) => (
             <Table.Row key={index}>
               <Table.Cell>
                 <Skeleton />

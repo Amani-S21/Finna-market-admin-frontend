@@ -7,27 +7,28 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
 
+export const categoriesColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Catégories" },
+  { label: "Date" },
+  { label: "Valeurs" },
+  { label: "Action" },
+];
+
 const CategoriesTable = ({
   categoriesResponse,
 }: {
   categoriesResponse: CategoriesResponse;
 }) => {
   const router = useRouter();
-  const columns: {
-    label: string;
-  }[] = [
-    { label: "N" },
-    { label: "Catégories" },
-    { label: "Date" },
-    { label: "Valeurs" },
-    { label: "Action" },
-  ];
 
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {columns.map((column) => (
+          {categoriesColumns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
               {column.label}
             </Table.ColumnHeaderCell>
