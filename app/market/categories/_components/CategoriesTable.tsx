@@ -6,16 +6,8 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
+import { categoriesColumns } from "../list/loading";
 
-export const categoriesColumns: {
-  label: string;
-}[] = [
-  { label: "N" },
-  { label: "Catégories" },
-  { label: "Date" },
-  { label: "Valeurs" },
-  { label: "Action" },
-];
 
 const CategoriesTable = ({
   categoriesResponse,

@@ -1,6 +1,16 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import { CategoriesToolBar } from "../_components";
-import { categoriesColumns } from "../_components/CategoriesTable";
+
+
+export const categoriesColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Catégories" },
+  { label: "Date" },
+  { label: "Valeurs" },
+  { label: "Action" },
+];
 
 const LoadingCategoriesPage = () => {
   return (
