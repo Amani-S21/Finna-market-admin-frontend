@@ -16,7 +16,12 @@ import { useEffect } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
-import { useCategoryForm, useCreateCategories } from "../_features/hooks";
+import {
+  useCategoryForm,
+  useCreateCategories,
+  useUpdateCategories,
+} from "../_features/hooks";
+import { updateCategories } from "../_features/api";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -47,28 +52,28 @@ const CategoryForm = ({ category }: { category?: Category }) => {
 
   const { mutateAsync: createCategory } = useCreateCategories({ axios });
 
-  //   const { mutateAsync: updateFeature } = usOeUpdateFeatures({ axios });
+  const { mutateAsync: updateCategory } = useUpdateCategories({ axios });
 
   const onSubmit = async (data: CategorySchema) => {
-    // if (feature) {
-    //   await updateFeature({
-    //     id: feature.id,
-    //     name: data.name,
-    //     featureValues:
-    //       featureValues?.map((v) => ({
-    //         id: v.id,
-    //         value: v.value,
-    //       })) ?? [],
-    //   });
-    // } else {
-    await createCategory({
-      name: data.name,
-      subCategories:
-        subCategories?.map((v) => ({
-          name: v.name,
-        })) ?? [],
-    });
-    // }
+    if (category) {
+      await updateCategory({
+        id: category.id,
+        name: data.name,
+        subCategories:
+          subCategories?.map((v) => ({
+            id: v.id,
+            name: v.name,
+          })) ?? [],
+      });
+    } else {
+      await createCategory({
+        name: data.name,
+        subCategories:
+          subCategories?.map((v) => ({
+            name: v.name,
+          })) ?? [],
+      });
+    }
   };
 
   return (

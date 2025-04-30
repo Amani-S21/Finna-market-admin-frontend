@@ -26,3 +26,15 @@ export const createCategories = async (
     return { count: 0, data: [] };
   }
 };
+
+export const updateCategories = async (
+  axios: AxiosInstance,
+  data: SubmitCategory
+) => {
+  try {
+    const res = await axios.patch(`/categories`, data);
+    return res.data;
+  } catch (error) {
+    return { count: 0, data: [] };
+  }
+};

@@ -11,7 +11,7 @@ const NewCategoryPage = () => {
         <BackButton />
         <div className="flex items-center space-x-4 mt-5">
           <TbCategoryMinus />
-          <span className="font-bold">Catégories</span>
+          <span className="font-bold">Catégorie</span>
         </div>
         <Text as="p" size="2" mb="4">
           Remplissez les champs ci dessous pour créer une nouvelle catégorie
