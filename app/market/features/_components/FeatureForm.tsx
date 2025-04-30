@@ -9,23 +9,17 @@ import {
   addFeatureValue,
   addFeatureValues,
   removeFeatureValue,
+  updateFeatureValue,
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Dialog,
-  DropdownMenu,
-  Flex,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Button, Flex, TextField } from "@radix-ui/themes";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
 import { useCreateFeatures, useUpdateFeatures } from "../_features/hooks";
-import { useEffect } from "react";
 
 const FeatureForm = ({ feature }: { feature?: Feature }) => {
   const axios = useAxiosAuth();
@@ -80,18 +74,6 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
           })) ?? [],
       });
     }
-
-    console.log(
-      JSON.stringify({
-        id: feature?.id,
-        name: data.name,
-        featureValues:
-          featureValues?.map((v) => ({
-            id: v.id,
-            value: v.value,
-          })) ?? [],
-      })
-    );
   };
 
   return (
@@ -143,6 +125,15 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
               index={`${index}`}
               onDeleteClick={() => {
                 dispatch(removeFeatureValue({ feature: v.value }));
+              }}
+              onDialogSave={() => {
+                dispatch(
+                  updateFeatureValue({
+                    id: v.id,
+                    index: v.index,
+                    value: v.value,
+                  })
+                );
               }}
             />
           ))}

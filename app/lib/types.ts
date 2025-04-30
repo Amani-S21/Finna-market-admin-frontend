@@ -1,4 +1,5 @@
 import {
+  categorySchema,
   featureSchema,
   productSchema,
   shopSchema,
@@ -11,6 +12,8 @@ export type SigninSchema = z.infer<typeof signinSchema>;
 export type ShopSchema = z.infer<typeof shopSchema>;
 
 export type FeatureSchema = z.infer<typeof featureSchema>;
+
+export type CategorySchema = z.infer<typeof categorySchema>;
 
 export type ProductSchema = z.infer<typeof productSchema>;
 
@@ -192,9 +195,16 @@ export type CategoriesResponse = {
 };
 
 export type SubCategory = {
-  id: string;
+  id?: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
-  category: Category[];
+  index? : number;
+  createdAt?: string;
+  updatedAt?: string;
+  category?: Category[];
 };
+
+export type SubmitCategory  = {
+  id? : string;
+  name : string;
+  subCategories : SubCategory[]
+}

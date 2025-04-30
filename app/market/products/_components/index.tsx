@@ -6,3 +6,4 @@ export { default as SelectSearchItem } from "./SelectSearchItem";
 export { default as SearchFeatureField } from "./SearchFeatureField";
 export { default as ProductImage } from "./ProductImage";
 export { default as ProductForm } from "./ProductForm";
+export {default as SelectSearchItemDialog} from "./SelectSearchItemDialog"

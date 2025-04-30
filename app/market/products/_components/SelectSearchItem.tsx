@@ -1,19 +1,11 @@
 "use client";
 
-import {
-  Button,
-  Dialog,
-  Flex,
-  IconButton,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import { TiInputCheckedOutline } from "react-icons/ti";
-import { MdOutlineEdit } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { TiInputCheckedOutline } from "react-icons/ti";
 import { useDispatch } from "react-redux";
-import { updateFeatureValue } from "@/redux/features/featureSlice";
+import SelectSearchItemDialog from "./SelectSearchItemDialog";
 
 type Props = {
   isSelected?: boolean | undefined;
@@ -25,6 +17,7 @@ type Props = {
   currency?: string;
   onClick?: (price: number) => void;
   onDeleteClick?: () => void;
+  onDialogSave?: () => void;
 };
 const SelectSearchItem = ({
   id,
@@ -36,9 +29,10 @@ const SelectSearchItem = ({
   currency,
   editable = false,
   onClick,
+  onDialogSave,
 }: Props) => {
   const [price, setPrice] = useState(0);
-  const [featureValue, setFeatureValue] = useState(title ?? "");
+
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -83,50 +77,12 @@ const SelectSearchItem = ({
         {isSelected && <TiInputCheckedOutline color="blue" size={25} />}
         {onDeleteClick && (
           <Flex gap="4">
-            <Dialog.Root>
-              <Dialog.Trigger>
-                <IconButton variant="ghost" ml="2">
-                  <MdOutlineEdit />
-                </IconButton>
-              </Dialog.Trigger>
-
-              <Dialog.Content maxWidth="450px">
-                <Dialog.Title size="4">Modifier la valeur</Dialog.Title>
-                <Dialog.Description size="1">
-                  Vous pouvez saisir un nouveau nom pour la valeur
-                </Dialog.Description>
-
-                <TextField.Root
-                  value={featureValue}
-                  placeholder="Enter un nouveau nom pour la valeur"
-                  onChange={(e) => setFeatureValue(e.target.value)}
-                  mt="6"
-                />
-
-                <Flex gap="3" mt="4" justify="end">
-                  <Dialog.Close>
-                    <Button variant="surface" color="gray">
-                      Annuler
-                    </Button>
-                  </Dialog.Close>
-                  <Dialog.Close>
-                    <Button
-                      onClick={() => {
-                        dispatch(
-                          updateFeatureValue({
-                            id,
-                            index,
-                            value: featureValue,
-                          })
-                        );
-                      }}
-                    >
-                      Enregistrer
-                    </Button>
-                  </Dialog.Close>
-                </Flex>
-              </Dialog.Content>
-            </Dialog.Root>
+            {onDialogSave && (
+              <SelectSearchItemDialog
+                defaultFieldText={title}
+                onSave={onDialogSave}
+              />
+            )}
             <IconButton variant="ghost" onClick={onDeleteClick}>
               <IoIosCloseCircleOutline />
             </IconButton>

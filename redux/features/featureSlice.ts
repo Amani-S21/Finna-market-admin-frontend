@@ -49,7 +49,7 @@ const featureSlice = createSlice({
           (v) => v.index === action.payload.index
         ) ?? 0;
 
-      console.log(JSON.stringify(index));
+      
 
       state.featureValues![index] = {
         id: action.payload.id,
