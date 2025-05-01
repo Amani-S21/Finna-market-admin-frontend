@@ -3,11 +3,15 @@
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { formattedDate } from "@/app/lib/tools";
-import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound } from "next/navigation";
 import { use } from "react";
-import { OrderDetailsFeaturesTable, OrderStatusBadge } from "../_components";
+import {
+  AsigneeSelect,
+  OrderDetailsFeaturesTable,
+  OrderStatusBadge,
+} from "../_components";
 import { useFetchOrderById } from "../_features/hooks";
 import LoadingOrderDetailsPage from "./loading";
 
@@ -63,7 +67,7 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
         <div>
-          <Button>Assigner</Button>
+          <AsigneeSelect />
         </div>
       </Grid>
     </>
