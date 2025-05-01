@@ -1,7 +1,7 @@
 "use client";
 
 import { formattedDate } from "@/app/lib/tools";
-import { OrdersResponse, ShopsListResponse } from "@/app/lib/types";
+import { OrdersResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { GoEye } from "react-icons/go";
@@ -32,6 +32,7 @@ const OrdersTable = ({
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{formattedDate(`${order.createdAt}`)}</Table.Cell>
             <Table.Cell>{order.user.fullName}</Table.Cell>
+            <Table.Cell>{order.user.phone}</Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
               <OrderStatusBadge status={order.status} />
             </Table.Cell>

@@ -6,3 +6,10 @@ export const fetchOrders = async (axios: AxiosInstance, page: string) => {
     return res.data;
   } catch (error) {}
 };
+
+export const fetchOrderById = async (axios: AxiosInstance, orderId: string) => {
+  try {
+    const res = await axios.get(`/orders/${orderId}`);
+    return res.data;
+  } catch (error) {}
+};

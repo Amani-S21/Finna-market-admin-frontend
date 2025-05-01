@@ -200,7 +200,7 @@ export type SubCategory = {
   index?: number;
   createdAt?: string;
   updatedAt?: string;
-  category?: Category[];
+  category?: Category;
 };
 
 export type SubmitCategory = {
@@ -234,4 +234,11 @@ export type OrderDetail = {
   createdAt?: string;
   updatedAt?: string;
   product: Product;
+  orderDetailFeatures: OrderDetailFeatures[];
+};
+
+export type OrderDetailFeatures = {
+  price: number;
+  features: Feature;
+  featureValue: FeatureValue;
 };

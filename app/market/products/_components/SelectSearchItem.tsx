@@ -53,12 +53,11 @@ const SelectSearchItem = ({
             style={{ backgroundColor: title }}
             className="h-[20px] w-[50px]  rounded-sm border border-gray-300"
           />
-          {valuePrice && <p className="mx-1">{valuePrice}</p>}
         </>
       ) : (
         <p className="mr-1">{title}</p>
       )}
-
+      {valuePrice && <p className="mx-1">{valuePrice}</p>}
       <Flex align="center">
         {editable && (
           <>
