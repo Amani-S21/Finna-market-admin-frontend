@@ -216,13 +216,15 @@ export type OrdersResponse = {
 
 export type Order = {
   id: string;
-  status: string;
+  status: Status;
   createdAt?: string;
   updatedAt?: string;
   userId: string;
   user: User;
   ordersDetails: OrderDetail[];
 };
+
+export type Status = "OPEN" | "IN_PROGRESS" | "CANCELED" | "CLOSED";
 
 export type OrderDetail = {
   id: string;

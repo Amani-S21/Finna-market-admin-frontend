@@ -5,9 +5,9 @@ export const ordersColumns: {
   label: string;
 }[] = [
   { label: "N" },
-  { label: "Commandé par" },
-  { label: "Status" },
   { label: "Date" },
+  { label: "Client" },
+  { label: "Status" },
   { label: "Action" },
 ];
 

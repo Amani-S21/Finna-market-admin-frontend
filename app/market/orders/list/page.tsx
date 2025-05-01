@@ -4,10 +4,9 @@ import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useSession } from "next-auth/react";
 import { use } from "react";
-import OrdersTable from "../_components/OrdersTable";
-import OrdersToolBar from "../_components/OrdersToolBar";
 import { useFetchOrders } from "../_features/hooks";
 import LoadingOrdersPage from "./loading";
+import { OrdersTable, OrdersToolBar } from "../_components";
 
 const OrdersPage = ({
   searchParams,

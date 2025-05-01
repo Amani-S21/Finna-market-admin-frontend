@@ -6,6 +6,7 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { GoEye } from "react-icons/go";
 import { ordersColumns } from "../list/loading";
+import OrderStatusBadge from "./OrderStatusBadge";
 
 const OrdersTable = ({
   ordersResponse,
@@ -29,11 +30,11 @@ const OrdersTable = ({
         {ordersResponse?.data.map((order, index) => (
           <Table.Row key={order.id}>
             <Table.Cell>{index + 1}</Table.Cell>
+            <Table.Cell>{formattedDate(`${order.createdAt}`)}</Table.Cell>
             <Table.Cell>{order.user.fullName}</Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
-              {order.status}
+              <OrderStatusBadge status={order.status} />
             </Table.Cell>
-            <Table.Cell>{formattedDate(`${order.createdAt}`)}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
