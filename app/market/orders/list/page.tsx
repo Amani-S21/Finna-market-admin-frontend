@@ -1,7 +1,11 @@
+import OrdersToolBar from "../_components/OrdersToolBar";
+
 const OrdersPage = () => {
   return (
-    <div>OrdersPage</div>
-  )
-}
+    <>
+      <OrdersToolBar />
+    </>
+  );
+};
 
-export default OrdersPage
+export default OrdersPage;
