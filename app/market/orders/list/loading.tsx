@@ -7,7 +7,7 @@ export const ordersColumns: {
   { label: "N" },
   { label: "Date" },
   { label: "Client" },
-  { label: "Contact" },
+  { label: "Livreur" },
   { label: "Status" },
   { label: "Action" },
 ];

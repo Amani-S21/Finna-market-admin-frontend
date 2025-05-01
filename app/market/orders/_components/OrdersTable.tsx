@@ -31,8 +31,10 @@ const OrdersTable = ({
           <Table.Row key={order.id}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{formattedDate(`${order.createdAt}`)}</Table.Cell>
-            <Table.Cell>{order.user.fullName}</Table.Cell>
-            <Table.Cell>{order.user.phone}</Table.Cell>
+            <Table.Cell>{order?.customer?.fullName}</Table.Cell>
+            <Table.Cell>
+              {order?.deliverer?.fullName ?? "-"}
+            </Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
               <OrderStatusBadge status={order.status} />
             </Table.Cell>

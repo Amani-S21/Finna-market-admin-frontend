@@ -42,7 +42,8 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const totalOrderFeaturesPrice = (orderDetail: OrderDetail): number => {
     const total = orderDetail.orderDetailFeatures.reduce(
-      (sum, item) => (sum += item.price),
+      (sum, item) =>
+        (sum += item.featureValue.featuresAffectationsHasValues[0].price),
       0
     );
     return total + orderDetail.product.currentPrice;
@@ -59,16 +60,16 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
           {order?.status && <OrderStatusBadge status={order?.status} />}
           <Card mt="4" mb="4">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${order?.user.fullName.substring(
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${order?.customer?.fullName.substring(
                 0,
                 1
               )}`}</div>
               <Flex direction="column">
                 <p className="lowercase first-letter:uppercase">
-                  {order?.user?.fullName}
+                  {order?.customer?.fullName}
                 </p>
                 <p className="text-sm font-bold text-gray-600">
-                  {order?.user?.phone}
+                  {order?.customer?.phone}
                 </p>
               </Flex>
             </Flex>
@@ -100,9 +101,12 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
                     <div className="flex flex-wrap gap-2">
                       {orderDetail.orderDetailFeatures.map((value) => (
                         <SelectSearchItem
-                          key={value.featureValue.id}
+                          key={value?.featureValue?.id}
                           title={value.featureValue.value}
-                          valuePrice={value.price}
+                          valuePrice={
+                            value.featureValue.featuresAffectationsHasValues[0]
+                              .price
+                          }
                           currency="Usd"
                         />
                       ))}

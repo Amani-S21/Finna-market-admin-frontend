@@ -4,7 +4,6 @@ import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { TiInputCheckedOutline } from "react-icons/ti";
-import { useDispatch } from "react-redux";
 import SelectSearchItemDialog from "./SelectSearchItemDialog";
 
 type Props = {

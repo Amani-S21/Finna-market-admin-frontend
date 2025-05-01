@@ -219,8 +219,10 @@ export type Order = {
   status: Status;
   createdAt?: string;
   updatedAt?: string;
-  userId: string;
-  user: User;
+  customerId?: string;
+  delivererId?: string;
+  customer?: User;
+  deliverer?: User;
   ordersDetails: OrderDetail[];
 };
 
@@ -238,7 +240,12 @@ export type OrderDetail = {
 };
 
 export type OrderDetailFeatures = {
-  price: number;
   features: Feature;
-  featureValue: FeatureValue;
+  featureValue: OrderFeatureValue;
+};
+
+export type OrderFeatureValue = {
+  id: string;
+  value: string;
+  featuresAffectationsHasValues: FeatureValuePrice[];
 };
