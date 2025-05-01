@@ -197,14 +197,39 @@ export type CategoriesResponse = {
 export type SubCategory = {
   id?: string;
   name: string;
-  index? : number;
+  index?: number;
   createdAt?: string;
   updatedAt?: string;
   category?: Category[];
 };
 
-export type SubmitCategory  = {
-  id? : string;
-  name : string;
-  subCategories : SubCategory[]
-}
+export type SubmitCategory = {
+  id?: string;
+  name: string;
+  subCategories: SubCategory[];
+};
+
+export type OrdersResponse = {
+  count: number;
+  data: Order[];
+};
+
+export type Order = {
+  id: string;
+  status: string;
+  createdAt?: string;
+  updatedAt?: string;
+  userId: string;
+  user: User;
+  ordersDetails: OrderDetail[];
+};
+
+export type OrderDetail = {
+  id: string;
+  quantity: number;
+  orderId: string;
+  productId: string;
+  createdAt?: string;
+  updatedAt?: string;
+  product: Product;
+};
