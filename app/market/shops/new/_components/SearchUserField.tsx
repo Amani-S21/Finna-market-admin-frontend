@@ -39,7 +39,7 @@ const SearUserTextField = ({
     staleTime: 60 * 1000,
   });
 
-  // ✅ Detect clicks outside
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

@@ -37,13 +37,13 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
       <BackButton />
-      <Grid columns="3" mt="4">
+      <Grid columns="3" mt="4" gapX="4">
         <div className="col-span-2">
           <Heading mb="1" className="lowercase first-letter:uppercase">
             {formattedDate(`${order?.createdAt}`)}
           </Heading>
           {order?.status && <OrderStatusBadge status={order?.status} />}
-          <Card mt="4" mb="4">
+          <Card mt="4" mb="5">
             <Flex align="center" gap="2">
               <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${order?.customer?.fullName.substring(
                 0,
@@ -59,7 +59,7 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </Flex>
             </Flex>
           </Card>
-          <Text size="2" mt="4" className="font-bold">
+          <Text size="2" mt="6" className="font-bold">
             Produits commandés
           </Text>
           {order?.ordersDetails && (
@@ -68,6 +68,10 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <div>
           <AsigneeSelect />
+          <Text color="red" as="p" size="1" mt="2" mr="2">
+            Aucun livreur assigné à cette commande, veuillez cliquer sur le
+            bouton en haut pour en séléctioner un
+          </Text>
         </div>
       </Grid>
     </>

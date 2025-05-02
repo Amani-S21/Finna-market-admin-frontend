@@ -48,6 +48,8 @@ export type User = {
   updatedAt: string;
 };
 
+export type Roles = "SUPER_ADMIN" | "SUPER_MARKET_ADMIN" | "CUSTOMER" | "DELIVERER";
+
 export type ProductsListResponse = {
   count: number;
   data: Product[];

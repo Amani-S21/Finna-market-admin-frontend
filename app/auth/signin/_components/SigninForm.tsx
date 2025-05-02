@@ -2,13 +2,13 @@
 
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import Spinner from "@/app/_components/Spinner";
-import { SigninSchema } from "@/app/types";
 import { signinSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, TextField } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Key, Phone } from "lucide-react";
+import { SigninSchema } from "@/app/lib/types";
 
 const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const {
