@@ -86,7 +86,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   useEffect(() => {
     if (product) {
       // Category relating
-      setSelectedCategoryId(product.subCategory.category.id);
+      setSelectedCategoryId(`${product?.subCategory?.category?.id}`);
       setSelectedSubCategory(product.subCategory);
 
       // Images

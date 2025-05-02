@@ -218,14 +218,14 @@ export type OrdersResponse = {
 
 export type Order = {
   id: string;
-  status: Status;
+  status?: Status;
   createdAt?: string;
   updatedAt?: string;
   customerId?: string;
   delivererId?: string;
   customer?: User;
   deliverer?: User;
-  ordersDetails: OrderDetail[];
+  ordersDetails?: OrderDetail[];
 };
 
 export type Status = "OPEN" | "IN_PROGRESS" | "CANCELED" | "CLOSED";

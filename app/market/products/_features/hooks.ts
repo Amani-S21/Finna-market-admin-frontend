@@ -28,7 +28,7 @@ export const useProductForm = ({
   return useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      category: product?.subCategory.category.name,
+      category: product?.subCategory?.category?.name,
       feature: "",
     },
   });

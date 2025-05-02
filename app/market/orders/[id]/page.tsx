@@ -6,7 +6,7 @@ import { formattedDate } from "@/app/lib/tools";
 import { Badge, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound } from "next/navigation";
-import { use } from "react";
+import { use, useState } from "react";
 import {
   DelivererSelect,
   OrderDetailsFeaturesTable,
@@ -19,6 +19,8 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { status } = useSession();
   const { id } = use(params);
   const axios = useAxiosAuth();
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const {
     data: order,
@@ -69,37 +71,47 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
           {order?.ordersDetails && (
             <OrderDetailsFeaturesTable orderDetails={order?.ordersDetails} />
           )}
-          <Text as="p" size="2" mt="5" className="font-bold mt-4">
-            Livreur
-          </Text>
-          <Text as="p" size="2" mt="1" mr="2">
-            Agent résponsable de la livraison
-          </Text>
-          <Flex mt="3" gap="2" align="center">
-            <Badge radius="large" className="uppercase">
-              <p className="p-4">
-                {order?.deliverer?.fullName.substring(0, 1)}
-              </p>
-            </Badge>
-            <Flex direction="column">
-              <Text>{order?.deliverer?.fullName}</Text>
-              <Text size="1" className="font-bold text-gray-600">
-                {order?.deliverer?.phone}
+          {order?.deliverer && (
+            <>
+              <Text as="p" size="2" mt="5" className="font-bold mt-4">
+                Livreur
               </Text>
-            </Flex>
-          </Flex>
+              <Text as="p" size="2" mt="1" mr="2">
+                Agent résponsable de la livraison
+              </Text>
+              <Flex mt="3" gap="2" align="center">
+                <Badge radius="large" className="uppercase">
+                  <p className="p-4">
+                    {order?.deliverer?.fullName.substring(0, 1)}
+                  </p>
+                </Badge>
+                <Flex direction="column">
+                  <Text>{order?.deliverer?.fullName}</Text>
+                  <Text size="1" className="font-bold text-gray-600">
+                    {order?.deliverer?.phone}
+                  </Text>
+                </Flex>
+              </Flex>
+            </>
+          )}
         </div>
         <div>
-          <DelivererSelect />
-          <Text as="p" size="2" mt="2" mr="2">
-            Vous pouvez modifier le livreur séléctionné en cliquant sur ce
-            bouton si haut
-          </Text>
-
-          {/* <Text color="red" as="p" size="1" mt="2" mr="2">
-            Aucun livreur assigné à cette commande, veuillez cliquer sur le
-            bouton en haut pour en séléctioner un
-          </Text> */}
+          <DelivererSelect
+            open={openDialog}
+            setOpen={setOpenDialog}
+            orderId={`${order?.id}`}
+          />
+          {order?.deliverer ? (
+            <Text as="p" size="2" mt="2" mr="2">
+              Vous pouvez modifier le livreur séléctionné en cliquant sur ce
+              bouton si haut
+            </Text>
+          ) : (
+            <Text color="red" as="p" size="2" mt="2" mr="2">
+              Aucun livreur assigné à cette commande, veuillez cliquer sur le
+              bouton en haut pour en séléctioner un
+            </Text>
+          )}
         </div>
       </Grid>
     </>

@@ -1,28 +1,53 @@
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { User } from "@/app/lib/types";
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { useSearchUser } from "../../users/_features/hooks";
+import { useUpdateOrder } from "../_features/hooks";
 
-const DelivererSelect = () => {
+type Props = {
+  orderId: string;
+  open: boolean;
+  setOpen: (val: boolean) => void;
+};
+
+const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
   const axios = useAxiosAuth();
+  const queryClient = useQueryClient();
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  const { data: searchedUsers, isLoading } = useSearchUser({
+  const { data: searchedUsers, isLoading: isLoadingUsers } = useSearchUser({
     axios,
     term: debouncedSearchTerm,
     role: "CUSTOMER",
-    enabled: !!debouncedSearchTerm, // status === "authenticated",
+    enabled: !!debouncedSearchTerm,
   });
 
+  const { mutateAsync: updateOrder, isPending } = useUpdateOrder({ axios });
+
+  const handleItemClicked = async (user: User) => {
+    try {
+      await updateOrder({
+        id: orderId,
+        delivererId: user.id,
+      });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: ["order-by-id"] });
+      setOpen(false);
+    } catch (error) {}
+  };
+
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <Button>
+        <Button onClick={() => setOpen(true)}>
           <MdOutlineEdit /> Séléctionner un livreur
         </Button>
       </Dialog.Trigger>
@@ -40,7 +65,7 @@ const DelivererSelect = () => {
           mt="6"
         />
 
-        {isLoading ? (
+        {isLoadingUsers ? (
           <div className="min-h-[60px]">
             <Text size="1" mt="4">
               Chargement...
@@ -56,15 +81,13 @@ const DelivererSelect = () => {
                   "cursor-default hover:bg-gray-50 py-2": true,
                 })}
                 key={user.id}
+                onClick={() => handleItemClicked(user)}
               >
-                <Flex align="center" justify="between">
-                  <Flex gap="2" align="center">
-                    <Badge radius="medium" className="uppercase">
-                      {user.fullName.substring(0, 1)}
-                    </Badge>
-                    <p>{user.fullName}</p>
-                  </Flex>
-                  <Text size="1">Chargement...</Text>
+                <Flex gap="2" align="center">
+                  <Badge radius="medium" className="uppercase">
+                    {user.fullName.substring(0, 1)}
+                  </Badge>
+                  <p>{user.fullName}</p>
                 </Flex>
               </div>
             ))}
@@ -77,7 +100,8 @@ const DelivererSelect = () => {
           </div>
         )}
 
-        <Flex gap="3" mt="4" justify="end">
+        <Flex gap="3" mt="4" justify="between">
+          {isPending ? <Text size="1">Chargement...</Text> : <p></p>}
           <Dialog.Close>
             <Button variant="surface" color="gray">
               Annuler

@@ -1,7 +1,8 @@
 import { Order, OrdersResponse } from "@/app/lib/types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { fetchOrderById, fetchOrders } from "./api";
+import { fetchOrderById, fetchOrders, updateOrder } from "./api";
+import { useRouter } from "next/navigation";
 
 type UseFetchOrders = {
   axios: AxiosInstance;
@@ -19,19 +20,33 @@ export const useFetchOrders = ({ axios, page, enabled }: UseFetchOrders) => {
   });
 };
 
-
 type UseFetchOrderById = {
   axios: AxiosInstance;
   orderId: string;
   enabled: boolean;
 };
 
-export const useFetchOrderById = ({ axios, orderId, enabled }: UseFetchOrderById) => {
+export const useFetchOrderById = ({
+  axios,
+  orderId,
+  enabled,
+}: UseFetchOrderById) => {
   return useQuery<Order>({
     queryKey: ["order-by-id", orderId],
     queryFn: () => fetchOrderById(axios, orderId),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
+  });
+};
+
+type UseUpdateOrder = {
+  axios: AxiosInstance;
+};
+
+export const useUpdateOrder = ({ axios }: UseUpdateOrder) => {
+  return useMutation({
+    mutationFn: (data: Order) => updateOrder(axios, data),
+    onSuccess: () => {},
   });
 };
