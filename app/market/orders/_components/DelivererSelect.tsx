@@ -1,33 +1,18 @@
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import {
-  Badge,
-  Button,
-  Dialog,
-  Flex,
-  IconButton,
-  Select,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
-import { Search } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useSearchUser } from "../../users/_features/hooks";
-import { useState } from "react";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
-import { Spinner } from "@/app/_components";
-import { MdOutlineEdit } from "react-icons/md";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
+import { useState } from "react";
+import { MdOutlineEdit } from "react-icons/md";
+import { useSearchUser } from "../../users/_features/hooks";
 
-const AsigneeSelect = () => {
+const DelivererSelect = () => {
   const axios = useAxiosAuth();
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  const {
-    data: searchedUsers,
-    isLoading,
-  } = useSearchUser({
+  const { data: searchedUsers, isLoading } = useSearchUser({
     axios,
     term: debouncedSearchTerm,
     role: "CUSTOMER",
@@ -102,44 +87,6 @@ const AsigneeSelect = () => {
       </Dialog.Content>
     </Dialog.Root>
   );
-
-  // return (
-  //   <Select.Root>
-  //     <Select.Trigger placeholder="Assigner livreur" />
-  //     <Select.Content>
-  //       <Select.Group>
-  //         <TextField.Root
-  //           placeholder="Rechercher"
-  //           value={searchValue ?? "gfgfggf"}
-  //           onChange={(e) => setSearchValue(e.target.value)}
-  //         >
-  //           <TextField.Slot>
-  //             <Search size={15} />
-  //           </TextField.Slot>
-  //         </TextField.Root>
-  //         {(searchedUsers ?? []).length > 0 ? (
-  //           <>
-  //             <Select.Label>Livreurs</Select.Label>
-  //             {isLoading ? (
-  //               <Spinner />
-  //             ) : (
-  //               searchedUsers?.map((user) => (
-  //                 <p key={user.id} value={user.id}>
-  //                   {user.fullName}
-  //                 </Select.Item>
-  //               ))
-  //             )}
-  //           </>
-  //         ) : (
-  //           <>
-  //             <Select.Label>Livreurs</Select.Label>
-  //             <Select.Item value="value">Aucun élément</Select.Item>
-  //           </>
-  //         )}
-  //       </Select.Group>
-  //     </Select.Content>
-  //   </Select.Root>
-  // );
 };
 
-export default AsigneeSelect;
+export default DelivererSelect;

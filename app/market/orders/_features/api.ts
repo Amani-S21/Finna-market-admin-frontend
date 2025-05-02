@@ -1,4 +1,3 @@
-import { Roles } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 
 export const fetchOrders = async (axios: AxiosInstance, page: string) => {
