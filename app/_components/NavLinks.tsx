@@ -3,15 +3,13 @@
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
-import { AiOutlineProduct } from "react-icons/ai";
-import { GrDeliver } from "react-icons/gr";
+import { AiOutlineOrderedList, AiOutlineProduct } from "react-icons/ai";
+import { FaClipboardUser } from "react-icons/fa6";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
-import { AiOutlineOrderedList } from "react-icons/ai";
 import { TbCategoryMinus } from "react-icons/tb";
 import { VscAccount } from "react-icons/vsc";
-import { IoIosExit } from "react-icons/io";
+import { FaUsers } from "react-icons/fa";
 
 const NavLinks = () => {
   const currentPath = usePathname();
@@ -22,7 +20,11 @@ const NavLinks = () => {
       label: "Produits",
       icon: <AiOutlineProduct />,
     },
-    { href: "/market/delivers", label: "Livreurs", icon: <GrDeliver /> },
+    {
+      href: "/market/users/list?page=1",
+      label: "Utilisateurs",
+      icon: <FaUsers />,
+    },
     {
       href: "/market/orders/list?page=1",
       label: "Commandes",

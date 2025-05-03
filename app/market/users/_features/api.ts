@@ -11,3 +11,10 @@ export const searchUser = async (
     return res.data;
   } catch (error) {}
 };
+
+export const fetchUsers = async (axios: AxiosInstance, page: string) => {
+  try {
+    const res = await axios.get(`/users?page=${page}&limit=10`);
+    return res.data;
+  } catch (error) {}
+};
