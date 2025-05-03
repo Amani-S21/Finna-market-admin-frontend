@@ -1,5 +1,15 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import { ProductsToolBar } from "../_components";
+import { Flex } from "@radix-ui/themes";
+
+const LoadingProductsPage = () => {
+  return (
+    <Flex direction="column" gap="4">
+      <ProductsToolBar />
+      <LoadingTable columns={productColumns} />
+    </Flex>
+  );
+};
 
 
 export const productColumns: {
@@ -11,16 +21,5 @@ export const productColumns: {
   { label: "Date" },
   { label: "Action" },
 ];
-
-const LoadingProductsPage = () => {
-  
-
-  return (
-    <div>
-      <ProductsToolBar />
-      <LoadingTable columns={productColumns} />
-    </div>
-  );
-};
 
 export default LoadingProductsPage;

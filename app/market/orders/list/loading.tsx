@@ -1,5 +1,15 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import OrdersToolBar from "../_components/OrdersToolBar";
+import { Flex } from "@radix-ui/themes";
+
+const LoadingOrdersPage = () => {
+  return (
+    <Flex direction="column" gap="4">
+      <OrdersToolBar />
+      <LoadingTable columns={ordersColumns} />
+    </Flex>
+  );
+};
 
 export const ordersColumns: {
   label: string;
@@ -11,14 +21,5 @@ export const ordersColumns: {
   { label: "Status" },
   { label: "Action" },
 ];
-
-const LoadingOrdersPage = () => {
-  return (
-    <>
-      <OrdersToolBar />
-      <LoadingTable columns={ordersColumns} />
-    </>
-  );
-};
 
 export default LoadingOrdersPage;

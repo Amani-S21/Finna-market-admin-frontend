@@ -1,13 +1,14 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ShopsToolBar } from "../_components";
+import { Flex } from "@radix-ui/themes";
 
 const LoadingShopspPage = () => {
   return (
-    <div>
+    <Flex direction="column" gap="4">
       <ShopsToolBar />
       <LoadingTable columns={shopsColumns} />
-    </div>
+    </Flex>
   );
 };
 

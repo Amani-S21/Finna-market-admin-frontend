@@ -1,6 +1,15 @@
 import LoadingTable from "@/app/_components/LoadingTable";
 import { CategoriesToolBar } from "../_components";
+import { Flex } from "@radix-ui/themes";
 
+const LoadingCategoriesPage = () => {
+  return (
+    <Flex direction="column" gap="4">
+      <CategoriesToolBar />
+      <LoadingTable columns={categoriesColumns} />
+    </Flex>
+  );
+};
 
 export const categoriesColumns: {
   label: string;
@@ -11,14 +20,5 @@ export const categoriesColumns: {
   { label: "Valeurs" },
   { label: "Action" },
 ];
-
-const LoadingCategoriesPage = () => {
-  return (
-    <>
-      <CategoriesToolBar />
-      <LoadingTable columns={categoriesColumns} />
-    </>
-  );
-};
 
 export default LoadingCategoriesPage;
