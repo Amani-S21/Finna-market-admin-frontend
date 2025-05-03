@@ -4,12 +4,12 @@ import { MdOutlineFeaturedPlayList } from "react-icons/md";
 const FeaturesToolBar = () => {
   return (
     <Flex justify="between">
-      <div className="mb-2">
+      <div>
         <div className="flex items-center space-x-4">
           <MdOutlineFeaturedPlayList />
           <span className="font-bold">Caractéristiques</span>
         </div>
-        <Text as="p" size="2" mb="4">
+        <Text as="p" size="2">
           Toutes les caractéristiques disponibles dans l'entreprise
         </Text>
       </div>

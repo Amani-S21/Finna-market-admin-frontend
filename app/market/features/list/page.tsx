@@ -8,6 +8,7 @@ import FeaturesTable from "../_components/FeaturesTable";
 import FeaturesToolBar from "../_components/FeaturesToolBar";
 import { useFetchFeatures } from "../_features/hooks";
 import LoadingFeatures from "./loading";
+import { Flex } from "@radix-ui/themes";
 
 const FeaturesPage = ({
   searchParams,
@@ -33,7 +34,7 @@ const FeaturesPage = ({
   if (error) return <p>Erreur</p>;
 
   return (
-    <>
+    <Flex direction="column" gap="4">
       <FeaturesToolBar />
       {featuresResponse && (
         <FeaturesTable featuresResponse={featuresResponse} />
@@ -44,7 +45,7 @@ const FeaturesPage = ({
         itemCount={featuresResponse?.count ?? 0}
         className="mt-4"
       />
-    </>
+    </Flex>
   );
 };
 
