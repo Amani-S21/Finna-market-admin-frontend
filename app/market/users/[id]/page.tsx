@@ -2,22 +2,13 @@
 
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import {
-  Badge,
-  Button,
-  Card,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-} from "@radix-ui/themes";
+import { Badge, Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { use } from "react";
+import { UserRoleBadge } from "../_components";
 import { useFetchUser } from "../_features/hooks";
 import LoadingUserDetailsPage from "./loading";
-import { Roles } from "@/app/lib/types";
-import { UserRoleBadge } from "../_components";
-import Link from "next/link";
 
 const UserDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { status } = useSession();

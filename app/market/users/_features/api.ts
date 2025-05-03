@@ -1,4 +1,4 @@
-import { Roles } from "@/app/lib/types";
+import { Roles, User } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 
 export const searchUser = async (
@@ -22,6 +22,13 @@ export const fetchUsers = async (axios: AxiosInstance, page: string) => {
 export const fetchUser = async (axios: AxiosInstance, userId: string) => {
   try {
     const res = await axios.get(`/users/${userId}`);
+    return res.data;
+  } catch (error) {}
+};
+
+export const updateUser = async (axios: AxiosInstance, data : User) => {
+  try {
+    const res = await axios.patch(`/users`, data);
     return res.data;
   } catch (error) {}
 };

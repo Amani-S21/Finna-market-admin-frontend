@@ -4,12 +4,15 @@ import {
   productSchema,
   shopSchema,
   signinSchema,
+  userSchema,
 } from "@/app/lib/validationSchemas";
 import { z } from "zod";
 
 export type SigninSchema = z.infer<typeof signinSchema>;
 
 export type ShopSchema = z.infer<typeof shopSchema>;
+
+export type UserSchema = z.infer<typeof userSchema>;
 
 export type FeatureSchema = z.infer<typeof featureSchema>;
 
@@ -40,12 +43,12 @@ export type Shop = {
 
 export type User = {
   id: string;
-  fullName: string;
-  role: Roles;
-  phone: string;
-  emailAddress: string;
-  createdAt: string;
-  updatedAt: string;
+  fullName?: string;
+  role?: Roles;
+  phone?: string;
+  emailAddress?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type UsersResponse = {

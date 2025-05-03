@@ -1,7 +1,16 @@
-import { Roles, User, UsersResponse } from "@/app/lib/types";
-import { useQuery } from "@tanstack/react-query";
+import { Roles, User, UserSchema, UsersResponse } from "@/app/lib/types";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { fetchUser, fetchUsers, searchUser } from "./api";
+import { fetchUser, fetchUsers, searchUser, updateUser } from "./api";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema } from "@/app/lib/validationSchemas";
+import { useRouter } from "next/navigation";
 
 type UseSearchUser = {
   axios: AxiosInstance;
@@ -28,14 +37,10 @@ export const useSearchUser = ({
 type UseFetchUsers = {
   axios: AxiosInstance;
   enabled: boolean;
-  page : string
+  page: string;
 };
 
-export const useFetchUsers = ({
-  axios,
-  page,
-  enabled,
-}: UseFetchUsers) => {
+export const useFetchUsers = ({ axios, page, enabled }: UseFetchUsers) => {
   return useQuery<UsersResponse>({
     queryKey: ["users", page],
     queryFn: () => fetchUsers(axios, page),
@@ -48,19 +53,35 @@ export const useFetchUsers = ({
 type UseFetchUser = {
   axios: AxiosInstance;
   enabled: boolean;
-  userId : string
+  userId: string;
 };
 
-export const useFetchUser = ({
-  axios,
-  userId,
-  enabled,
-}: UseFetchUser) => {
+export const useFetchUser = ({ axios, userId, enabled }: UseFetchUser) => {
   return useQuery<User>({
     queryKey: ["user", userId],
     queryFn: () => fetchUser(axios, userId),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
+  });
+};
+
+export const useUserForm = () => {
+  return useForm<UserSchema>({
+    resolver: zodResolver(userSchema),
+  });
+};
+
+export const useUpdateUser = ({ axios }: { axios: AxiosInstance }) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: (data: User) => updateUser(axios, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      router.back();
+    },
   });
 };

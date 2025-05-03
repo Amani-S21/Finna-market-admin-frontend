@@ -13,6 +13,10 @@ export const shopSchema = z.object({
   address: z.string().min(1, "Veuillez saisir l'addrèsse"),
 });
 
+export const userSchema = z.object({
+  role: z.string().min(1, "Veuillez selectionner un role")
+});
+
 export const categorySchema = z.object({
   name: z.string().min(1, "Veuillez remplir le nom"),
   subCategory: z.string().optional(),
