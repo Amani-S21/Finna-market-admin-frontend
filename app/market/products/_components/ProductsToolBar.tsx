@@ -5,12 +5,12 @@ import { IoStorefrontOutline } from "react-icons/io5";
 const ProductsToolBar = () => {
   return (
     <Flex justify="between">
-      <div className="mb-2">
+      <div>
         <div className="flex items-center space-x-4">
           <IoStorefrontOutline />
           <span className="font-bold">Produits</span>
         </div>
-        <Text as="p" size="2" mb="4">
+        <Text as="p" size="2">
           Tous les produits disponibles dans l'entreprise
         </Text>
       </div>

@@ -7,6 +7,7 @@ import LoadingProductsPage from "./loading";
 import { ProductsToolBar, ProductsTable } from "../_components";
 import { useFetchProducts } from "../_features/hooks";
 import { useSession } from "next-auth/react";
+import { Flex } from "@radix-ui/themes";
 
 const ProductsPage = ({
   searchParams,
@@ -28,7 +29,7 @@ const ProductsPage = ({
   if (error) return;
 
   return (
-    <div>
+    <Flex direction="column" gap="4">
       <ProductsToolBar />
       {productsResponse && (
         <ProductsTable productsResponse={productsResponse} />
@@ -37,9 +38,8 @@ const ProductsPage = ({
         pageSize={10}
         currentPage={parseInt(page)}
         itemCount={productsResponse?.count ?? 0}
-        className="mt-4"
       />
-    </div>
+    </Flex>
   );
 };
 
