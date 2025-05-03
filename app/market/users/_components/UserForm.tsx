@@ -6,6 +6,7 @@ import { Button, Flex, Select } from "@radix-ui/themes";
 import { useUpdateUser, useUserForm } from "../_features/hooks";
 import { Controller } from "react-hook-form";
 import { Spinner } from "@/app/_components";
+import { userRoles } from "./UserRoleFilter";
 
 const UserForm = ({ user }: { user?: User }) => {
   const axios = useAxiosAuth();
@@ -58,11 +59,5 @@ const UserForm = ({ user }: { user?: User }) => {
   );
 };
 
-const userRoles: { label: string; value: Roles }[] = [
-  { label: "client", value: "CUSTOMER" },
-  { label: "livreur", value: "DELIVERER" },
-  { label: "super admin", value: "SUPER_ADMIN" },
-  { label: "super marché admin", value: "SUPER_MARKET_ADMIN" },
-];
 
 export default UserForm;

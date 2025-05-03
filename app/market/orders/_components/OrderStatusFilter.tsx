@@ -1,4 +1,4 @@
-import { Roles, Status } from "@/app/lib/types";
+import { Status } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
 
 const OrderStatusFilter = () => {
