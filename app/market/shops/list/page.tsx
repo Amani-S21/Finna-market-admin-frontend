@@ -7,6 +7,7 @@ import LoadingShopspPage from "./loading";
 import { useFetchShops } from "../_features/hooks";
 import { ShopsToolBar, ShopsTable } from "../_components";
 import { useSession } from "next-auth/react";
+import { Flex } from "@radix-ui/themes";
 
 const ShopsPage = ({
   searchParams,
@@ -28,7 +29,7 @@ const ShopsPage = ({
   if (error) return;
 
   return (
-    <div>
+    <Flex direction="column" gap="4">
       <ShopsToolBar />
       {shopsResponse && <ShopsTable shopsResponse={shopsResponse} />}
       <Pagination
@@ -37,7 +38,7 @@ const ShopsPage = ({
         itemCount={shopsResponse?.count ?? 0}
         className="mt-4"
       />
-    </div>
+    </Flex>
   );
 };
 
