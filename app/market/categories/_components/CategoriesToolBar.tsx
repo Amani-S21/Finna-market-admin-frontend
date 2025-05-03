@@ -5,12 +5,12 @@ import { TbCategoryMinus } from "react-icons/tb";
 const CategoriesToolBar = () => {
   return (
     <Flex justify="between">
-      <div className="mb-2">
+      <div>
         <div className="flex items-center space-x-4">
           <TbCategoryMinus />
           <span className="font-bold">Catégories</span>
         </div>
-        <Text as="p" size="2" mb="4">
+        <Text as="p" size="2">
           Toutes les catégories disponibles dans l'entreprise
         </Text>
       </div>

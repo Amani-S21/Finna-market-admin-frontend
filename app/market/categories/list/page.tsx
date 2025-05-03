@@ -8,6 +8,7 @@ import LoadingCategoriesPage from "./loading";
 import { CategoriesToolBar } from "../_components";
 import CategoriesTable from "../_components/CategoriesTable";
 import { Pagination } from "@/app/_components";
+import { Flex } from "@radix-ui/themes";
 
 const CategoriesPage = ({
   searchParams,
@@ -29,7 +30,7 @@ const CategoriesPage = ({
   if (error) return;
 
   return (
-    <>
+    <Flex direction="column" gap="4">
       <CategoriesToolBar />
       {categoriesResponse && (
         <CategoriesTable categoriesResponse={categoriesResponse} />
@@ -40,7 +41,7 @@ const CategoriesPage = ({
         itemCount={categoriesResponse?.count ?? 0}
         className="mt-4"
       />
-    </>
+    </Flex>
   );
 };
 
