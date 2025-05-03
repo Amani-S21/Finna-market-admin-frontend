@@ -18,3 +18,10 @@ export const fetchUsers = async (axios: AxiosInstance, page: string) => {
     return res.data;
   } catch (error) {}
 };
+
+export const fetchUser = async (axios: AxiosInstance, userId: string) => {
+  try {
+    const res = await axios.get(`/users/${userId}`);
+    return res.data;
+  } catch (error) {}
+};

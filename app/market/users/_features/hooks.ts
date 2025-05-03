@@ -1,7 +1,7 @@
 import { Roles, User, UsersResponse } from "@/app/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { fetchUsers, searchUser } from "./api";
+import { fetchUser, fetchUsers, searchUser } from "./api";
 
 type UseSearchUser = {
   axios: AxiosInstance;
@@ -39,6 +39,26 @@ export const useFetchUsers = ({
   return useQuery<UsersResponse>({
     queryKey: ["users", page],
     queryFn: () => fetchUsers(axios, page),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseFetchUser = {
+  axios: AxiosInstance;
+  enabled: boolean;
+  userId : string
+};
+
+export const useFetchUser = ({
+  axios,
+  userId,
+  enabled,
+}: UseFetchUser) => {
+  return useQuery<User>({
+    queryKey: ["user", userId],
+    queryFn: () => fetchUser(axios, userId),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

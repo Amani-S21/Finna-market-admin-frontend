@@ -36,7 +36,7 @@ const OrdersTable = ({
               {order?.deliverer?.fullName ?? "-"}
             </Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
-              <OrderStatusBadge status={order.status} />
+              {order.status && <OrderStatusBadge status={order.status} />}
             </Table.Cell>
             <Table.Cell>
               <IconButton

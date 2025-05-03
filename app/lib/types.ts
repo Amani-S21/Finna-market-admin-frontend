@@ -41,7 +41,7 @@ export type Shop = {
 export type User = {
   id: string;
   fullName: string;
-  role: string;
+  role: Roles;
   phone: string;
   emailAddress: string;
   createdAt: string;
