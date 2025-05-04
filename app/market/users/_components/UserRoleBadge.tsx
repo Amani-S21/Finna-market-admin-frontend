@@ -4,7 +4,7 @@ import React from "react";
 
 const UserRoleBadge = ({ role }: { role: Roles }) => {
   return (
-    <Badge>
+    <Badge color="gray">
       <p className="lowercase first-letter:uppercase">{useRole[role]}</p>
     </Badge>
   );

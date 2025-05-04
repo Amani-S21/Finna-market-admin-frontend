@@ -17,6 +17,7 @@ export const usersColumns: {
 }[] = [
   { label: "N" },
   { label: "Utilisateur" },
+  { label: "Role" },
   { label: "Contact" },
   { label: "Date création" },
   { label: "Action" },

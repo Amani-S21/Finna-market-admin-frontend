@@ -6,6 +6,7 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { usersColumns } from "../list/loading";
+import UserRoleBadge from "./UserRoleBadge";
 
 const UsersTable = ({
   usersResponse,
@@ -30,10 +31,11 @@ const UsersTable = ({
           <Table.Row key={user.id}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{user.fullName}</Table.Cell>
+            <Table.Cell><UserRoleBadge role={user.role!}/></Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
               {user.phone}
             </Table.Cell>
-            <Table.Cell>{formattedDate(user.createdAt)}</Table.Cell>
+            <Table.Cell>{formattedDate(user?.createdAt!)}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
