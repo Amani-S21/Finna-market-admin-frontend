@@ -7,13 +7,19 @@ import { useRouter } from "next/navigation";
 type UseFetchOrders = {
   axios: AxiosInstance;
   page: string;
+  status?: string;
   enabled: boolean;
 };
 
-export const useFetchOrders = ({ axios, page, enabled }: UseFetchOrders) => {
+export const useFetchOrders = ({
+  axios,
+  page,
+  status,
+  enabled,
+}: UseFetchOrders) => {
   return useQuery<OrdersResponse>({
-    queryKey: ["orders", page],
-    queryFn: () => fetchOrders(axios, page),
+    queryKey: ["orders", page, status],
+    queryFn: () => fetchOrders(axios, page, status),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

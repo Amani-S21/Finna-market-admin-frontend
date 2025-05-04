@@ -1,9 +1,16 @@
 import { Order } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 
-export const fetchOrders = async (axios: AxiosInstance, page: string) => {
+export const fetchOrders = async (
+  axios: AxiosInstance,
+  page: string,
+  status?: string
+) => {
   try {
-    const res = await axios.get(`/orders?page=${page}&limit=10`);
+    const query = status
+      ? `status=${status}&page=${page}&limit=10`
+      : `page=${page}&limit=10`;
+    const res = await axios.get(`/orders?${query}`);
     return res.data;
   } catch (error) {}
 };

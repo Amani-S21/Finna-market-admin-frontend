@@ -12,17 +12,22 @@ import { Flex } from "@radix-ui/themes";
 const OrdersPage = ({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; status: string }>;
 }) => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { page } = use(searchParams);
+  const { page, status: orderStatus } = use(searchParams);
 
   const {
     data: ordersResponse,
     isLoading,
     error,
-  } = useFetchOrders({ axios, page, enabled: status === "authenticated" });
+  } = useFetchOrders({
+    axios,
+    page,
+    status: orderStatus,
+    enabled: status === "authenticated",
+  });
 
   if (isLoading || status === "loading") return <LoadingOrdersPage />;
 

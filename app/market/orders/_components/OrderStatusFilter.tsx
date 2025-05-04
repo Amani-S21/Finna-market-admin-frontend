@@ -12,7 +12,7 @@ const OrderStatusFilter = () => {
     <Select.Root
       onValueChange={(status) => {
         const params = new URLSearchParams();
-        if (status) params.append("status", status);
+        if (status !== "ALL") params.append("status", status);
 
         if (searchParams.get("page"))
           params.append("page", searchParams.get("page")!);
@@ -20,6 +20,7 @@ const OrderStatusFilter = () => {
         const query = params.size ? `?${params}` : "";
         router.push("/market/orders/list" + query);
       }}
+      defaultValue={searchParams.get("status") ?? "ALL"}
     >
       <Select.Trigger placeholder="Séléctionner un status" />
       <Select.Content>
@@ -33,7 +34,7 @@ const OrderStatusFilter = () => {
   );
 };
 
-const statusses: { label: string; value: Status | "ALL" }[] = [
+const statusses: { label: string; value?: Status | "ALL" }[] = [
   { label: "Tout", value: "ALL" },
   { label: "Ouvert", value: "OPEN" },
   { label: "En cours", value: "IN_PROGRESS" },
