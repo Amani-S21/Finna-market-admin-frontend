@@ -1,10 +1,19 @@
+"use client";
+
 import { Roles } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const UserRoleFilter = () => {
+  const router = useRouter();
   return (
-    <Select.Root>
+    <Select.Root
+      onValueChange={(role) => {
+        const query = role ? `?role=${role}` : "";
+        router.push("/market/users" + query);
+      }}
+    >
       <Select.Trigger placeholder="Séléctionner un role" />
       <Select.Content>
         {userRoles.map((role) => (

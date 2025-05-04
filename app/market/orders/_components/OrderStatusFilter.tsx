@@ -1,18 +1,24 @@
-"use client"
+"use client";
 
 import { Status } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
-
+import { useRouter, useSearchParams } from "next/navigation";
 
 const OrderStatusFilter = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <Select.Root
       onValueChange={(status) => {
-        const query = status ? `?status=${status}` : "";
-        router.push("/market/status" + query);
+        const params = new URLSearchParams();
+        if (status) params.append("status", status);
+
+        if (searchParams.get("page"))
+          params.append("page", searchParams.get("page")!);
+
+        const query = params.size ? `?${params}` : "";
+        router.push("/market/orders/list" + query);
       }}
     >
       <Select.Trigger placeholder="Séléctionner un status" />
