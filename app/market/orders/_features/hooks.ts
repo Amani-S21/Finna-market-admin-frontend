@@ -1,4 +1,4 @@
-import { Order, OrdersResponse } from "@/app/lib/types";
+import { Order, OrdersResponse, Status } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { fetchOrderById, fetchOrders, updateOrder } from "./api";
@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 type UseFetchOrders = {
   axios: AxiosInstance;
   page: string;
-  status?: string;
+  status?: Status;
   enabled: boolean;
 };
 

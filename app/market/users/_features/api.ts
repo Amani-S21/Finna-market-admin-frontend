@@ -12,9 +12,16 @@ export const searchUser = async (
   } catch (error) {}
 };
 
-export const fetchUsers = async (axios: AxiosInstance, page: string) => {
+export const fetchUsers = async (
+  axios: AxiosInstance,
+  page: string,
+  role?: Roles
+) => {
   try {
-    const res = await axios.get(`/users?page=${page}&limit=10`);
+    const query = role
+      ? `role=${role}&page=${page}&limit=10`
+      : `page=${page}&limit=10`;
+    const res = await axios.get(`/users?${query}`);
     return res.data;
   } catch (error) {}
 };
@@ -26,7 +33,7 @@ export const fetchUser = async (axios: AxiosInstance, userId: string) => {
   } catch (error) {}
 };
 
-export const updateUser = async (axios: AxiosInstance, data : User) => {
+export const updateUser = async (axios: AxiosInstance, data: User) => {
   try {
     const res = await axios.patch(`/users`, data);
     return res.data;

@@ -25,7 +25,7 @@ const OrderStatusFilter = () => {
       <Select.Trigger placeholder="Séléctionner un status" />
       <Select.Content>
         {statusses.map((status) => (
-          <Select.Item key={status.label} value={status.value || ""}>
+          <Select.Item key={status.label} value={status.value}>
             {status.label}
           </Select.Item>
         ))}
@@ -34,7 +34,7 @@ const OrderStatusFilter = () => {
   );
 };
 
-const statusses: { label: string; value?: Status | "ALL" }[] = [
+const statusses: { label: string; value: Status | "ALL" }[] = [
   { label: "Tout", value: "ALL" },
   { label: "Ouvert", value: "OPEN" },
   { label: "En cours", value: "IN_PROGRESS" },

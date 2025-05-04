@@ -10,10 +10,11 @@ const UserRoleFilter = () => {
   const searchParams = useSearchParams();
   return (
     <Select.Root
+      defaultValue={searchParams.get("role") || "ALL"}
       onValueChange={(role) => {
         const params = new URLSearchParams();
 
-        if (role) params.append("role", role);
+        if (role !== "ALL") params.append("role", role);
 
         if (searchParams.get("page"))
           params.append("page", searchParams.get("page")!);
@@ -25,7 +26,7 @@ const UserRoleFilter = () => {
       <Select.Trigger placeholder="Séléctionner un role" />
       <Select.Content>
         {userRoles.map((role) => (
-          <Select.Item key={role.label} value={role.value || ""}>
+          <Select.Item key={role.label} value={role.value}>
             {role.label}
           </Select.Item>
         ))}

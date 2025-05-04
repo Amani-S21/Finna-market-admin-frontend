@@ -38,12 +38,13 @@ type UseFetchUsers = {
   axios: AxiosInstance;
   enabled: boolean;
   page: string;
+  role? : Roles
 };
 
-export const useFetchUsers = ({ axios, page, enabled }: UseFetchUsers) => {
+export const useFetchUsers = ({ axios, page, role, enabled }: UseFetchUsers) => {
   return useQuery<UsersResponse>({
-    queryKey: ["users", page],
-    queryFn: () => fetchUsers(axios, page),
+    queryKey: ["users", page, role],
+    queryFn: () => fetchUsers(axios, page, role),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

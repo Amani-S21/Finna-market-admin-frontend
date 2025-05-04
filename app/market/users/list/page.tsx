@@ -9,19 +9,21 @@ import LoadingUsersPage from "./loading";
 import { Pagination } from "@/app/_components";
 import UsersTable from "../_components/UsersTable";
 import { Flex } from "@radix-ui/themes";
+import { Roles } from "@/app/lib/types";
 
 const UsersPage = ({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; role: Roles }>;
 }) => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { page } = use(searchParams);
+  const { page, role } = use(searchParams);
 
   const { data: usersResponse, isLoading } = useFetchUsers({
     axios,
     page,
+    role,
     enabled: status === "authenticated",
   });
 

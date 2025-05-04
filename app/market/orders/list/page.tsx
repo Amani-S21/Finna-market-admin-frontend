@@ -8,11 +8,12 @@ import { useFetchOrders } from "../_features/hooks";
 import LoadingOrdersPage from "./loading";
 import { OrdersTable, OrdersToolBar } from "../_components";
 import { Flex } from "@radix-ui/themes";
+import { Status } from "@/app/lib/types";
 
 const OrdersPage = ({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string; status: string }>;
+  searchParams: Promise<{ page: string; status: Status }>;
 }) => {
   const { status } = useSession();
   const axios = useAxiosAuth();
