@@ -1,9 +1,20 @@
+"use client"
+
 import { Status } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
+
 
 const OrderStatusFilter = () => {
+  const router = useRouter();
+
   return (
-    <Select.Root>
+    <Select.Root
+      onValueChange={(status) => {
+        const query = status ? `?status=${status}` : "";
+        router.push("/market/status" + query);
+      }}
+    >
       <Select.Trigger placeholder="Séléctionner un status" />
       <Select.Content>
         {statusses.map((status) => (
@@ -17,7 +28,7 @@ const OrderStatusFilter = () => {
 };
 
 const statusses: { label: string; value: Status | "ALL" }[] = [
-  { label: "Tout", value : "ALL"},
+  { label: "Tout", value: "ALL" },
   { label: "Ouvert", value: "OPEN" },
   { label: "En cours", value: "IN_PROGRESS" },
   { label: "Annulé", value: "CANCELED" },
