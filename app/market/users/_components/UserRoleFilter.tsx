@@ -2,16 +2,24 @@
 
 import { Roles } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 const UserRoleFilter = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   return (
     <Select.Root
       onValueChange={(role) => {
-        const query = role ? `?role=${role}` : "";
-        router.push("/market/users" + query);
+        const params = new URLSearchParams();
+
+        if (role) params.append("role", role);
+
+        if (searchParams.get("page"))
+          params.append("page", searchParams.get("page")!);
+
+        const query = params.size ? `?${params}` : "";
+        router.push("/market/users/list" + query);
       }}
     >
       <Select.Trigger placeholder="Séléctionner un role" />
