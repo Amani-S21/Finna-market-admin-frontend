@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Card, Grid, Heading } from "@radix-ui/themes";
-import { BadgeDollarSign, BedSingle, LogOut, Plane } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { Card, Grid, Heading } from "@radix-ui/themes";
+import { BadgeDollarSign, BedSingle, Plane } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
     <div className="h-screen flex flex-col px-8 mx-auto pb-32">
       <div
         className="py-4 flex gap-4 items-center"
-        onClick={() => router.push("/profile")}
+        onClick={() => router.push("/profile/details")}
       >
         <div className="flex gap-4 items-center ml-auto">
           <div className="text-right text-sm">

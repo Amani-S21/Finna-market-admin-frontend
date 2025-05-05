@@ -7,7 +7,7 @@ type Props = {
 
 const ProfileItem = ({ title, value }: Props) => {
   return (
-    <Flex direction="column" gap="2" mt="5">
+    <Flex direction="column" gap="2">
       <Text as="p" size="1" className="font-bold">
         {title}
       </Text>
