@@ -1,7 +1,7 @@
-const LoadingProfilePage = () => {
+const LoadingEditProfilePage = () => {
   return (
     <div>Chargement...</div>
   );
 }
 
-export default LoadingProfilePage
+export default LoadingEditProfilePage
