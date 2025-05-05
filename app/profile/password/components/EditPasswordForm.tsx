@@ -8,12 +8,21 @@ import { useUpdatePassword } from "@/app/profile/_features/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, TextField } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const EditPasswordForm = () => {
   const { data: session } = useSession();
   const axios = useAxiosAuth();
-  const { mutateAsync: updatePassword, isPending } = useUpdatePassword({
+  const router = useRouter();
+
+  const {
+    mutateAsync: updatePassword,
+    isError,
+    error,
+    isSuccess,
+  } = useUpdatePassword({
     axios,
   });
 
@@ -32,6 +41,10 @@ const EditPasswordForm = () => {
       newPassword: data.newPassword,
     });
   };
+
+  useEffect(() => {
+    if (isSuccess) router.back();
+  });
 
   return (
     <form className="max-w-xl" onSubmit={handleSubmit(onSubmit)}>
