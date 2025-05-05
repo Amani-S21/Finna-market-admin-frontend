@@ -1,7 +1,15 @@
-import { Avatar, Button, Flex, Separator, Text } from "@radix-ui/themes";
+import {
+  Avatar,
+  Button,
+  Flex,
+  IconButton,
+  Separator,
+  Text,
+} from "@radix-ui/themes";
 import { FaRegUserCircle } from "react-icons/fa";
 import { BackButton } from "../_components";
 import ProfileItem from "./_components/ProfileItem";
+import { CiEdit } from "react-icons/ci";
 
 const ProfilePage = () => {
   return (
@@ -36,6 +44,13 @@ const ProfilePage = () => {
               title="Addrèsse mail"
               value="gedeonyalakuhanda@gmail.com"
             />
+            <Separator size="4" mt="4" />
+            <Flex justify="between" align="center">
+              <ProfileItem title="Mot de passe" value="*******************" />
+              <IconButton variant="ghost">
+                <CiEdit />
+              </IconButton>
+            </Flex>
             <div className="self-start">
               <Button mt="8">Editer le profile</Button>
             </div>
