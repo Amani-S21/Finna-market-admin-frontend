@@ -7,23 +7,25 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
 
   return (
-    <div className="h-screen flex flex-col container mx-auto pb-32">
-      <div className="py-8 flex gap-4 items-center justify-end">
-        <Button
-          onClick={() => signOut()}
-          variant="soft"
-          radius="full"
-          color="red"
-        >
-          <LogOut size={15} />
-          <span className="text-xs">Déconnection</span>
-        </Button>
-        {/* <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
-          <p>{session?.data.fullName.substring(0, 2)}</p>
-        </div> */}
+    <div className="h-screen flex flex-col px-8 mx-auto pb-32">
+      <div
+        className="py-4 flex gap-4 items-center"
+        onClick={() => router.push("/profile")}
+      >
+        <div className="flex gap-4 items-center ml-auto">
+          <div className="text-right text-sm">
+            <span className="lowercase">{session?.data.fullName}</span>
+            <p className="font-bold">{session?.data.phone}</p>
+          </div>
+          <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
+            <p className="uppercase">
+              {session?.data.fullName.substring(0, 2)}
+            </p>
+          </div>
+        </div>
       </div>
       <div className="flex justify-center items-center my-auto">
         <Grid

@@ -1,6 +1,5 @@
 import { Roles } from "@/app/lib/types";
-import { Badge, Heading } from "@radix-ui/themes";
-import React from "react";
+import { Badge } from "@radix-ui/themes";
 
 const UserRoleBadge = ({ role }: { role: Roles }) => {
   return (

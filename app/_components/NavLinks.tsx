@@ -45,11 +45,11 @@ const NavLinks = () => {
       label: "Caractéristiques",
       icon: <MdOutlineFeaturedPlayList />,
     },
-    {
-      href: "/market/profile?page=1",
-      label: "Profile",
-      icon: <VscAccount />,
-    },
+    // {
+    //   href: "/market/profile",
+    //   label: "Profile",
+    //   icon: <VscAccount />,
+    // },
   ];
 
   return (
