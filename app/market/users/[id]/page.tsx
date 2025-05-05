@@ -30,7 +30,7 @@ const UserDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Flex direction="column" gap="4" className="col-span-2">
           <Flex gap="2" align="center">
             <Badge radius="large" className="uppercase">
-              <p className="p-4 text-xl">{user?.fullName.substring(0, 1)}</p>
+              <p className="p-4 text-xl">{user?.fullName?.substring(0, 1)}</p>
             </Badge>
             <Flex direction="column">
               <Heading className="lowercase first-letter:uppercase">

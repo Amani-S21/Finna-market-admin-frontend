@@ -259,3 +259,9 @@ export type OrderFeatureValue = {
   value: string;
   featuresAffectationsHasValues: FeatureValuePrice[];
 };
+
+export type SubmitUpdatePassword = {
+  id : string;
+  oldPassword : string;
+  newPassword : string;
+}

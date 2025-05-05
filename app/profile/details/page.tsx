@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Avatar,
   Button,
@@ -6,13 +8,28 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
+import Link from "next/link";
+import { CiEdit } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
 import { BackButton } from "../../_components";
 import ProfileItem from "../_components/ProfileItem";
-import { CiEdit } from "react-icons/ci";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { useFetchUser } from "@/app/market/users/_features/hooks";
+import LoadingProfilePage from "./loading";
 
 const ProfilePage = () => {
+  const { status, data: session } = useSession();
+  const axios = useAxiosAuth();
+
+  const { data: user, isLoading } = useFetchUser({
+    axios,
+    userId: `${session?.data.id}`,
+    enabled: status === "authenticated",
+  });
+
+  if (isLoading || status === "loading") return LoadingProfilePage();
+
   return (
     <div className="min-h-screen">
       <div className="flex flex-col">
@@ -35,21 +52,25 @@ const ProfilePage = () => {
         <div className="max-w-3xl w-full mx-auto flex flex-col">
           <Flex>
             <div className="mb-4 bg-green-00 ">
-              <Avatar fallback="YG" radius="full" size="8" />
+              <Avatar
+                fallback={`${user?.fullName?.substring(0, 2)}`}
+                radius="full"
+                size="8"
+              />
             </div>
             <Flex direction="column" ml="5" className="bg-amber-0 w-full">
-              <ProfileItem title="Nom complet" value="YALA Gédéon" />
+              <ProfileItem title="Nom complet" value={`${user?.fullName}`} />
               <Separator size="4" mt="4" mb="5" />
               <ProfileItem
                 title="Numero de téléphone"
-                value="+243 971 945 367"
+                value={`${user?.phone}`}
               />
               <Separator size="4" mt="4" mb="5" />
               <ProfileItem
                 title="Addrèsse mail"
-                value="gedeonyalakuhanda@gmail.com"
+                value={`${user?.emailAddress}`}
               />
-              <Separator size="4" mt="4" mb="5"/>
+              <Separator size="4" mt="4" mb="5" />
               <Flex justify="between" align="center">
                 <ProfileItem title="Mot de passe" value="*******************" />
                 <Link href="/profile/password/edit">
