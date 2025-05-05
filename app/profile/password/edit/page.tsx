@@ -1,7 +1,7 @@
 import { BackButton } from "@/app/_components";
-import { Button, Flex, Text, TextField } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { Key } from "lucide-react";
-import React from "react";
+import EditPasswordForm from "../components/EditPasswordForm";
 
 const EditPasswordPage = () => {
   return (
@@ -29,37 +29,7 @@ const EditPasswordPage = () => {
           </Flex>
         </div>
         <div className="min-w-3xl mx-auto">
-          <div className="max-w-xl">
-            <Flex direction="column" gap="2">
-              <p className="text-sm font-bold">Ancien mot de passe</p>
-              <TextField.Root
-                // {...register("purchasedPrice")}
-
-                placeholder="Saisissez l'ancien mot de passe"
-                type="password"
-              />
-              {/* <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage> */}
-            </Flex>
-            <Flex direction="column" gap="2" mt="4">
-              <p className="text-sm font-bold">Nouveau mot de passe</p>
-              <TextField.Root
-                // {...register("purchasedPrice")}
-                placeholder="Saisissez le nouveau mot de passe"
-                type="password"
-              />
-              {/* <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage> */}
-            </Flex>
-            <Flex direction="column" gap="2" mt="4">
-              <p className="text-sm font-bold">Confirmer le mot de passe</p>
-              <TextField.Root
-                // {...register("purchasedPrice")}
-                placeholder="Saisissez encore le mot de passe"
-                type="password"
-              />
-              {/* <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage> */}
-            </Flex>
-            <Button mt="5">Modifier</Button>
-          </div>
+          <EditPasswordForm/>
         </div>
       </div>
     </div>

@@ -13,8 +13,21 @@ export const shopSchema = z.object({
   address: z.string().min(1, "Veuillez saisir l'addrèsse"),
 });
 
+export const updatePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(1, "Veuillez saisir le mot de passe"),
+    newPassword: z.string().min(1, "Veuillez saisir le nouveau mot de passe"),
+    confirmPassword: z
+      .string()
+      .min(1, "Veuillez confirmer le nouveau mot de passe"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Les mots de passe ne correspondent pas",
+  });
+
 export const userSchema = z.object({
-  role: z.string().min(1, "Veuillez selectionner un role")
+  role: z.string().min(1, "Veuillez selectionner un role"),
 });
 
 export const categorySchema = z.object({

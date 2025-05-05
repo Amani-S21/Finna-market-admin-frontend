@@ -4,6 +4,7 @@ import {
   productSchema,
   shopSchema,
   signinSchema,
+  updatePasswordSchema,
   userSchema,
 } from "@/app/lib/validationSchemas";
 import { z } from "zod";
@@ -11,6 +12,8 @@ import { z } from "zod";
 export type SigninSchema = z.infer<typeof signinSchema>;
 
 export type ShopSchema = z.infer<typeof shopSchema>;
+
+export type UpdatePasswordSchema = z.infer<typeof updatePasswordSchema>;
 
 export type UserSchema = z.infer<typeof userSchema>;
 
@@ -52,11 +55,15 @@ export type User = {
 };
 
 export type UsersResponse = {
-  count : number,
-  data : User[]
-}
+  count: number;
+  data: User[];
+};
 
-export type Roles = "SUPER_ADMIN" | "SUPER_MARKET_ADMIN" | "CUSTOMER" | "DELIVERER";
+export type Roles =
+  | "SUPER_ADMIN"
+  | "SUPER_MARKET_ADMIN"
+  | "CUSTOMER"
+  | "DELIVERER";
 
 export type ProductsListResponse = {
   count: number;
@@ -261,7 +268,7 @@ export type OrderFeatureValue = {
 };
 
 export type SubmitUpdatePassword = {
-  id : string;
-  oldPassword : string;
-  newPassword : string;
-}
+  id: string;
+  oldPassword: string;
+  newPassword: string;
+};
