@@ -26,6 +26,12 @@ export const updatePasswordSchema = z
     message: "Les mots de passe ne correspondent pas",
   });
 
+export const updateUserSchema = z.object({
+  fullName: z.string().min(1, "Veuillez saisir le nom complet"),
+  phone: z.string().min(1, "Veuillez saisir le numero de téléphone"),
+  emailAddress: z.string().min(1, "Veuillez saisir l'addrèsse mail"),
+});
+
 export const userSchema = z.object({
   role: z.string().min(1, "Veuillez selectionner un role"),
 });

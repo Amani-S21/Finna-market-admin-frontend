@@ -1,7 +1,7 @@
 import { BackButton } from "@/app/_components";
 import { Flex, Text } from "@radix-ui/themes";
 import { Key } from "lucide-react";
-import EditPasswordForm from "../components/EditPasswordForm";
+import EditPasswordForm from "../../_components/EditPasswordForm";
 
 const EditPasswordPage = () => {
   return (
@@ -29,7 +29,7 @@ const EditPasswordPage = () => {
           </Flex>
         </div>
         <div className="min-w-3xl mx-auto">
-          <EditPasswordForm/>
+          <EditPasswordForm />
         </div>
       </div>
     </div>

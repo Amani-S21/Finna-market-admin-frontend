@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useFetchUser } from "@/app/market/users/_features/hooks";
-import { Button, Flex, Text, TextField } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { FaRegUserCircle } from "react-icons/fa";
+import { EditProfileForm } from "../_components";
 import LoadingEditProfilePage from "./loading";
 
 const EditProfilePage = () => {
@@ -45,38 +46,7 @@ const EditProfilePage = () => {
           </Flex>
         </div>
         <div className="min-w-3xl mx-auto">
-          <div className="max-w-xl">
-            <Flex direction="column" gap="2">
-              <p className="text-sm font-bold">Nom compltet</p>
-              <TextField.Root
-                // {...register("purchasedPrice")}
-                defaultValue={user?.fullName}
-                placeholder="Saisissez le nom compltet"
-              />
-              {/* <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage> */}
-            </Flex>
-            <Flex direction="column" gap="2" mt="4">
-              <p className="text-sm font-bold">Numero de téléphone</p>
-              <TextField.Root
-                // {...register("purchasedPrice")}
-                defaultValue={user?.phone}
-                placeholder="Saisissez le numero de téléphone"
-                type="tel"
-              />
-              {/* <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage> */}
-            </Flex>
-            <Flex direction="column" gap="2" mt="4">
-              <p className="text-sm font-bold">Addrésse mail</p>
-              <TextField.Root
-                // {...register("purchasedPrice")}
-                defaultValue={user?.emailAddress}
-                placeholder="Saisissez l'addrèsse mail"
-                type="email"
-              />
-              {/* <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage> */}
-            </Flex>
-            <Button mt="5">Modifier</Button>
-          </div>
+          {user && <EditProfileForm user={user} />}
         </div>
       </div>
     </div>
