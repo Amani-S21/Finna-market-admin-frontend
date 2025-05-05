@@ -1,6 +1,7 @@
-import { Avatar, Button, Flex, Grid, Separator, Text } from "@radix-ui/themes";
+import { Avatar, Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { FaRegUserCircle } from "react-icons/fa";
 import { BackButton } from "../_components";
+import ProfileItem from "./_components/ProfileItem";
 
 const ProfilePage = () => {
   return (
@@ -42,24 +43,6 @@ const ProfilePage = () => {
         </Flex>
       </div>
     </div>
-  );
-};
-
-type Props = {
-  title: string;
-  value: string;
-};
-
-const ProfileItem = ({ title, value }: Props) => {
-  return (
-    <Flex direction="column" gap="2" mt="5">
-      <Text as="p" size="1" className="font-bold">
-        {title}
-      </Text>
-      <Text as="p" size="2">
-        {value}
-      </Text>
-    </Flex>
   );
 };
 
