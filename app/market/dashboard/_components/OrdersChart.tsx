@@ -1,7 +1,14 @@
 import { OrderSymmary } from "@/app/lib/types";
 import { Card } from "@radix-ui/themes";
-import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from "recharts";
-import React from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from "recharts";
 
 const OrdersChart = ({
   orderSummaryCounts,
@@ -21,6 +28,12 @@ const OrdersChart = ({
         <BarChart data={data}>
           <XAxis dataKey="label" />
           <YAxis />
+          <Tooltip
+            wrapperStyle={{
+              width: 100,
+              backgroundColor: "#ccc",
+            }}
+          />
           <Bar
             dataKey="value"
             barSize={20}
