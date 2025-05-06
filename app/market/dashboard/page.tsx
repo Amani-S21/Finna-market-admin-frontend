@@ -8,8 +8,8 @@ import {
 } from "../orders/_features/hooks";
 import OrdersSummary from "./_components/OrdersSummary";
 import LoadingDashboardPage from "./loading";
-import { RecentOrders } from "./_components";
-import { Flex } from "@radix-ui/themes";
+import { OrdersChart, RecentOrders } from "./_components";
+import { Flex, Grid } from "@radix-ui/themes";
 
 const MarketHomePage = () => {
   const { status } = useSession();
@@ -30,10 +30,13 @@ const MarketHomePage = () => {
   if (error) return;
 
   return (
-    <Flex direction="column" gap="4">
-      <OrdersSummary orderSummaryCounts={orderSummaryCounts!} />
+    <Grid columns={{ initial: "1", md: "2" }} gap="4">
+      <Flex direction="column" gap="4">
+        <OrdersSummary orderSummaryCounts={orderSummaryCounts!} />
+        <OrdersChart orderSummaryCounts={orderSummaryCounts!} />
+      </Flex>
       <RecentOrders orders={recentOrders!} />
-    </Flex>
+    </Grid>
   );
 };
 

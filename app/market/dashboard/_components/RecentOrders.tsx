@@ -11,10 +11,12 @@ import { useRouter } from "next/navigation";
 const RecentOrders = ({ orders }: { orders: Order[] }) => {
   const router = useRouter();
   return (
-    <Card variant="ghost">
+    <Card className="min-h-full">
       <Flex direction="column">
         <Heading size="4">Commandes récentes</Heading>
-        <Text as="p" size="2" mb="2">La liste des commandes les plus récentes</Text>
+        <Text as="p" size="2" mb="4">
+          La liste des commandes les plus récentes
+        </Text>
         <Table.Root>
           <Table.Header>
             <Table.Row>
