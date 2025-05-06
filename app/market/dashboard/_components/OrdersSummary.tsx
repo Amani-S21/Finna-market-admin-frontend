@@ -1,26 +1,8 @@
-"use client"
-
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { OrderSymmary } from "@/app/lib/types";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useFetchOrdersSummary } from "../../orders/_features/hooks";
-import LoadingDashboardPage from "../loading";
 
-const OrdersSummary = () => {
-  const { status } = useSession();
-  const axios = useAxiosAuth();
-
-  const {
-    data: orderSummaryCounts,
-    isLoading,
-    error,
-  } = useFetchOrdersSummary({ axios, enabled: status === "authenticated" });
-
-  if (isLoading || status === "loading") return <LoadingDashboardPage />;
-
-  if (error) return;
-
+const OrdersSummary = ({orderSummaryCounts} : {orderSummaryCounts : OrderSymmary}) => {
   return (
     <Flex gap="4">
       <OrdersSummaryItem
@@ -65,7 +47,7 @@ const OrdersSummaryItem = ({
   link,
 }: OrdersSummaryItemProps) => {
   return (
-    <div className=" w-full h-full min-h-[200px]">
+    <div className=" w-full h-full">
       <Link href={link}>
         <Card>
           <Flex direction="column" gap="4">
