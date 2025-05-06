@@ -275,3 +275,10 @@ export type SubmitUpdatePassword = {
   oldPassword: string;
   newPassword: string;
 };
+
+export type OrderSymmary = {
+  opened : number,
+  inProgress : number,
+  canceled : number,
+  closed : number,
+}

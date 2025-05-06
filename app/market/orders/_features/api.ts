@@ -28,3 +28,10 @@ export const updateOrder = async (axios: AxiosInstance, data: Order) => {
     return res.data;
   } catch (error) {}
 };
+
+export const fetchOrdersSummary = async (axios: AxiosInstance) => {
+  try {
+    const res = await axios.get(`/orders/summary?limit=5`);
+    return res.data;
+  } catch (error) {}
+};
