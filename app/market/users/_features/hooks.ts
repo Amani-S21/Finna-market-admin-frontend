@@ -38,10 +38,15 @@ type UseFetchUsers = {
   axios: AxiosInstance;
   enabled: boolean;
   page: string;
-  role? : Roles
+  role?: Roles;
 };
 
-export const useFetchUsers = ({ axios, page, role, enabled }: UseFetchUsers) => {
+export const useFetchUsers = ({
+  axios,
+  page,
+  role,
+  enabled,
+}: UseFetchUsers) => {
   return useQuery<UsersResponse>({
     queryKey: ["users", page, role],
     queryFn: () => fetchUsers(axios, page, role),
@@ -75,14 +80,12 @@ export const useUserForm = () => {
 
 export const useUpdateUser = ({ axios }: { axios: AxiosInstance }) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation({
     mutationFn: (data: User) => updateUser(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      router.back();
     },
   });
 };

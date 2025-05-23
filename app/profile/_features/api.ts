@@ -13,9 +13,9 @@ export const updatePassword = async (
     let message = "An unexpected error occurred";
 
     if (statusCode === 404) {
-      message = "The old password is not correct, make sure to put the real one";
+      message = "L'ancien mot de passe n'est pas correct veuillez le verifier";
     }
-    
+
     const customError = new Error(message);
     throw customError;
   }

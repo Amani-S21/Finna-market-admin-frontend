@@ -42,20 +42,15 @@ const EditPasswordForm = () => {
         oldPassword: data.oldPassword,
         newPassword: data.newPassword,
       });
-    } catch (error : any) {
-      console.log(error.statusCode);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
-    if (isError && error) {
-      console.log("Error message:", JSON.stringify(error)); // this is safe
-      // toast.error(error.message) or show in UI
-    } else if (isSuccess) {
+    if (isSuccess) {
       toast.success(`Mot de passe modifiée avec succèes`);
       router.back();
     }
-  }, [error, isError, isSuccess]);
+  }, [isSuccess]);
 
   return (
     <div className="max-w-xl">

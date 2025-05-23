@@ -37,5 +37,15 @@ export const updateUser = async (axios: AxiosInstance, data: User) => {
   try {
     const res = await axios.patch(`/users`, data);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "An unexpected error occurred";
+
+    if (statusCode === 202) {
+      message = "Informations du compte modifiées avec succèes";
+    }
+    
+    const customError = new Error(message);
+    throw customError;
+  }
 };
