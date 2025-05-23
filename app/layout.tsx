@@ -1,5 +1,6 @@
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
+import { Toaster } from "react-hot-toast";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./theme-config.css";
@@ -35,6 +36,7 @@ export default function RootLayout({
               <Theme>
                 <main className="bg-[#f9fafb]">{children}</main>
               </Theme>
+              <Toaster position="bottom-right" />
             </ReduxProvider>
           </QueryProvider>
         </NextSessionProvider>
