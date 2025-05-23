@@ -36,7 +36,7 @@ export default function RootLayout({
               <Theme>
                 <main className="bg-[#f9fafb]">{children}</main>
               </Theme>
-              <Toaster position="bottom-right" />
+              <Toaster position="bottom-center" />
             </ReduxProvider>
           </QueryProvider>
         </NextSessionProvider>
