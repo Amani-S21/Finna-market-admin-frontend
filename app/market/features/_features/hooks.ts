@@ -61,7 +61,6 @@ type UseCreateFeatures = {
 
 export const useCreateFeatures = ({ axios }: UseCreateFeatures) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation<void, Error, SubmitFeatureWithValues>({
     mutationFn: (data: SubmitFeatureWithValues) => createFeatures(axios, data),
@@ -74,7 +73,6 @@ export const useCreateFeatures = ({ axios }: UseCreateFeatures) => {
 
 export const useUpdateFeatures = ({ axios }: UseCreateFeatures) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation<void, Error, SubmitFeatureWithValues>({
     mutationFn: (data: SubmitFeatureWithValues) => updateFeatures(axios, data),

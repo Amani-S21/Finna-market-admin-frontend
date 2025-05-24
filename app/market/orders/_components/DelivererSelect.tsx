@@ -2,10 +2,10 @@ import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { User } from "@/app/lib/types";
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
-import { useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { MdOutlineEdit } from "react-icons/md";
 import { useSearchUser } from "../../users/_features/hooks";
 import { useUpdateOrder } from "../_features/hooks";
@@ -18,7 +18,7 @@ type Props = {
 
 const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
   const axios = useAxiosAuth();
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchTerm = useDebounce(searchValue, 300);
@@ -30,7 +30,11 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
     enabled: !!debouncedSearchTerm,
   });
 
-  const { mutateAsync: updateOrder, isPending } = useUpdateOrder({ axios });
+  const {
+    mutateAsync: updateOrder,
+    isPending,
+    isSuccess: isUpdateSuccess,
+  } = useUpdateOrder({ axios });
 
   const handleItemClicked = async (user: User) => {
     try {
@@ -38,11 +42,17 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
         id: orderId,
         delivererId: user.id,
       });
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-      queryClient.invalidateQueries({ queryKey: ["order-by-id"] });
+
       setOpen(false);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      toast.success(`Caractéristique crééee avec avec succèes`);
+      router.back();
+    }
+  }, [isUpdateSuccess]);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -85,7 +95,7 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
               >
                 <Flex gap="2" align="center">
                   <Badge radius="medium" className="uppercase">
-                    {user.fullName.substring(0, 1)}
+                    {user.fullName?.substring(0, 1)}
                   </Badge>
                   <p>{user.fullName}</p>
                 </Flex>

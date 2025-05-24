@@ -1,7 +1,13 @@
 import { Order, OrdersResponse, OrderSymmary, Status } from "@/app/lib/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { fetchOrderById, fetchOrders, fetchOrdersSummary, fetchRecentOrders, updateOrder } from "./api";
+import {
+  fetchOrderById,
+  fetchOrders,
+  fetchOrdersSummary,
+  fetchRecentOrders,
+  updateOrder,
+} from "./api";
 
 type UseFetchOrders = {
   axios: AxiosInstance;
@@ -50,18 +56,26 @@ type UseUpdateOrder = {
 };
 
 export const useUpdateOrder = ({ axios }: UseUpdateOrder) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (data: Order) => updateOrder(axios, data),
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: ["order-by-id"] });
+    },
   });
 };
 
 type FetchOrdersSummary = {
   axios: AxiosInstance;
-  enabled : boolean;
+  enabled: boolean;
 };
 
-export const useFetchOrdersSummary = ({ axios, enabled }: FetchOrdersSummary) => {
+export const useFetchOrdersSummary = ({
+  axios,
+  enabled,
+}: FetchOrdersSummary) => {
   return useQuery<OrderSymmary>({
     queryKey: ["order-summary"],
     queryFn: () => fetchOrdersSummary(axios),
@@ -71,7 +85,10 @@ export const useFetchOrdersSummary = ({ axios, enabled }: FetchOrdersSummary) =>
   });
 };
 
-export const useFetchRecentOrders = ({ axios, enabled }: FetchOrdersSummary) => {
+export const useFetchRecentOrders = ({
+  axios,
+  enabled,
+}: FetchOrdersSummary) => {
   return useQuery<Order[]>({
     queryKey: ["orders-recent"],
     queryFn: () => fetchRecentOrders(axios),
