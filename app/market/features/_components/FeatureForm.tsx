@@ -89,7 +89,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
 
   useEffect(() => {
     if (isCreateSuccess) {
-      toast.success(`Caractéristique crééee avec avec succèes`);
+      toast.success(`Caractéristique créée avec avec succèes`);
       router.back();
     }
   }, [isCreateSuccess]);

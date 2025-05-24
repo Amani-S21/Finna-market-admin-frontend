@@ -49,7 +49,22 @@ export const createProduct = async (
   try {
     const res = await axios.post(`/products`, product);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Nom du produit déjà utilisées, veuillez utiliser un autre nom";
+        break;
+
+      default:
+        message = "Une erreur inconue est survenue";
+    }
+
+    const customError = new Error(message);
+    throw customError;
+  }
 };
 
 export const updateProduct = async (
@@ -59,5 +74,20 @@ export const updateProduct = async (
   try {
     const res = await axios.patch(`/products`, product);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Nom du product déjà utilisées, veuillez utiliser un autre nom";
+        break;
+
+      default:
+        message = "Une erreur inconue est survenue";
+    }
+
+    const customError = new Error(message);
+    throw customError;
+  }
 };

@@ -16,7 +16,14 @@ import {
   resetList,
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
-import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Callout,
+  Flex,
+  Switch,
+  TextArea,
+  TextField,
+} from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
@@ -42,6 +49,7 @@ import {
 import { useRouter } from "next/navigation";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
 import { useFetchFeaturesByValue } from "../../features/_features/hooks";
+import toast from "react-hot-toast";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
@@ -152,9 +160,17 @@ const ProductForm = ({ product }: { product?: Product }) => {
     }
   };
 
-  const { mutateAsync: createProductMutation } = useCreateProduct({ axios });
+  const {
+    mutateAsync: createProductMutation,
+    error: createError,
+    isSuccess: isCreateSuccess,
+  } = useCreateProduct({ axios });
 
-  const { mutateAsync: patchProductMutation } = useUpdateProduct({ axios });
+  const {
+    mutateAsync: patchProductMutation,
+    error: updateError,
+    isSuccess: isUpdateSuccess,
+  } = useUpdateProduct({ axios });
 
   const onSubmit = async (data: ProductSchema) => {
     if (productImageUrls.current.length < 3)
@@ -188,232 +204,264 @@ const ProductForm = ({ product }: { product?: Product }) => {
       })),
     };
     if (product) {
-      patchProductMutation({
-        id: product?.id,
-        ...productSubmit,
-      });
+      try {
+        patchProductMutation({
+          id: product?.id,
+          ...productSubmit,
+        });
+      } catch (error) {}
     } else {
-      createProductMutation(productSubmit);
+      try {
+        createProductMutation(productSubmit);
+      } catch (error) {}
     }
   };
 
+  useEffect(() => {
+    if (isCreateSuccess) {
+      toast.success(`Produit créé avec avec succèes`);
+      router.back();
+    }
+  }, [isCreateSuccess]);
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      toast.success(`Produit modifié avec avec succèes`);
+      router.back();
+    }
+  }, [isUpdateSuccess]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Nom</p>
-        <TextField.Root
-          {...register("name")}
-          placeholder="Nom du produit"
-          defaultValue={product?.name}
-        />
-        <ErrorMessage>{errors.name?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Prix d'achat</p>
-        <TextField.Root
-          {...register("purchasedPrice")}
-          placeholder="Saisissez le prix d'achat"
-          defaultValue={product?.purchasedPrice}
-        />
-        <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Ancien prix de vente</p>
-        <TextField.Root
-          {...register("oldPrice")}
-          defaultValue={product?.oldPrice}
-          placeholder="Veuillez saisir l'ancien prix"
-        />
-        <ErrorMessage>{errors.oldPrice?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Prix de vente courant</p>
-        <TextField.Root
-          {...register("currentPrice")}
-          defaultValue={product?.currentPrice}
-          placeholder="Veuillez saisir le prix courant du produit"
-        />
-        <ErrorMessage>{errors.currentPrice?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Déscription</p>
-        <TextArea
-          {...register("description")}
-          defaultValue={product?.description}
-          rows={6}
-          placeholder="Veuillez saisir déscription du produit"
-        />
-        <ErrorMessage>{errors.description?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Publié</p>
-        <Switch
-          defaultChecked
-          onCheckedChange={(value) => {
-            setIsPublished(value);
-          }}
-        />
-      </div>
-      <Controller
-        control={control}
-        name="category"
-        render={({ field }) => (
-          <div className="flex flex-col space-y-2 mt-6">
-            <p className="text-sm font-bold">Catégorie</p>
-            <SearchCategoryTextField
-              {...field}
-              setSelectedCategoryId={setSelectedCategoryId}
-            />
-
-            <ErrorMessage>{errors.category?.message}</ErrorMessage>
-          </div>
-        )}
-      />
-      {categoriesResponse?.data && (
-        <>
-          <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
-          <div className="flex flex-wrap gap-2 mb-2">
-            {categoriesResponse?.data.map((value) => (
-              <SelectSearchItem
-                key={value.id}
-                isSelected={value.id === selectedSubCategory?.id}
-                editable={false}
-                title={value.name}
-                onClick={() => {
-                  setSelectedSubCategory(value);
-                }}
-              />
-            ))}
-          </div>
-          {!selectedSubCategory && (
-            <ErrorMessage>
-              Veuillez séléctionner une sous catégorie
-            </ErrorMessage>
-          )}
-        </>
+    <div>
+      {createError && (
+        <Callout.Root mb="4" color="red">
+          <Callout.Text>{createError?.message}</Callout.Text>
+        </Callout.Root>
       )}
-      <div className="flex flex-col space-y-2 mt-4 mb-2">
-        <Flex justify="between">
-          <p className="text-sm font-bold">Photos</p>
-          <Flex
-            align="center"
-            onClick={() => {
-              productImageFiles.current = [];
-              setImage1(undefined);
-              setImage2(undefined);
-              setImage3(undefined);
-            }}
-          >
-            <CiTrash size={16} />
-            <p className="text-sm underline hover:cursor-default">
-              Réinitialiser
-            </p>
-          </Flex>
-        </Flex>
-        <Flex gap="4">
-          <ProductImage
-            image={image1!}
-            setImage={setImage1}
-            setFile={(fileToAdd) => {
-              pushFileToList(0, fileToAdd);
-            }}
-          />
-          <ProductImage
-            image={image2!}
-            setImage={setImage2}
-            setFile={(fileToAdd) => {
-              pushFileToList(1, fileToAdd);
-            }}
-          />
-          <ProductImage
-            image={image3!}
-            setImage={setImage3}
-            setFile={(fileToAdd) => {
-              pushFileToList(2, fileToAdd);
-            }}
-          />
-        </Flex>
-      </div>
-      {testImageSelection() === false && (
-        <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
+      {updateError && (
+        <Callout.Root mb="4" color="red">
+          <Callout.Text>{updateError?.message}</Callout.Text>
+        </Callout.Root>
       )}
-      <div className="flex flex-col  mt-4">
-        <Flex
-          justify="between"
-          onClick={() => {
-            dispatch(
-              addFeature({
-                featureId: `${selectedFeature?.id}`,
-                name: `${selectedFeature?.name}`,
-                featureValues: featureValuePrices!,
-              })
-            );
-
-            // restore features values list
-            dispatch(resetList());
-          }}
-        >
-          <p className="text-sm font-bold ">Caractéristiques</p>
-          <Flex align="center">
-            <IoIosAdd size={20} />
-            <p className="text-sm underline hover:cursor-default">
-              Ajoutrer a la liste
-            </p>
-          </Flex>
-        </Flex>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Nom</p>
+          <TextField.Root
+            {...register("name")}
+            placeholder="Nom du produit"
+            defaultValue={product?.name}
+          />
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Prix d'achat</p>
+          <TextField.Root
+            {...register("purchasedPrice")}
+            placeholder="Saisissez le prix d'achat"
+            defaultValue={product?.purchasedPrice}
+          />
+          <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Ancien prix de vente</p>
+          <TextField.Root
+            {...register("oldPrice")}
+            defaultValue={product?.oldPrice}
+            placeholder="Veuillez saisir l'ancien prix"
+          />
+          <ErrorMessage>{errors.oldPrice?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Prix de vente courant</p>
+          <TextField.Root
+            {...register("currentPrice")}
+            defaultValue={product?.currentPrice}
+            placeholder="Veuillez saisir le prix courant du produit"
+          />
+          <ErrorMessage>{errors.currentPrice?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Déscription</p>
+          <TextArea
+            {...register("description")}
+            defaultValue={product?.description}
+            rows={6}
+            placeholder="Veuillez saisir déscription du produit"
+          />
+          <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Publié</p>
+          <Switch
+            defaultChecked
+            onCheckedChange={(value) => {
+              setIsPublished(value);
+            }}
+          />
+        </div>
         <Controller
           control={control}
-          name="feature"
+          name="category"
           render={({ field }) => (
-            <div className="flex flex-col space-y-2 mt-2">
-              <SearchFeatureField
+            <div className="flex flex-col space-y-2 mt-6">
+              <p className="text-sm font-bold">Catégorie</p>
+              <SearchCategoryTextField
                 {...field}
-                value={field.value || ""}
-                setSelectedFeature={setSelectedFeature}
+                setSelectedCategoryId={setSelectedCategoryId}
               />
-              <ErrorMessage>{errors.feature?.message}</ErrorMessage>
+
+              <ErrorMessage>{errors.category?.message}</ErrorMessage>
             </div>
           )}
         />
-        {selectedFeature && (
+        {categoriesResponse?.data && (
           <>
-            <p className="text-sm font-bold mt-4">
-              Valeurs des caractéristiques
-            </p>
-            <div className="flex flex-wrap gap-2 mt-2 text-sm mb-2">
-              {featuresByValueResponse?.data.map((feature) => (
+            <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {categoriesResponse?.data.map((value) => (
                 <SelectSearchItem
-                  key={feature.featureValueId}
-                  title={feature.featureValues.value}
-                  editable={true}
-                  isSelected={featurePriceExist(feature.featureValueId)}
-                  currency="Usd"
-                  onClick={(price) => {
-                    dispatch(
-                      addAndRemoveFeaturePrices({
-                        featureValueId: feature.featureValueId,
-                        name: feature.featureValues.value,
-                        price: price,
-                      })
-                    );
+                  key={value.id}
+                  isSelected={value.id === selectedSubCategory?.id}
+                  editable={false}
+                  title={value.name}
+                  onClick={() => {
+                    setSelectedSubCategory(value);
                   }}
                 />
               ))}
             </div>
+            {!selectedSubCategory && (
+              <ErrorMessage>
+                Veuillez séléctionner une sous catégorie
+              </ErrorMessage>
+            )}
           </>
         )}
-        {features?.length! > 0 && <FeaturesToPostTable features={features!} />}
-        {features?.length! < 1 && (
-          <ErrorMessage>
-            Les caractéristiques du produit sont obligatoires
-          </ErrorMessage>
+        <div className="flex flex-col space-y-2 mt-4 mb-2">
+          <Flex justify="between">
+            <p className="text-sm font-bold">Photos</p>
+            <Flex
+              align="center"
+              onClick={() => {
+                productImageFiles.current = [];
+                setImage1(undefined);
+                setImage2(undefined);
+                setImage3(undefined);
+              }}
+            >
+              <CiTrash size={16} />
+              <p className="text-sm underline hover:cursor-default">
+                Réinitialiser
+              </p>
+            </Flex>
+          </Flex>
+          <Flex gap="4">
+            <ProductImage
+              image={image1!}
+              setImage={setImage1}
+              setFile={(fileToAdd) => {
+                pushFileToList(0, fileToAdd);
+              }}
+            />
+            <ProductImage
+              image={image2!}
+              setImage={setImage2}
+              setFile={(fileToAdd) => {
+                pushFileToList(1, fileToAdd);
+              }}
+            />
+            <ProductImage
+              image={image3!}
+              setImage={setImage3}
+              setFile={(fileToAdd) => {
+                pushFileToList(2, fileToAdd);
+              }}
+            />
+          </Flex>
+        </div>
+        {testImageSelection() === false && (
+          <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )}
-      </div>
+        <div className="flex flex-col  mt-4">
+          <Flex
+            justify="between"
+            onClick={() => {
+              dispatch(
+                addFeature({
+                  featureId: `${selectedFeature?.id}`,
+                  name: `${selectedFeature?.name}`,
+                  featureValues: featureValuePrices!,
+                })
+              );
 
-      <Button disabled={isSubmitting} mt="6">
-        {product ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-      </Button>
-    </form>
+              // restore features values list
+              dispatch(resetList());
+            }}
+          >
+            <p className="text-sm font-bold ">Caractéristiques</p>
+            <Flex align="center">
+              <IoIosAdd size={20} />
+              <p className="text-sm underline hover:cursor-default">
+                Ajoutrer a la liste
+              </p>
+            </Flex>
+          </Flex>
+          <Controller
+            control={control}
+            name="feature"
+            render={({ field }) => (
+              <div className="flex flex-col space-y-2 mt-2">
+                <SearchFeatureField
+                  {...field}
+                  value={field.value || ""}
+                  setSelectedFeature={setSelectedFeature}
+                />
+                <ErrorMessage>{errors.feature?.message}</ErrorMessage>
+              </div>
+            )}
+          />
+          {selectedFeature && (
+            <>
+              <p className="text-sm font-bold mt-4">
+                Valeurs des caractéristiques
+              </p>
+              <div className="flex flex-wrap gap-2 mt-2 text-sm mb-2">
+                {featuresByValueResponse?.data.map((feature) => (
+                  <SelectSearchItem
+                    key={feature.featureValueId}
+                    title={feature.featureValues.value}
+                    editable={true}
+                    isSelected={featurePriceExist(feature.featureValueId)}
+                    currency="Usd"
+                    onClick={(price) => {
+                      dispatch(
+                        addAndRemoveFeaturePrices({
+                          featureValueId: feature.featureValueId,
+                          name: feature.featureValues.value,
+                          price: price,
+                        })
+                      );
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+          {features?.length! > 0 && (
+            <FeaturesToPostTable features={features!} />
+          )}
+          {features?.length! < 1 && (
+            <ErrorMessage>
+              Les caractéristiques du produit sont obligatoires
+            </ErrorMessage>
+          )}
+        </div>
+
+        <Button disabled={isSubmitting} mt="6">
+          {product ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+        </Button>
+      </form>
+    </div>
   );
 };
 
