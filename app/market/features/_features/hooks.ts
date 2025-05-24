@@ -68,7 +68,6 @@ export const useCreateFeatures = ({ axios }: UseCreateFeatures) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["features"] });
       queryClient.invalidateQueries({ queryKey: ["features-by-id"] });
-      router.back();
     },
   });
 };
@@ -82,7 +81,6 @@ export const useUpdateFeatures = ({ axios }: UseCreateFeatures) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["features"] });
       queryClient.invalidateQueries({ queryKey: ["features-by-id"] });
-      router.back();
     },
   });
 };
