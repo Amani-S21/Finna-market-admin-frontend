@@ -3,7 +3,7 @@
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Category, CategorySchema, FeatureSchema } from "@/app/lib/types";
+import { Category, CategorySchema } from "@/app/lib/types";
 import {
   addSubCategories,
   addSubCategory,
@@ -12,7 +12,9 @@ import {
 } from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
 import { Button, Callout, Flex, TextField } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
@@ -21,8 +23,6 @@ import {
   useCreateCategories,
   useUpdateCategories,
 } from "../_features/hooks";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -118,6 +118,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
+      
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>

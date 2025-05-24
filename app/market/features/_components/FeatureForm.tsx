@@ -13,18 +13,21 @@ import {
 } from "@/redux/features/featureSlice";
 import { RootState } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, TextField } from "@radix-ui/themes";
+import { Button, Callout, Flex, TextField } from "@radix-ui/themes";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
 import { useCreateFeatures, useUpdateFeatures } from "../_features/hooks";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const FeatureForm = ({ feature }: { feature?: Feature }) => {
   const axios = useAxiosAuth();
   const dispatch = useDispatch();
   const { featureValues } = useSelector((state: RootState) => state.feature);
+  const router = useRouter();
 
   useEffect(() => {
     if (feature) {
@@ -50,9 +53,17 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
     resolver: zodResolver(featureSchema),
   });
 
-  const { mutateAsync: createFeature } = useCreateFeatures({ axios });
+  const {
+    mutateAsync: createFeature,
+    isSuccess: isCreateSuccess,
+    error: createError,
+  } = useCreateFeatures({ axios });
 
-  const { mutateAsync: updateFeature } = useUpdateFeatures({ axios });
+  const {
+    mutateAsync: updateFeature,
+    isSuccess: isUpdateSuccess,
+    error: updateError,
+  } = useUpdateFeatures({ axios });
 
   const onSubmit = async (data: FeatureSchema) => {
     if (feature) {
@@ -76,74 +87,100 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
     }
   };
 
+  useEffect(() => {
+    if (isCreateSuccess) {
+      toast.success(`Catégorie crééee avec avec succèes`);
+      router.back();
+    }
+  }, [isCreateSuccess]);
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      toast.success(`Catégorie modifiée avec avec succèes`);
+      router.back();
+    }
+  }, [isUpdateSuccess]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl">
-      <div className="flex flex-col space-y-2 mt-4">
-        <p className="text-sm font-bold">Nom</p>
-        <TextField.Root
-          {...register("name")}
-          defaultValue={feature?.name}
-          placeholder="Nom de la caractéristique"
-        />
-        <ErrorMessage>{errors.name?.message}</ErrorMessage>
-      </div>
-      <div className="flex flex-col space-y-2 mt-4">
-        <Flex justify="between">
-          <p className="text-sm font-bold">Valeur caractéristique</p>
-          <Flex
-            align="center"
-            onClick={() => {
-              dispatch(
-                addFeatureValue({
-                  index: `${featureValues?.length}`,
-                  value: watch("type") ?? "",
-                })
-              );
-
-              resetField("type");
-            }}
-          >
-            <IoIosAdd size={20} />
-            <p className="text-sm underline hover:cursor-default">
-              Ajoutrer à la liste
-            </p>
-          </Flex>
-        </Flex>
-        <TextField.Root
-          {...register("type")}
-          placeholder="Type de la caractéristique"
-        />
-      </div>
-
-      {(featureValues ?? []).length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-4">
-          {featureValues?.map((v, index) => (
-            <SelectSearchItem
-              key={v.value + index}
-              id={v.id}
-              title={v.value}
-              index={`${index}`}
-              onDeleteClick={() => {
-                dispatch(removeFeatureValue({ feature: v.value }));
-              }}
-              onDialogSave={(textValue) => {
+    <div className="max-w-xl">
+      {createError && (
+        <Callout.Root mb="4" color="red">
+          <Callout.Text>{createError?.message}</Callout.Text>
+        </Callout.Root>
+      )}
+      {updateError && (
+        <Callout.Root mb="4" color="red">
+          <Callout.Text>{updateError?.message}</Callout.Text>
+        </Callout.Root>
+      )}
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl">
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Nom</p>
+          <TextField.Root
+            {...register("name")}
+            defaultValue={feature?.name}
+            placeholder="Nom de la caractéristique"
+          />
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <Flex justify="between">
+            <p className="text-sm font-bold">Valeur caractéristique</p>
+            <Flex
+              align="center"
+              onClick={() => {
                 dispatch(
-                  updateFeatureValue({
-                    id: v.id,
-                    index: v.index,
-                    value: textValue,
+                  addFeatureValue({
+                    index: `${featureValues?.length}`,
+                    value: watch("type") ?? "",
                   })
                 );
-              }}
-            />
-          ))}
-        </div>
-      )}
 
-      <Button disabled={isSubmitting} mt="4">
-        {feature ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-      </Button>
-    </form>
+                resetField("type");
+              }}
+            >
+              <IoIosAdd size={20} />
+              <p className="text-sm underline hover:cursor-default">
+                Ajoutrer à la liste
+              </p>
+            </Flex>
+          </Flex>
+          <TextField.Root
+            {...register("type")}
+            placeholder="Type de la caractéristique"
+          />
+        </div>
+
+        {(featureValues ?? []).length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-4">
+            {featureValues?.map((v, index) => (
+              <SelectSearchItem
+                key={v.value + index}
+                id={v.id}
+                title={v.value}
+                index={`${index}`}
+                onDeleteClick={() => {
+                  dispatch(removeFeatureValue({ feature: v.value }));
+                }}
+                onDialogSave={(textValue) => {
+                  dispatch(
+                    updateFeatureValue({
+                      id: v.id,
+                      index: v.index,
+                      value: textValue,
+                    })
+                  );
+                }}
+              />
+            ))}
+          </div>
+        )}
+
+        <Button disabled={isSubmitting} mt="4">
+          {feature ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+        </Button>
+      </form>
+    </div>
   );
 };
 

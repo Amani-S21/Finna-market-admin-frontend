@@ -29,8 +29,21 @@ export const createFeatures = async (
   try {
     const res = await axios.post(`/features`, data);
     return res.data;
-  } catch (error) {
-    return { count: 0, data: [] };
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Nom de la caractéristique déjà utilisées, veuillez utiliser un autre nom";
+        break;
+
+      default:
+        message = "Une erreur inconue est survenue";
+    }
+
+    const customError = new Error(message);
+    throw customError;
   }
 };
 
@@ -41,8 +54,21 @@ export const updateFeatures = async (
   try {
     const res = await axios.patch(`/features`, data);
     return res.data;
-  } catch (error) {
-    return { count: 0, data: [] };
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Nom de la caractéristique déjà utilisées, veuillez utiliser un autre nom";
+        break;
+
+      default:
+        message = "Une erreur inconue est survenue";
+    }
+
+    const customError = new Error(message);
+    throw customError;
   }
 };
 
