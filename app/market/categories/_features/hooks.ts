@@ -1,9 +1,8 @@
-import { CategoriesResponse, Category, CategorySchema, FeatureSchema, SubmitCategory } from "@/app/lib/types";
+import { CategoriesResponse, Category, CategorySchema, SubmitCategory } from "@/app/lib/types";
 import { categorySchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { createCategories, fetchCategories, fetchCategoryById, updateCategories } from "./api";
 
@@ -59,28 +58,27 @@ type UseCreateCategory = {
 
 export const useCreateCategories = ({ axios }: UseCreateCategory) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
+  
 
   return useMutation<void, Error, SubmitCategory>({
     mutationFn: (data: SubmitCategory) => createCategories(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
-      router.back();
+      
     },
   });
 };
 
 export const useUpdateCategories = ({ axios }: UseCreateCategory) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation<void, Error, SubmitCategory>({
     mutationFn: (data: SubmitCategory) => updateCategories(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
-      router.back();
+      
     },
   });
 };
