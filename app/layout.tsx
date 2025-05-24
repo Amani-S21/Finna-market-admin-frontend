@@ -36,7 +36,14 @@ export default function RootLayout({
               <Theme>
                 <main className="bg-[#f9fafb]">{children}</main>
               </Theme>
-              <Toaster position="bottom-center" />
+              <Toaster
+                position="bottom-center"
+                toastOptions={{
+                  style: {
+                    fontFamily: "Montserrat, sans-serif",
+                  },
+                }}
+              />
             </ReduxProvider>
           </QueryProvider>
         </NextSessionProvider>

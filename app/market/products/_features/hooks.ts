@@ -40,28 +40,24 @@ type UseCreateProduct = {
 
 export const useCreateProduct = ({ axios }: UseCreateProduct) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation<void, Error, SubmitProduct>({
     mutationFn: (data: SubmitProduct) => createProduct(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-      router.back();
     },
   });
 };
 
 export const useUpdateProduct = ({ axios }: UseCreateProduct) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation<void, Error, SubmitProduct>({
     mutationFn: (data: SubmitProduct) => updateProduct(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-      router.back();
     },
   });
 };

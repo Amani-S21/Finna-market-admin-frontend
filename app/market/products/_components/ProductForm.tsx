@@ -205,14 +205,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
     };
     if (product) {
       try {
-        patchProductMutation({
+        await patchProductMutation({
           id: product?.id,
           ...productSubmit,
         });
       } catch (error) {}
     } else {
       try {
-        createProductMutation(productSubmit);
+        await createProductMutation(productSubmit);
       } catch (error) {}
     }
   };

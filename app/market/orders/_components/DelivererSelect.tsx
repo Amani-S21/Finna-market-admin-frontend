@@ -45,12 +45,11 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
 
       setOpen(false);
     } catch (error) {}
-  };
+};
 
   useEffect(() => {
     if (isUpdateSuccess) {
-      toast.success(`Caractéristique crééee avec avec succèes`);
-      router.back();
+      toast.success(`Affectation effectuée avec avec succèes`);
     }
   }, [isUpdateSuccess]);
 

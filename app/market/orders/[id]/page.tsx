@@ -47,7 +47,7 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
           {order?.status && <OrderStatusBadge status={order?.status} />}
           <Card mt="4" mb="5">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${order?.customer?.fullName.substring(
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${order?.customer?.fullName?.substring(
                 0,
                 1
               )}`}</div>
@@ -82,7 +82,7 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
               <Flex mt="3" gap="2" align="center">
                 <Badge radius="large" className="uppercase">
                   <p className="p-4">
-                    {order?.deliverer?.fullName.substring(0, 1)}
+                    {order?.deliverer?.fullName?.substring(0, 1)}
                   </p>
                 </Badge>
                 <Flex direction="column">

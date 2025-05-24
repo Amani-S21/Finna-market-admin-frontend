@@ -45,7 +45,8 @@ const OrderDetailsFeaturesTable = ({
                     key={value?.featureValue?.id}
                     title={value.featureValue.value}
                     valuePrice={
-                      value.featureValue.featuresAffectationsHasValues[0].price
+                      value.featureValue.featuresAffectationsHasValues[0]
+                        .price
                     }
                     currency="Usd"
                   />
