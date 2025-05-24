@@ -1,6 +1,6 @@
-import { Shop, ShopsListResponse } from "@/app/lib/types";
-import { useQuery } from "@tanstack/react-query";
-import { fetchShopById, fetchShops } from "./api";
+import { Shop, ShopsListResponse, SubmitShop } from "@/app/lib/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {  createShop, fetchShopById, fetchShops, updateShop } from "./api";
 import { AxiosInstance } from "axios";
 
 type UseFetchShops = {
@@ -36,5 +36,33 @@ export const useFetchShopsById = ({
     staleTime: 60 * 1000,
     retry: 3,
     enabled,
+  });
+};
+
+type UseCreateOrUpdateShop = {
+  axios: AxiosInstance;
+};
+
+export const useCreateShop = ({ axios }: UseCreateOrUpdateShop) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, SubmitShop>({
+    mutationFn: (data: SubmitShop) => createShop(axios, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shop"] });
+      queryClient.invalidateQueries({ queryKey: ["shops"] });
+    },
+  });
+};
+
+export const useUpdateShop = ({ axios }: UseCreateOrUpdateShop) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, SubmitShop>({
+    mutationFn: (data: SubmitShop) => updateShop(axios, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shop"] });
+      queryClient.invalidateQueries({ queryKey: ["shops"] });
+    },
   });
 };

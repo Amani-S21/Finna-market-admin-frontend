@@ -40,7 +40,7 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
           <Text size="2">{shop?.createdAt}</Text>
           <Card mt="4">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${shop?.users?.fullName.substring(
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${shop?.users?.fullName?.substring(
                 0,
                 1
               )}`}</div>
