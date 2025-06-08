@@ -1,16 +1,14 @@
 import { Roles, User, UserSchema, UsersResponse } from "@/app/lib/types";
+import { userSchema } from "@/app/lib/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  QueryClient,
   useMutation,
   useQuery,
-  useQueryClient,
+  useQueryClient
 } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { fetchUser, fetchUsers, searchUser, updateUser } from "./api";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { userSchema } from "@/app/lib/validationSchemas";
-import { useRouter } from "next/navigation";
+import { fetchUser, fetchUsers, searchUser, updateUser } from "./api";
 
 type UseSearchUser = {
   axios: AxiosInstance;

@@ -55,10 +55,11 @@ const ProductsDetailsPage = ({
 
           <Card my="4">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${product?.user?.fullName.substring(
-                0,
-                1
-              )}`}</div>
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">
+                {product?.user?.fullName
+                  ? product.user.fullName.substring(0, 1)
+                  : ""}
+              </div>
               <Flex direction="column">
                 <p className="lowercase first-letter:uppercase">
                   {product?.user?.fullName}

@@ -22,7 +22,7 @@ const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
       phone: data.phone,
       password: data.password,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: callbackUrl,
     });
   };
 

@@ -1,10 +1,9 @@
 import {
-  FeatureValuesByFeatureResponse,
   Product,
   ProductSchema,
   ProductsListResponse,
   SubCategoriesResponse,
-  SubmitProduct,
+  SubmitProduct
 } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +17,6 @@ import {
   fetchSubCategories,
   updateProduct,
 } from "./api";
-import { useRouter } from "next/navigation";
 
 export const useProductForm = ({
   product,
