@@ -1,20 +1,21 @@
 "use client";
 
 import { BackButton } from "@/app/_components";
-import { Text } from "@radix-ui/themes";
-import { MdOutlineFeaturedPlayList } from "react-icons/md";
-import { FeatureForm } from "../../_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { notFound } from "next/navigation";
-import { use } from "react";
-import { useFetchFeatureById } from "../../_features/hooks";
-import LoadingFeatureDetails from "../../[id]/loading";
+import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import { notFound, useParams } from "next/navigation";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
+import LoadingFeatureDetails from "../../[id]/loading";
+import { FeatureForm } from "../../_components";
+import { useFetchFeatureById } from "../../_features/hooks";
+import { Suspense } from "react";
 
-const EditFeaturePage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildEditFeaturePage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { id } = use(params);
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const {
     data: feature,
     isLoading,
@@ -44,6 +45,14 @@ const EditFeaturePage = ({ params }: { params: Promise<{ id: string }> }) => {
 
       <FeatureForm feature={feature} />
     </>
+  );
+};
+
+const EditFeaturePage = () => {
+  return (
+    <Suspense fallback={<LoadingFeatureDetails />}>
+      <BuildEditFeaturePage />
+    </Suspense>
   );
 };
 

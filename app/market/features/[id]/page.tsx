@@ -3,17 +3,18 @@
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Button, Grid, Heading, Link, Text } from "@radix-ui/themes";
-import { use } from "react";
-import { useFetchFeatureById } from "../_features/hooks";
-import { SelectSearchItem } from "../../products/_components";
-import LoadingFeatureDetails from "./loading";
-import { notFound } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { notFound, useParams } from "next/navigation";
+import { SelectSearchItem } from "../../products/_components";
+import { useFetchFeatureById } from "../_features/hooks";
+import LoadingFeatureDetails from "./loading";
+import { Suspense } from "react";
 
-const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildFeatureDetails = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { id } = use(params);
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const {
     data: feature,
     isLoading,
@@ -59,6 +60,14 @@ const FeatureDetails = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </Grid>
     </>
+  );
+};
+
+const FeatureDetails = () => {
+  return (
+    <Suspense fallback={<LoadingFeatureDetails />}>
+      <BuildFeatureDetails />
+    </Suspense>
   );
 };
 
