@@ -8,9 +8,14 @@ declare module "next-auth" {
       emailAddress: string;
       crdatedAt: string;
       updatedAt: string;
+      shop: {
+        id: string;
+        name: string;
+        address: string;
+      }[];
     };
     accessToken: string;
-    refreshToken : string;
+    refreshToken: string;
   }
 }
 
@@ -24,12 +29,16 @@ declare module "next-auth/jwt" {
       emailAddress: string;
       crdatedAt: string;
       updatedAt: string;
+      shop: {
+        id: string;
+        name: string;
+        address: string;
+      }[];
     };
     accessToken: string;
-    refreshToken : string;
+    refreshToken: string;
   }
 }
-
 
 export interface User {
   data: {
@@ -40,7 +49,12 @@ export interface User {
     emailAddress: string;
     crdatedAt: string;
     updatedAt: string;
+    shop: {
+      id: string;
+      name: string;
+      address: string;
+    }[];
   };
   accessToken: string;
-  refreshToken : string;
+  refreshToken: string;
 }

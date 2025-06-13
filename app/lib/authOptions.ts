@@ -23,9 +23,8 @@ export const authOptions: NextAuthOptions = {
           if (![200, 201, 202].includes(res.status)) return null;
 
           return res.data;
-        } catch (error) {
-          console.error("Login failed:", error);
-          return null;
+        } catch (error: any) {
+          throw new Error(error?.response?.data?.statusCode || "Login failed");
         }
       },
     }),

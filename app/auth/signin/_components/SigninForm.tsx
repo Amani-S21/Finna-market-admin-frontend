@@ -9,21 +9,34 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Key, Phone } from "lucide-react";
 import { SigninSchema } from "@/app/lib/types";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-const SigninForm = ({ callbackUrl }: { callbackUrl: string }) => {
+const SigninForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<SigninSchema>({ resolver: zodResolver(signinSchema) });
+  const router = useRouter();
 
   const onSubmit = async (data: SigninSchema) => {
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       phone: data.phone,
       password: data.password,
-      redirect: true,
-      callbackUrl: callbackUrl,
+      redirect: false,
     });
+
+    if (result?.status === 200) {
+      toast.success("Connecté avec succèes");
+      router.replace("/");
+    } else if (result?.error) {
+      if (result.error === "401") {
+        toast.error("Veuillez vérifier vos informations");
+      }
+    } else {
+      toast.error("An unknown error occurred");
+    }
   };
 
   return (
