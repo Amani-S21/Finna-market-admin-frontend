@@ -4,16 +4,18 @@ import BackButton from "@/app/_components/BackButton";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { notFound } from "next/navigation";
-import { use } from "react";
+import { notFound, useParams } from "next/navigation";
+import { Suspense } from "react";
 import { IoStorefrontOutline } from "react-icons/io5";
 import LoadingShopDetails from "../../[id]/loading";
 import { useFetchShopsById } from "../../_features/hooks";
 import ShopForm from "../../new/_components/ShopForm";
+import LoadingEditShopPage from "./loading";
 
-const EditShopPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildEditShopPage = () => {
   const { status } = useSession();
-  const { id } = use(params);
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const axios = useAxiosAuth();
 
   const {
@@ -45,6 +47,14 @@ const EditShopPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
       <ShopForm shop={shop} />
     </div>
+  );
+};
+
+const EditShopPage = () => {
+  return (
+    <Suspense fallback={<LoadingEditShopPage />}>
+      <BuildEditShopPage />
+    </Suspense>
   );
 };
 

@@ -5,14 +5,17 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { use } from "react";
+import { notFound, useParams } from "next/navigation";
+import { Suspense, use } from "react";
 import { useFetchShopsById } from "../_features/hooks";
 import LoadingShopDetails from "./loading";
+import LoadingEditProductPage from "../../products/edit/[id]/loading";
 
-const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildShopsDetailPage = () => {
   const { status } = useSession();
-  const { id } = use(params);
+  
+    const params = useParams<{ id: string }>();
+    const id = params.id;
   const axios = useAxiosAuth();
 
   const {
@@ -68,6 +71,15 @@ const ShopsDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </Grid>
     </>
+  );
+};
+
+
+const ShopsDetailPage = () => {
+  return (
+    <Suspense fallback={<LoadingEditProductPage />}>
+      <BuildShopsDetailPage />
+    </Suspense>
   );
 };
 

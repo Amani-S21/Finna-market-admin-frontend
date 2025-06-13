@@ -5,12 +5,12 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { ShopsTable, ShopsToolBar } from "../_components";
 import { useFetchShops } from "../_features/hooks";
 import LoadingShopspPage from "./loading";
-import { Suspense } from "react";
 
-const ShopsPage = () => {
+const BuildShopsPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
@@ -27,8 +27,7 @@ const ShopsPage = () => {
   if (error) return;
 
   return (
-    <Suspense fallback={<LoadingShopspPage />}>
-      <Flex direction="column" gap="4">
+    <Flex direction="column" gap="4">
       <ShopsToolBar />
       {shopsResponse && <ShopsTable shopsResponse={shopsResponse} />}
       <Pagination
@@ -38,6 +37,13 @@ const ShopsPage = () => {
         className="mt-4"
       />
     </Flex>
+  );
+};
+
+const ShopsPage = () => {
+  return (
+    <Suspense fallback={<LoadingShopspPage />}>
+      <BuildShopsPage />
     </Suspense>
   );
 };
