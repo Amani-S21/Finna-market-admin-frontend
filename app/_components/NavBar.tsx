@@ -1,9 +1,10 @@
-import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { authOptions } from "../lib/authOptions";
+"use client";
 
-const NavBar = async () => {
-  const session = await getServerSession(authOptions);
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+
+const NavBar = () => {
+  const { data: session } = useSession();
 
   return (
     <div className="h-[80px]  sticky border-b border-gray-200 top-0 bg-gray-50 z-30 flex px-8 items-center">
