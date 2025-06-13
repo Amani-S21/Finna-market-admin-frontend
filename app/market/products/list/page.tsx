@@ -8,8 +8,9 @@ import { useSearchParams } from "next/navigation";
 import { ProductsTable, ProductsToolBar } from "../_components";
 import { useFetchProducts } from "../_features/hooks";
 import LoadingProductsPage from "./loading";
+import { Suspense } from "react";
 
-const ProductsPage = () => {
+const BuildProductsPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
@@ -37,6 +38,14 @@ const ProductsPage = () => {
         itemCount={productsResponse?.count ?? 0}
       />
     </Flex>
+  );
+};
+
+const ProductsPage = () => {
+  return (
+    <Suspense fallback={<LoadingProductsPage />}>
+      <BuildProductsPage />
+    </Suspense>
   );
 };
 

@@ -28,20 +28,18 @@ const BuildCategoriesPage = () => {
   if (error) return;
 
   return (
-    <Suspense fallback={<LoadingCategoriesPage />}>
-      <Flex direction="column" gap="4">
-        <CategoriesToolBar />
-        {categoriesResponse && (
-          <CategoriesTable categoriesResponse={categoriesResponse} />
-        )}
-        <Pagination
-          pageSize={10}
-          currentPage={parseInt(page)}
-          itemCount={categoriesResponse?.count ?? 0}
-          className="mt-4"
-        />
-      </Flex>
-    </Suspense>
+    <Flex direction="column" gap="4">
+      <CategoriesToolBar />
+      {categoriesResponse && (
+        <CategoriesTable categoriesResponse={categoriesResponse} />
+      )}
+      <Pagination
+        pageSize={10}
+        currentPage={parseInt(page)}
+        itemCount={categoriesResponse?.count ?? 0}
+        className="mt-4"
+      />
+    </Flex>
   );
 };
 

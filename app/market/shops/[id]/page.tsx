@@ -6,10 +6,10 @@ import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
-import { Suspense, use } from "react";
+import { Suspense } from "react";
+import LoadingEditProductPage from "../../products/edit/[id]/loading";
 import { useFetchShopsById } from "../_features/hooks";
 import LoadingShopDetails from "./loading";
-import LoadingEditProductPage from "../../products/edit/[id]/loading";
 
 const BuildShopsDetailPage = () => {
   const { status } = useSession();

@@ -10,8 +10,9 @@ import FeaturesToolBar from "../_components/FeaturesToolBar";
 import { useFetchFeatures } from "../_features/hooks";
 import LoadingFeatures from "./loading";
 import { Suspense } from "react";
+import LoadingFeaturesPage from "./loading";
 
-const FeaturesPage = () => {
+const BuildFeaturesPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
@@ -32,19 +33,25 @@ const FeaturesPage = () => {
   if (error) return <p>Erreur</p>;
 
   return (
-    <Suspense fallback={<LoadingFeatures />}>
-      <Flex direction="column" gap="4">
-        <FeaturesToolBar />
-        {featuresResponse && (
-          <FeaturesTable featuresResponse={featuresResponse} />
-        )}
-        <Pagination
-          pageSize={10}
-          currentPage={parseInt(page)}
-          itemCount={featuresResponse?.count ?? 0}
-          className="mt-4"
-        />
-      </Flex>
+    <Flex direction="column" gap="4">
+      <FeaturesToolBar />
+      {featuresResponse && (
+        <FeaturesTable featuresResponse={featuresResponse} />
+      )}
+      <Pagination
+        pageSize={10}
+        currentPage={parseInt(page)}
+        itemCount={featuresResponse?.count ?? 0}
+        className="mt-4"
+      />
+    </Flex>
+  );
+};
+
+const FeaturesPage = () => {
+  return (
+    <Suspense fallback={<LoadingFeaturesPage />}>
+      <BuildFeaturesPage />
     </Suspense>
   );
 };

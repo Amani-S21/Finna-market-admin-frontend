@@ -2,7 +2,7 @@ import LoadingTable from "@/app/_components/LoadingTable";
 import { FeaturesToolBar } from "../_components";
 import { Flex } from "@radix-ui/themes";
 
-const LoadingFeatures = () => {
+const LoadingFeaturesPage = () => {
   return (
     <Flex direction="column" gap="4">
       <FeaturesToolBar />
@@ -21,4 +21,4 @@ export  const featuresColumns: {
   { label: "Action" },
 ];
 
-export default LoadingFeatures;
+export default LoadingFeaturesPage;
