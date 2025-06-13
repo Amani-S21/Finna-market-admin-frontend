@@ -1,23 +1,21 @@
 "use client";
 
+import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { use } from "react";
-import { useFetchCategories } from "../_features/hooks";
-import LoadingCategoriesPage from "./loading";
+import { useSearchParams } from "next/navigation";
 import { CategoriesToolBar } from "../_components";
 import CategoriesTable from "../_components/CategoriesTable";
-import { Pagination } from "@/app/_components";
-import { Flex } from "@radix-ui/themes";
+import { useFetchCategories } from "../_features/hooks";
+import LoadingCategoriesPage from "./loading";
+import { Suspense } from "react";
 
-const CategoriesPage = ({
-  searchParams,
-}: {
-  searchParams: Promise<{ page: string }>;
-}) => {
+const CategoriesPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { page } = use(searchParams);
+  const searchParams = useSearchParams();
+  const page: string = searchParams.get("page") ?? "";
 
   const {
     data: categoriesResponse,
@@ -30,18 +28,20 @@ const CategoriesPage = ({
   if (error) return;
 
   return (
-    <Flex direction="column" gap="4">
-      <CategoriesToolBar />
-      {categoriesResponse && (
-        <CategoriesTable categoriesResponse={categoriesResponse} />
-      )}
-      <Pagination
-        pageSize={10}
-        currentPage={parseInt(page)}
-        itemCount={categoriesResponse?.count ?? 0}
-        className="mt-4"
-      />
-    </Flex>
+    <Suspense fallback={<LoadingCategoriesPage />}>
+      <Flex direction="column" gap="4">
+        <CategoriesToolBar />
+        {categoriesResponse && (
+          <CategoriesTable categoriesResponse={categoriesResponse} />
+        )}
+        <Pagination
+          pageSize={10}
+          currentPage={parseInt(page)}
+          itemCount={categoriesResponse?.count ?? 0}
+          className="mt-4"
+        />
+      </Flex>
+    </Suspense>
   );
 };
 

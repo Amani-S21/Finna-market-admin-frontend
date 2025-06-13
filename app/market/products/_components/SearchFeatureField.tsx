@@ -70,7 +70,7 @@ const SearchFeatureTextField = ({
     } else {
       setIsDropdownVisible(false);
     }
-  }, [debouncedSearchTerm, refetch]);
+  }, [debouncedSearchTerm, isManuallySelected, refetch]);
 
   const handleSelect = (item: Feature) => {
     setIsManuallySelected(true);

@@ -42,7 +42,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
         ])
       );
     }
-  }, [category]);
+  }, [category, dispatch]);
 
   const {
     register,
@@ -78,7 +78,9 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               name: v.name,
             })) ?? [],
         });
-      } catch (error) {}
+          } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
     } else {
       try {
         await createCategory({
@@ -88,7 +90,9 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               name: v.name,
             })) ?? [],
         });
-      } catch (error) {}
+          } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
     }
   };
 
@@ -97,14 +101,14 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       toast.success(`Catégorie crééee avec avec succèes`);
       router.back();
     }
-  }, [isCreateSuccess]);
+  }, [isCreateSuccess, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
       toast.success(`Catégorie modifiée avec avec succèes`);
       router.back();
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, router]);
 
   return (
     <div className="max-w-xl">

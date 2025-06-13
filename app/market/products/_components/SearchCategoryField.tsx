@@ -70,7 +70,7 @@ const SearchCategoryTextField = ({
     } else {
       setIsDropdownVisible(false);
     }
-  }, [debouncedSearchTerm, refetch]);
+  }, [debouncedSearchTerm, refetch, isManuallySelected]);
 
   const handleSelect = (item: Category) => {
     setIsManuallySelected(true);

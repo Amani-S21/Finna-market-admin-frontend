@@ -1,6 +1,6 @@
 export const formattedDate = (date: string): string => {
-  let myDate = new Date(date);
-  let formated = new Intl.DateTimeFormat("fr-FR", {
+  const myDate = new Date(date);
+  const formated = new Intl.DateTimeFormat("fr-FR", {
     year: "numeric",
     month: "long",
     day: "numeric",

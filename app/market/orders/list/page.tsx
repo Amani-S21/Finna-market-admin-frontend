@@ -2,22 +2,22 @@
 
 import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Status } from "@/app/lib/types";
+import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { use } from "react";
+import { useSearchParams } from "next/navigation";
+import {  OrdersToolBar } from "../_components";
 import { useFetchOrders } from "../_features/hooks";
 import LoadingOrdersPage from "./loading";
-import { OrdersTable, OrdersToolBar } from "../_components";
-import { Flex } from "@radix-ui/themes";
-import { Status } from "@/app/lib/types";
+import { Suspense } from "react";
+import OrdersTable from "../_components/OrdersTable";
 
-const OrdersPage = ({
-  searchParams,
-}: {
-  searchParams: Promise<{ page: string; status: Status }>;
-}) => {
+const BuildOrdersPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { page, status: orderStatus } = use(searchParams);
+  const searchParams = useSearchParams();
+  const page: string = searchParams.get("page") ?? "1";
+  const orderStatus: Status = searchParams.get("status") as Status;
 
   const {
     data: ordersResponse,
@@ -45,6 +45,15 @@ const OrdersPage = ({
         className="mt-4"
       />
     </Flex>
+  );
+};
+
+
+const OrdersPage = () => {
+  return (
+    <Suspense>
+      <BuildOrdersPage />
+    </Suspense>
   );
 };
 

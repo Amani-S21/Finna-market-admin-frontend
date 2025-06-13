@@ -1,18 +1,26 @@
 import { SubmitProduct, UploadFileResponse } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
+import toast from "react-hot-toast";
 
 export const fetchProducts = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/products?page=${page}&limit=10`);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
-export const fetchProductById = async (axios: AxiosInstance, productId: string) => {
+export const fetchProductById = async (
+  axios: AxiosInstance,
+  productId: string
+) => {
   try {
     const res = await axios.get(`/products/${productId}`);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const uploadUrl = async (axios: AxiosInstance, image: File) => {
@@ -26,9 +34,10 @@ export const uploadUrl = async (axios: AxiosInstance, image: File) => {
       },
     });
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
-
 
 export const fetchSubCategories = async (
   axios: AxiosInstance,
@@ -39,7 +48,9 @@ export const fetchSubCategories = async (
       `/sub-categories/by-category/${selectedCategoryId}?page=1&limit=20`
     );
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const createProduct = async (
@@ -55,7 +66,8 @@ export const createProduct = async (
 
     switch (statusCode) {
       case 409:
-        message = "Nom du produit déjà utilisées, veuillez utiliser un autre nom";
+        message =
+          "Nom du produit déjà utilisées, veuillez utiliser un autre nom";
         break;
 
       default:
@@ -80,7 +92,8 @@ export const updateProduct = async (
 
     switch (statusCode) {
       case 409:
-        message = "Nom du product déjà utilisées, veuillez utiliser un autre nom";
+        message =
+          "Nom du product déjà utilisées, veuillez utiliser un autre nom";
         break;
 
       default:

@@ -41,7 +41,7 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
         ])
       );
     }
-  }, [feature]);
+  }, [feature, dispatch]);
 
   const {
     register,
@@ -92,14 +92,14 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
       toast.success(`Caractéristique créée avec avec succèes`);
       router.back();
     }
-  }, [isCreateSuccess]);
+  }, [isCreateSuccess, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
       toast.success(`Caractéristique modifiée avec avec succèes`);
       router.back();
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, router]);
 
   return (
     <div className="max-w-xl">

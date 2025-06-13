@@ -3,9 +3,9 @@
 import { Roles } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 
-const UserRoleFilter = () => {
+const BuildUserRoleFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   return (
@@ -32,6 +32,14 @@ const UserRoleFilter = () => {
         ))}
       </Select.Content>
     </Select.Root>
+  );
+};
+
+const UserRoleFilter = () => {
+  return (
+    <Suspense>
+      <BuildUserRoleFilter />
+    </Suspense>
   );
 };
 

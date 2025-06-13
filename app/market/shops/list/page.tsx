@@ -2,21 +2,19 @@
 
 import Pagination from "@/app/_components/Pagination";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { use } from "react";
-import LoadingShopspPage from "./loading";
-import { useFetchShops } from "../_features/hooks";
-import { ShopsToolBar, ShopsTable } from "../_components";
-import { useSession } from "next-auth/react";
 import { Flex } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { ShopsTable, ShopsToolBar } from "../_components";
+import { useFetchShops } from "../_features/hooks";
+import LoadingShopspPage from "./loading";
+import { Suspense } from "react";
 
-const ShopsPage = ({
-  searchParams,
-}: {
-  searchParams: Promise<{ page: string }>;
-}) => {
+const ShopsPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { page } = use(searchParams);
+  const searchParams = useSearchParams();
+  const page: string = searchParams.get("page") ?? "";
 
   const {
     data: shopsResponse,
@@ -29,7 +27,8 @@ const ShopsPage = ({
   if (error) return;
 
   return (
-    <Flex direction="column" gap="4">
+    <Suspense fallback={<LoadingShopspPage />}>
+      <Flex direction="column" gap="4">
       <ShopsToolBar />
       {shopsResponse && <ShopsTable shopsResponse={shopsResponse} />}
       <Pagination
@@ -39,6 +38,7 @@ const ShopsPage = ({
         className="mt-4"
       />
     </Flex>
+    </Suspense>
   );
 };
 

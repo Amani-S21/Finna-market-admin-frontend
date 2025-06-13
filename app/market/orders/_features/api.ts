@@ -1,5 +1,6 @@
 import { Order, Status } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
+import toast from "react-hot-toast";
 
 export const fetchOrders = async (
   axios: AxiosInstance,
@@ -12,33 +13,43 @@ export const fetchOrders = async (
       : `page=${page}&limit=10`;
     const res = await axios.get(`/orders?${query}`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const fetchOrderById = async (axios: AxiosInstance, orderId: string) => {
   try {
     const res = await axios.get(`/orders/${orderId}`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const updateOrder = async (axios: AxiosInstance, data: Order) => {
   try {
     const res = await axios.put(`/orders`, data);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const fetchOrdersSummary = async (axios: AxiosInstance) => {
   try {
     const res = await axios.get(`/orders/summary`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const fetchRecentOrders = async (axios: AxiosInstance) => {
   try {
     const res = await axios.get(`/orders/recents?limit=10`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };

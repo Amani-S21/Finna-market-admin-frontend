@@ -1,5 +1,6 @@
 import { Roles, User } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
+import toast from "react-hot-toast";
 
 export const searchUser = async (
   axios: AxiosInstance,
@@ -9,7 +10,9 @@ export const searchUser = async (
   try {
     const res = await axios.get(`/users/search?term=${term}&role=${role}`);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const fetchUsers = async (
@@ -23,14 +26,18 @@ export const fetchUsers = async (
       : `page=${page}&limit=10`;
     const res = await axios.get(`/users?${query}`);
     return res.data;
-  } catch (error) {}
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const fetchUser = async (axios: AxiosInstance, userId: string) => {
   try {
     const res = await axios.get(`/users/${userId}`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const updateUser = async (axios: AxiosInstance, data: User) => {
@@ -44,7 +51,7 @@ export const updateUser = async (axios: AxiosInstance, data: User) => {
     if (statusCode === 202) {
       message = "Informations du compte modifiées avec succèes";
     }
-    
+
     const customError = new Error(message);
     throw customError;
   }

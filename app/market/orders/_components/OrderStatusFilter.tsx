@@ -3,8 +3,9 @@
 import { Status } from "@/app/lib/types";
 import { Select } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-const OrderStatusFilter = () => {
+const BuildOrderStatusFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -31,6 +32,14 @@ const OrderStatusFilter = () => {
         ))}
       </Select.Content>
     </Select.Root>
+  );
+};
+
+const OrderStatusFilter = () => {
+  return (
+    <Suspense>
+      <BuildOrderStatusFilter />
+    </Suspense>
   );
 };
 

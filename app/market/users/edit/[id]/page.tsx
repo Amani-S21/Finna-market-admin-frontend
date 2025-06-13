@@ -4,16 +4,18 @@ import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { use } from "react";
 import { FaUsers } from "react-icons/fa6";
 import { UserForm } from "../../_components";
 import { useFetchUser } from "../../_features/hooks";
 import LoadingEditUserPage from "./loading";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-const EditUserPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildEditUserPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { id } = use(params);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id") ?? "";
 
   const { data: user, isLoading } = useFetchUser({
     axios,
@@ -38,6 +40,14 @@ const EditUserPage = ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
       <UserForm user={user} />
     </div>
+  );
+};
+
+const EditUserPage = () => {
+  return (
+    <Suspense fallback={<LoadingEditUserPage />}>
+      <BuildEditUserPage />
+    </Suspense>
   );
 };
 

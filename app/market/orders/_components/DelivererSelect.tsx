@@ -3,7 +3,6 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { User } from "@/app/lib/types";
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdOutlineEdit } from "react-icons/md";
@@ -18,7 +17,6 @@ type Props = {
 
 const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
   const axios = useAxiosAuth();
-  const router = useRouter();
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchTerm = useDebounce(searchValue, 300);
@@ -44,7 +42,9 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
       });
 
       setOpen(false);
-    } catch (error) {}
+        } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
   useEffect(() => {

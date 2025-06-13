@@ -35,7 +35,7 @@ const UsersTable = ({
             <Table.Cell className="truncate max-w-[300px]">
               {user.phone}
             </Table.Cell>
-            <Table.Cell>{formattedDate(user?.createdAt!)}</Table.Cell>
+            <Table.Cell>{formattedDate(`${user?.createdAt}`)}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"

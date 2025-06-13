@@ -42,7 +42,9 @@ const EditPasswordForm = () => {
         oldPassword: data.oldPassword,
         newPassword: data.newPassword,
       });
-    } catch (error) {}
+    } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
   };
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const EditPasswordForm = () => {
       toast.success(`Mot de passe modifiée avec succèes`);
       router.back();
     }
-  }, [isSuccess]);
+  }, [isSuccess, router]);
 
   return (
     <div className="max-w-xl">

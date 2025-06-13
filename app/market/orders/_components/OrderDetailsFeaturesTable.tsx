@@ -9,11 +9,14 @@ const OrderDetailsFeaturesTable = ({
   orderDetails: OrderDetail[];
 }) => {
   const totalOrderFeaturesPrice = (orderDetail: OrderDetail): number => {
-    const total = orderDetail.orderDetailFeatures.reduce(
-      (sum, item) =>
-        (sum += item.featureValue.featuresAffectationsHasValues[0].price),
-      0
-    );
+    const total = orderDetail.orderDetailFeatures.reduce((sum, item) => {
+      if (item.featureValue.featuresAffectationsHasValues.length > 0) {
+        return (sum +=
+          item.featureValue.featuresAffectationsHasValues[0].price);
+      } else {
+        return (sum += 0);
+      }
+    }, 0);
     return total + orderDetail.product.currentPrice;
   };
 
@@ -45,8 +48,11 @@ const OrderDetailsFeaturesTable = ({
                     key={value?.featureValue?.id}
                     title={value.featureValue.value}
                     valuePrice={
-                      value.featureValue.featuresAffectationsHasValues[0]
-                        .price
+                      value.featureValue.featuresAffectationsHasValues.length >
+                      0
+                        ? value.featureValue.featuresAffectationsHasValues[0]
+                            .price
+                        : 0
                     }
                     currency="Usd"
                   />
@@ -54,7 +60,7 @@ const OrderDetailsFeaturesTable = ({
               </div>
             </Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
-              {orderDetail.product.currentPrice}
+              {`${orderDetail.product.currentPrice}`}
             </Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
               {totalOrderFeaturesPrice(orderDetail) * orderDetail.quantity}

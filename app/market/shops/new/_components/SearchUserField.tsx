@@ -68,12 +68,12 @@ const SearUserTextField = ({
     } else {
       setIsDropdownVisible(false);
     }
-  }, [debouncedSearchTerm, refetch]);
+  }, [debouncedSearchTerm, isManuallySelected, refetch]);
 
   const handleSelect = (item: User) => {
     setIsManuallySelected(true);
     setSelectedId(item.id);
-    onChange(item.fullName);
+    onChange(`${item.fullName}`);
     setIsDropdownVisible(false);
   };
 

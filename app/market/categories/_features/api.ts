@@ -1,11 +1,14 @@
 import { SubmitCategory } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
+import toast from "react-hot-toast";
 
 export const fetchCategories = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/categories?page=${page}&limit=10`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const fetchCategoryById = async (
@@ -15,7 +18,9 @@ export const fetchCategoryById = async (
   try {
     const res = await axios.get(`/categories/${categoryId}`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const createCategories = async (

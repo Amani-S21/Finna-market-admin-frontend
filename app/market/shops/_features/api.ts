@@ -1,11 +1,14 @@
 import { SubmitShop } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
+import toast from "react-hot-toast";
 
 export const fetchShops = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/shops?page=${page}&limit=10`);
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const fetchShopById = async (axios: AxiosInstance, shopId: string) => {

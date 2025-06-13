@@ -4,12 +4,10 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineOrderedList, AiOutlineProduct } from "react-icons/ai";
-import { FaClipboardUser } from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { TbCategoryMinus } from "react-icons/tb";
-import { VscAccount } from "react-icons/vsc";
-import { FaUsers } from "react-icons/fa";
 
 const NavLinks = () => {
   const currentPath = usePathname();

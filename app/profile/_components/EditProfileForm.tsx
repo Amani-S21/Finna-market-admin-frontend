@@ -40,7 +40,9 @@ const EditProfileForm = ({ user }: { user: User }) => {
         phone: data.phone,
         emailAddress: data.emailAddress,
       });
-    } catch (error) {}
+     } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
   };
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const EditProfileForm = ({ user }: { user: User }) => {
       toast.success(`Informations du compte modifiées avec succèes`);
       router.back();
     }
-  }, [isSuccess]);
+  }, [isSuccess, router]);
 
   return (
     <div className="max-w-xl">

@@ -5,8 +5,8 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { formattedDate } from "@/app/lib/tools";
 import { Badge, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { notFound } from "next/navigation";
-import { use, useState } from "react";
+import { notFound, useParams, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import {
   DelivererSelect,
   OrderDetailsFeaturesTable,
@@ -15,10 +15,11 @@ import {
 import { useFetchOrderById } from "../_features/hooks";
 import LoadingOrderDetailsPage from "./loading";
 
-const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildOrderDetailsPage = () => {
   const { status } = useSession();
-  const { id } = use(params);
   const axios = useAxiosAuth();
+  const params = useParams<{ id: string }>();
+  const id = params.id ?? "";
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -115,6 +116,14 @@ const OrderDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </Grid>
     </>
+  );
+};
+
+const OrderDetailsPage = () => {
+  return (
+    <Suspense fallback={<LoadingOrderDetailsPage />}>
+      <BuildOrderDetailsPage />
+    </Suspense>
   );
 };
 

@@ -2,21 +2,18 @@
 
 import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { use } from "react";
-import LoadingProductsPage from "./loading";
-import { ProductsToolBar, ProductsTable } from "../_components";
-import { useFetchProducts } from "../_features/hooks";
-import { useSession } from "next-auth/react";
 import { Flex } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { ProductsTable, ProductsToolBar } from "../_components";
+import { useFetchProducts } from "../_features/hooks";
+import LoadingProductsPage from "./loading";
 
-const ProductsPage = ({
-  searchParams,
-}: {
-  searchParams: Promise<{ page: string }>;
-}) => {
+const ProductsPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { page } = use(searchParams);
+  const searchParams = useSearchParams();
+  const page: string = searchParams.get("page") ?? "";
 
   const {
     data: productsResponse,

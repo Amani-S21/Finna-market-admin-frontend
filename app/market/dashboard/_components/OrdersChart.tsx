@@ -3,7 +3,6 @@ import { Card } from "@radix-ui/themes";
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,

@@ -6,7 +6,6 @@ import {
 } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { useRouter } from "next/navigation";
 import {
   createFeatures,
   fetchFeatureById,

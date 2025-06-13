@@ -46,31 +46,35 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
     if (shop) {
       try {
         await updateShop({ id: shop.id, userId, ...data });
-      } catch (error) {}
+          } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
     } else {
       try {
         await createShop({ userId, ...data });
-      } catch (error) {}
+          } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
     }
   };
 
   useEffect(() => {
     if (shop) setUserId(shop?.users.id ?? "");
-  }, []);
+  }, [shop]);
 
   useEffect(() => {
     if (isCreateSuccess) {
       toast.success(`Boutique créé avec avec succès`);
       router.back();
     }
-  }, [isCreateSuccess]);
+  }, [isCreateSuccess, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
       toast.success(`Boutique modifiée avec avec succès`);
       router.back();
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, router]);
 
   return (
     <div className="max-w-xl">

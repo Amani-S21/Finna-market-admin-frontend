@@ -1,13 +1,14 @@
 import { SubmitFeatureWithValues } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
+import toast from "react-hot-toast";
 
 export const fetchFeatures = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/features?page=${page}&limit=10`);
     return res.data;
-  } catch (error) {
-    return { count: 0, data: [] };
-  }
+     } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const fetchFeatureById = async (
@@ -17,9 +18,9 @@ export const fetchFeatureById = async (
   try {
     const res = await axios.get(`/features/${featureId}`);
     return res.data;
-  } catch (error) {
-    return { count: 0, data: [] };
-  }
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };
 
 export const createFeatures = async (
@@ -82,5 +83,7 @@ export const fetchFeatureValueByFeature = async (
     );
 
     return res.data;
-  } catch (error) {}
+      } catch (error : any) {
+      toast.error(JSON.stringify(error))
+    }
 };

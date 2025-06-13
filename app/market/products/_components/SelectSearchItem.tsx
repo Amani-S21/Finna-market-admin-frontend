@@ -11,7 +11,7 @@ type Props = {
   editable?: boolean | undefined;
   id?: string;
   title: string;
-  index?: string;
+  index?: string; 
   valuePrice?: number;
   currency?: string;
   onClick?: (price: number) => void;
@@ -19,9 +19,7 @@ type Props = {
   onDialogSave?: (textValue: string) => void;
 };
 const SelectSearchItem = ({
-  id,
   title,
-  index,
   isSelected,
   valuePrice,
   onDeleteClick,

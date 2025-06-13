@@ -23,3 +23,11 @@ export const ordersColumns: {
 ];
 
 export default LoadingOrdersPage;
+
+// import React from "react";
+
+// const LoadingOrdersPage = () => {
+//   return <div>loading...</div>;
+// };
+
+// export default LoadingOrdersPage;

@@ -2,13 +2,7 @@
 
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import {
-  Feature,
-  Product,
-  ProductSchema,
-  SubCategory,
-  SubmitProduct,
-} from "@/app/lib/types";
+import { Feature, Product, ProductSchema, SubCategory } from "@/app/lib/types";
 import {
   addAndRemoveFeaturePrices,
   addFeature,
@@ -24,7 +18,7 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
@@ -38,7 +32,7 @@ import {
   SelectSearchItem,
 } from "../_components";
 import SearchCategoryTextField from "../_components/SearchCategoryField";
-import { createProduct, updateProduct, uploadUrl } from "../_features/api";
+import { uploadUrl } from "../_features/api";
 import {
   useCreateProduct,
   useFetchCategories,
@@ -47,15 +41,15 @@ import {
 } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
-import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
-import { useFetchFeaturesByValue } from "../../features/_features/hooks";
 import toast from "react-hot-toast";
+import { useFetchFeaturesByValue } from "../../features/_features/hooks";
+import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
   const axios = useAxiosAuth();
   const router = useRouter();
-  const queryClient = useQueryClient();
+
   const { featureValuePrices } = useSelector(
     (state: RootState) => state.feature
   );
@@ -116,7 +110,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
         )
       );
     }
-  }, [product]);
+  }, [product, dispatch]);
 
   const { data: categoriesResponse } = useFetchCategories({
     axios,
@@ -209,11 +203,15 @@ const ProductForm = ({ product }: { product?: Product }) => {
           id: product?.id,
           ...productSubmit,
         });
-      } catch (error) {}
+      } catch (error: any) {
+        toast.error(JSON.stringify(error));
+      }
     } else {
       try {
         await createProductMutation(productSubmit);
-      } catch (error) {}
+      } catch (error: any) {
+        toast.error(JSON.stringify(error));
+      }
     }
   };
 
@@ -222,14 +220,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
       toast.success(`Produit créé avec avec succèes`);
       router.back();
     }
-  }, [isCreateSuccess]);
+  }, [isCreateSuccess, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
       toast.success(`Produit modifié avec avec succèes`);
       router.back();
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, router]);
 
   return (
     <div>
@@ -447,10 +445,10 @@ const ProductForm = ({ product }: { product?: Product }) => {
               </div>
             </>
           )}
-          {features?.length! > 0 && (
+          {features && features?.length > 0 && (
             <FeaturesToPostTable features={features!} />
           )}
-          {features?.length! < 1 && (
+          {features && features?.length < 1 && (
             <ErrorMessage>
               Les caractéristiques du produit sont obligatoires
             </ErrorMessage>
