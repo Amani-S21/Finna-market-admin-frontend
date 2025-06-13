@@ -4,17 +4,18 @@ import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { notFound } from "next/navigation";
-import { use } from "react";
+import { notFound, useParams } from "next/navigation";
+import { Suspense } from "react";
 import { AiOutlineProduct } from "react-icons/ai";
 import { ProductForm } from "../../_components";
 import { useFetchProductById } from "../../_features/hooks";
 import LoadingEditProductPage from "./loading";
 
-const EditProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildEditProductPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const { id } = use(params);
+  const params = useParams<{ id: string }>();
+  const id = params.id;
 
   const {
     data: product,
@@ -44,6 +45,14 @@ const EditProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
       <ProductForm product={product} />
     </div>
+  );
+};
+
+const EditProductPage = () => {
+  return (
+    <Suspense fallback={<LoadingEditProductPage />}>
+      <BuildEditProductPage />
+    </Suspense>
   );
 };
 

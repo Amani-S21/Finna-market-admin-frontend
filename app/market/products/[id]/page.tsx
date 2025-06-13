@@ -3,10 +3,6 @@
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Product } from "@/app/lib/types";
-import { useQuery } from "@tanstack/react-query";
-import { use } from "react";
-import LoadingProductDetails from "./loading";
-import { notFound } from "next/navigation";
 import {
   Button,
   Card,
@@ -16,15 +12,16 @@ import {
   Link,
   Text,
 } from "@radix-ui/themes";
-import { ProductsFeaturesTable } from "../_components";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { notFound, useParams } from "next/navigation";
+import { Suspense } from "react";
+import { ProductsFeaturesTable } from "../_components";
+import LoadingProductDetails from "./loading";
 
-const ProductsDetailsPage = ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
-  const { id } = use(params);
+const BuildProductsDetailsPage = () => {
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const axios = useAxiosAuth();
 
   const {
@@ -126,6 +123,14 @@ const ProductsDetailsPage = ({
         </div>
       </Grid>
     </>
+  );
+};
+
+const ProductsDetailsPage = () => {
+  return (
+    <Suspense fallback={<LoadingProductDetails />}>
+      <BuildProductsDetailsPage />
+    </Suspense>
   );
 };
 
