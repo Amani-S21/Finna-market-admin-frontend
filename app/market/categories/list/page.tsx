@@ -11,7 +11,7 @@ import { useFetchCategories } from "../_features/hooks";
 import LoadingCategoriesPage from "./loading";
 import { Suspense } from "react";
 
-const CategoriesPage = () => {
+const BuildCategoriesPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
@@ -41,6 +41,14 @@ const CategoriesPage = () => {
           className="mt-4"
         />
       </Flex>
+    </Suspense>
+  );
+};
+
+const CategoriesPage = () => {
+  return (
+    <Suspense fallback={<LoadingCategoriesPage />}>
+      <BuildCategoriesPage />
     </Suspense>
   );
 };

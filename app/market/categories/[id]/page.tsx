@@ -1,19 +1,20 @@
 "use client";
 
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useSession } from "next-auth/react";
-import { use } from "react";
-import LoadingCategoryDetails from "./loading";
-import { notFound } from "next/navigation";
-import { useFetchCategoryById } from "../_features/hooks";
 import { BackButton } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Button, Grid, Heading, Text } from "@radix-ui/themes";
-import { SelectSearchItem } from "../../products/_components";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { notFound, useParams } from "next/navigation";
+import { Suspense } from "react";
+import { SelectSearchItem } from "../../products/_components";
+import { useFetchCategoryById } from "../_features/hooks";
+import LoadingCategoryDetails from "./loading";
 
-const CategoryDetails = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildCategoryDetails = () => {
   const { status } = useSession();
-  const { id } = use(params);
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const axios = useAxiosAuth();
 
   const {
@@ -57,6 +58,14 @@ const CategoryDetails = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </Grid>
     </>
+  );
+};
+
+const CategoryDetails = () => {
+  return (
+    <Suspense fallback={<LoadingCategoryDetails />}>
+      <BuildCategoryDetails />
+    </Suspense>
   );
 };
 

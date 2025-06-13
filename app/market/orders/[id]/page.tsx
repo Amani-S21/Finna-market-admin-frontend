@@ -5,7 +5,7 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { formattedDate } from "@/app/lib/tools";
 import { Badge, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { notFound, useParams, useSearchParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import {
   DelivererSelect,

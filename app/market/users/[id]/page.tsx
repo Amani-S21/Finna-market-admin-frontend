@@ -5,7 +5,7 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Badge, Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Suspense } from "react";
 import { UserRoleBadge } from "../_components";
 import { useFetchUser } from "../_features/hooks";
@@ -14,8 +14,8 @@ import LoadingUserDetailsPage from "./loading";
 const BuildUserDetailsPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id") ?? "";
+  const params = useParams<{ id: string }>();
+  const id = params.id;
 
   const { data: user, isLoading } = useFetchUser({
     axios,

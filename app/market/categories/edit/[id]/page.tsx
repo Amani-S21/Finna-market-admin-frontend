@@ -1,19 +1,20 @@
-"use client"
+"use client";
 
 import { BackButton } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Text } from "@radix-ui/themes";
-import React, { use } from "react";
+import { useSession } from "next-auth/react";
+import { notFound, useParams } from "next/navigation";
+import { Suspense } from "react";
 import { TbCategoryMinus } from "react-icons/tb";
 import CategoryForm from "../../_components/CategoryForm";
-import { useSession } from "next-auth/react";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useFetchCategoryById } from "../../_features/hooks";
-import { notFound } from "next/navigation";
 import LoadingEditCategoriesPage from "./loading";
 
-const EditCategoryPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const BuildEditCategoryPage = () => {
   const { status } = useSession();
-  const { id } = use(params);
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const axios = useAxiosAuth();
 
   const {
@@ -45,6 +46,14 @@ const EditCategoryPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
       <CategoryForm category={category} />
     </>
+  );
+};
+
+const EditCategoryPage = () => {
+  return (
+    <Suspense fallback={<LoadingEditCategoriesPage />}>
+      <BuildEditCategoryPage />
+    </Suspense>
   );
 };
 
