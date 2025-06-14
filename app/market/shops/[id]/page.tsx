@@ -11,6 +11,7 @@ import LoadingEditProductPage from "../../products/edit/[id]/loading";
 import { useFetchShopsById } from "../_features/hooks";
 import LoadingShopDetails from "./loading";
 import { formattedDate } from "@/app/lib/tools";
+import { Edit } from "lucide-react";
 
 const BuildShopsDetailPage = () => {
   const { status } = useSession();
@@ -33,7 +34,8 @@ const BuildShopsDetailPage = () => {
 
   if (error) notFound();
 
-  const superMarketOwner = shop?.shopAffectations[0].user;
+  const superMarketOwner =
+    shop?.shopAffectations.length && shop?.shopAffectations[0].user;
 
   return (
     <>
@@ -45,20 +47,29 @@ const BuildShopsDetailPage = () => {
           </Heading>
           <Text size="2">{formattedDate(`${shop?.createdAt}`)}</Text>
           <Card mt="4">
-            <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${superMarketOwner?.fullName?.substring(
-                0,
-                1
-              )}`}</div>
-              <Flex direction="column">
-                <p className="lowercase first-letter:uppercase">
-                  {superMarketOwner?.fullName}
-                </p>
-                <p className="text-sm font-bold text-gray-600">
-                  {superMarketOwner?.phone}
-                </p>
+            {superMarketOwner ? (
+              <Flex align="center" gap="2">
+                <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${superMarketOwner?.fullName?.substring(
+                  0,
+                  1
+                )}`}</div>
+                <Flex direction="column">
+                  <p className="lowercase first-letter:uppercase">
+                    {superMarketOwner?.fullName}
+                  </p>
+                  <p className="text-sm font-bold text-gray-600">
+                    {superMarketOwner?.phone}
+                  </p>
+                </Flex>
               </Flex>
-            </Flex>
+            ) : (
+              <Flex gap="4">
+                <Text color="red" size="2">
+                  Affecter un propriétaire
+                </Text>
+                <Edit size={18} style={{ color: "var(--accent-9)" }} />
+              </Flex>
+            )}
           </Card>
           <Card mt="4" variant="ghost">
             <Text size="2" className="text-gray-600 font-bold">

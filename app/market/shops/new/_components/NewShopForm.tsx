@@ -1,21 +1,21 @@
 "use client";
 
+import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import axios from "@/app/lib/axios";
-import { Shop, ShopSchema } from "@/app/lib/types";
-import { shopSchema } from "@/app/lib/validationSchemas";
+import { NewShopSchema } from "@/app/lib/types";
+import { newShopSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import SearUserTextField from "./SearchUserField";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { useCreateShop, useUpdateShop } from "../../_features/hooks";
-import { Spinner } from "@/app/_components";
-import { useSession } from "next-auth/react";
+import { useCreateShop } from "../../_features/hooks";
+import SearchUserTextField from "./SearchUserField";
 
-const ShopForm = ({ shop }: { shop?: Shop }) => {
+const NewShopForm = () => {
   const { data: session } = useSession();
   const [userId, setUserId] = useState("");
   const router = useRouter();
@@ -25,11 +25,8 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ShopSchema>({
-    resolver: zodResolver(shopSchema),
-    defaultValues: {
-      userName: shop?.creator.fullName ?? "",
-    },
+  } = useForm<NewShopSchema>({
+    resolver: zodResolver(newShopSchema),
   });
 
   const {
@@ -38,40 +35,17 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
     error: createError,
   } = useCreateShop({ axios });
 
-  const {
-    mutateAsync: updateShop,
-    isSuccess: isUpdateSuccess,
-    error: updateError,
-  } = useUpdateShop({ axios });
-
-  const onSubmit = async (data: ShopSchema) => {
-    if (shop) {
-      try {
-        await updateShop({
-          id: shop.id,
-          creatorId: session?.data.id,
-          superMarketOwnerId: userId,
-          ...data,
-        });
-      } catch (error: any) {
-        toast.error(JSON.stringify(error));
-      }
-    } else {
-      try {
-        await createShop({
-          creatorId: session?.data.id,
-          superMarketOwnerId: userId,
-          ...data,
-        });
-      } catch (error: any) {
-        toast.error(JSON.stringify(error));
-      }
+  const onSubmit = async (data: NewShopSchema) => {
+    try {
+      await createShop({
+        creatorId: session?.data.id,
+        superMarketOwnerId: userId,
+        ...data,
+      });
+    } catch (error: any) {
+      toast.error(JSON.stringify(error));
     }
   };
-
-  useEffect(() => {
-    if (shop) setUserId(shop?.creator.id ?? "");
-  }, [shop]);
 
   useEffect(() => {
     if (isCreateSuccess) {
@@ -80,23 +54,12 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
     }
   }, [isCreateSuccess, router]);
 
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      toast.success(`Boutique modifiée avec avec succès`);
-      router.back();
-    }
-  }, [isUpdateSuccess, router]);
 
   return (
     <div className="max-w-xl">
       {createError && (
         <Callout.Root mb="4" color="red">
           <Callout.Text>{createError?.message}</Callout.Text>
-        </Callout.Root>
-      )}
-      {updateError && (
-        <Callout.Root mb="4" color="red">
-          <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,7 +69,7 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
           render={({ field }) => (
             <div className="flex flex-col space-y-2 mt-6">
               <p className="text-sm font-bold">Propriétaire</p>
-              <SearUserTextField {...field} setSelectedId={setUserId} />
+              <SearchUserTextField {...field} setSelectedId={setUserId} />
               <ErrorMessage>{errors.userName?.message}</ErrorMessage>
             </div>
           )}
@@ -115,7 +78,6 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root
             {...register("name")}
-            defaultValue={shop?.name}
             placeholder="Nom de la boutique"
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
@@ -125,17 +87,16 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
           <TextArea
             {...register("address")}
             rows={6}
-            defaultValue={shop?.address}
             placeholder="Addrèsse de la boutique"
           />
           <ErrorMessage>{errors.address?.message}</ErrorMessage>
         </div>
         <Button disabled={isSubmitting} mt="4">
-          {shop ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+          Enregistrer {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
   );
 };
 
-export default ShopForm;
+export default NewShopForm;

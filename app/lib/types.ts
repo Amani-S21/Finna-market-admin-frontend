@@ -1,18 +1,21 @@
 import {
   categorySchema,
+  editShopSchema,
   featureSchema,
+  newShopSchema,
   productSchema,
-  shopSchema,
   signinSchema,
   updatePasswordSchema,
   updateUserSchema,
-  userSchema,
+  userSchema
 } from "@/app/lib/validationSchemas";
 import { z } from "zod";
 
 export type SigninSchema = z.infer<typeof signinSchema>;
 
-export type ShopSchema = z.infer<typeof shopSchema>;
+export type NewShopSchema = z.infer<typeof newShopSchema>;
+
+export type EditShopSchema = z.infer<typeof editShopSchema>;
 
 export type UpdatePasswordSchema = z.infer<typeof updatePasswordSchema>;
 

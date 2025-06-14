@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import { IoStorefrontOutline } from "react-icons/io5";
 import LoadingShopDetails from "../../[id]/loading";
 import { useFetchShopsById } from "../../_features/hooks";
-import ShopForm from "../../new/_components/ShopForm";
+import EditShopForm from "../../new/_components/EditShopForm";
 import LoadingEditShopPage from "./loading";
 
 const BuildEditShopPage = () => {
@@ -45,7 +45,7 @@ const BuildEditShopPage = () => {
         </Text>
       </div>
 
-      <ShopForm shop={shop} />
+      <EditShopForm shop={shop} />
     </div>
   );
 };

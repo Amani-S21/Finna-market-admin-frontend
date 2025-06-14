@@ -12,7 +12,7 @@ type Props = {
   setSelectedId: (value: string) => void;
 };
 
-const SearUserTextField = ({
+const SearchUserTextField = ({
   value,
   onChange,
   onBlur,
@@ -39,7 +39,6 @@ const SearUserTextField = ({
     staleTime: 60 * 1000,
   });
 
-  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -117,4 +116,4 @@ const SearUserTextField = ({
   );
 };
 
-export default SearUserTextField;
+export default SearchUserTextField;
