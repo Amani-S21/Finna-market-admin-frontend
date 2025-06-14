@@ -206,13 +206,13 @@ const ProductForm = ({ product }: { product?: Product }) => {
           ...productSubmit,
         });
       } catch (error: any) {
-        toast.error(JSON.stringify(error));
+        toast.error(error);
       }
     } else {
       try {
         await createProductMutation(productSubmit);
       } catch (error: any) {
-        toast.error(JSON.stringify(error));
+        toast.error(error);
       }
     }
   };
@@ -239,6 +239,27 @@ const ProductForm = ({ product }: { product?: Product }) => {
     if (isCreateSuccess) {
       (async () => {
         await uploadPictures(); // Wait for uploads
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+        queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+
+        router.back(); // Only navigate after everything finishes
+      })();
+    } else if (createError) {
+      toast.error(``);
+    }
+  }, [isCreateSuccess, createdProductData, router]);
+
+  useEffect(() => {
+    if (isCreateSuccess) {
+      (async () => {
+        await uploadPictures(); // Wait for uploads
+      })();
+    }
+  }, [isCreateSuccess]);
+
+  useEffect(() => {
+    if (sendProductLinksSuccess) {
+      (async () => {
         queryClient.invalidateQueries({ queryKey: ["products"] });
         queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
         toast.success(`Produit créé avec succès`);
