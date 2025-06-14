@@ -1,4 +1,8 @@
-import { SubmitProduct, UploadFileResponse } from "@/app/lib/types";
+import {
+  SubmitProduct,
+  SubmitProductLinks,
+  UploadFileResponse,
+} from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
 
@@ -100,6 +104,23 @@ export const updateProduct = async (
         message = "Une erreur inconue est survenue";
     }
 
+    const customError = new Error(message);
+    throw customError;
+  }
+};
+
+export const sendProductLinks = async (
+  axios: AxiosInstance,
+  productLinks: SubmitProductLinks
+) => {
+  try {
+    const res = await axios.patch(
+      `/products/send-pictures-links`,
+      productLinks
+    );
+    return res.data;
+  } catch (error: any) {
+    let message = "Une erreur inconue est survenue";
     const customError = new Error(message);
     throw customError;
   }

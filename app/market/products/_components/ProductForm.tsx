@@ -18,7 +18,7 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
@@ -37,6 +37,7 @@ import {
   useCreateProduct,
   useFetchCategories,
   useProductForm,
+  useSendProductsLinks,
   useUpdateProduct,
 } from "../_features/hooks";
 
@@ -47,6 +48,7 @@ import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
   const axios = useAxiosAuth();
   const router = useRouter();
 
@@ -58,6 +60,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   // Product images urls
   const productImageUrls = useRef<string[]>([]);
+  const creadedProductId = useRef<string>("");
   const productImageFiles = useRef<File[]>([]);
 
   // Images
@@ -158,6 +161,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
     mutateAsync: createProductMutation,
     error: createError,
     isSuccess: isCreateSuccess,
+    data: createdProductData,
   } = useCreateProduct({ axios });
 
   const {
@@ -166,16 +170,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
     isSuccess: isUpdateSuccess,
   } = useUpdateProduct({ axios });
 
-  const onSubmit = async (data: ProductSchema) => {
-    if (productImageUrls.current.length < 3)
-      for (let i = 0; i < productImageFiles.current.length; i++) {
-        const data = await uploadProductPicture({
-          axios,
-          file: productImageFiles.current[i],
-        });
-        productImageUrls.current.push(`${data?.url}`);
-      }
+  const {
+    mutateAsync: sendProductLinks,
+    error: sendProductLinksError,
+    isSuccess: sendProductLinksSuccess,
+    isPending: isPendingSendingLinks,
+  } = useSendProductsLinks({ axios });
 
+  const onSubmit = async (data: ProductSchema) => {
     // Post product
     const { name, purchasedPrice, oldPrice, currentPrice, description } = data;
     const productSubmit = {
@@ -186,9 +188,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
+      shopId: session?.data.shop[0].id,
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
-      pictures: [...productImageUrls.current],
       features: (features ?? []).map((feature) => ({
         featureId: feature.featureId,
         featureValues: feature.featureValues.map((fv) => ({
@@ -215,15 +217,40 @@ const ProductForm = ({ product }: { product?: Product }) => {
     }
   };
 
+  // upload pictures
+  const uploadPictures = async () => {
+    if (productImageUrls.current.length < 3)
+      for (let i = 0; i < productImageFiles.current.length; i++) {
+        const data = await uploadProductPicture({
+          axios,
+          file: productImageFiles.current[i],
+        });
+        productImageUrls.current.push(`${data?.url}`);
+      }
+
+    // Now we can send the uploaded pictures and update the product
+    await sendProductLinks({
+      id: `${createdProductData?.id}`,
+      pictures: [...productImageUrls.current],
+    });
+  };
+
   useEffect(() => {
     if (isCreateSuccess) {
-      toast.success(`Produit créé avec avec succèes`);
-      router.back();
+      (async () => {
+        await uploadPictures(); // Wait for uploads
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+        queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+        toast.success(`Produit créé avec succès`);
+        router.back(); // Only navigate after everything finishes
+      })();
     }
-  }, [isCreateSuccess, router]);
+  }, [isCreateSuccess, createdProductData, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
       toast.success(`Produit modifié avec avec succèes`);
       router.back();
     }
@@ -455,8 +482,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
           )}
         </div>
 
-        <Button disabled={isSubmitting} mt="6">
-          {product ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+        <Button disabled={isSubmitting || isPendingSendingLinks} mt="6">
+          {product ? "Modifier" : "Enregistrer"}{" "}
+          {(isSubmitting || isPendingSendingLinks) && <Spinner />}
         </Button>
       </form>
     </div>

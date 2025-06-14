@@ -178,6 +178,11 @@ export type FeatureHasFeatureValue = {
   featureValues: FeatureValue;
 };
 
+export type SubmitProductLinks = {
+  id : string,
+  pictures : string[]
+}
+
 export type SubmitFeatureWithValues = {
   id?: string;
   name: string;
@@ -186,17 +191,18 @@ export type SubmitFeatureWithValues = {
 
 export type SubmitProduct = {
   id?: string;
-  name: string;
-  purchasedPrice: number;
-  oldPrice: number;
-  currentPrice: number;
-  published: boolean;
-  userId: string;
-  pictures: string[];
-  description: string;
-  categoryId: string;
-  subCategoryId: string;
-  features: SubmitFeature[];
+  name?: string;
+  purchasedPrice?: number;
+  oldPrice?: number;
+  currentPrice?: number;
+  published?: boolean;
+  userId?: string;
+  pictures?: string[];
+  description?: string;
+  categoryId?: string;
+  subCategoryId?: string;
+  shopId? : string;
+  features?: SubmitFeature[];
 };
 
 type SubmitFeature = {

@@ -3,7 +3,8 @@ import {
   ProductSchema,
   ProductsListResponse,
   SubCategoriesResponse,
-  SubmitProduct
+  SubmitProduct,
+  SubmitProductLinks,
 } from "@/app/lib/types";
 import { productSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +16,7 @@ import {
   fetchProductById,
   fetchProducts,
   fetchSubCategories,
+  sendProductLinks,
   updateProduct,
 } from "./api";
 
@@ -37,28 +39,23 @@ type UseCreateProduct = {
 };
 
 export const useCreateProduct = ({ axios }: UseCreateProduct) => {
-  const queryClient = useQueryClient();
-
-  return useMutation<void, Error, SubmitProduct>({
+  return useMutation<Product, Error, SubmitProduct>({
     mutationFn: (data: SubmitProduct) => createProduct(axios, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-    },
   });
 };
 
 export const useUpdateProduct = ({ axios }: UseCreateProduct) => {
-  const queryClient = useQueryClient();
-
-  return useMutation<void, Error, SubmitProduct>({
+  return useMutation<Product, Error, SubmitProduct>({
     mutationFn: (data: SubmitProduct) => updateProduct(axios, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-    },
   });
 };
+
+export const useSendProductsLinks = ({ axios }: UseCreateProduct) => {
+  return useMutation<Product, Error, SubmitProductLinks>({
+    mutationFn: (data: SubmitProductLinks) => sendProductLinks(axios, data),
+  });
+};
+
 
 type UseFetchProduct = {
   axios: AxiosInstance;

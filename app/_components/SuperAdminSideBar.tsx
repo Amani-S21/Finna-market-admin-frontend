@@ -58,11 +58,6 @@ const links = [
     icon: <LuLayoutDashboard />,
   },
   {
-    href: "/market/products/list?page=1",
-    label: "Produits",
-    icon: <AiOutlineProduct />,
-  },
-  {
     href: "/market/users/list?page=1",
     label: "Utilisateurs",
     icon: <FaUsers />,
