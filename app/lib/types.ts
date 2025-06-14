@@ -35,16 +35,25 @@ export type SubmitShop = {
   id?: string;
   name: string;
   address: string;
-  userId?: string;
+  creatorId?: string;
+  superMarketOwnerId?: string;
 };
 
 export type Shop = {
   id: string;
   name: string;
   address: string;
-  users: User;
+  creator: User;
+  shopAffectations: ShopAffectation[];
   createdAt: string;
   updatedAt: string;
+};
+
+export type ShopAffectation = {
+  userId: string;
+  shopId: string;
+  role: string;
+  user: User;
 };
 
 export type User = {
@@ -179,9 +188,9 @@ export type FeatureHasFeatureValue = {
 };
 
 export type SubmitProductLinks = {
-  id : string,
-  pictures : string[]
-}
+  id: string;
+  pictures: string[];
+};
 
 export type SubmitFeatureWithValues = {
   id?: string;
@@ -201,7 +210,7 @@ export type SubmitProduct = {
   description?: string;
   categoryId?: string;
   subCategoryId?: string;
-  shopId? : string;
+  shopId?: string;
   features?: SubmitFeature[];
 };
 
@@ -283,8 +292,8 @@ export type SubmitUpdatePassword = {
 };
 
 export type OrderSymmary = {
-  opened : number,
-  inProgress : number,
-  canceled : number,
-  closed : number,
-}
+  opened: number;
+  inProgress: number;
+  canceled: number;
+  closed: number;
+};

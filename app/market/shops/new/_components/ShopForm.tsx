@@ -13,8 +13,10 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useCreateShop, useUpdateShop } from "../../_features/hooks";
 import { Spinner } from "@/app/_components";
+import { useSession } from "next-auth/react";
 
 const ShopForm = ({ shop }: { shop?: Shop }) => {
+  const { data: session } = useSession();
   const [userId, setUserId] = useState("");
   const router = useRouter();
 
@@ -26,7 +28,7 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
   } = useForm<ShopSchema>({
     resolver: zodResolver(shopSchema),
     defaultValues: {
-      userName: shop?.users.fullName ?? "",
+      userName: shop?.creator.fullName ?? "",
     },
   });
 
@@ -45,21 +47,30 @@ const ShopForm = ({ shop }: { shop?: Shop }) => {
   const onSubmit = async (data: ShopSchema) => {
     if (shop) {
       try {
-        await updateShop({ id: shop.id, userId, ...data });
-          } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+        await updateShop({
+          id: shop.id,
+          creatorId: session?.data.id,
+          superMarketOwnerId: userId,
+          ...data,
+        });
+      } catch (error: any) {
+        toast.error(JSON.stringify(error));
+      }
     } else {
       try {
-        await createShop({ userId, ...data });
-          } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+        await createShop({
+          creatorId: session?.data.id,
+          superMarketOwnerId: userId,
+          ...data,
+        });
+      } catch (error: any) {
+        toast.error(JSON.stringify(error));
+      }
     }
   };
 
   useEffect(() => {
-    if (shop) setUserId(shop?.users.id ?? "");
+    if (shop) setUserId(shop?.creator.id ?? "");
   }, [shop]);
 
   useEffect(() => {

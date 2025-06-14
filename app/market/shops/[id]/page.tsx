@@ -10,12 +10,13 @@ import { Suspense } from "react";
 import LoadingEditProductPage from "../../products/edit/[id]/loading";
 import { useFetchShopsById } from "../_features/hooks";
 import LoadingShopDetails from "./loading";
+import { formattedDate } from "@/app/lib/tools";
 
 const BuildShopsDetailPage = () => {
   const { status } = useSession();
-  
-    const params = useParams<{ id: string }>();
-    const id = params.id;
+
+  const params = useParams<{ id: string }>();
+  const id = params.id;
   const axios = useAxiosAuth();
 
   const {
@@ -32,27 +33,29 @@ const BuildShopsDetailPage = () => {
 
   if (error) notFound();
 
+  const superMarketOwner = shop?.shopAffectations[0].user;
+
   return (
     <>
       <BackButton />
-      <Grid columns="3" mt="4">
+      <Grid columns="3" mt="4" gap="8">
         <div className="col-span-2">
           <Heading className="lowercase first-letter:uppercase">
             {shop?.name}
           </Heading>
-          <Text size="2">{shop?.createdAt}</Text>
+          <Text size="2">{formattedDate(`${shop?.createdAt}`)}</Text>
           <Card mt="4">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${shop?.users?.fullName?.substring(
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${superMarketOwner?.fullName?.substring(
                 0,
                 1
               )}`}</div>
               <Flex direction="column">
                 <p className="lowercase first-letter:uppercase">
-                  {shop?.users?.fullName}
+                  {superMarketOwner?.fullName}
                 </p>
                 <p className="text-sm font-bold text-gray-600">
-                  {shop?.users?.phone}
+                  {superMarketOwner?.phone}
                 </p>
               </Flex>
             </Flex>
@@ -73,7 +76,6 @@ const BuildShopsDetailPage = () => {
     </>
   );
 };
-
 
 const ShopsDetailPage = () => {
   return (

@@ -60,7 +60,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   // Product images urls
   const productImageUrls = useRef<string[]>([]);
-  const creadedProductId = useRef<string>("");
   const productImageFiles = useRef<File[]>([]);
 
   // Images
@@ -172,7 +171,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const {
     mutateAsync: sendProductLinks,
-    error: sendProductLinksError,
     isSuccess: sendProductLinksSuccess,
     isPending: isPendingSendingLinks,
   } = useSendProductsLinks({ axios });
@@ -238,7 +236,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   useEffect(() => {
     if (isCreateSuccess) {
       (async () => {
-        await uploadPictures(); // Wait for uploads
+        // await uploadPictures(); 
         queryClient.invalidateQueries({ queryKey: ["products"] });
         queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
 
