@@ -90,10 +90,11 @@ export const useFetchOrdersSummary = ({
 export const useFetchRecentOrders = ({
   axios,
   enabled,
+  shopId,
 }: FetchOrdersSummary) => {
   return useQuery<Order[]>({
     queryKey: ["orders-recent"],
-    queryFn: () => fetchRecentOrders(axios),
+    queryFn: () => fetchRecentOrders(axios, shopId),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

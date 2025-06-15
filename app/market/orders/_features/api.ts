@@ -49,9 +49,15 @@ export const fetchOrdersSummary = async (
   }
 };
 
-export const fetchRecentOrders = async (axios: AxiosInstance) => {
+export const fetchRecentOrders = async (
+  axios: AxiosInstance,
+  shopId?: string
+) => {
   try {
-    const res = await axios.get(`/orders/recents?limit=10`);
+    const url = shopId
+      ? `/orders/recents?shopId=${shopId}&limit=10`
+      : `/orders/recents?limit=10`;
+    const res = await axios.get(url);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));

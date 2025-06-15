@@ -18,6 +18,7 @@ import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import { ProductsFeaturesTable } from "../_components";
 import LoadingProductDetails from "./loading";
+import { formattedDate } from "@/app/lib/tools";
 
 const BuildProductsDetailsPage = () => {
   const params = useParams<{ id: string }>();
@@ -48,22 +49,27 @@ const BuildProductsDetailsPage = () => {
           <Heading className="lowercase first-letter:uppercase">
             {product?.name}
           </Heading>
-          <Text size="2">{product?.createdAt}</Text>
+          <Text size="2">{formattedDate(`${product?.createdAt}`)}</Text>
 
           <Card my="4">
-            <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">
-                {product?.user?.fullName
-                  ? product.user.fullName.substring(0, 1)
-                  : ""}
-              </div>
-              <Flex direction="column">
-                <p className="lowercase first-letter:uppercase">
-                  {product?.user?.fullName}
-                </p>
-                <p className="text-sm font-bold text-gray-600">
-                  {product?.user?.phone}
-                </p>
+            <Flex direction="column" gap="4">
+              <Text size="2" className="font-bold">
+                Créé par
+              </Text>
+              <Flex align="center" gap="2">
+                <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">
+                  {product?.user?.fullName
+                    ? product.user.fullName.substring(0, 1)
+                    : ""}
+                </div>
+                <Flex direction="column">
+                  <p className="lowercase first-letter:uppercase">
+                    {product?.user?.fullName}
+                  </p>
+                  <p className="text-sm font-bold text-gray-600">
+                    {product?.user?.phone}
+                  </p>
+                </Flex>
               </Flex>
             </Flex>
           </Card>

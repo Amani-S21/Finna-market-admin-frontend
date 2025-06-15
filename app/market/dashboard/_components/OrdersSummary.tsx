@@ -1,10 +1,15 @@
 import { OrderSymmary } from "@/app/lib/types";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { wrap } from "module";
 import Link from "next/link";
 
-const OrdersSummary = ({orderSummaryCounts} : {orderSummaryCounts : OrderSymmary}) => {
+const OrdersSummary = ({
+  orderSummaryCounts,
+}: {
+  orderSummaryCounts: OrderSymmary;
+}) => {
   return (
-    <Flex gap="4">
+    <Flex gap="4" wrap={{initial : "wrap", md : "nowrap"}} className="">
       <OrdersSummaryItem
         title="Ouverts"
         description="Total des commandes ouverts"
@@ -47,7 +52,7 @@ const OrdersSummaryItem = ({
   link,
 }: OrdersSummaryItemProps) => {
   return (
-    <div className=" w-full h-full">
+    <div className="w-full">
       <Link href={link}>
         <Card>
           <Flex direction="column" gap="4">
@@ -70,6 +75,5 @@ const OrdersSummaryItem = ({
     </div>
   );
 };
-
 
 export default OrdersSummary;
