@@ -11,7 +11,6 @@ const LoadingProductsPage = () => {
   );
 };
 
-
 export const productColumns: {
   label: string;
 }[] = [

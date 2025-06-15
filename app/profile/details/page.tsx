@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useFetchUser } from "@/app/market/users/_features/hooks";
 import LoadingProfilePage from "./loading";
+import { signOut } from "next-auth/react";
 
 const ProfilePage = () => {
   const { status, data: session } = useSession();
@@ -28,6 +29,9 @@ const ProfilePage = () => {
     enabled: status === "authenticated",
   });
 
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/auth/signin" });
+  };
   if (isLoading || status === "loading") return LoadingProfilePage();
 
   return (
@@ -79,10 +83,18 @@ const ProfilePage = () => {
                   </IconButton>
                 </Link>
               </Flex>
-              <div className="self-start">
+              <div className="self-start flex gap-4">
                 <Link href="/profile/edit">
                   <Button mt="8">Editer le profile</Button>
                 </Link>
+                <Button
+                  variant="outline"
+                  color="red"
+                  mt="8"
+                  onClick={handleSignOut}
+                >
+                  Se déconnecter
+                </Button>
               </div>
             </Flex>
           </Flex>
