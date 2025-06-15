@@ -67,7 +67,9 @@ const BuildShopsDetailPage = () => {
                 <Text color="red" size="2">
                   Affecter un propriétaire
                 </Text>
-                <Edit size={18} style={{ color: "var(--accent-9)" }} />
+                <Link href={`/market/shops/affect/${shop?.id}`}>
+                  <Edit size={18} style={{ color: "var(--accent-9)" }} />
+                </Link>
               </Flex>
             )}
           </Card>

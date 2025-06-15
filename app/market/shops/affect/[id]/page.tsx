@@ -7,13 +7,13 @@ import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import { IoStorefrontOutline } from "react-icons/io5";
-import LoadingShopDetails from "../../[id]/loading";
+import AffectShopForm from "../../_components/AffectShopForm";
 import { useFetchShopsById } from "../../_features/hooks";
-import LoadingEditShopPage from "./loading";
-import EditShopForm from "../../_components/EditShopForm";
+import LoadingAffectShop from "./loading";
 
-const BuildEditShopPage = () => {
+const BuildAffectShopPage = () => {
   const { status } = useSession();
+
   const params = useParams<{ id: string }>();
   const id = params.id;
   const axios = useAxiosAuth();
@@ -28,7 +28,7 @@ const BuildEditShopPage = () => {
     enabled: status === "authenticated",
   });
 
-  if (isLoading || status === "loading") return <LoadingShopDetails />;
+  if (isLoading || status === "loading") return <LoadingAffectShop />;
 
   if (error) notFound();
 
@@ -38,24 +38,24 @@ const BuildEditShopPage = () => {
         <BackButton />
         <div className="flex items-center space-x-4 mt-5">
           <IoStorefrontOutline />
-          <span className="font-bold">Boutique</span>
+          <span className="font-bold">Affecter une boutique</span>
         </div>
         <Text as="p" size="2" mb="4">
-          Remplissez les champs ci dessous pour modifier la boutique
+          Réchercher un utilisateur et affectez lui une boutique
         </Text>
       </div>
 
-      <EditShopForm shop={shop} />
+      <AffectShopForm shopId={`${shop?.id}`} />
     </div>
   );
 };
 
-const EditShopPage = () => {
+const AffectShopPage = () => {
   return (
-    <Suspense fallback={<LoadingEditShopPage />}>
-      <BuildEditShopPage />
+    <Suspense fallback={<LoadingAffectShop/>}>
+      <BuildAffectShopPage />
     </Suspense>
   );
 };
 
-export default EditShopPage;
+export default AffectShopPage;

@@ -1,3 +1,5 @@
+import { Shop } from "./types";
+
 declare module "next-auth" {
   interface Session {
     data: {
@@ -6,12 +8,16 @@ declare module "next-auth" {
       phone: string;
       role: string;
       emailAddress: string;
-      crdatedAt: string;
-      updatedAt: string;
-      shop: {
-        id: string;
-        name: string;
-        address: string;
+      shopAffectations: {
+        role: string;
+        shop: {
+          id: string;
+          name: string;
+          address: string;
+          creatorId: string;
+          createdAt: string;
+          updatedAt: string;
+        };
       }[];
     };
     accessToken: string;
@@ -27,12 +33,16 @@ declare module "next-auth/jwt" {
       phone: string;
       role: string;
       emailAddress: string;
-      crdatedAt: string;
-      updatedAt: string;
-      shop: {
-        id: string;
-        name: string;
-        address: string;
+      shopAffectations: {
+        role: string;
+        shop: {
+          id: string;
+          name: string;
+          address: string;
+          creatorId: string;
+          createdAt: string;
+          updatedAt: string;
+        };
       }[];
     };
     accessToken: string;
@@ -47,12 +57,16 @@ export interface User {
     phone: string;
     role: string;
     emailAddress: string;
-    crdatedAt: string;
-    updatedAt: string;
-    shop: {
-      id: string;
-      name: string;
-      address: string;
+    shopAffectations: {
+      role: string;
+      shop: {
+        id: string;
+        name: string;
+        address: string;
+        creatorId: string;
+        createdAt: string;
+        updatedAt: string;
+      };
     }[];
   };
   accessToken: string;

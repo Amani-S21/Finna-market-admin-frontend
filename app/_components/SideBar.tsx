@@ -8,11 +8,15 @@ const SideBar = () => {
 
   if (status === "loading") return;
 
-  if (session?.data.role === "SUPER_MARKET_ADMIN") {
-    return <SuperMarketAdminSideBar />;
-  } else {
-    return <SuperAdminSideBar />;
+  const affectations = session?.data?.shopAffectations;
+
+  if (affectations && affectations.length > 0) {
+    if (affectations[0].role === "SUPER_MARKET_ADMIN") {
+      return <SuperMarketAdminSideBar />;
+    }
   }
+
+  return <SuperAdminSideBar />;
 };
 
 export default SideBar;

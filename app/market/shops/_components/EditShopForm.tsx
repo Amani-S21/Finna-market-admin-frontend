@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useUpdateShop } from "../../_features/hooks";
+import { useUpdateShop } from "../_features/hooks";
 
 const EditShopForm = ({ shop }: { shop?: Shop }) => {
   const [userId, setUserId] = useState("");
@@ -19,7 +19,6 @@ const EditShopForm = ({ shop }: { shop?: Shop }) => {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<EditShopSchema>({

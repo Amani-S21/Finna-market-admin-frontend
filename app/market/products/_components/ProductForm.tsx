@@ -186,7 +186,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
-      shopId: session?.data.shop[0].id,
+      shopId: session?.data.shopAffectations[0].shop.id,
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
       features: (features ?? []).map((feature) => ({
@@ -216,44 +216,44 @@ const ProductForm = ({ product }: { product?: Product }) => {
   };
 
   // upload pictures
-  const uploadPictures = async () => {
-    if (productImageUrls.current.length < 3)
-      for (let i = 0; i < productImageFiles.current.length; i++) {
-        const data = await uploadProductPicture({
-          axios,
-          file: productImageFiles.current[i],
-        });
-        productImageUrls.current.push(`${data?.url}`);
-      }
+  // const uploadPictures = async () => {
+  //   if (productImageUrls.current.length < 3)
+  //     for (let i = 0; i < productImageFiles.current.length; i++) {
+  //       const data = await uploadProductPicture({
+  //         axios,
+  //         file: productImageFiles.current[i],
+  //       });
+  //       productImageUrls.current.push(`${data?.url}`);
+  //     }
 
-    // Now we can send the uploaded pictures and update the product
-    await sendProductLinks({
-      id: `${createdProductData?.id}`,
-      pictures: [...productImageUrls.current],
-    });
-  };
+  //   // Now we can send the uploaded pictures and update the product
+  //   await sendProductLinks({
+  //     id: `${createdProductData?.id}`,
+  //     pictures: [...productImageUrls.current],
+  //   });
+  // };
 
   useEffect(() => {
     if (isCreateSuccess) {
       (async () => {
-        // await uploadPictures(); 
+        // await uploadPictures();
         queryClient.invalidateQueries({ queryKey: ["products"] });
         queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
 
-        router.back(); // Only navigate after everything finishes
+        router.back();
       })();
     } else if (createError) {
       toast.error(``);
     }
   }, [isCreateSuccess, createdProductData, router]);
 
-  useEffect(() => {
-    if (isCreateSuccess) {
-      (async () => {
-        await uploadPictures(); // Wait for uploads
-      })();
-    }
-  }, [isCreateSuccess]);
+  // useEffect(() => {
+  //   if (isCreateSuccess) {
+  //     (async () => {
+  //       await uploadPictures(); // Wait for uploads
+  //     })();
+  //   }
+  // }, [isCreateSuccess]);
 
   useEffect(() => {
     if (sendProductLinksSuccess) {

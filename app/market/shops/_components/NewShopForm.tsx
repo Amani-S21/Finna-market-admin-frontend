@@ -9,20 +9,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useCreateShop } from "../../_features/hooks";
-import SearchUserTextField from "./SearchUserField";
+import { useCreateShop } from "../_features/hooks";
 
 const NewShopForm = () => {
   const { data: session } = useSession();
-  const [userId, setUserId] = useState("");
   const router = useRouter();
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<NewShopSchema>({
@@ -39,7 +36,6 @@ const NewShopForm = () => {
     try {
       await createShop({
         creatorId: session?.data.id,
-        superMarketOwnerId: userId,
         ...data,
       });
     } catch (error: any) {
@@ -54,7 +50,6 @@ const NewShopForm = () => {
     }
   }, [isCreateSuccess, router]);
 
-
   return (
     <div className="max-w-xl">
       {createError && (
@@ -63,17 +58,6 @@ const NewShopForm = () => {
         </Callout.Root>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          control={control}
-          name="userName"
-          render={({ field }) => (
-            <div className="flex flex-col space-y-2 mt-6">
-              <p className="text-sm font-bold">Propriétaire</p>
-              <SearchUserTextField {...field} setSelectedId={setUserId} />
-              <ErrorMessage>{errors.userName?.message}</ErrorMessage>
-            </div>
-          )}
-        />
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root

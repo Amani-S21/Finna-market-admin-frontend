@@ -56,17 +56,22 @@ export const useSendProductsLinks = ({ axios }: UseCreateProduct) => {
   });
 };
 
-
 type UseFetchProduct = {
   axios: AxiosInstance;
   page: string;
   enabled: boolean;
+  shopId?: string;
 };
 
-export const useFetchProducts = ({ axios, page, enabled }: UseFetchProduct) => {
+export const useFetchProducts = ({
+  axios,
+  page,
+  shopId,
+  enabled,
+}: UseFetchProduct) => {
   return useQuery<ProductsListResponse>({
     queryKey: ["products", page],
-    queryFn: () => fetchProducts(axios, page),
+    queryFn: () => fetchProducts(axios, page, shopId),
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,

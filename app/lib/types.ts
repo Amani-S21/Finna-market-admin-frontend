@@ -1,4 +1,5 @@
 import {
+  affectShopSchema,
   categorySchema,
   editShopSchema,
   featureSchema,
@@ -7,13 +8,15 @@ import {
   signinSchema,
   updatePasswordSchema,
   updateUserSchema,
-  userSchema
+  userSchema,
 } from "@/app/lib/validationSchemas";
 import { z } from "zod";
 
 export type SigninSchema = z.infer<typeof signinSchema>;
 
 export type NewShopSchema = z.infer<typeof newShopSchema>;
+
+export type AffectShopSchema = z.infer<typeof affectShopSchema>;
 
 export type EditShopSchema = z.infer<typeof editShopSchema>;
 
@@ -39,7 +42,6 @@ export type SubmitShop = {
   name: string;
   address: string;
   creatorId?: string;
-  superMarketOwnerId?: string;
 };
 
 export type Shop = {
@@ -299,4 +301,10 @@ export type OrderSymmary = {
   inProgress: number;
   canceled: number;
   closed: number;
+};
+
+export type SubmitAffectShop = {
+  shopId: string;
+  userId: string;
+  role: Roles;
 };

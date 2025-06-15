@@ -6,9 +6,16 @@ import {
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
 
-export const fetchProducts = async (axios: AxiosInstance, page: string) => {
+export const fetchProducts = async (
+  axios: AxiosInstance,
+  page: string,
+  shopId?: string
+) => {
   try {
-    const res = await axios.get(`/products?page=${page}&limit=10`);
+    const url = shopId
+      ? `/products?shopId=${shopId}&page=${page}&limit=10`
+      : `/products?page=${page}&limit=10`;
+    const res = await axios.get(url);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));

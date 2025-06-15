@@ -1,6 +1,11 @@
-import { Shop, ShopsListResponse, SubmitShop } from "@/app/lib/types";
+import {
+  Shop,
+  ShopsListResponse,
+  SubmitAffectShop,
+  SubmitShop,
+} from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {  createShop, fetchShopById, fetchShops, updateShop } from "./api";
+import { affectShop, createShop, fetchShopById, fetchShops, updateShop } from "./api";
 import { AxiosInstance } from "axios";
 
 type UseFetchShops = {
@@ -64,5 +69,15 @@ export const useUpdateShop = ({ axios }: UseCreateOrUpdateShop) => {
       queryClient.invalidateQueries({ queryKey: ["shop"] });
       queryClient.invalidateQueries({ queryKey: ["shops"] });
     },
+  });
+};
+
+type UseUpdateShop = {
+  axios: AxiosInstance;
+};
+
+export const useAffectShop = ({ axios }: UseUpdateShop) => {
+  return useMutation<void, Error, SubmitAffectShop>({
+    mutationFn: (data: SubmitAffectShop) => affectShop(axios, data),
   });
 };

@@ -3,7 +3,7 @@
 import BackButton from "@/app/_components/BackButton";
 import { Text } from "@radix-ui/themes";
 import { IoStorefrontOutline } from "react-icons/io5";
-import ShopForm from "./_components/NewShopForm";
+import NewShopForm from "../_components/NewShopForm";
 
 const NewShopPage = () => {
   return (
@@ -19,7 +19,7 @@ const NewShopPage = () => {
         </Text>
       </div>
 
-      <ShopForm />
+      <NewShopForm />
     </div>
   );
 };
