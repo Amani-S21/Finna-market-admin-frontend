@@ -1,4 +1,3 @@
-import { Shop } from "./types";
 
 declare module "next-auth" {
   interface Session {

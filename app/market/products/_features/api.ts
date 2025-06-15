@@ -127,7 +127,7 @@ export const sendProductLinks = async (
     );
     return res.data;
   } catch (error: any) {
-    let message = "Une erreur inconue est survenue";
+    const message = "Une erreur inconue est survenue" + error;
     const customError = new Error(message);
     throw customError;
   }

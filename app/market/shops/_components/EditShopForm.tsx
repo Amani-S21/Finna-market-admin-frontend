@@ -8,13 +8,13 @@ import { editShopSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useUpdateShop } from "../_features/hooks";
 
 const EditShopForm = ({ shop }: { shop?: Shop }) => {
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
   const router = useRouter();
 
   const {
@@ -36,7 +36,6 @@ const EditShopForm = ({ shop }: { shop?: Shop }) => {
       try {
         await updateShop({
           id: shop.id,
-          superMarketOwnerId: userId,
           ...data,
         });
       } catch (error: any) {
@@ -45,12 +44,12 @@ const EditShopForm = ({ shop }: { shop?: Shop }) => {
     }
   };
 
-  useEffect(() => {
-    if (shop) {
-      shop?.shopAffectations.length &&
-        setUserId(shop?.shopAffectations[0].user.id ?? "");
-    }
-  }, [shop]);
+  // useEffect(() => {
+  //   if (shop) {
+  //     shop?.shopAffectations.length &&
+  //       setUserId(shop?.shopAffectations[0].user.id ?? "");
+  //   }
+  // }, [shop]);
 
   useEffect(() => {
     if (isUpdateSuccess) {

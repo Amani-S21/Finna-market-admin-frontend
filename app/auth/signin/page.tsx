@@ -1,14 +1,8 @@
 import { Card, Flex, Text } from "@radix-ui/themes";
-import { use } from "react";
 import SigninForm from "./_components/SigninForm";
 
-type Props = {
-  searchParams: Promise<{ callbackUrl: string }>;
-};
 
-const SigninPage = ({ searchParams }: Props) => {
-  const { callbackUrl } = use(searchParams);
-
+const SigninPage = () => {
   return (
     <div className="h-screen flex justify-center items-center">
       <Card className="drop-shadow-2xl w-full max-w-[400px] mx-4">
@@ -17,7 +11,7 @@ const SigninPage = ({ searchParams }: Props) => {
           <p className="text-xs my-2">
             Veuillez entrer vos identifiants pour continuer
           </p>
-          <SigninForm callbackUrl={callbackUrl} />
+          <SigninForm />
           <Text size="1" color="gray" my="4">
             Powered by ksoft <span className="text-xs align-top">&copy;</span>
           </Text>

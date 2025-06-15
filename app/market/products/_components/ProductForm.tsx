@@ -18,8 +18,7 @@ import {
   TextArea,
   TextField,
 } from "@radix-ui/themes";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosInstance } from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
@@ -32,13 +31,11 @@ import {
   SelectSearchItem,
 } from "../_components";
 import SearchCategoryTextField from "../_components/SearchCategoryField";
-import { uploadUrl } from "../_features/api";
 import {
   useCreateProduct,
   useFetchCategories,
   useProductForm,
-  useSendProductsLinks,
-  useUpdateProduct,
+  useUpdateProduct
 } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
@@ -81,11 +78,11 @@ const ProductForm = ({ product }: { product?: Product }) => {
     formState: { errors, isSubmitting },
   } = useProductForm({ product });
 
-  const { mutateAsync: uploadProductPicture } = useMutation({
-    mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
-      uploadUrl(axios, file),
-    retry: 0,
-  });
+  // const { mutateAsync: uploadProductPicture } = useMutation({
+  //   mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
+  //     uploadUrl(axios, file),
+  //   retry: 0,
+  // });
 
   useEffect(() => {
     if (product) {
@@ -169,11 +166,11 @@ const ProductForm = ({ product }: { product?: Product }) => {
     isSuccess: isUpdateSuccess,
   } = useUpdateProduct({ axios });
 
-  const {
-    mutateAsync: sendProductLinks,
-    isSuccess: sendProductLinksSuccess,
-    isPending: isPendingSendingLinks,
-  } = useSendProductsLinks({ axios });
+  // const {
+  //   mutateAsync: sendProductLinks,
+  //   isSuccess: sendProductLinksSuccess,
+  //   isPending: isPendingSendingLinks,
+  // } = useSendProductsLinks({ axios });
 
   const onSubmit = async (data: ProductSchema) => {
     // Post product
@@ -245,7 +242,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
     } else if (createError) {
       toast.error(``);
     }
-  }, [isCreateSuccess, createdProductData, router]);
+  }, [isCreateSuccess, createdProductData, router, createError, queryClient]);
 
   // useEffect(() => {
   //   if (isCreateSuccess) {
@@ -255,16 +252,16 @@ const ProductForm = ({ product }: { product?: Product }) => {
   //   }
   // }, [isCreateSuccess]);
 
-  useEffect(() => {
-    if (sendProductLinksSuccess) {
-      (async () => {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-        toast.success(`Produit créé avec succès`);
-        router.back(); // Only navigate after everything finishes
-      })();
-    }
-  }, [isCreateSuccess, createdProductData, router]);
+  // useEffect(() => {
+  //   if (sendProductLinksSuccess) {
+  //     (async () => {
+  //       queryClient.invalidateQueries({ queryKey: ["products"] });
+  //       queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+  //       toast.success(`Produit créé avec succès`);
+  //       router.back(); // Only navigate after everything finishes
+  //     })();
+  //   }
+  // }, [isCreateSuccess, createdProductData, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -273,7 +270,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       toast.success(`Produit modifié avec avec succèes`);
       router.back();
     }
-  }, [isUpdateSuccess, router]);
+  }, [isUpdateSuccess, queryClient, router]);
 
   return (
     <div>
@@ -501,9 +498,18 @@ const ProductForm = ({ product }: { product?: Product }) => {
           )}
         </div>
 
-        <Button disabled={isSubmitting || isPendingSendingLinks} mt="6">
+        <Button
+          disabled={
+            isSubmitting
+            // || isPendingSendingLinks
+          }
+          mt="6"
+        >
           {product ? "Modifier" : "Enregistrer"}{" "}
-          {(isSubmitting || isPendingSendingLinks) && <Spinner />}
+          {isSubmitting && (
+            // || isPendingSendingLinks
+            <Spinner />
+          )}
         </Button>
       </form>
     </div>

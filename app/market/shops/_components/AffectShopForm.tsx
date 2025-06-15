@@ -35,7 +35,7 @@ const AffectShopForm = ({ shopId }: { shopId: string }) => {
     error,
   } = useAffectShop({ axios });
 
-  const onSubmit = async (data: AffectShopSchema) => {
+  const onSubmit = async () => {
     try {
       await affectShop({
         shopId,
@@ -54,7 +54,7 @@ const AffectShopForm = ({ shopId }: { shopId: string }) => {
       toast.success(`Boutique affectéé avec succès`);
       router.back();
     }
-  }, [isSuccess, router]);
+  }, [isSuccess, queryClient, router]);
 
   return (
     <div className="max-w-xl">
