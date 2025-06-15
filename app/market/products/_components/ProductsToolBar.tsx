@@ -1,8 +1,9 @@
+import { Roles } from "@/app/lib/types";
 import { Button, Flex, Link, Text } from "@radix-ui/themes";
 import React from "react";
 import { IoStorefrontOutline } from "react-icons/io5";
 
-const ProductsToolBar = () => {
+const ProductsToolBar = ({ role }: { role: Roles }) => {
   return (
     <Flex justify="between">
       <div>
@@ -15,11 +16,13 @@ const ProductsToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/market/products/new">
-        <Button>
-          <span className="text-xs">Nouveau produit</span>
-        </Button>
-      </Link>
+      {role !== "SUPER_ADMIN" && (
+        <Link href="/market/products/new">
+          <Button>
+            <span className="text-xs">Nouveau produit</span>
+          </Button>
+        </Link>
+      )}
     </Flex>
   );
 };

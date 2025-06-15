@@ -9,6 +9,7 @@ import { ProductsTable, ProductsToolBar } from "../_components";
 import { useFetchProducts } from "../_features/hooks";
 import LoadingProductsPage from "./loading";
 import { Suspense } from "react";
+import { Roles } from "@/app/lib/types";
 
 const BuildProductsPage = () => {
   const { status, data: session } = useSession();
@@ -39,7 +40,7 @@ const BuildProductsPage = () => {
 
   return (
     <Flex direction="column" gap="4">
-      <ProductsToolBar />
+      <ProductsToolBar role={`${session?.data.role}` as Roles} />
       {productsResponse && (
         <ProductsTable productsResponse={productsResponse} />
       )}

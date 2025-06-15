@@ -19,9 +19,11 @@ import { Suspense } from "react";
 import { ProductsFeaturesTable } from "../_components";
 import LoadingProductDetails from "./loading";
 import { formattedDate } from "@/app/lib/tools";
+import { useSession } from "next-auth/react";
 
 const BuildProductsDetailsPage = () => {
   const params = useParams<{ id: string }>();
+  const { data: session, status } = useSession();
   const id = params.id;
   const axios = useAxiosAuth();
 
@@ -37,7 +39,7 @@ const BuildProductsDetailsPage = () => {
     retry: 3,
   });
 
-  if (isLoading) return <LoadingProductDetails />;
+  if (isLoading || status === "loading") return <LoadingProductDetails />;
 
   if (error) notFound();
 
@@ -122,11 +124,13 @@ const BuildProductsDetailsPage = () => {
             featureAffectations={product?.featuresAffectations ?? []}
           />
         </div>
-        <div>
-          <Link href={`/market/products/edit/${product?.id}`}>
-            <Button>Modifier</Button>
-          </Link>
-        </div>
+        {session?.data.role !== "SUPER_ADMIN" && (
+          <div>
+            <Link href={`/market/products/edit/${product?.id}`}>
+              <Button>Modifier</Button>
+            </Link>
+          </div>
+        )}
       </Grid>
     </>
   );
