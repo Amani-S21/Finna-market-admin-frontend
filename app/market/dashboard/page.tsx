@@ -12,14 +12,20 @@ import { OrdersChart, RecentOrders } from "./_components";
 import { Flex, Grid } from "@radix-ui/themes";
 
 const MarketHomePage = () => {
-  const { status } = useSession();
+  const { status, data : session } = useSession();
   const axios = useAxiosAuth();
+
+  const shopAffectation = session?.data.shopAffectations;
+  let shopId = "";
+  if (shopAffectation && shopAffectation.length > 0) {
+    shopId = shopAffectation[0].shop.id;
+  }
 
   const {
     data: orderSummaryCounts,
     isLoading: isLoadingOrdercounts,
     error,
-  } = useFetchOrdersSummary({ axios, enabled: status === "authenticated" });
+  } = useFetchOrdersSummary({ axios, shopId, enabled: status === "authenticated" });
 
   const { data: recentOrders, isLoading: isLoadingRecentOrders } =
     useFetchRecentOrders({ axios, enabled: status === "authenticated" });

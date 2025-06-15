@@ -13,43 +13,47 @@ export const fetchOrders = async (
       : `page=${page}&limit=10`;
     const res = await axios.get(`/orders?${query}`);
     return res.data;
-      } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const fetchOrderById = async (axios: AxiosInstance, orderId: string) => {
   try {
     const res = await axios.get(`/orders/${orderId}`);
     return res.data;
-      } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const updateOrder = async (axios: AxiosInstance, data: Order) => {
   try {
     const res = await axios.put(`/orders`, data);
     return res.data;
-      } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
-export const fetchOrdersSummary = async (axios: AxiosInstance) => {
+export const fetchOrdersSummary = async (
+  axios: AxiosInstance,
+  shopId?: string
+) => {
   try {
-    const res = await axios.get(`/orders/summary`);
+    const url = shopId ? `/orders/summary?shopId=${shopId}` : `/orders/summary`;
+    const res = await axios.get(url);
     return res.data;
-      } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const fetchRecentOrders = async (axios: AxiosInstance) => {
   try {
     const res = await axios.get(`/orders/recents?limit=10`);
     return res.data;
-      } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };

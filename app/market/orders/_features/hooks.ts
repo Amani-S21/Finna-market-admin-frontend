@@ -70,15 +70,17 @@ export const useUpdateOrder = ({ axios }: UseUpdateOrder) => {
 type FetchOrdersSummary = {
   axios: AxiosInstance;
   enabled: boolean;
+  shopId? : string;
 };
 
 export const useFetchOrdersSummary = ({
   axios,
   enabled,
+  shopId,
 }: FetchOrdersSummary) => {
   return useQuery<OrderSymmary>({
     queryKey: ["order-summary"],
-    queryFn: () => fetchOrdersSummary(axios),
+    queryFn: () => fetchOrdersSummary(axios, shopId),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
