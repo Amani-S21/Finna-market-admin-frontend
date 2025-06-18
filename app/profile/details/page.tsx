@@ -44,7 +44,7 @@ const ProfilePage = () => {
               <Flex direction="column">
                 <Text as="p" className="font-bold">
                   Profile
-                </Text>f
+                </Text>
                 <Text as="p" size="1">
                   Informations du compte
                 </Text>
