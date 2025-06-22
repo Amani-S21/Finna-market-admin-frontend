@@ -20,7 +20,7 @@ import {
 } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { CiTrash } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
@@ -36,7 +36,7 @@ import {
   useFetchCategories,
   useProductForm,
   useSendProductsLinks,
-  useUpdateProduct
+  useUpdateProduct,
 } from "../_features/hooks";
 
 import { useRouter } from "next/navigation";
@@ -216,7 +216,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   };
 
   // upload pictures
-  const uploadPictures = async () => {
+  const uploadPictures = useCallback(async () => {
     if (productImageUrls.current.length < 3)
       for (let i = 0; i < productImageFiles.current.length; i++) {
         const data = await uploadProductPicture({
@@ -231,7 +231,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       id: `${createdProductData?.id}`,
       pictures: [...productImageUrls.current],
     });
-  };
+  }, [productImageFiles, productImageUrls, createdProductData?.id]);
 
   useEffect(() => {
     if (isCreateSuccess) {
@@ -245,7 +245,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
     } else if (createError) {
       toast.error(``);
     }
-  }, [isCreateSuccess, createdProductData, router, createError, queryClient]);
+  }, [
+    uploadPictures,
+    isCreateSuccess,
+    createdProductData,
+    router,
+    createError,
+    queryClient,
+  ]);
 
   useEffect(() => {
     if (isCreateSuccess) {
@@ -253,7 +260,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
         await uploadPictures(); // Wait for uploads
       })();
     }
-  }, [isCreateSuccess]);
+  }, [uploadPictures, isCreateSuccess]);
 
   useEffect(() => {
     if (sendProductLinksSuccess) {
@@ -264,7 +271,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
         router.back(); // Only navigate after everything finishes
       })();
     }
-  }, [isCreateSuccess, createdProductData, router]);
+  }, [
+    queryClient,
+    sendProductLinksSuccess,
+    ,
+    isCreateSuccess,
+    createdProductData,
+    router,
+  ]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -501,18 +515,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
           )}
         </div>
 
-        <Button
-          disabled={
-            isSubmitting
-            // || isPendingSendingLinks
-          }
-          mt="6"
-        >
+        <Button disabled={isSubmitting || isPendingSendingLinks} mt="6">
           {product ? "Modifier" : "Enregistrer"}{" "}
-          {isSubmitting && (
-            // || isPendingSendingLinks
-            <Spinner />
-          )}
+          {isSubmitting || (isPendingSendingLinks && <Spinner />)}
         </Button>
       </form>
     </div>

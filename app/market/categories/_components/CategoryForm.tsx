@@ -105,7 +105,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       toast.success(`Catégorie crééee avec avec succèes`);
       router.back();
     }
-  }, [isCreateSuccess, router]);
+  }, [queryClient, isCreateSuccess, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -114,7 +114,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       toast.success(`Catégorie modifiée avec avec succèes`);
       router.back();
     }
-  }, [isUpdateSuccess, router]);
+  }, [queryClient, isUpdateSuccess, router]);
 
   return (
     <div className="max-w-xl">
