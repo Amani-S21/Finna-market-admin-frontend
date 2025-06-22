@@ -23,12 +23,14 @@ import {
   useCreateCategories,
   useUpdateCategories,
 } from "../_features/hooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
   const dispatch = useDispatch();
   const { subCategories } = useSelector((state: RootState) => state.category);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (category) {
@@ -78,9 +80,9 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               name: v.name,
             })) ?? [],
         });
-          } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+      } catch (error: any) {
+        toast.error(JSON.stringify(error));
+      }
     } else {
       try {
         await createCategory({
@@ -90,14 +92,16 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               name: v.name,
             })) ?? [],
         });
-          } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+      } catch (error: any) {
+        toast.error(JSON.stringify(error));
+      }
     }
   };
 
   useEffect(() => {
     if (isCreateSuccess) {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
       toast.success(`Catégorie crééee avec avec succèes`);
       router.back();
     }
@@ -105,6 +109,8 @@ const CategoryForm = ({ category }: { category?: Category }) => {
 
   useEffect(() => {
     if (isUpdateSuccess) {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
       toast.success(`Catégorie modifiée avec avec succèes`);
       router.back();
     }
@@ -122,7 +128,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
-      
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>

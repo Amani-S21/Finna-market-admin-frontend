@@ -1,16 +1,26 @@
-import { CategoriesResponse, Category, CategorySchema, SubmitCategory } from "@/app/lib/types";
+import {
+  CategoriesResponse,
+  Category,
+  CategorySchema,
+  SubmitCategory,
+} from "@/app/lib/types";
 import { categorySchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
-import { createCategories, fetchCategories, fetchCategoryById, updateCategories } from "./api";
+import {
+  createCategories,
+  fetchCategories,
+  fetchCategoryById,
+  updateCategories,
+} from "./api";
 
-export const useCategoryForm = ()=> {
+export const useCategoryForm = () => {
   return useForm<CategorySchema>({
     resolver: zodResolver(categorySchema),
   });
-}
+};
 
 type UseFetchCategories = {
   axios: AxiosInstance;
@@ -52,25 +62,13 @@ export const useFetchCategoryById = ({
   });
 };
 
-type UseCreateCategory = {
-  axios: AxiosInstance;
-};
-
-export const useCreateCategories = ({ axios }: UseCreateCategory) => {
-  const queryClient = useQueryClient();
-  
-
+export const useCreateCategories = ({ axios }: { axios: AxiosInstance }) => {
   return useMutation<void, Error, SubmitCategory>({
     mutationFn: (data: SubmitCategory) => createCategories(axios, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
-      
-    },
   });
 };
 
-export const useUpdateCategories = ({ axios }: UseCreateCategory) => {
+export const useUpdateCategories = ({ axios }: { axios: AxiosInstance }) => {
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, SubmitCategory>({
@@ -78,7 +76,6 @@ export const useUpdateCategories = ({ axios }: UseCreateCategory) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
-      
     },
   });
 };

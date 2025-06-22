@@ -34,6 +34,7 @@ const SigninForm = () => {
       if (result.error === "401") {
         toast.error("Veuillez vérifier vos informations");
       }
+      toast.error("Echec de connection, veuillez verifier vos cooordonées");
     } else {
       toast.error("An unknown error occurred");
     }
