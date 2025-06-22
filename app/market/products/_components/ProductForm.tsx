@@ -231,7 +231,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       id: `${createdProductData?.id}`,
       pictures: [...productImageUrls.current],
     });
-  }, [productImageFiles, productImageUrls, createdProductData?.id]);
+  }, [uploadProductPicture, sendProductLinks, axios, productImageFiles, productImageUrls, createdProductData?.id]);
 
   useEffect(() => {
     if (isCreateSuccess) {
@@ -246,6 +246,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
       toast.error(``);
     }
   }, [
+    sendProductLinks,
+    uploadProductPicture,
     uploadPictures,
     isCreateSuccess,
     createdProductData,
