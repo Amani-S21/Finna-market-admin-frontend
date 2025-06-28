@@ -66,6 +66,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const [image1, setImage1] = useState<string | undefined>();
   const [image2, setImage2] = useState<string | undefined>();
   const [image3, setImage3] = useState<string | undefined>();
+  const [isUploading, setIsUploading] = useState(false);
 
   const [isPublished, setIsPublished] = useState(true);
 
@@ -199,16 +200,29 @@ const ProductForm = ({ product }: { product?: Product }) => {
     };
     if (product) {
       try {
-        await patchProductMutation({
-          id: product?.id,
-          ...productSubmit,
-        });
+        await patchProductMutation(
+          {
+            id: product?.id,
+            ...productSubmit,
+          },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries({ queryKey: ["products"] });
+              queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+            },
+          }
+        );
       } catch (error: any) {
         toast.error(error);
       }
     } else {
       try {
-        await createProductMutation(productSubmit);
+        await createProductMutation(productSubmit, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["products"] });
+            queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+          },
+        });
       } catch (error: any) {
         toast.error(error);
       }
@@ -217,30 +231,38 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   // upload pictures
   const uploadPictures = useCallback(async () => {
-    if (productImageUrls.current.length < 3)
-      for (let i = 0; i < productImageFiles.current.length; i++) {
-        const data = await uploadProductPicture({
-          axios,
-          file: productImageFiles.current[i],
-        });
-        productImageUrls.current.push(`${data?.url}`);
-      }
+    try {
+      setIsUploading(true);
+      if (productImageUrls.current.length < 3)
+        for (let i = 0; i < productImageFiles.current.length; i++) {
+          const data = await uploadProductPicture({
+            axios,
+            file: productImageFiles.current[i],
+          });
+          productImageUrls.current.push(`${data?.imgName}`);
+        }
 
-    // Now we can send the uploaded pictures and update the product
-    await sendProductLinks({
-      id: `${createdProductData?.id}`,
-      pictures: [...productImageUrls.current],
-    });
-  }, [uploadProductPicture, sendProductLinks, axios, productImageFiles, productImageUrls, createdProductData?.id]);
+      // Now we can send the uploaded pictures and update the product
+      await sendProductLinks({
+        id: `${createdProductData?.id}`,
+        pictures: [...productImageUrls.current],
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  }, [
+    uploadProductPicture,
+    sendProductLinks,
+    axios,
+    productImageFiles,
+    productImageUrls,
+    createdProductData?.id,
+  ]);
 
   useEffect(() => {
     if (isCreateSuccess) {
       (async () => {
         await uploadPictures();
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-
-        router.back();
       })();
     } else if (createError) {
       toast.error(``);
@@ -257,21 +279,11 @@ const ProductForm = ({ product }: { product?: Product }) => {
   ]);
 
   useEffect(() => {
-    if (isCreateSuccess) {
-      (async () => {
-        await uploadPictures(); // Wait for uploads
-      })();
-    }
-  }, [uploadPictures, isCreateSuccess]);
-
-  useEffect(() => {
     if (sendProductLinksSuccess) {
-      (async () => {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
-        toast.success(`Produit créé avec succès`);
-        router.back(); // Only navigate after everything finishes
-      })();
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+      toast.success(`Produit créé avec succès`);
+      router.back(); // Only navigate after everything finishes
     }
   }, [
     queryClient,
@@ -517,9 +529,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
           )}
         </div>
 
-        <Button disabled={isSubmitting || isPendingSendingLinks} mt="6">
+        <Button
+          disabled={isSubmitting || isUploading || isPendingSendingLinks}
+          mt="6"
+        >
           {product ? "Modifier" : "Enregistrer"}{" "}
-          {isSubmitting || (isPendingSendingLinks && <Spinner />)}
+          {(isSubmitting || isUploading || isPendingSendingLinks) && (
+            <Spinner />
+          )}
         </Button>
       </form>
     </div>

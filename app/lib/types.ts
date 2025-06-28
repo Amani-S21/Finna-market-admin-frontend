@@ -183,7 +183,7 @@ export type FeatureValuePrice = {
 
 export type UploadFileResponse = {
   message: string;
-  url: string;
+  imgName: string;
 };
 
 export type FeatureHasFeatureValue = {

@@ -90,7 +90,7 @@ const BuildProductsDetailsPage = () => {
                     height={80}
                     width={100}
                     alt="product image"
-                    src={picture}
+                    src={`https://finna-media.buy-one-store.com/v1/uploads/images/${picture}`}
                     className="object-cover rounded-md"
                   />
                 </div>
