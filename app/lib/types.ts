@@ -249,6 +249,18 @@ export type SubmitCategory = {
   subCategories: SubCategory[];
 };
 
+export type TaxesResponse = {
+  count: number;
+  data: Taxe[];
+};
+
+export type Taxe = {
+  id?: string;
+  name: string;
+  createdAt: string;
+  updatedAt?: string;
+};
+
 export type OrdersResponse = {
   count: number;
   data: Order[];

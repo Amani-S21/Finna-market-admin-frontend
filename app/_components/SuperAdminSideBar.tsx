@@ -11,6 +11,7 @@ import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import classNames from "classnames";
 import { usePathname } from "next/navigation";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { DollarSign } from "lucide-react";
 
 const SuperAdminSideBar = () => {
   return (
@@ -87,11 +88,11 @@ const links = [
     label: "Caractéristiques",
     icon: <MdOutlineFeaturedPlayList />,
   },
-  // {
-  //   href: "/market/profile",
-  //   label: "Profile",
-  //   icon: <VscAccount />,
-  // },
+  {
+    href: "/market/taxes/list?page=1",
+    label: "Taxes",
+    icon: <DollarSign size={18} />,
+  },
 ];
 
 export default SuperAdminSideBar;
