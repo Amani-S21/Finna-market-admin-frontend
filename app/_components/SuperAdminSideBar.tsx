@@ -39,6 +39,7 @@ const NavLinks = () => {
             className={classNames({
               "text-blue-700 font-bold":
                 link.href.split("?")[0] === currentPath,
+              "hover:text-blue-700": true,
             })}
           >
             <div className="flex items-center space-x-2">
