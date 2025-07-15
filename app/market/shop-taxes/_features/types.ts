@@ -1,9 +1,14 @@
+import { z } from "zod";
+import { shopTaxeSchema } from "./validationSchemas";
+
 export type Taxe = {
   id: string;
   name: string;
   createdAt: string; // ISO 8601 format
   updatedAt: string;
 };
+
+export type ShopTaxeSchema = z.infer<typeof shopTaxeSchema>;
 
 export type TaxePriceData = {
   price: number;

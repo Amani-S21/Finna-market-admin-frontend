@@ -17,7 +17,7 @@ const TaxesToolBar = () => {
 
       <Link href="/market/taxes/new">
         <Button>
-          <span className="text-xs">Nouvelle taxe</span>
+          <span className="text-xs">Nouveau pourcentage</span>
         </Button>
       </Link>
     </Flex>

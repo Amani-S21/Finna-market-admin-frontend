@@ -9,6 +9,7 @@ import LoadingShopTaxesPage from "./loading";
 import { Flex } from "@radix-ui/themes";
 import { Pagination } from "@/app/_components";
 import TaxesPriceTable from "../_components/TaxesPriceTable";
+import { TaxesToolBar } from "../_components";
 
 const ShopTaxesPage = () => {
   const { status, data: session } = useSession();
@@ -34,7 +35,7 @@ const ShopTaxesPage = () => {
 
   return (
     <Flex direction="column" gap="4">
-      <ShopTaxesPage />
+      <TaxesToolBar />
       {taxesResponse && <TaxesPriceTable taxesResponse={taxesResponse} />}
       <Pagination
         pageSize={10}

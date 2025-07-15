@@ -37,7 +37,9 @@ const TaxesPriceTable = ({
                 variant="ghost"
                 ml="4"
                 onClick={() =>
-                  router.push(`/market/taxes/${taxe.taxeId}/${taxe.shopId}`)
+                  router.push(
+                    `/market/shop-taxes/${taxe.shopId}/${taxe.taxeId}`
+                  )
                 }
               >
                 <GoEye size={18} color="black" />
