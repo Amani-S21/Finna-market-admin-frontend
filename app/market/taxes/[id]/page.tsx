@@ -37,9 +37,7 @@ const BuildTaxeDetails = () => {
             {taxe?.name}
           </Heading>
           <Text size="2">{taxe?.createdAt}</Text>
-          <Text mt="4" size="2" as="p" className="font-bold">
-            Taxe
-          </Text>
+         
         </div>
         <div>
           <Link href={`/market/taxes/edit/${taxe?.id}`}>

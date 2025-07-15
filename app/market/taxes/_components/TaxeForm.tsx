@@ -103,7 +103,7 @@ const TaxeForm = ({ taxe }: { taxe?: Taxe }) => {
           <TextField.Root
             {...register("name")}
             defaultValue={taxe?.name}
-            placeholder="Nom de la caractéristique"
+            placeholder="Nom de la taxe"
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
