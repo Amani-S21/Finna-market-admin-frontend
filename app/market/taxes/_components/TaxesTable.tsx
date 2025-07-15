@@ -6,8 +6,11 @@ import { IconButton, Table } from "@radix-ui/themes";
 import { IoIosMore } from "react-icons/io";
 import { taxesColumns } from "../list/loading";
 import { GoEye } from "react-icons/go";
+import { useRouter } from "next/navigation";
 
 const TaxesTable = ({ taxesResponse }: { taxesResponse: TaxesResponse }) => {
+  const router = useRouter();
+
   return (
     <Table.Root variant="surface">
       <Table.Header>
@@ -26,7 +29,11 @@ const TaxesTable = ({ taxesResponse }: { taxesResponse: TaxesResponse }) => {
             <Table.Cell>{taxe.name}</Table.Cell>
             <Table.Cell>{formattedDate(taxe.createdAt)}</Table.Cell>
             <Table.Cell>
-              <IconButton variant="ghost" ml="4">
+              <IconButton
+                variant="ghost"
+                ml="4"
+                onClick={() => router.push(`/market/taxes/${taxe.id}`)}
+              >
                 <GoEye size={18} color="black" />
               </IconButton>
             </Table.Cell>
