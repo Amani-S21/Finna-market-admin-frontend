@@ -2,8 +2,9 @@ import { Flex, Text } from "@radix-ui/themes";
 import React from "react";
 import { FaUsers } from "react-icons/fa6";
 import UserRoleFilter from "./UserRoleFilter";
+import { Roles } from "@/app/lib/types";
 
-const UsersToolBar = () => {
+const UsersToolBar = ({ userRole }: { userRole: Roles }) => {
   return (
     <Flex justify="between">
       <div>
@@ -15,7 +16,7 @@ const UsersToolBar = () => {
           Tous les utilisateurs disponibles dans l'entreprise
         </Text>
       </div>
-      <UserRoleFilter />
+      {userRole === "SUPER_ADMIN" && <UserRoleFilter />}
     </Flex>
   );
 };

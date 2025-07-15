@@ -13,7 +13,8 @@ import LoadingUsersPage from "./loading";
 import { Suspense } from "react";
 
 const BuildUsersPage = () => {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
+  const currentUserRole = session?.data.shopAffectations[0].role;
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "";
@@ -31,7 +32,7 @@ const BuildUsersPage = () => {
   return (
     <Suspense fallback={<LoadingUsersPage />}>
       <Flex direction="column" gap="4">
-        <UsersToolBar />
+        <UsersToolBar userRole={currentUserRole as Roles} />
         {usersResponse && <UsersTable usersResponse={usersResponse} />}
         <Pagination
           pageSize={10}
