@@ -6,6 +6,7 @@ import {
   newShopSchema,
   productSchema,
   signinSchema,
+  taxeSchema,
   updatePasswordSchema,
   updateUserSchema,
   userSchema,
@@ -29,6 +30,8 @@ export type UserSchema = z.infer<typeof userSchema>;
 export type FeatureSchema = z.infer<typeof featureSchema>;
 
 export type CategorySchema = z.infer<typeof categorySchema>;
+
+export type TaxeSchema = z.infer<typeof taxeSchema>;
 
 export type ProductSchema = z.infer<typeof productSchema>;
 
@@ -259,6 +262,11 @@ export type Taxe = {
   name: string;
   createdAt: string;
   updatedAt?: string;
+};
+
+export type TaxeSubmit = {
+   id?: string;
+  name: string;
 };
 
 export type OrdersResponse = {

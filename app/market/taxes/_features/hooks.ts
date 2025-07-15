@@ -1,7 +1,16 @@
-import { CategoriesResponse, Taxe, TaxesResponse } from "@/app/lib/types";
-import { useQuery } from "@tanstack/react-query";
+import { Taxe, TaxeSchema, TaxesResponse, TaxeSubmit } from "@/app/lib/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { fetchTaxeById, fetchTaxes } from "./api";
+import { createTaxes, fetchTaxeById, fetchTaxes, updateTaxes } from "./api";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { taxeSchema } from "@/app/lib/validationSchemas";
+
+export const useTaxeForm = () => {
+  return useForm<TaxeSchema>({
+    resolver: zodResolver(taxeSchema),
+  });
+};
 
 type UseFetchTaxes = {
   axios: AxiosInstance;
@@ -19,19 +28,34 @@ export const useFetchTaxes = ({ axios, page, enabled }: UseFetchTaxes) => {
   });
 };
 
-
 type UseFetchTaxeById = {
   axios: AxiosInstance;
   taxeId: string;
   enabled: boolean;
 };
 
-export const useFetchTaxeById = ({ axios, taxeId, enabled }: UseFetchTaxeById) => {
+export const useFetchTaxeById = ({
+  axios,
+  taxeId,
+  enabled,
+}: UseFetchTaxeById) => {
   return useQuery<Taxe>({
     queryKey: ["taxe", taxeId],
     queryFn: () => fetchTaxeById(axios, taxeId),
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,
+  });
+};
+
+export const useCreateTaxes = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<void, Error, TaxeSubmit>({
+    mutationFn: (data: TaxeSubmit) => createTaxes(axios, data),
+  });
+};
+
+export const useUpdateTaxes = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<void, Error, TaxeSubmit>({
+    mutationFn: (data: TaxeSubmit) => updateTaxes(axios, data),
   });
 };
