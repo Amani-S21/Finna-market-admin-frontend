@@ -2,6 +2,7 @@
 
 import logo from "@/public/logo.png";
 import classNames from "classnames";
+import { DollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -36,6 +37,7 @@ const NavLinks = () => {
             className={classNames({
               "text-blue-700 font-bold":
                 link.href.split("?")[0] === currentPath,
+              "hover:text-blue-700": true,
             })}
           >
             <div className="flex items-center space-x-2">
@@ -71,10 +73,10 @@ const links = [
     icon: <AiOutlineOrderedList />,
   },
   {
-    href: "/market/shops/list?page=1",
-    label: "Boutiques",
-    icon: <IoStorefrontOutline />,
-  }
+    href: "/market/shop-taxes/list?page=1",
+    label: "Taxes",
+    icon: <DollarSign size={18} />,
+  },
 ];
 
 export default SuperMarketAdminSideBar;

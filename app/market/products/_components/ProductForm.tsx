@@ -187,7 +187,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
-      shopId: session?.data.shopAffectations[0].shop.id,
+      shopId: session?.data.shopAffectations[0].shopId,
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
       features: (features ?? []).map((feature) => ({

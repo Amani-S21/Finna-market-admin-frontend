@@ -1,3 +1,4 @@
+import { boolean } from "zod";
 
 declare module "next-auth" {
   interface Session {
@@ -9,14 +10,9 @@ declare module "next-auth" {
       emailAddress: string;
       shopAffectations: {
         role: string;
-        shop: {
-          id: string;
-          name: string;
-          address: string;
-          creatorId: string;
-          createdAt: string;
-          updatedAt: string;
-        };
+        userId: string;
+        shopId: string;
+        isActive: boolean;
       }[];
     };
     accessToken: string;

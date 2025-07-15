@@ -20,7 +20,7 @@ const BuildProductsPage = () => {
   const shopAffectation = session?.data.shopAffectations;
   let shopId = "";
   if (shopAffectation && shopAffectation.length > 0) {
-    shopId = shopAffectation[0].shop.id;
+    shopId = shopAffectation[0].shopId;
   }
 
   const {

@@ -14,7 +14,6 @@ import toast from "react-hot-toast";
 import { useUpdateShop } from "../_features/hooks";
 
 const EditShopForm = ({ shop }: { shop?: Shop }) => {
-  // const [userId, setUserId] = useState("");
   const router = useRouter();
 
   const {
@@ -43,13 +42,6 @@ const EditShopForm = ({ shop }: { shop?: Shop }) => {
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (shop) {
-  //     shop?.shopAffectations.length &&
-  //       setUserId(shop?.shopAffectations[0].user.id ?? "");
-  //   }
-  // }, [shop]);
 
   useEffect(() => {
     if (isUpdateSuccess) {

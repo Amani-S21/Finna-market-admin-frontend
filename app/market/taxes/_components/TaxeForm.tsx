@@ -8,7 +8,6 @@ import { Button, Callout, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import {
   useCreateTaxes,
   useTaxeForm,
@@ -17,14 +16,11 @@ import {
 
 const TaxeForm = ({ taxe }: { taxe?: Taxe }) => {
   const axios = useAxiosAuth();
-  const dispatch = useDispatch();
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const {
     register,
-    resetField,
-    watch,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useTaxeForm();
@@ -32,7 +28,6 @@ const TaxeForm = ({ taxe }: { taxe?: Taxe }) => {
   const {
     mutateAsync: createTaxe,
     error: createError,
-    isSuccess: isCreateSuccess,
   } = useCreateTaxes({
     axios,
   });
@@ -40,7 +35,6 @@ const TaxeForm = ({ taxe }: { taxe?: Taxe }) => {
   const {
     mutateAsync: updateTaxe,
     error: updateError,
-    isSuccess: isUpdateSuccess,
   } = useUpdateTaxes({ axios });
 
   const onSubmit = async (data: CategorySchema) => {
