@@ -4,12 +4,14 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import React from "react";
-import { useFetchShopTaxe } from "../../_features/hooks";
 import LoadingTaxePricesDetailsPage from "./loading";
 import { BackButton } from "@/app/_components";
 import { Button, Grid, Heading, Link, Text } from "@radix-ui/themes";
+import { DollarSign } from "lucide-react";
+import { ShopTaxeForm } from "../../../_components";
+import { useFetchShopTaxe } from "../../../_features/hooks";
 
-const TaxesPricesDetailsPage = () => {
+const EditShopTaxePage = () => {
   const { status } = useSession();
   const params = useParams<{ shopId: string; taxeId: string }>();
   const axios = useAxiosAuth();
@@ -31,26 +33,21 @@ const TaxesPricesDetailsPage = () => {
   if (error) notFound();
 
   return (
-    <>
-      <BackButton />
-      <Grid columns="3" mt="4">
-        <div className="col-span-2">
-          <Heading className="lowercase first-letter:uppercase">
-            {taxe?.price}
-          </Heading>
-          <Text size="2">{taxe?.createdAt}</Text>
-          <p>{taxe?.price}</p>
+    <div className="max-w-xl">
+      <div className="mb-2">
+        <BackButton />
+        <div className="flex items-center space-x-4 mt-5">
+          <DollarSign size={18} />
+          <span className="font-bold">Taxe</span>
         </div>
-        <div>
-          <Link
-            href={`/market/shop-taxes/edit/${taxe?.shopId}/${taxe?.taxeId}`}
-          >
-            <Button>Modifier</Button>
-          </Link>
-        </div>
-      </Grid>
-    </>
+        <Text as="p" size="2" mb="4">
+          Remplissez les champs ci dessous pour modifier le pourcentage de la taxe
+        </Text>
+      </div>
+
+      <ShopTaxeForm tax={taxe} />
+    </div>
   );
 };
 
-export default TaxesPricesDetailsPage;
+export default EditShopTaxePage;

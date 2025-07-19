@@ -17,9 +17,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { shopTaxeSchema, shopTaxSchema } from "./validationSchemas";
 
-export const useShopTaxForm = () => {
+export const useShopTaxForm = ({ taxName }: { taxName?: string }) => {
   return useForm<ShopTaxSchema>({
     resolver: zodResolver(shopTaxSchema),
+    defaultValues: { taxName },
   });
 };
 

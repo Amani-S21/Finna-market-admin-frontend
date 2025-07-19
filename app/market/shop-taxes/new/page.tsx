@@ -15,7 +15,7 @@ const ShopTaxesPage = () => {
         </div>
         <Text as="p" size="2" mb="4">
           Remplissez les champs ci dessous pour créer un nouveau pourcentage de
-          produit
+          la taxe
         </Text>
       </div>
 

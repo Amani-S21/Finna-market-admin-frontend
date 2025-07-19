@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchTaxInput from "./SearchTaxeInput";
 import { ErrorMessage, Spinner } from "@/app/_components";
 import { Controller } from "react-hook-form";
@@ -21,7 +21,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-const ShopTaxeForm = ({ taxPrice }: { taxPrice: TaxePriceData }) => {
+const ShopTaxeForm = ({ tax }: { tax?: TaxePriceData }) => {
   const { data: session } = useSession();
   const axios = useAxiosAuth();
   const [selectedTaxPriceId, setSelectedTaxPriceId] = useState("");
@@ -33,7 +33,7 @@ const ShopTaxeForm = ({ taxPrice }: { taxPrice: TaxePriceData }) => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useShopTaxForm();
+  } = useShopTaxForm({taxName : tax?.taxe.name});
 
   const { mutateAsync: createTaxPriceMutation, error: createError } =
     useCreateShopTaxes({ axios });
@@ -42,18 +42,22 @@ const ShopTaxeForm = ({ taxPrice }: { taxPrice: TaxePriceData }) => {
     useUpdateShopTaxes({ axios });
 
   const onSubmit = async (data: ShopTaxSchema) => {
-    if (taxPrice) {
+    if (tax) {
       const dataSubmit: TaxePriceSubmit = {
-        shopId: `${session?.data.shopAffectations[0].shopId}`,
+        shopId: tax.shopId,
         taxeId: selectedTaxPriceId,
         price: parseInt(`${data.price}`),
       };
-      await patchTaxpriceMutation(dataSubmit, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["shop-taxe"] });
-          queryClient.invalidateQueries({ queryKey: ["shop-taxes"] });
-        },
-      });
+      try {
+        await patchTaxpriceMutation(dataSubmit, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["shop-taxe"] });
+            queryClient.invalidateQueries({ queryKey: ["shop-taxes"] });
+            toast.success("Pourcentage modifié");
+            router.back();
+          },
+        });
+      } catch (error) {}
     } else {
       const dataSubmit: TaxePriceSubmit = {
         shopId: `${session?.data.shopAffectations[0].shopId}`,
@@ -65,7 +69,7 @@ const ShopTaxeForm = ({ taxPrice }: { taxPrice: TaxePriceData }) => {
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["shop-taxe"] });
             queryClient.invalidateQueries({ queryKey: ["shop-taxes"] });
-            toast.success("Nouveau pourcentage ajouté");
+            toast.success("Pourcentage ajouté");
             router.back();
           },
         });
@@ -73,6 +77,12 @@ const ShopTaxeForm = ({ taxPrice }: { taxPrice: TaxePriceData }) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (tax) {
+      setSelectedTaxPriceId(tax.taxeId);
+    }
+  }, [tax]);
 
   return (
     <div>
@@ -108,13 +118,13 @@ const ShopTaxeForm = ({ taxPrice }: { taxPrice: TaxePriceData }) => {
           <TextField.Root
             {...register("price")}
             placeholder="Saisissez le prix d'achat"
-            defaultValue={taxPrice?.price}
+            defaultValue={tax?.price}
           />
           <ErrorMessage>{errors.price?.message}</ErrorMessage>
         </div>
 
         <Button disabled={isSubmitting} mt="2">
-          {taxPrice ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+          {tax ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
