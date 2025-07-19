@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { shopTaxeSchema } from "./validationSchemas";
+import { shopTaxeSchema, shopTaxSchema } from "./validationSchemas";
+
+export type ShopTaxSchema = z.infer<typeof shopTaxSchema>;
 
 export type Taxe = {
   id: string;

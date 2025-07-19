@@ -7,6 +7,7 @@ import {
 } from "./api";
 import {
   ShopTaxeSchema,
+  ShopTaxSchema,
   TaxePriceData,
   TaxePriceResponse,
   TaxePriceSubmit,
@@ -14,7 +15,13 @@ import {
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { shopTaxeSchema } from "./validationSchemas";
+import { shopTaxeSchema, shopTaxSchema } from "./validationSchemas";
+
+export const useShopTaxForm = () => {
+  return useForm<ShopTaxSchema>({
+    resolver: zodResolver(shopTaxSchema),
+  });
+};
 
 export const useTaxePriceForm = () => {
   return useForm<ShopTaxeSchema>({

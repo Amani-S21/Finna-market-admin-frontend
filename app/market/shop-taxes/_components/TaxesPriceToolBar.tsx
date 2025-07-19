@@ -15,7 +15,7 @@ const TaxesToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/market/taxes/new">
+      <Link href="/market/shop-taxes/new">
         <Button>
           <span className="text-xs">Nouveau pourcentage</span>
         </Button>
