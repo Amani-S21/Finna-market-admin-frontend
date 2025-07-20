@@ -10,11 +10,10 @@ import UsersTable from "../_components/UsersTable";
 import UsersToolBar from "../_components/UsersToolBar";
 import { useFetchUsers } from "../_features/hooks";
 import LoadingUsersPage from "./loading";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 const BuildUsersPage = () => {
   const { status, data: session } = useSession();
-  const currentUserRole = session?.data.shopAffectations[0].role;
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "";
@@ -27,12 +26,24 @@ const BuildUsersPage = () => {
     enabled: status === "authenticated",
   });
 
+  const affectations = session?.data?.shopAffectations ?? [];
+
+  const currentUserRole = () => {
+    if (affectations.length > 0) {
+      if (affectations && affectations.length > 0) {
+        return affectations[0].role as Roles;
+      }
+    } else {
+      return session?.data.role as Roles;
+    }
+  };
+
   if (isLoading || status === "loading") return <LoadingUsersPage />;
 
   return (
     <Suspense fallback={<LoadingUsersPage />}>
       <Flex direction="column" gap="4">
-        <UsersToolBar userRole={currentUserRole as Roles} />
+        <UsersToolBar userRole={currentUserRole()!} />
         {usersResponse && <UsersTable usersResponse={usersResponse} />}
         <Pagination
           pageSize={10}

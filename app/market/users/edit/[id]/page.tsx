@@ -8,14 +8,14 @@ import { FaUsers } from "react-icons/fa6";
 import { UserForm } from "../../_components";
 import { useFetchUser } from "../../_features/hooks";
 import LoadingEditUserPage from "./loading";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 const BuildEditUserPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id") ?? "";
+  const params = useParams<{ id: string }>();
+  const id = params.id;
 
   const { data: user, isLoading } = useFetchUser({
     axios,

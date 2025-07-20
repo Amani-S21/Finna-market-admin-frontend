@@ -5,10 +5,12 @@ import toast from "react-hot-toast";
 export const searchUser = async (
   axios: AxiosInstance,
   term: string,
-  role: Roles
+  role?: Roles
 ) => {
   try {
-    const res = await axios.get(`/users/search?term=${term}&role=${role}`);
+    const res = role
+      ? await axios.get(`/users/search?term=${term}&role=${role}`)
+      : await axios.get(`/users/search?term=${term}`);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
@@ -35,9 +37,9 @@ export const fetchUser = async (axios: AxiosInstance, userId: string) => {
   try {
     const res = await axios.get(`/users/${userId}`);
     return res.data;
-      } catch (error : any) {
-      toast.error(JSON.stringify(error))
-    }
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
 };
 
 export const updateUser = async (axios: AxiosInstance, data: User) => {

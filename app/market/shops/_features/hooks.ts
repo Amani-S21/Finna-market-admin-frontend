@@ -5,8 +5,9 @@ import {
   SubmitShop,
 } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { affectShop, createShop, fetchShopById, fetchShops, updateShop } from "./api";
+import { affectShop, createShop, fetchShopById, fetchShops, searchShopType, updateShop } from "./api";
 import { AxiosInstance } from "axios";
+import { ShopTypesResponse } from "../../orders/_features/types";
 
 type UseFetchShops = {
   axios: AxiosInstance;
@@ -79,5 +80,25 @@ type UseUpdateShop = {
 export const useAffectShop = ({ axios }: UseUpdateShop) => {
   return useMutation<void, Error, SubmitAffectShop>({
     mutationFn: (data: SubmitAffectShop) => affectShop(axios, data),
+  });
+};
+
+type UseSearchShopType = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchShopType = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchShopType) => {
+  return useQuery<ShopTypesResponse>({
+    queryKey: ["searched-shop-types", term],
+    queryFn: () => searchShopType(axios, term),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
   });
 };

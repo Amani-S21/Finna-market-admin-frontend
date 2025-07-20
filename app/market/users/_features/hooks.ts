@@ -13,7 +13,7 @@ import { fetchUser, fetchUsers, searchUser, updateUser } from "./api";
 type UseSearchUser = {
   axios: AxiosInstance;
   term: string;
-  role: Roles;
+  role?: Roles;
   enabled: boolean;
 };
 

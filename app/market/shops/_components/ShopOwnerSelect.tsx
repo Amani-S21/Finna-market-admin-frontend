@@ -1,21 +1,28 @@
+"use client";
+
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { User } from "@/app/lib/types";
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { MdOutlineEdit } from "react-icons/md";
+import { ChevronDown, Search } from "lucide-react";
+import { useState } from "react";
+import { ShopType } from "../../orders/_features/types";
 import { useSearchUser } from "../../users/_features/hooks";
-import { useUpdateOrder } from "../_features/hooks";
+import { User } from "@/app/lib/types";
 
 type Props = {
-  orderId: string;
+  selectedUser: User | undefined;
+  setSelectedUser: (val: User) => void;
   open: boolean;
   setOpen: (val: boolean) => void;
 };
 
-const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
+const ShopOwnerSelect = ({
+  setSelectedUser,
+  setOpen,
+  open,
+  selectedUser,
+}: Props) => {
   const axios = useAxiosAuth();
 
   const [searchValue, setSearchValue] = useState("");
@@ -24,55 +31,53 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
   const { data: searchedUsers, isLoading: isLoadingUsers } = useSearchUser({
     axios,
     term: debouncedSearchTerm,
-    role: "CUSTOMER",
     enabled: !!debouncedSearchTerm,
   });
 
-  const {
-    mutateAsync: updateOrder,
-    isPending,
-    isSuccess: isUpdateSuccess,
-  } = useUpdateOrder({ axios });
-
   const handleItemClicked = async (user: User) => {
-    try {
-      await updateOrder({
-        id: orderId,
-        delivererId: user.id,
-      });
-
-      setOpen(false);
-    } catch (error: any) {
-      toast.error(JSON.stringify(error));
-    }
+    setSelectedUser(user);
+    setOpen(false);
   };
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      toast.success(`Affectation effectuée avec avec succèes`);
-    }
-  }, [isUpdateSuccess]);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <Button onClick={() => setOpen(true)}>
-          <MdOutlineEdit /> Séléctionner un livreur
-        </Button>
+        <div
+          className="flex flex-col space-y-2 mt-6"
+          onClick={() => setOpen(true)}
+        >
+          <p className="text-sm font-bold">Propriétaire</p>
+          <div className="relative">
+            <TextField.Root
+              placeholder="Sélectionner un utilisateur"
+              value={selectedUser?.fullName ?? ""}
+              onChange={() => {}}
+            >
+              <TextField.Slot>
+                <ChevronDown size={15} />
+              </TextField.Slot>
+            </TextField.Root>
+            <div className="inset-0 absolute hover:cursor-default"></div>
+          </div>
+        </div>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title size="4">Séléctionner un livreur</Dialog.Title>
+        <Dialog.Title size="4">Séléctionner le proprétaire</Dialog.Title>
         <Dialog.Description size="1">
-          Vous pouvez séléctionner un livreur après recherche
+          Vous pouvez séléctionner le proprétaire après recherche
         </Dialog.Description>
 
         <TextField.Root
           value={searchValue}
-          placeholder="Ce champs est obligatoire"
+          placeholder="Rechercher un utilisateur"
           onChange={(e) => setSearchValue(e.target.value)}
           mt="6"
-        />
+        >
+          <TextField.Slot>
+            <Search size={15} />
+          </TextField.Slot>
+        </TextField.Root>
 
         {isLoadingUsers ? (
           <div className="min-h-[60px]">
@@ -110,7 +115,7 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
         )}
 
         <Flex gap="3" mt="4" justify="between">
-          {isPending ? <Text size="1">Chargement...</Text> : <p></p>}
+          {/* {isPending ? <Text size="1">Chargement...</Text> : <p></p>} */}
           <Dialog.Close>
             <Button variant="surface" color="gray">
               Annuler
@@ -122,4 +127,4 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
   );
 };
 
-export default DelivererSelect;
+export default ShopOwnerSelect;

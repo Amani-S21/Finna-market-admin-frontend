@@ -108,3 +108,15 @@ export const updateShop = async (axios: AxiosInstance, data: SubmitShop) => {
     throw customError;
   }
 };
+
+export const searchShopType = async (
+  axios: AxiosInstance,
+  term: string,
+) => {
+  try {
+    const res = await axios.get(`/shop-types/search?term=${term}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
