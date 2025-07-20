@@ -30,8 +30,10 @@ const ShopsTable = ({
           <Table.Row key={shop.id}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{shop.name}</Table.Cell>
+            <Table.Cell>{shop.nationalId}</Table.Cell>
+            <Table.Cell>{shop.rccm}</Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
-              {shop.address}
+              {shop.shopCode}
             </Table.Cell>
             <Table.Cell>{formattedDate(shop.createdAt)}</Table.Cell>
             <Table.Cell>

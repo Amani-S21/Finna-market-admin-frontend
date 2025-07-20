@@ -35,6 +35,11 @@ export type TaxeSchema = z.infer<typeof taxeSchema>;
 
 export type ProductSchema = z.infer<typeof productSchema>;
 
+export type ExpeditionRegion = {
+  shopId: string;
+  expeditionRegionId: string;
+};
+
 export type ShopsListResponse = {
   count: number;
   data: Shop[];
@@ -44,17 +49,32 @@ export type SubmitShop = {
   id?: string;
   name: string;
   address: string;
+  nationalId: string;
+  rccm: string;
+  emailAddress?: string;
+  phone?: string;
   creatorId?: string;
+  typeId?: string;
+  ownerId: string;
+  categories: { id: string }[];
+  shopExpeditions: { id: string }[];
 };
 
 export type Shop = {
   id: string;
   name: string;
   address: string;
-  creator: User;
-  shopAffectations: ShopAffectation[];
+  nationalId: string;
+  rccm: string;
+  emailAddress: string;
+  phone: string;
+  creatorId: string;
+  typeId: string;
+  shopCode: string;
   createdAt: string;
   updatedAt: string;
+  ExpeditionRegions: ExpeditionRegion[];
+  shopAffectations: ShopAffectation[];
 };
 
 export type ShopAffectation = {
@@ -265,7 +285,7 @@ export type Taxe = {
 };
 
 export type TaxeSubmit = {
-   id?: string;
+  id?: string;
   name: string;
 };
 

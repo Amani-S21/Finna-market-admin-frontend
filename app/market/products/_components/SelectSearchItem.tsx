@@ -77,7 +77,7 @@ const SelectSearchItem = ({
                 onSave={onDialogSave}
               />
             )}
-            <IconButton variant="ghost" onClick={onDeleteClick}>
+            <IconButton type="button" variant="ghost" onClick={onDeleteClick}>
               <IoIosCloseCircleOutline />
             </IconButton>
           </Flex>

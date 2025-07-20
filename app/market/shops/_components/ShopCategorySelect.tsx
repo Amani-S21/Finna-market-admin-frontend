@@ -17,6 +17,7 @@ type Props = {
   >;
   open: boolean;
   setOpen: (val: boolean) => void;
+  onDeleteClick: (category: Category) => void
 };
 
 const ShopCategorySelect = ({
@@ -24,6 +25,7 @@ const ShopCategorySelect = ({
   selectedShopCategories,
   setOpen,
   open,
+  onDeleteClick
 }: Props) => {
   const axios = useAxiosAuth();
 
@@ -52,13 +54,6 @@ const ShopCategorySelect = ({
     });
   };
 
-  const onDeleteClick = (category: Category) => {
-    setSelectedShopCategories((prev) => {
-      if (!prev) return [];
-
-      return prev.filter((c) => c.id !== category.id);
-    });
-  };
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -155,7 +150,7 @@ const ShopCategorySelect = ({
           {/* {isPending ? <Text size="1">Chargement...</Text> : <p></p>} */}
           <Dialog.Close>
             <Button variant="surface" color="gray">
-              Annuler
+              Fermer
             </Button>
           </Dialog.Close>
         </Flex>

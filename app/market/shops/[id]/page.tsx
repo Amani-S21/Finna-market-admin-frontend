@@ -75,6 +75,36 @@ const BuildShopsDetailPage = () => {
           </Card>
           <Card mt="4" variant="ghost">
             <Text size="2" className="text-gray-600 font-bold">
+              Id National
+            </Text>
+            <p className="mt-1">{shop?.nationalId}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="text-gray-600 font-bold">
+              RCCM
+            </Text>
+            <p className="mt-1">{shop?.rccm}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="text-gray-600 font-bold">
+              Code
+            </Text>
+            <p className="mt-1">{shop?.shopCode}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="text-gray-600 font-bold">
+              Téléphone
+            </Text>
+            <p className="mt-1">{shop?.phone}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="text-gray-600 font-bold">
+              Addrèsse mail
+            </Text>
+            <p className="mt-1">{shop?.emailAddress}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="text-gray-600 font-bold">
               Addrèsse
             </Text>
             <p className="mt-1">{shop?.address}</p>

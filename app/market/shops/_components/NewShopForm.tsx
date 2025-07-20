@@ -19,6 +19,7 @@ import ShopCategorySelect from "./ShopCategorySelect";
 import ShopExpeditionRegionsSelect from "./ShopExpeditionSelect";
 import ShopOwnerSelect from "./ShopOwnerSelect";
 import ShopTypeSelect from "./ShopTypeSelect";
+import { SelectSearchItem } from "../../products/_components";
 
 const NewShopForm = () => {
   const { data: session } = useSession();
@@ -55,13 +56,34 @@ const NewShopForm = () => {
 
   const onSubmit = async (data: NewShopSchema) => {
     try {
-      await createShop({
-        creatorId: session?.data.id,
+      const submitData = {
         ...data,
-      });
+        creatorId: session?.data.id,
+        typeId: selectedShopType?.id,
+        ownerId: `${selectedUser?.id}`,
+        categories:
+          selectedShopCategories?.map((category) => ({
+            id: category.id,
+          })) ?? [],
+        shopExpeditions: [
+          {
+            id: selectedExpedition?.id ?? "",
+          },
+        ],
+      };
+
+      await createShop(submitData);
     } catch (error: any) {
       toast.error(JSON.stringify(error));
     }
+  };
+
+  const onDeleteClick = (category: Category) => {
+    setSelectedShopCategories((prev) => {
+      if (!prev) return [];
+
+      return prev.filter((c) => c.id !== category.id);
+    });
   };
 
   useEffect(() => {
@@ -93,28 +115,28 @@ const NewShopForm = () => {
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">National Id</p>
               <TextField.Root
-                // {...register("name")}
+                {...register("nationalId")}
                 placeholder="National Id"
               />
-              <ErrorMessage>{errors.name?.message}</ErrorMessage>
+              <ErrorMessage>{errors.nationalId?.message}</ErrorMessage>
             </div>
 
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">RCCM</p>
               <TextField.Root
-                // {...register("name")}
+                {...register("rccm")}
                 placeholder="Entrer le RCCM"
               />
-              <ErrorMessage>{errors.name?.message}</ErrorMessage>
+              <ErrorMessage>{errors.rccm?.message}</ErrorMessage>
             </div>
 
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Email address</p>
               <TextField.Root
-                // {...register("name")}
+                {...register("emailAddress")}
                 placeholder="Entrer l'address mail"
               />
-              <ErrorMessage>{errors.name?.message}</ErrorMessage>
+              <ErrorMessage>{errors.emailAddress?.message}</ErrorMessage>
             </div>
 
             <div className="flex flex-col space-y-2 mt-4">
@@ -132,10 +154,10 @@ const NewShopForm = () => {
               <div className="flex flex-col space-y-2">
                 <p className="text-sm font-bold">Phone</p>
                 <TextField.Root
-                  // {...register("name")}
+                  {...register("phone")}
                   placeholder="Entrer le numero de téléphone"
                 />
-                <ErrorMessage>{errors.name?.message}</ErrorMessage>
+                <ErrorMessage>{errors.phone?.message}</ErrorMessage>
               </div>
 
               <ShopTypeSelect
@@ -164,7 +186,20 @@ const NewShopForm = () => {
               setOpen={setOpenCategoryDialog}
               selectedShopCategories={selectedShopCategories}
               setSelectedShopCategories={setSelectedShopCategories}
+              onDeleteClick={onDeleteClick}
             />
+            <Flex mt="4" gap="4" wrap="wrap">
+              {(selectedShopCategories ?? []).map((category, index) => (
+                <SelectSearchItem
+                  key={index}
+                  id={category.id}
+                  title={category.name}
+                  index={`${index}`}
+                  editable={false}
+                  onDeleteClick={() => onDeleteClick(category)}
+                />
+              ))}
+            </Flex>
           </div>
         </Flex>
 

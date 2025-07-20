@@ -17,7 +17,9 @@ export const shopsColumns: {
 }[] = [
   { label: "N" },
   { label: "Boutique" },
-  { label: "Addrèsse" },
+  { label: "Id Nat" },
+  { label: "Rccm" },
+  { label: "Code" },
   { label: "Date" },
   { label: "Action" },
 ];

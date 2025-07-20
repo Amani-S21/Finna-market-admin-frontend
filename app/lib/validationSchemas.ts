@@ -8,13 +8,12 @@ export const signinSchema = z.object({
 });
 
 export const newShopSchema = z.object({
-  name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
-  expeditionPlaceName: z
-    .string()
-    .min(1, "Veuillez saisir le lieu d'expédition"),
-  owner: z.string().min(1, "Veuillez sélectionner le propriétaire"),
+  name: z.string().min(1, "Ce champs est obligatoire"),
   address: z.string().min(1, "Veuillez saisir l'addrèsse"),
-  category: z.string().min(1, "Veuillez saisir la catégorie"),
+  nationalId: z.string(),
+  rccm: z.string(),
+  emailAddress: z.string().optional(),
+  phone: z.string().optional(),
 });
 
 export const affectShopSchema = z.object({
