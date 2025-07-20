@@ -14,6 +14,7 @@ export const newShopSchema = z.object({
     .min(1, "Veuillez saisir le lieu d'expédition"),
   owner: z.string().min(1, "Veuillez sélectionner le propriétaire"),
   address: z.string().min(1, "Veuillez saisir l'addrèsse"),
+  category: z.string().min(1, "Veuillez saisir la catégorie"),
 });
 
 export const affectShopSchema = z.object({

@@ -1,53 +1,54 @@
 "use client";
 
-import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
-import { ChevronDown, Search } from "lucide-react";
-import React, { useState } from "react";
-import { ShopType } from "../../orders/_features/types";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
-import { useSearchShopType } from "../_features/hooks";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
+import { ChevronDown, Search } from "lucide-react";
+import { useState } from "react";
+import { ShopType } from "../../orders/_features/types";
+import { useSearchExpeditionRegions } from "../_features/hooks";
+import { ExpeditionRegion } from "../_features/types";
 
 type Props = {
-  selectedShop: ShopType | undefined;
-  setSelectedType: (val: ShopType) => void;
+  selectedExpedition: ExpeditionRegion | undefined;
+  setSelectedExpeditionRegion: (val: ExpeditionRegion) => void;
   open: boolean;
   setOpen: (val: boolean) => void;
 };
 
-const ShopTypeSelect = ({
-  setSelectedType,
+const ShopExpeditionRegionsSelect = ({
+  setSelectedExpeditionRegion,
   setOpen,
   open,
-  selectedShop,
+  selectedExpedition,
 }: Props) => {
   const axios = useAxiosAuth();
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  const { data: shopTypesResponse, isLoading: isLoadingTypes } =
-    useSearchShopType({
+  const { data: shopExpeditionRegionsResponse, isLoading: isLoadingTypes } =
+    useSearchExpeditionRegions({
       axios,
       term: debouncedSearchTerm,
       enabled: !!debouncedSearchTerm,
     });
 
   const handleItemClicked = async (shopType: ShopType) => {
-    setSelectedType(shopType);
+    setSelectedExpeditionRegion(shopType);
     setOpen(false);
   };
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <div className="flex flex-col space-y-2 mt-4" onClick={() => setOpen(true)}>
-          <p className="text-sm font-bold">Type boutique</p>
+        <div className="flex flex-col space-y-2 mt-6" onClick={() => setOpen(true)}>
+          <p className="text-sm font-bold">Lieu d'expédition</p>
           <div className="relative">
             <TextField.Root
-              placeholder="Sélectionner le type"
-              value={selectedShop?.name ?? ""}
+              placeholder="Sélectionner le lieu d'expédition"
+              value={selectedExpedition?.name ?? ""}
               onChange={() => {}}
             >
               <TextField.Slot>
@@ -82,26 +83,28 @@ const ShopTypeSelect = ({
               Chargement...
             </Text>
           </div>
-        ) : (shopTypesResponse?.data ?? []).length > 0 ? (
+        ) : (shopExpeditionRegionsResponse?.data ?? []).length > 0 ? (
           <div className="min-h-[60px] mt-2">
-            {shopTypesResponse?.data?.map((shopType, index) => (
-              <div
-                className={classNames({
-                  "border-b border-gray-200":
-                    index + 1 !== shopTypesResponse?.data.length,
-                  "cursor-default hover:bg-gray-50 py-2": true,
-                })}
-                key={shopType.id}
-                onClick={() => handleItemClicked(shopType)}
-              >
-                <Flex gap="2" align="center">
-                  <Badge radius="medium" className="uppercase">
-                    {shopType.name?.substring(0, 1)}
-                  </Badge>
-                  <p>{shopType.name}</p>
-                </Flex>
-              </div>
-            ))}
+            {shopExpeditionRegionsResponse?.data?.map(
+              (expeditionRegion, index) => (
+                <div
+                  className={classNames({
+                    "border-b border-gray-200":
+                      index + 1 !== shopExpeditionRegionsResponse?.data.length,
+                    "cursor-default hover:bg-gray-50 py-2": true,
+                  })}
+                  key={expeditionRegion.id}
+                  onClick={() => handleItemClicked(expeditionRegion)}
+                >
+                  <Flex gap="2" align="center">
+                    <Badge radius="medium" className="uppercase">
+                      {expeditionRegion.name?.substring(0, 1)}
+                    </Badge>
+                    <p>{expeditionRegion.name}</p>
+                  </Flex>
+                </div>
+              )
+            )}
           </div>
         ) : (
           <div className="min-h-[60px]">
@@ -124,4 +127,4 @@ const ShopTypeSelect = ({
   );
 };
 
-export default ShopTypeSelect;
+export default ShopExpeditionRegionsSelect;

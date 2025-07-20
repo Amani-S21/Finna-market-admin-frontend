@@ -10,7 +10,7 @@ import { Button, Callout, Flex, TextArea, TextField } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useCreateShop } from "../_features/hooks";
 import { IoIosAdd } from "react-icons/io";
@@ -18,6 +18,9 @@ import { ChevronDown, ShoppingBag, Type } from "lucide-react";
 import ShopTypeSelect from "./ShopTypeSelect";
 import { ShopType } from "../../orders/_features/types";
 import ShopOwnerSelect from "./ShopOwnerSelect";
+import ShopExpeditionRegionsSelect from "./ShopExpeditionSelect";
+import { ExpeditionRegion } from "../_features/types";
+import { SearchCategoryTextField, SelectSearchItem } from "../../products/_components";
 
 const NewShopForm = () => {
   const { data: session } = useSession();
@@ -29,9 +32,16 @@ const NewShopForm = () => {
   const [selectedUser, setSelectedUser] = useState<User>();
   const [openOwnerDialog, setOpenOwnerDialog] = useState(false);
 
+  const [selectedExpedition, setSelectedExpedition] =
+    useState<ExpeditionRegion>();
+  const [openExpeditionDialog, setOpenExpeditionDialog] = useState(false);
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<NewShopSchema>({
     resolver: zodResolver(newShopSchema),
@@ -108,15 +118,6 @@ const NewShopForm = () => {
             </div>
 
             <div className="flex flex-col space-y-2 mt-4">
-              <p className="text-sm font-bold">Phone</p>
-              <TextField.Root
-                // {...register("name")}
-                placeholder="Entrer le numero de téléphone"
-              />
-              <ErrorMessage>{errors.name?.message}</ErrorMessage>
-            </div>
-
-            <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Addrèsse</p>
               <TextArea
                 {...register("address")}
@@ -128,6 +129,15 @@ const NewShopForm = () => {
           </div>
           <div className="w-full">
             <div className="flex flex-col mt-4">
+              <div className="flex flex-col space-y-2">
+                <p className="text-sm font-bold">Phone</p>
+                <TextField.Root
+                  // {...register("name")}
+                  placeholder="Entrer le numero de téléphone"
+                />
+                <ErrorMessage>{errors.name?.message}</ErrorMessage>
+              </div>
+
               <ShopTypeSelect
                 setSelectedType={setSelectedshopType}
                 selectedShop={selectedShopType}
@@ -142,22 +152,14 @@ const NewShopForm = () => {
                 setOpen={setOpenOwnerDialog}
               />
 
-              <div className="flex flex-col space-y-2 mt-6">
-                <p className="text-sm font-bold">Lieu d'expédition</p>
-                <TextField.Root
-                  {...register("expeditionPlaceName")}
-                  placeholder="Lieu d'expédition"
-                >
-                  <TextField.Slot>
-                    <ChevronDown size={15} />
-                  </TextField.Slot>
-                </TextField.Root>
-                <ErrorMessage>
-                  {errors.expeditionPlaceName?.message}
-                </ErrorMessage>
-              </div>
+              <ShopExpeditionRegionsSelect
+                setSelectedExpeditionRegion={setSelectedExpedition}
+                selectedExpedition={selectedExpedition}
+                open={openExpeditionDialog}
+                setOpen={setOpenExpeditionDialog}
+              />
             </div>
-            <div className="flex flex-col space-y-2 mt-4">
+            <div className="flex flex-col space-y-2 mt-6">
               <Flex justify="between">
                 <p className="text-sm font-bold">Catégories de la boutique</p>
                 <Flex
@@ -174,7 +176,7 @@ const NewShopForm = () => {
                 >
                   <IoIosAdd size={20} />
                   <p className="text-sm underline hover:cursor-default">
-                    Ajoutrer à la liste
+                    Réinitialiser la liste
                   </p>
                 </Flex>
               </Flex>
@@ -183,6 +185,30 @@ const NewShopForm = () => {
                 placeholder="Type de la caractéristique"
               />
             </div>
+            {(subCategories ?? []).length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-4">
+                {subCategories?.map((v, index) => (
+                  <SelectSearchItem
+                    key={v.name + index}
+                    id={v.id}
+                    title={v.name}
+                    index={`${index}`}
+                    onDeleteClick={() => {
+                      // dispatch(removeSubCategory({ category: v.name }));
+                    }}
+                    onDialogSave={(textValue) => {
+                      // dispatch(
+                      //   updateSubCategory({
+                      //     id: v.id,
+                      //     index: v.index,
+                      //     name: textValue,
+                      //   })
+                      // );
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </Flex>
 

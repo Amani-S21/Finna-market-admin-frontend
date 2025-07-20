@@ -120,3 +120,15 @@ export const searchShopType = async (
     toast.error(JSON.stringify(error));
   }
 };
+
+export const searchExpeditionRegions = async (
+  axios: AxiosInstance,
+  term: string,
+) => {
+  try {
+    const res = await axios.get(`/expedition-regions/search?term=${term}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};

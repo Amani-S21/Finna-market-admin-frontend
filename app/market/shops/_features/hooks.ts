@@ -5,9 +5,10 @@ import {
   SubmitShop,
 } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { affectShop, createShop, fetchShopById, fetchShops, searchShopType, updateShop } from "./api";
+import { affectShop, createShop, fetchShopById, fetchShops, searchExpeditionRegions, searchShopType, updateShop } from "./api";
 import { AxiosInstance } from "axios";
 import { ShopTypesResponse } from "../../orders/_features/types";
+import { ExpeditionRegionsResponse } from "./types";
 
 type UseFetchShops = {
   axios: AxiosInstance;
@@ -97,6 +98,26 @@ export const useSearchShopType = ({
   return useQuery<ShopTypesResponse>({
     queryKey: ["searched-shop-types", term],
     queryFn: () => searchShopType(axios, term),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseSearchExpeditionRegions = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchExpeditionRegions = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchExpeditionRegions) => {
+  return useQuery<ExpeditionRegionsResponse>({
+    queryKey: ["searched-expedition-regions", term],
+    queryFn: () => searchExpeditionRegions(axios, term),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

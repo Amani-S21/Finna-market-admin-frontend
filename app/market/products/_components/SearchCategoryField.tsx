@@ -32,7 +32,7 @@ const SearchCategoryTextField = ({
     isLoading,
     refetch,
   } = useQuery<Category[]>({
-    queryKey: ["shops", debouncedSearchTerm],
+    queryKey: ["search-categories", debouncedSearchTerm],
     queryFn: () =>
       axios
         .get(`/categories/search?term=${debouncedSearchTerm}`)
@@ -41,7 +41,7 @@ const SearchCategoryTextField = ({
     staleTime: 60 * 1000,
   });
 
-  // ✅ Detect clicks outside
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -91,7 +91,7 @@ const SearchCategoryTextField = ({
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => value && setIsDropdownVisible(true)}
         onBlur={onBlur}
-        placeholder="Veuillez saisir une caractéristique"
+        placeholder="Veuillez saisir une catégorie"
       />
 
       {isDropdownVisible && (
