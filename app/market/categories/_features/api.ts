@@ -72,3 +72,15 @@ export const updateCategories = async (
     throw customError;
   }
 };
+
+export const searchCategories = async (
+  axios: AxiosInstance,
+  term: string,
+) => {
+  try {
+    const res = await axios.get(`/categories/search?term=${term}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};

@@ -13,6 +13,7 @@ import {
   createCategories,
   fetchCategories,
   fetchCategoryById,
+  searchCategories,
   updateCategories,
 } from "./api";
 
@@ -77,5 +78,25 @@ export const useUpdateCategories = ({ axios }: { axios: AxiosInstance }) => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
     },
+  });
+};
+
+type UseSearchCategories = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchCategories = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchCategories) => {
+  return useQuery<CategoriesResponse>({
+    queryKey: ["searched-categories", term],
+    queryFn: () => searchCategories(axios, term),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
   });
 };

@@ -3,45 +3,45 @@
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import axios from "@/app/lib/axios";
-import { NewShopSchema, User } from "@/app/lib/types";
+import { Category, NewShopSchema, User } from "@/app/lib/types";
 import { newShopSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, Flex, TextArea, TextField } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useCreateShop } from "../_features/hooks";
-import { IoIosAdd } from "react-icons/io";
-import { ChevronDown, ShoppingBag, Type } from "lucide-react";
-import ShopTypeSelect from "./ShopTypeSelect";
 import { ShopType } from "../../orders/_features/types";
-import ShopOwnerSelect from "./ShopOwnerSelect";
-import ShopExpeditionRegionsSelect from "./ShopExpeditionSelect";
+import { useCreateShop } from "../_features/hooks";
 import { ExpeditionRegion } from "../_features/types";
-import { SearchCategoryTextField, SelectSearchItem } from "../../products/_components";
+import ShopCategorySelect from "./ShopCategorySelect";
+import ShopExpeditionRegionsSelect from "./ShopExpeditionSelect";
+import ShopOwnerSelect from "./ShopOwnerSelect";
+import ShopTypeSelect from "./ShopTypeSelect";
 
 const NewShopForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   const [selectedShopType, setSelectedshopType] = useState<ShopType>();
+
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [selectedShopCategories, setSelectedShopCategories] =
+    useState<Category[]>();
 
   const [selectedUser, setSelectedUser] = useState<User>();
   const [openOwnerDialog, setOpenOwnerDialog] = useState(false);
+  const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
 
   const [selectedExpedition, setSelectedExpedition] =
     useState<ExpeditionRegion>();
   const [openExpeditionDialog, setOpenExpeditionDialog] = useState(false);
 
-  const [selectedCategoryId, setSelectedCategoryId] = useState("");
-
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors, isSubmitting },
   } = useForm<NewShopSchema>({
     resolver: zodResolver(newShopSchema),
@@ -159,56 +159,12 @@ const NewShopForm = () => {
                 setOpen={setOpenExpeditionDialog}
               />
             </div>
-            <div className="flex flex-col space-y-2 mt-6">
-              <Flex justify="between">
-                <p className="text-sm font-bold">Catégories de la boutique</p>
-                <Flex
-                  align="center"
-                  onClick={() => {
-                    // dispatch(
-                    //   addFeatureValue({
-                    //     index: `${featureValues?.length}`,
-                    //     value: watch("type") ?? "",
-                    //   })
-                    // );
-                    // resetField("type");
-                  }}
-                >
-                  <IoIosAdd size={20} />
-                  <p className="text-sm underline hover:cursor-default">
-                    Réinitialiser la liste
-                  </p>
-                </Flex>
-              </Flex>
-              <TextField.Root
-                // {...register("type")}
-                placeholder="Type de la caractéristique"
-              />
-            </div>
-            {(subCategories ?? []).length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-4">
-                {subCategories?.map((v, index) => (
-                  <SelectSearchItem
-                    key={v.name + index}
-                    id={v.id}
-                    title={v.name}
-                    index={`${index}`}
-                    onDeleteClick={() => {
-                      // dispatch(removeSubCategory({ category: v.name }));
-                    }}
-                    onDialogSave={(textValue) => {
-                      // dispatch(
-                      //   updateSubCategory({
-                      //     id: v.id,
-                      //     index: v.index,
-                      //     name: textValue,
-                      //   })
-                      // );
-                    }}
-                  />
-                ))}
-              </div>
-            )}
+            <ShopCategorySelect
+              open={openCategoryDialog}
+              setOpen={setOpenCategoryDialog}
+              selectedShopCategories={selectedShopCategories}
+              setSelectedShopCategories={setSelectedShopCategories}
+            />
           </div>
         </Flex>
 
