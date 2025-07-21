@@ -14,6 +14,7 @@ const useRole: Record<Roles, string> = {
   DELIVERER: "livreur",
   SUPER_ADMIN: "super admin",
   SUPER_MARKET_ADMIN: "super admin super marché",
+  DELIVERER_ADMIN : "Admin livraison"
 };
 
 export default UserRoleBadge;

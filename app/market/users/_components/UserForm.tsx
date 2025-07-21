@@ -7,9 +7,14 @@ import { useUpdateUser, useUserForm } from "../_features/hooks";
 import { Controller } from "react-hook-form";
 import { Spinner } from "@/app/_components";
 import { userRoles } from "./UserRoleFilter";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const UserForm = ({ user }: { user?: User }) => {
   const axios = useAxiosAuth();
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const {
     control,
@@ -21,7 +26,18 @@ const UserForm = ({ user }: { user?: User }) => {
 
   const onSubmit = async (data: UserSchema) => {
     if (user && data.role)
-      await updateUser({ id: user?.id, role: data.role as Roles });
+      await updateUser(
+        { id: user?.id, role: data.role as Roles },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+            queryClient.invalidateQueries({ queryKey: ["users"] });
+
+            router.back();
+            toast.success("Opération effectuée avec succèes");
+          },
+        }
+      );
   };
 
   return (
@@ -58,6 +74,5 @@ const UserForm = ({ user }: { user?: User }) => {
     </form>
   );
 };
-
 
 export default UserForm;

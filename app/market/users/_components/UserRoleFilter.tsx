@@ -49,6 +49,7 @@ export const userRoles: { label: string; value: Roles | "ALL" }[] = [
   { label: "livreur", value: "DELIVERER" },
   { label: "super admin", value: "SUPER_ADMIN" },
   { label: "super marché admin", value: "SUPER_MARKET_ADMIN" },
+  { label: "Admin livraison", value: "DELIVERER_ADMIN" },
 ];
 
 export default UserRoleFilter;

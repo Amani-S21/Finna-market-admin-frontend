@@ -2,7 +2,7 @@
 
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Category } from "@/app/lib/types";
+import { CategoriesResponse, Category } from "@/app/lib/types";
 import { TextField } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
@@ -31,7 +31,7 @@ const SearchCategoryTextField = ({
     data: categories,
     isLoading,
     refetch,
-  } = useQuery<Category[]>({
+  } = useQuery<CategoriesResponse>({
     queryKey: ["search-categories", debouncedSearchTerm],
     queryFn: () =>
       axios
@@ -98,9 +98,9 @@ const SearchCategoryTextField = ({
         <div className="absolute w-full bg-white shadow mt-1 max-h-40 overflow-auto z-10">
           {isLoading ? (
             <div className="p-2">Chargement...</div>
-          ) : categories && categories.length > 0 ? (
+          ) : categories && categories.data.length > 0 ? (
             <ul>
-              {categories.map((item: Category) => (
+              {categories.data.map((item: Category) => (
                 <li
                   key={item.id}
                   onClick={() => handleSelect(item)}

@@ -64,10 +64,26 @@ export const featureSchema = z.object({
 
 export const productSchema = z.object({
   name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
-  purchasedPrice: z.string().min(1, "Veuillez saisir le prix d'achat"),
-  oldPrice: z.string().min(1, "Veuillez saisir l'ancien prix"),
-  currentPrice: z.string().min(1, "Veuillez saisir le prix courant"),
-  description: z
+  cost: z.coerce.number().min(1, "Le cout doit etre au minimum 1"),
+  price: z.coerce.number().min(1, "Le prix doit etre au minimum 1"),
+  percentage: z.coerce.number().min(1, "Le pourcentage doit etre au minimum 1"),
+  weightInGrams: z.coerce
+    .number()
+    .min(1, "Le poids en gramme doit etre au minimum 1")
+    .optional(),
+  heightInCm: z.coerce
+    .number()
+    .min(1, "La hauteur en cm doit etre au minimum 1")
+    .optional(),
+  widthInCm: z.coerce
+    .number()
+    .min(1, "La largeur en cm doit etre au minimum 1")
+    .optional(),
+  lengthInCm: z.coerce
+    .number()
+    .min(1, "La longueur en cm doit etre au minimum 1")
+    .optional(),
+  description: z.coerce
     .string()
     .min(5, "La déscription doit avoir au minimum 5 caracteres"),
   category: z.string().min(1, "Veuillez sélectionner la catégorie"),

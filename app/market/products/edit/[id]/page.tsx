@@ -31,7 +31,7 @@ const BuildEditProductPage = () => {
 
   if (error) notFound();
   return (
-    <div className="max-w-xl">
+    <div>
       <div className="mb-2">
         <BackButton />
         <div className="flex items-center space-x-4 mt-5">

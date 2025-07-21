@@ -4,12 +4,12 @@ import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { Suspense } from "react";
 import { FaUsers } from "react-icons/fa6";
 import { UserForm } from "../../_components";
 import { useFetchUser } from "../../_features/hooks";
 import LoadingEditUserPage from "./loading";
-import { useParams, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 const BuildEditUserPage = () => {
   const { status } = useSession();

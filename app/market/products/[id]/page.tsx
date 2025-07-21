@@ -123,6 +123,48 @@ const BuildProductsDetailsPage = () => {
           <ProductsFeaturesTable
             featureAffectations={product?.featuresAffectations ?? []}
           />
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Coût
+            </Text>
+            <p className="mt-1">{product?.cost}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Prix
+            </Text>
+            <p className="mt-1">{product?.price}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Poids en gramme
+            </Text>
+            <p className="mt-1">{product?.weightInGrams}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Hauteur en cm
+            </Text>
+            <p className="mt-1">{product?.heightInCm}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Largeur en cm
+            </Text>
+            <p className="mt-1">{product?.widthInCm}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Longuer en cm
+            </Text>
+            <p className="mt-1">{product?.lengthInCm}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="font-bold">
+              Pourcentage
+            </Text>
+            <p className="mt-1">{product?.percentage}</p>
+          </Card>
         </div>
         {session?.data.role !== "SUPER_ADMIN" && (
           <div>

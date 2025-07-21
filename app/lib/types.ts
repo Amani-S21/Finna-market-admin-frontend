@@ -103,7 +103,8 @@ export type Roles =
   | "SUPER_ADMIN"
   | "SUPER_MARKET_ADMIN"
   | "CUSTOMER"
-  | "DELIVERER";
+  | "DELIVERER"
+  | "DELIVERER_ADMIN";
 
 export type ProductsListResponse = {
   count: number;
@@ -114,9 +115,13 @@ export type Product = {
   id?: string;
   name: string;
   description: string;
-  oldPrice: number;
-  currentPrice: number;
-  purchasedPrice: number;
+  cost: number;
+  price: number;
+  percentage?: number;
+  weightInGrams?: number;
+  heightInCm?: number;
+  widthInCm?: number;
+  lengthInCm?: number;
   publised: boolean;
   pictures: string[];
   createdAt: string;
@@ -132,6 +137,7 @@ export type SubCategoriesResponse = {
   count: number;
   data: SubCategory[];
 };
+
 
 export type Category = {
   id: string;

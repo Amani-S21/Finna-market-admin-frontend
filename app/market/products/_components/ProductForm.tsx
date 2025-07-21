@@ -178,12 +178,26 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const onSubmit = async (data: ProductSchema) => {
     // Post product
-    const { name, purchasedPrice, oldPrice, currentPrice, description } = data;
+    const {
+      name,
+      cost,
+      price,
+      percentage,
+      description,
+      weightInGrams,
+      heightInCm,
+      widthInCm,
+      lengthInCm,
+    } = data;
     const productSubmit = {
       name,
-      purchasedPrice: Number(purchasedPrice),
-      oldPrice: Number(oldPrice),
-      currentPrice: Number(currentPrice),
+      cost,
+      price,
+      percentage,
+      weightInGrams,
+      heightInCm,
+      widthInCm,
+      lengthInCm,
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
@@ -198,6 +212,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
         })),
       })),
     };
+
     if (product) {
       try {
         await patchProductMutation(
@@ -316,222 +331,273 @@ const ProductForm = ({ product }: { product?: Product }) => {
         </Callout.Root>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Nom</p>
-          <TextField.Root
-            {...register("name")}
-            placeholder="Nom du produit"
-            defaultValue={product?.name}
-          />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Prix d'achat</p>
-          <TextField.Root
-            {...register("purchasedPrice")}
-            placeholder="Saisissez le prix d'achat"
-            defaultValue={product?.purchasedPrice}
-          />
-          <ErrorMessage>{errors.purchasedPrice?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Ancien prix de vente</p>
-          <TextField.Root
-            {...register("oldPrice")}
-            defaultValue={product?.oldPrice}
-            placeholder="Veuillez saisir l'ancien prix"
-          />
-          <ErrorMessage>{errors.oldPrice?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Prix de vente courant</p>
-          <TextField.Root
-            {...register("currentPrice")}
-            defaultValue={product?.currentPrice}
-            placeholder="Veuillez saisir le prix courant du produit"
-          />
-          <ErrorMessage>{errors.currentPrice?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Déscription</p>
-          <TextArea
-            {...register("description")}
-            defaultValue={product?.description}
-            rows={6}
-            placeholder="Veuillez saisir déscription du produit"
-          />
-          <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Publié</p>
-          <Switch
-            defaultChecked
-            onCheckedChange={(value) => {
-              setIsPublished(value);
-            }}
-          />
-        </div>
-        <Controller
-          control={control}
-          name="category"
-          render={({ field }) => (
-            <div className="flex flex-col space-y-2 mt-6">
-              <p className="text-sm font-bold">Catégorie</p>
-              <SearchCategoryTextField
-                {...field}
-                setSelectedCategoryId={setSelectedCategoryId}
+        <Flex gap="6">
+          <div className="w-full">
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Nom</p>
+              <TextField.Root
+                {...register("name")}
+                placeholder="Nom du produit"
+                defaultValue={product?.name}
               />
-
-              <ErrorMessage>{errors.category?.message}</ErrorMessage>
+              <ErrorMessage>{errors.name?.message}</ErrorMessage>
             </div>
-          )}
-        />
-        {categoriesResponse?.data && (
-          <>
-            <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
-            <div className="flex flex-wrap gap-2 mb-2">
-              {categoriesResponse?.data.map((value) => (
-                <SelectSearchItem
-                  key={value.id}
-                  isSelected={value.id === selectedSubCategory?.id}
-                  editable={false}
-                  title={value.name}
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Coût</p>
+              <TextField.Root
+                {...register("cost")}
+                type="number"
+                placeholder="Saisissez le prix d'achat"
+                defaultValue={product?.cost}
+              />
+              <ErrorMessage>{errors.cost?.message}</ErrorMessage>
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Prix</p>
+              <TextField.Root
+                {...register("price")}
+                type="number"
+                defaultValue={product?.price}
+                placeholder="Veuillez saisir l'ancien prix"
+              />
+              <ErrorMessage>{errors.price?.message}</ErrorMessage>
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Pourcentage</p>
+              <TextField.Root
+                {...register("percentage")}
+                type="number"
+                defaultValue={product?.percentage}
+                placeholder="Veuillez saisir le prix courant du produit"
+              />
+              <ErrorMessage>{errors.percentage?.message}</ErrorMessage>
+            </div>
+
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Poids en gramme</p>
+              <TextField.Root
+                {...register("weightInGrams")}
+                type="number"
+                defaultValue={product?.weightInGrams}
+                placeholder="Veuillez saisir le poids en gramme"
+              />
+              <ErrorMessage>{errors.weightInGrams?.message}</ErrorMessage>
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Hauteur en cm</p>
+              <TextField.Root
+                {...register("heightInCm")}
+                type="number"
+                defaultValue={product?.heightInCm}
+                placeholder="Veuillez saisir le prix courant du produit"
+              />
+              <ErrorMessage>{errors.heightInCm?.message}</ErrorMessage>
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Largeur en cm</p>
+              <TextField.Root
+                {...register("widthInCm")}
+                type="number"
+                defaultValue={product?.widthInCm}
+                placeholder="Veuillez saisir le prix courant du produit"
+              />
+              <ErrorMessage>{errors.widthInCm?.message}</ErrorMessage>
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Longueur en cm</p>
+              <TextField.Root
+                {...register("lengthInCm")}
+                type="number"
+                defaultValue={product?.lengthInCm}
+                placeholder="Veuillez saisir le prix courant du produit"
+              />
+              <ErrorMessage>{errors.lengthInCm?.message}</ErrorMessage>
+            </div>
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="category"
+              render={({ field }) => (
+                <div className="flex flex-col space-y-2 mt-4">
+                  <p className="text-sm font-bold">Catégorie</p>
+                  <SearchCategoryTextField
+                    {...field}
+                    setSelectedCategoryId={setSelectedCategoryId}
+                  />
+
+                  <ErrorMessage>{errors.category?.message}</ErrorMessage>
+                </div>
+              )}
+            />
+            {categoriesResponse?.data && (
+              <>
+                <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {categoriesResponse?.data.map((value) => (
+                    <SelectSearchItem
+                      key={value.id}
+                      isSelected={value.id === selectedSubCategory?.id}
+                      editable={false}
+                      title={value.name}
+                      onClick={() => {
+                        setSelectedSubCategory(value);
+                      }}
+                    />
+                  ))}
+                </div>
+                {!selectedSubCategory && (
+                  <ErrorMessage>
+                    Veuillez séléctionner une sous catégorie
+                  </ErrorMessage>
+                )}
+              </>
+            )}
+            <div className="flex flex-col mt-4">
+              <Flex
+                justify="between"
+                onClick={() => {
+                  dispatch(
+                    addFeature({
+                      featureId: `${selectedFeature?.id}`,
+                      name: `${selectedFeature?.name}`,
+                      featureValues: featureValuePrices!,
+                    })
+                  );
+
+                  // restore features values list
+                  dispatch(resetList());
+                }}
+              >
+                <p className="text-sm font-bold ">Caractéristiques</p>
+                <Flex align="center">
+                  <IoIosAdd size={20} />
+                  <p className="text-sm underline hover:cursor-default">
+                    Ajoutrer a la liste
+                  </p>
+                </Flex>
+              </Flex>
+              <Controller
+                control={control}
+                name="feature"
+                render={({ field }) => (
+                  <div className="flex flex-col space-y-2 mt-2">
+                    <SearchFeatureField
+                      {...field}
+                      value={field.value || ""}
+                      setSelectedFeature={setSelectedFeature}
+                    />
+                    <ErrorMessage>{errors.feature?.message}</ErrorMessage>
+                  </div>
+                )}
+              />
+              {selectedFeature && (
+                <>
+                  <p className="text-sm font-bold mt-4">
+                    Valeurs des caractéristiques
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-2 text-sm mb-2">
+                    {featuresByValueResponse?.data.map((feature) => (
+                      <SelectSearchItem
+                        key={feature.featureValueId}
+                        title={feature.featureValues.value}
+                        editable={true}
+                        isSelected={featurePriceExist(feature.featureValueId)}
+                        currency="Usd"
+                        onClick={(price) => {
+                          dispatch(
+                            addAndRemoveFeaturePrices({
+                              featureValueId: feature.featureValueId,
+                              name: feature.featureValues.value,
+                              price: price,
+                            })
+                          );
+                        }}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+              {features && features?.length > 0 && (
+                <FeaturesToPostTable features={features!} />
+              )}
+              {features && features?.length < 1 && (
+                <ErrorMessage>
+                  Les caractéristiques du produit sont obligatoires
+                </ErrorMessage>
+              )}
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Déscription</p>
+              <TextArea
+                {...register("description")}
+                defaultValue={product?.description}
+                rows={3}
+                placeholder="Veuillez saisir déscription du produit"
+              />
+              <ErrorMessage>{errors.description?.message}</ErrorMessage>
+            </div>
+
+            <div className="flex flex-col space-y-2 mt-4 mb-2">
+              <Flex justify="between">
+                <p className="text-sm font-bold">Photos</p>
+                <Flex
+                  align="center"
                   onClick={() => {
-                    setSelectedSubCategory(value);
+                    productImageFiles.current = [];
+                    setImage1(undefined);
+                    setImage2(undefined);
+                    setImage3(undefined);
+                  }}
+                >
+                  <CiTrash size={16} />
+                  <p className="text-sm underline hover:cursor-default">
+                    Réinitialiser
+                  </p>
+                </Flex>
+              </Flex>
+              <Flex gap="4">
+                <ProductImage
+                  image={image1!}
+                  setImage={setImage1}
+                  setFile={(fileToAdd) => {
+                    pushFileToList(0, fileToAdd);
                   }}
                 />
-              ))}
-            </div>
-            {!selectedSubCategory && (
-              <ErrorMessage>
-                Veuillez séléctionner une sous catégorie
-              </ErrorMessage>
-            )}
-          </>
-        )}
-        <div className="flex flex-col space-y-2 mt-4 mb-2">
-          <Flex justify="between">
-            <p className="text-sm font-bold">Photos</p>
-            <Flex
-              align="center"
-              onClick={() => {
-                productImageFiles.current = [];
-                setImage1(undefined);
-                setImage2(undefined);
-                setImage3(undefined);
-              }}
-            >
-              <CiTrash size={16} />
-              <p className="text-sm underline hover:cursor-default">
-                Réinitialiser
-              </p>
-            </Flex>
-          </Flex>
-          <Flex gap="4">
-            <ProductImage
-              image={image1!}
-              setImage={setImage1}
-              setFile={(fileToAdd) => {
-                pushFileToList(0, fileToAdd);
-              }}
-            />
-            <ProductImage
-              image={image2!}
-              setImage={setImage2}
-              setFile={(fileToAdd) => {
-                pushFileToList(1, fileToAdd);
-              }}
-            />
-            <ProductImage
-              image={image3!}
-              setImage={setImage3}
-              setFile={(fileToAdd) => {
-                pushFileToList(2, fileToAdd);
-              }}
-            />
-          </Flex>
-        </div>
-        {testImageSelection() === false && (
-          <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
-        )}
-        <div className="flex flex-col  mt-4">
-          <Flex
-            justify="between"
-            onClick={() => {
-              dispatch(
-                addFeature({
-                  featureId: `${selectedFeature?.id}`,
-                  name: `${selectedFeature?.name}`,
-                  featureValues: featureValuePrices!,
-                })
-              );
-
-              // restore features values list
-              dispatch(resetList());
-            }}
-          >
-            <p className="text-sm font-bold ">Caractéristiques</p>
-            <Flex align="center">
-              <IoIosAdd size={20} />
-              <p className="text-sm underline hover:cursor-default">
-                Ajoutrer a la liste
-              </p>
-            </Flex>
-          </Flex>
-          <Controller
-            control={control}
-            name="feature"
-            render={({ field }) => (
-              <div className="flex flex-col space-y-2 mt-2">
-                <SearchFeatureField
-                  {...field}
-                  value={field.value || ""}
-                  setSelectedFeature={setSelectedFeature}
+                <ProductImage
+                  image={image2!}
+                  setImage={setImage2}
+                  setFile={(fileToAdd) => {
+                    pushFileToList(1, fileToAdd);
+                  }}
                 />
-                <ErrorMessage>{errors.feature?.message}</ErrorMessage>
-              </div>
+                <ProductImage
+                  image={image3!}
+                  setImage={setImage3}
+                  setFile={(fileToAdd) => {
+                    pushFileToList(2, fileToAdd);
+                  }}
+                />
+              </Flex>
+            </div>
+            {testImageSelection() === false && (
+              <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
             )}
-          />
-          {selectedFeature && (
-            <>
-              <p className="text-sm font-bold mt-4">
-                Valeurs des caractéristiques
-              </p>
-              <div className="flex flex-wrap gap-2 mt-2 text-sm mb-2">
-                {featuresByValueResponse?.data.map((feature) => (
-                  <SelectSearchItem
-                    key={feature.featureValueId}
-                    title={feature.featureValues.value}
-                    editable={true}
-                    isSelected={featurePriceExist(feature.featureValueId)}
-                    currency="Usd"
-                    onClick={(price) => {
-                      dispatch(
-                        addAndRemoveFeaturePrices({
-                          featureValueId: feature.featureValueId,
-                          name: feature.featureValues.value,
-                          price: price,
-                        })
-                      );
-                    }}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-          {features && features?.length > 0 && (
-            <FeaturesToPostTable features={features!} />
-          )}
-          {features && features?.length < 1 && (
-            <ErrorMessage>
-              Les caractéristiques du produit sont obligatoires
-            </ErrorMessage>
-          )}
-        </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Publié</p>
+              <Switch
+                defaultChecked
+                onCheckedChange={(value) => {
+                  setIsPublished(value);
+                }}
+              />
+            </div>
+          </div>
+        </Flex>
 
         <Button
           disabled={isSubmitting || isUploading || isPendingSendingLinks}
-          mt="6"
+          mt="4"
         >
           {product ? "Modifier" : "Enregistrer"}{" "}
           {(isSubmitting || isUploading || isPendingSendingLinks) && (

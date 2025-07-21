@@ -77,13 +77,8 @@ export const useUserForm = () => {
 };
 
 export const useUpdateUser = ({ axios }: { axios: AxiosInstance }) => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (data: User) => updateUser(axios, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
+   
   });
 };
