@@ -43,7 +43,7 @@ const BuildOrderDetailsPage = () => {
       <Grid columns="3" mt="4" gapX="4">
         <div className="col-span-2">
           <Heading mb="1" className="lowercase first-letter:uppercase">
-            {formattedDate(`${order?.createdAt}`)}
+            {order?.createdAt} {/* {formattedDate(`${order?.createdAt}`)} */}
           </Heading>
           {order?.status && <OrderStatusBadge status={order?.status} />}
           <Card mt="4" mb="5">

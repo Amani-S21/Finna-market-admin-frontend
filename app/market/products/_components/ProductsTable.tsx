@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { IoIosMore } from "react-icons/io";
 import { productColumns } from "../list/loading";
-
-
+import Image from "next/image";
 
 const ProductsTable = ({
   productsResponse,
@@ -29,8 +28,19 @@ const ProductsTable = ({
       </Table.Header>
       <Table.Body>
         {productsResponse?.data.map((product, index) => (
-          <Table.Row key={product.id}>
+          <Table.Row align="center" key={product.id}>
             <Table.Cell>{index + 1}</Table.Cell>
+            <Table.Cell>
+              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-white relative">
+                <Image
+                  height={50}
+                  width={60}
+                  alt="product image"
+                  src={`https://finna-media.buy-one-store.com/v1/uploads/images/${product.pictures[0]}`}
+                  className="object-cover rounded-md"
+                />
+              </div>
+            </Table.Cell>
             <Table.Cell>{product.name}</Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
               {product.description}

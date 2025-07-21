@@ -15,8 +15,9 @@ export const productColumns: {
   label: string;
 }[] = [
   { label: "N" },
+  { label: "Photo" },
   { label: "Produit" },
-  { label: "Addrèsse" },
+  { label: "Déscription" },
   { label: "Date" },
   { label: "Action" },
 ];
