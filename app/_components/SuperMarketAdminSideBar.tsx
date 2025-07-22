@@ -8,7 +8,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineOrderedList, AiOutlineProduct } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa6";
-import { IoStorefrontOutline } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
 
 const SuperMarketAdminSideBar = () => {
@@ -63,7 +62,7 @@ const links = [
     icon: <AiOutlineProduct />,
   },
   {
-    href: "/market/users/list?page=1",
+    href: "/market/users/list?page=1&role=SUPER_MARKET_ADMIN",
     label: "Utilisateurs",
     icon: <FaUsers />,
   },

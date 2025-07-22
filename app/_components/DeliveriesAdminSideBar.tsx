@@ -62,7 +62,7 @@ const links = [
     icon: <AiOutlineOrderedList />,
   },
   {
-    href: "/market/users/list?page=1",
+    href: "/market/users/list?page=1&role=DELIVERER",
     label: "Utilisateurs",
     icon: <FaUsers />,
   },

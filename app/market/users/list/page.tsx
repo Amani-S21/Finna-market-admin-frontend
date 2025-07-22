@@ -42,7 +42,7 @@ const BuildUsersPage = () => {
 
   return (
     <Suspense fallback={<LoadingUsersPage />}>
-      <Flex direction="column" gap="4">
+      <Flex direction="column">
         <UsersToolBar userRole={currentUserRole()!} />
         {usersResponse && <UsersTable usersResponse={usersResponse} />}
         <Pagination

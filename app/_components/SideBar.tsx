@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import React from "react";
-import SuperMarketAdminSideBar from "./DeliveriesAdminSideBar";
+import SuperMarketAdminSideBar from "./SuperMarketAdminSideBar";
 import SuperAdminSideBar from "./SuperAdminSideBar";
 import { Roles } from "../lib/types";
 import DeliveriesAdminSideBar from "./DeliveriesAdminSideBar";
@@ -22,6 +22,7 @@ const SideBar = () => {
     }
   };
 
+  console.log("yala ===> " + role());
   if (role() === "SUPER_MARKET_ADMIN") {
     return <SuperMarketAdminSideBar />;
   } else if (role() === "SUPER_ADMIN") {
