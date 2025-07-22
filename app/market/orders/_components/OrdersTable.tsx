@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { GoEye } from "react-icons/go";
 import { ordersColumns } from "../list/loading";
 import OrderStatusBadge from "./OrderStatusBadge";
+import QRCode from "react-qr-code";
 
 const OrdersTable = ({
   ordersResponse,
@@ -28,10 +29,21 @@ const OrdersTable = ({
       </Table.Header>
       <Table.Body>
         {ordersResponse?.data.map((order, index) => (
-          <Table.Row key={order.id}>
+          <Table.Row align="center" key={order.id}>
             <Table.Cell>{index + 1}</Table.Cell>
+            <Table.Cell>
+              <div className="h-[60px] w-[60px] mt-4">
+                <QRCode
+                  size={256}
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                  value={`${order.code}`}
+                  viewBox={`0 0 256 256`}
+                />
+              </div>
+            </Table.Cell>
             <Table.Cell>{formattedDate(`${order.createdAt}`)}</Table.Cell>
-            <Table.Cell>{order?.customer?.fullName}</Table.Cell>
+            <Table.Cell>{order.totalAmount}</Table.Cell>
+
             <Table.Cell>
               <Badge>
                 <Text
@@ -39,7 +51,7 @@ const OrdersTable = ({
                   size="2"
                   className="lowercase first-letter:uppercase"
                 >
-                  {order.orderType.name}
+                  {order.orderType?.name}
                 </Text>
               </Badge>
             </Table.Cell>

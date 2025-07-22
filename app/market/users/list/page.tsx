@@ -6,27 +6,36 @@ import { Roles } from "@/app/lib/types";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import UsersTable from "../_components/UsersTable";
 import UsersToolBar from "../_components/UsersToolBar";
-import { useFetchUsers } from "../_features/hooks";
+import { useFetchUsers, useFetchUsersByShop } from "../_features/hooks";
 import LoadingUsersPage from "./loading";
-import { Suspense, useEffect } from "react";
 
 const BuildUsersPage = () => {
   const { status, data: session } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
+
   const page: string = searchParams.get("page") ?? "";
   const role: Roles = searchParams.get("role") as Roles;
 
-  const { data: usersResponse, isLoading } = useFetchUsers({
-    axios,
-    page,
-    role,
-    enabled: status === "authenticated",
-  });
-
   const affectations = session?.data?.shopAffectations ?? [];
+  const shopId = affectations.length > 0 ? affectations[0]?.shopId : null;
+
+  const { data: usersResponse, isLoading } = shopId
+    ? useFetchUsersByShop({
+        axios,
+        shopId,
+        page,
+        enabled: status === "authenticated",
+      })
+    : useFetchUsers({
+        axios,
+        page,
+        role,
+        enabled: status === "authenticated",
+      });
 
   const currentUserRole = () => {
     if (affectations.length > 0) {

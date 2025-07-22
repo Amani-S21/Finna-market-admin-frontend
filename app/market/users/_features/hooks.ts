@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
-import { fetchUser, fetchUsers, searchUser, updateUser } from "./api";
+import { fetchUser, fetchUsers, fetchUsersByShop, searchUser, updateUser } from "./api";
 import { searchShop } from "../../shops/_features/api";
 
 type UseSearchUser = {
@@ -84,6 +84,23 @@ export const useFetchUser = ({ axios, userId, enabled }: UseFetchUser) => {
   return useQuery<User>({
     queryKey: ["user", userId],
     queryFn: () => fetchUser(axios, userId),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseFetchUsersByShop = {
+  axios: AxiosInstance;
+  page : string,
+  enabled: boolean;
+  shopId: string;
+};
+
+export const useFetchUsersByShop = ({ axios, shopId,page, enabled }: UseFetchUsersByShop) => {
+  return useQuery<UsersResponse>({
+    queryKey: ["users-by-shop", shopId],
+    queryFn: () => fetchUsersByShop(axios, shopId, page),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

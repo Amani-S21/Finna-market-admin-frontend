@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useSession } from "next-auth/react";
@@ -10,6 +10,7 @@ import { Flex } from "@radix-ui/themes";
 import { Pagination } from "@/app/_components";
 import TaxesPriceTable from "../_components/TaxesPriceTable";
 import { TaxesToolBar } from "../_components";
+import { Roles } from "@/app/lib/types";
 
 const ShopTaxesPage = () => {
   const { status, data: session } = useSession();

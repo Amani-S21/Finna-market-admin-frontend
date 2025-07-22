@@ -5,7 +5,7 @@ import { Flex } from "@radix-ui/themes";
 const LoadingOrdersPage = () => {
   return (
     <Flex direction="column" gap="4">
-      <OrdersToolBar />
+      <OrdersToolBar  />
       <LoadingTable columns={ordersColumns} />
     </Flex>
   );
@@ -15,8 +15,9 @@ export const ordersColumns: {
   label: string;
 }[] = [
   { label: "N" },
+  { label: "Qr-code" },
   { label: "Date" },
-  { label: "Client" },
+  { label: "Prix" },
   { label: "Type" },
   { label: "Status" },
   { label: "Action" },

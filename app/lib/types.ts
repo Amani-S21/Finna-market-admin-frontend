@@ -128,7 +128,7 @@ export type Product = {
   updatedAt: string;
   userId: string;
   subCategoryId: string;
-  shop : Shop;
+  shop: Shop;
   user?: User;
   subCategory: SubCategory;
   featuresAffectations: FeatureAffectation[];
@@ -297,19 +297,22 @@ export type TaxeSubmit = {
 
 export type OrdersResponse = {
   count: number;
+  totalAmountInFrancs?: number;
   data: Order[];
 };
 
 export type Order = {
   id: string;
+  totalAmount? : string;
   status?: Status;
   createdAt?: string;
   updatedAt?: string;
   customerId?: string;
+  code?: string;
   delivererId?: string;
   customer?: User;
   deliverer?: User;
-  orderType: {
+  orderType?: {
     id: string;
     name: string;
     createdAt: string;
@@ -324,6 +327,7 @@ export type OrderDetail = {
   id: string;
   quantity: number;
   orderId: string;
+  code: string;
   productId: string;
   createdAt: string;
   updatedAt: string;

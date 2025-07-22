@@ -22,7 +22,6 @@ const SideBar = () => {
     }
   };
 
-  console.log("yala ===> " + role());
   if (role() === "SUPER_MARKET_ADMIN") {
     return <SuperMarketAdminSideBar />;
   } else if (role() === "SUPER_ADMIN") {

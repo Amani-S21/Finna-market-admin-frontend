@@ -42,6 +42,21 @@ export const fetchUser = async (axios: AxiosInstance, userId: string) => {
   }
 };
 
+export const fetchUsersByShop = async (
+  axios: AxiosInstance,
+  shopId: string,
+  page: string
+) => {
+  try {
+    const res = await axios.get(
+      `/users/by-shop/${shopId}?page=${page}&limit=10`
+    );
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
 export const updateUser = async (axios: AxiosInstance, data: User) => {
   try {
     const res = await axios.patch(`/users`, data);

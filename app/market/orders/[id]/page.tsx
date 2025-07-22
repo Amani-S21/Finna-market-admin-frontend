@@ -14,16 +14,28 @@ import {
 } from "../_components";
 import { useFetchOrderById } from "../_features/hooks";
 import LoadingOrderDetailsPage from "./loading";
-import { Status } from "@/app/lib/types";
+import { Roles, Status } from "@/app/lib/types";
 import { formattedDate } from "@/app/lib/tools";
 import { TbInfoSmall } from "react-icons/tb";
 import { Info } from "lucide-react";
 
 const BuildOrderDetailsPage = () => {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const axios = useAxiosAuth();
   const params = useParams<{ id: string }>();
   const id = params.id ?? "";
+
+  const affectations = session?.data?.shopAffectations ?? [];
+
+  const role = () => {
+    if (affectations.length > 0) {
+      if (affectations && affectations.length > 0) {
+        return affectations[0].role as Roles;
+      }
+    } else {
+      return session?.data.role as Roles;
+    }
+  };
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -130,27 +142,30 @@ const BuildOrderDetailsPage = () => {
             </>
           )}
         </div>
-        <div>
-          <DelivererSelect
-            open={openDialog}
-            setOpen={setOpenDialog}
-            orderId={`${ordersResponse?.data?.id}`}
-          />
-          {ordersResponse?.data?.deliverer ? (
-            <Flex align="center" gap="4" mt="2">
-              <Info color="green" />
-              <Text as="p" size="2" mt="2" mr="2">
-                Vous pouvez modifier le livreur séléctionné en cliquant sur ce
-                bouton si haut
-              </Text>
-            </Flex>
-          ) : (
-            <Text color="red" as="p" size="2" mt="2" mr="2">
-              Aucun livreur assigné à cette commande, veuillez cliquer sur le
-              bouton en haut pour en séléctioner un
-            </Text>
-          )}
-        </div>
+        {role() === "DELIVERER_ADMIN" ||
+          (role() === "SUPER_ADMIN" && (
+            <div>
+              <DelivererSelect
+                open={openDialog}
+                setOpen={setOpenDialog}
+                orderId={`${ordersResponse?.data?.id}`}
+              />
+              {ordersResponse?.data?.deliverer ? (
+                <Flex align="center" gap="4" mt="2">
+                  <Info color="green" />
+                  <Text as="p" size="2" mt="2" mr="2">
+                    Vous pouvez modifier le livreur séléctionné en cliquant sur
+                    ce bouton si haut
+                  </Text>
+                </Flex>
+              ) : (
+                <Text color="red" as="p" size="2" mt="2" mr="2">
+                  Aucun livreur assigné à cette commande, veuillez cliquer sur
+                  le bouton en haut pour en séléctioner un
+                </Text>
+              )}
+            </div>
+          ))}
       </Grid>
     </>
   );

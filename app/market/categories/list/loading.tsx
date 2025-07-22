@@ -17,7 +17,7 @@ export const categoriesColumns: {
   { label: "N" },
   { label: "Catégories" },
   { label: "Date" },
-  { label: "Valeurs" },
+  { label: "Sous catégorie" },
   { label: "Action" },
 ];
 

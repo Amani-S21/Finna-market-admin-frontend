@@ -36,7 +36,7 @@ const BuildOrdersPage = () => {
 
   return (
     <Flex direction="column">
-      <OrdersToolBar />
+      {ordersResponse && <OrdersToolBar order={ordersResponse} />}
       {ordersResponse && <OrdersTable ordersResponse={ordersResponse} />}
       <Pagination
         pageSize={10}
