@@ -1,14 +1,14 @@
-import { Roles, User, UserSchema, UsersResponse } from "@/app/lib/types";
+import { Roles, Shop, User, UserSchema, UsersResponse } from "@/app/lib/types";
 import { userSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useMutation,
-  useQuery,
-  useQueryClient
+  useQuery
 } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import { fetchUser, fetchUsers, searchUser, updateUser } from "./api";
+import { searchShop } from "../../shops/_features/api";
 
 type UseSearchUser = {
   axios: AxiosInstance;
@@ -26,6 +26,26 @@ export const useSearchUser = ({
   return useQuery<User[]>({
     queryKey: ["searched-users", term, role],
     queryFn: () => searchUser(axios, term, role),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseSearchShop = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchShop = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchShop) => {
+  return useQuery<Shop[]>({
+    queryKey: ["searched-shops", term],
+    queryFn: () => searchShop(axios, term),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

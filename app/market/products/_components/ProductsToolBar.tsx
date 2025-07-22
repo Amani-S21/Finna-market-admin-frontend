@@ -17,7 +17,16 @@ const ProductsToolBar = ({ role }: { role?: Roles }) => {
         </Text>
       </div>
 
-      {role && role !== "SUPER_ADMIN" && (
+      <Flex gap="4" align="center">
+        <Search size={16} />
+        <Link href="/market/products/new">
+          <Button>
+            <span className="text-xs">Nouveau produit</span>
+          </Button>
+        </Link>
+      </Flex>
+
+      {/* {role && role !== "SUPER_ADMIN" && (
         <Flex gap="4" align="center">
           <Search size={16} />
           <Link href="/market/products/new">
@@ -26,7 +35,7 @@ const ProductsToolBar = ({ role }: { role?: Roles }) => {
             </Button>
           </Link>
         </Flex>
-      )}
+      )} */}
     </Flex>
   );
 };

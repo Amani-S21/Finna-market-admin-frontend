@@ -60,7 +60,12 @@ const links = [
     href: "/market/orders/list?page=1",
     label: "Commandes",
     icon: <AiOutlineOrderedList />,
-  }
+  },
+  {
+    href: "/market/users/list?page=1",
+    label: "Utilisateurs",
+    icon: <FaUsers />,
+  },
 ];
 
 export default DeliveriesAdminSideBar;

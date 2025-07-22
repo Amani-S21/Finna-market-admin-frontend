@@ -16,6 +16,8 @@ import { useFetchOrderById } from "../_features/hooks";
 import LoadingOrderDetailsPage from "./loading";
 import { Status } from "@/app/lib/types";
 import { formattedDate } from "@/app/lib/tools";
+import { TbInfoSmall } from "react-icons/tb";
+import { Info } from "lucide-react";
 
 const BuildOrderDetailsPage = () => {
   const { status } = useSession();
@@ -106,18 +108,18 @@ const BuildOrderDetailsPage = () => {
 
           {ordersResponse?.data?.deliverer && (
             <>
-              <Text as="p" size="2" mt="5" className="font-bold mt-4">
+              <Text as="p" size="2" mt="6" className="font-bold mt-4">
                 Livreur
               </Text>
               <Text as="p" size="2" mt="1" mr="2">
                 Agent résponsable de la livraison
               </Text>
               <Flex mt="3" gap="2" align="center">
-                <Badge radius="large" className="uppercase">
-                  <p className="p-4">
+                <div className="h-[60px] w-[60px] bg- flex justify-center items-center rounded-full bg-blue-400">
+                  <p className="text-xl text-white">
                     {ordersResponse?.data?.deliverer?.fullName?.substring(0, 1)}
                   </p>
-                </Badge>
+                </div>
                 <Flex direction="column">
                   <Text>{ordersResponse?.data?.deliverer?.fullName}</Text>
                   <Text size="1" className="font-bold text-gray-600">
@@ -135,10 +137,13 @@ const BuildOrderDetailsPage = () => {
             orderId={`${ordersResponse?.data?.id}`}
           />
           {ordersResponse?.data?.deliverer ? (
-            <Text as="p" size="2" mt="2" mr="2">
-              Vous pouvez modifier le livreur séléctionné en cliquant sur ce
-              bouton si haut
-            </Text>
+            <Flex align="center" gap="4" mt="2">
+              <Info color="green" />
+              <Text as="p" size="2" mt="2" mr="2">
+                Vous pouvez modifier le livreur séléctionné en cliquant sur ce
+                bouton si haut
+              </Text>
+            </Flex>
           ) : (
             <Text color="red" as="p" size="2" mt="2" mr="2">
               Aucun livreur assigné à cette commande, veuillez cliquer sur le

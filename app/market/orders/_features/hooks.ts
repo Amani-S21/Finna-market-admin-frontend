@@ -8,7 +8,7 @@ import {
   fetchRecentOrders,
   updateOrder,
 } from "./api";
-import { OrderResponse } from "./types";
+import { OrderResponse, UpdateOrderSubmit } from "./types";
 
 type UseFetchOrders = {
   axios: AxiosInstance;
@@ -60,7 +60,7 @@ export const useUpdateOrder = ({ axios }: UseUpdateOrder) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: Order) => updateOrder(axios, data),
+    mutationFn: (data: UpdateOrderSubmit) => updateOrder(axios, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["order-by-id"] });

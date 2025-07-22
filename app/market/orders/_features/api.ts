@@ -1,6 +1,7 @@
 import { Order, Status } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
+import { UpdateOrderSubmit } from "./types";
 
 export const fetchOrders = async (
   axios: AxiosInstance,
@@ -27,7 +28,7 @@ export const fetchOrderById = async (axios: AxiosInstance, orderId: string) => {
   }
 };
 
-export const updateOrder = async (axios: AxiosInstance, data: Order) => {
+export const updateOrder = async (axios: AxiosInstance, data: UpdateOrderSubmit) => {
   try {
     const res = await axios.put(`/orders`, data);
     return res.data;

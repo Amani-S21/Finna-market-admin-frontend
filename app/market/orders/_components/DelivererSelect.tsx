@@ -24,7 +24,7 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
   const { data: searchedUsers, isLoading: isLoadingUsers } = useSearchUser({
     axios,
     term: debouncedSearchTerm,
-    role: "CUSTOMER",
+    role: "DELIVERER",
     enabled: !!debouncedSearchTerm,
   });
 

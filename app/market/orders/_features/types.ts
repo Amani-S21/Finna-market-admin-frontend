@@ -45,3 +45,8 @@ export type OrderResponse = {
     ordersDetails: OrderDetail[];
   };
 };
+
+export type UpdateOrderSubmit = {
+  id: string;
+  delivererId: string;
+};

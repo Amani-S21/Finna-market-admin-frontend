@@ -2,7 +2,13 @@
 
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Feature, Product, ProductSchema, SubCategory } from "@/app/lib/types";
+import {
+  Feature,
+  Product,
+  ProductSchema,
+  Shop,
+  SubCategory,
+} from "@/app/lib/types";
 import {
   addAndRemoveFeaturePrices,
   addFeature,
@@ -45,6 +51,7 @@ import { useFetchFeaturesByValue } from "../../features/_features/hooks";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
 import { AxiosInstance } from "axios";
 import { uploadUrl } from "../_features/api";
+import ShopProductSelect from "./ShopProductSelect";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
@@ -61,6 +68,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
   // Product images urls
   const productImageUrls = useRef<string[]>([]);
   const productImageFiles = useRef<File[]>([]);
+
+  const [selectedShop, setSelectedShop] = useState<Shop>();
+  const [openDialog, setOpenDialog] = useState(false);
 
   // Images
   const [image1, setImage1] = useState<string | undefined>();
@@ -175,6 +185,10 @@ const ProductForm = ({ product }: { product?: Product }) => {
     isSuccess: sendProductLinksSuccess,
     isPending: isPendingSendingLinks,
   } = useSendProductsLinks({ axios });
+
+  const selectedShopToBePost = ()=> {
+    
+  }
 
   const onSubmit = async (data: ProductSchema) => {
     // Post product
@@ -527,6 +541,13 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 </ErrorMessage>
               )}
             </div>
+            <ShopProductSelect
+              setSelectedShop={setSelectedShop}
+              selectedShop={selectedShop}
+              open={openDialog}
+              setOpen={setOpenDialog}
+            />
+
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Déscription</p>
               <TextArea
