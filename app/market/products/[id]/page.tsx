@@ -166,13 +166,11 @@ const BuildProductsDetailsPage = () => {
             <p className="mt-1">{product?.percentage}</p>
           </Card>
         </div>
-        {session?.data.role !== "SUPER_ADMIN" && (
-          <div>
-            <Link href={`/market/products/edit/${product?.id}`}>
-              <Button>Modifier</Button>
-            </Link>
-          </div>
-        )}
+        <div>
+          <Link href={`/market/products/edit/${product?.id}`}>
+            <Button>Modifier</Button>
+          </Link>
+        </div>
       </Grid>
     </>
   );

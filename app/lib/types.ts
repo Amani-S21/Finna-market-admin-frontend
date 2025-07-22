@@ -128,6 +128,7 @@ export type Product = {
   updatedAt: string;
   userId: string;
   subCategoryId: string;
+  shop : Shop;
   user?: User;
   subCategory: SubCategory;
   featuresAffectations: FeatureAffectation[];

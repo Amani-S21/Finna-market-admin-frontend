@@ -125,6 +125,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       // Category relating
       setSelectedCategoryId(`${product?.subCategory?.category?.id}`);
       setSelectedSubCategory(product.subCategory);
+      setSelectedShop(product.shop);
 
       // Images
       productImageUrls.current = [];
@@ -336,7 +337,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
   }, [
     queryClient,
     sendProductLinksSuccess,
-    ,
     isCreateSuccess,
     createdProductData,
     router,
@@ -560,12 +560,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 </ErrorMessage>
               )}
             </div>
-            <ShopProductSelect
-              setSelectedShop={setSelectedShop}
-              selectedShop={selectedShop}
-              open={openDialog}
-              setOpen={setOpenDialog}
-            />
+            {role() === "SUPER_ADMIN" && (
+              <ShopProductSelect
+                setSelectedShop={setSelectedShop}
+                selectedShop={selectedShop}
+                open={openDialog}
+                setOpen={setOpenDialog}
+              />
+            )}
 
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Déscription</p>
