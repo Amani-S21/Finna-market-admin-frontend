@@ -6,6 +6,7 @@ import {
   Feature,
   Product,
   ProductSchema,
+  Roles,
   Shop,
   SubCategory,
 } from "@/app/lib/types";
@@ -84,7 +85,28 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const [selectedSubCategory, setSelectedSubCategory] = useState<
     SubCategory | undefined
   >();
+
   const dispatch = useDispatch();
+
+  const affectations = session?.data?.shopAffectations ?? [];
+  const role = () => {
+    if (affectations.length > 0) {
+      if (affectations && affectations.length > 0) {
+        return affectations[0].role as Roles;
+      }
+    } else {
+      return session?.data.role as Roles;
+    }
+  };
+
+  const shopIdToBePost = () => {
+    if (role() === "SUPER_MARKET_ADMIN") {
+      return session?.data.shopAffectations[0].shopId;
+    } else if (role() === "SUPER_ADMIN") {
+      return selectedShop?.id;
+    }
+  };
+
   const {
     register,
     control,
@@ -186,10 +208,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
     isPending: isPendingSendingLinks,
   } = useSendProductsLinks({ axios });
 
-  const selectedShopToBePost = ()=> {
-    
-  }
-
   const onSubmit = async (data: ProductSchema) => {
     // Post product
     const {
@@ -215,7 +233,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
-      shopId: session?.data.shopAffectations[0].shopId,
+      shopId: shopIdToBePost(),
+      // shopId: session?.data.shopAffectations[0].shopId,
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
       features: (features ?? []).map((feature) => ({
