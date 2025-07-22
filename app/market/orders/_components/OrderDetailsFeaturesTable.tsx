@@ -17,7 +17,7 @@ const OrderDetailsFeaturesTable = ({
         return (sum += 0);
       }
     }, 0);
-    return total + orderDetail.product.currentPrice;
+    return total + orderDetail.product.price;
   };
 
   return (
@@ -60,7 +60,7 @@ const OrderDetailsFeaturesTable = ({
               </div>
             </Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
-              {`${orderDetail.product.currentPrice}`}
+              {`${orderDetail.product.price}`}
             </Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
               {totalOrderFeaturesPrice(orderDetail) * orderDetail.quantity}

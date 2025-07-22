@@ -1,7 +1,15 @@
 // "use client";
 
 import { Order } from "@/app/lib/types";
-import { Card, Flex, Heading, IconButton, Table, Text } from "@radix-ui/themes";
+import {
+  Badge,
+  Card,
+  Flex,
+  Heading,
+  IconButton,
+  Table,
+  Text,
+} from "@radix-ui/themes";
 
 import React from "react";
 import { OrderStatusBadge } from "../../orders/_components";
@@ -32,7 +40,17 @@ const RecentOrders = ({ orders }: { orders: Order[] }) => {
               <Table.Row key={order.id}>
                 <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>{order?.customer?.fullName}</Table.Cell>
-                <Table.Cell>{order?.deliverer?.fullName ?? "-"}</Table.Cell>
+                <Table.Cell>
+                  <Badge>
+                    <Text
+                      as="p"
+                      size="2"
+                      className="lowercase first-letter:uppercase"
+                    >
+                      {order.orderType.name}
+                    </Text>
+                  </Badge>
+                </Table.Cell>
                 <Table.Cell className="truncate max-w-[300px]">
                   {order.status && <OrderStatusBadge status={order.status} />}
                 </Table.Cell>
@@ -59,7 +77,7 @@ export const recentOrdersColumns: {
 }[] = [
   { label: "N" },
   { label: "Client" },
-  { label: "Livreur" },
+  { label: "Type" },
   { label: "Status" },
   { label: "Action" },
 ];

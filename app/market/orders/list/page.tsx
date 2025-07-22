@@ -6,7 +6,7 @@ import { Status } from "@/app/lib/types";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import {  OrdersToolBar } from "../_components";
+import { OrdersToolBar } from "../_components";
 import { useFetchOrders } from "../_features/hooks";
 import LoadingOrdersPage from "./loading";
 import { Suspense } from "react";
@@ -35,7 +35,7 @@ const BuildOrdersPage = () => {
   if (error) return;
 
   return (
-    <Flex direction="column" gap="4">
+    <Flex direction="column">
       <OrdersToolBar />
       {ordersResponse && <OrdersTable ordersResponse={ordersResponse} />}
       <Pagination
@@ -47,7 +47,6 @@ const BuildOrdersPage = () => {
     </Flex>
   );
 };
-
 
 const OrdersPage = () => {
   return (

@@ -2,7 +2,7 @@
 
 import { formattedDate } from "@/app/lib/tools";
 import { OrdersResponse } from "@/app/lib/types";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Badge, IconButton, Table, Text } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { GoEye } from "react-icons/go";
 import { ordersColumns } from "../list/loading";
@@ -16,7 +16,7 @@ const OrdersTable = ({
   const router = useRouter();
 
   return (
-    <Table.Root variant="surface">
+    <Table.Root mt="6" mb="4" variant="surface">
       <Table.Header>
         <Table.Row>
           {ordersColumns.map((column) => (
@@ -33,7 +33,15 @@ const OrdersTable = ({
             <Table.Cell>{formattedDate(`${order.createdAt}`)}</Table.Cell>
             <Table.Cell>{order?.customer?.fullName}</Table.Cell>
             <Table.Cell>
-              {order?.deliverer?.fullName ?? "-"}
+              <Badge>
+                <Text
+                  as="p"
+                  size="2"
+                  className="lowercase first-letter:uppercase"
+                >
+                  {order.orderType.name}
+                </Text>
+              </Badge>
             </Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
               {order.status && <OrderStatusBadge status={order.status} />}

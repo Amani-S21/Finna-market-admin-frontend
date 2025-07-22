@@ -2,11 +2,11 @@
 
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { formattedDate } from "@/app/lib/tools";
 import { Badge, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import QRCode from "react-qr-code";
 import {
   DelivererSelect,
   OrderDetailsFeaturesTable,
@@ -14,6 +14,8 @@ import {
 } from "../_components";
 import { useFetchOrderById } from "../_features/hooks";
 import LoadingOrderDetailsPage from "./loading";
+import { Status } from "@/app/lib/types";
+import { formattedDate } from "@/app/lib/tools";
 
 const BuildOrderDetailsPage = () => {
   const { status } = useSession();
@@ -24,7 +26,7 @@ const BuildOrderDetailsPage = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const {
-    data: order,
+    data: ordersResponse,
     isLoading,
     error,
   } = useFetchOrderById({
@@ -43,21 +45,30 @@ const BuildOrderDetailsPage = () => {
       <Grid columns="3" mt="4" gapX="4">
         <div className="col-span-2">
           <Heading mb="1" className="lowercase first-letter:uppercase">
-            {order?.createdAt} {/* {formattedDate(`${order?.createdAt}`)} */}
+            {formattedDate(`${ordersResponse?.data?.createdAt}`)}
           </Heading>
-          {order?.status && <OrderStatusBadge status={order?.status} />}
+          <Flex gap="2" mt="4" mb="5">
+            {ordersResponse?.data?.status && (
+              <OrderStatusBadge
+                status={ordersResponse?.data?.status as Status}
+              />
+            )}
+            <Badge>
+              <Text size="2">{ordersResponse?.data.orderType.name}</Text>
+            </Badge>
+          </Flex>
           <Card mt="4" mb="5">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${order?.customer?.fullName?.substring(
+              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${ordersResponse?.data?.customer?.fullName?.substring(
                 0,
                 1
               )}`}</div>
               <Flex direction="column">
                 <p className="lowercase first-letter:uppercase">
-                  {order?.customer?.fullName}
+                  {ordersResponse?.data?.customer?.fullName}
                 </p>
                 <p className="text-sm font-bold text-gray-600">
-                  {order?.customer?.phone}
+                  {ordersResponse?.data?.customer?.phone}
                 </p>
               </Flex>
             </Flex>
@@ -69,10 +80,31 @@ const BuildOrderDetailsPage = () => {
             Tous les produits commandés par l'utilisateurs avec toutes les
             caractéristiques séléctionnées
           </Text>
-          {order?.ordersDetails && (
-            <OrderDetailsFeaturesTable orderDetails={order?.ordersDetails} />
+          {ordersResponse?.data?.ordersDetails && (
+            <OrderDetailsFeaturesTable
+              orderDetails={ordersResponse?.data?.ordersDetails}
+            />
           )}
-          {order?.deliverer && (
+          <Flex mt="5" gap="4" align="start">
+            <div className="h-[150px] w-[150px] mt-4">
+              <QRCode
+                size={256}
+                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                value={`${ordersResponse?.data.code}`}
+                viewBox={`0 0 256 256`}
+              />
+            </div>
+            <div>
+              <Text mt="6" as="p" size="2" className="font-bold">
+                Code commande
+              </Text>
+              <Text as="p" size="6" mt="1" mr="2">
+                {ordersResponse?.data.code}
+              </Text>
+            </div>
+          </Flex>
+
+          {ordersResponse?.data?.deliverer && (
             <>
               <Text as="p" size="2" mt="5" className="font-bold mt-4">
                 Livreur
@@ -83,13 +115,13 @@ const BuildOrderDetailsPage = () => {
               <Flex mt="3" gap="2" align="center">
                 <Badge radius="large" className="uppercase">
                   <p className="p-4">
-                    {order?.deliverer?.fullName?.substring(0, 1)}
+                    {ordersResponse?.data?.deliverer?.fullName?.substring(0, 1)}
                   </p>
                 </Badge>
                 <Flex direction="column">
-                  <Text>{order?.deliverer?.fullName}</Text>
+                  <Text>{ordersResponse?.data?.deliverer?.fullName}</Text>
                   <Text size="1" className="font-bold text-gray-600">
-                    {order?.deliverer?.phone}
+                    {ordersResponse?.data?.deliverer?.phone}
                   </Text>
                 </Flex>
               </Flex>
@@ -100,9 +132,9 @@ const BuildOrderDetailsPage = () => {
           <DelivererSelect
             open={openDialog}
             setOpen={setOpenDialog}
-            orderId={`${order?.id}`}
+            orderId={`${ordersResponse?.data?.id}`}
           />
-          {order?.deliverer ? (
+          {ordersResponse?.data?.deliverer ? (
             <Text as="p" size="2" mt="2" mr="2">
               Vous pouvez modifier le livreur séléctionné en cliquant sur ce
               bouton si haut

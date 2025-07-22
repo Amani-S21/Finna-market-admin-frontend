@@ -17,17 +17,9 @@ export const ordersColumns: {
   { label: "N" },
   { label: "Date" },
   { label: "Client" },
-  { label: "Livreur" },
+  { label: "Type" },
   { label: "Status" },
   { label: "Action" },
 ];
 
 export default LoadingOrdersPage;
-
-// import React from "react";
-
-// const LoadingOrdersPage = () => {
-//   return <div>loading...</div>;
-// };
-
-// export default LoadingOrdersPage;

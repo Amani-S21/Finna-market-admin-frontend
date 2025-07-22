@@ -138,7 +138,6 @@ export type SubCategoriesResponse = {
   data: SubCategory[];
 };
 
-
 export type Category = {
   id: string;
   name: string;
@@ -309,6 +308,12 @@ export type Order = {
   delivererId?: string;
   customer?: User;
   deliverer?: User;
+  orderType: {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
   ordersDetails?: OrderDetail[];
 };
 
@@ -319,10 +324,72 @@ export type OrderDetail = {
   quantity: number;
   orderId: string;
   productId: string;
-  createdAt?: string;
-  updatedAt?: string;
-  product: Product;
-  orderDetailFeatures: OrderDetailFeatures[];
+  createdAt: string;
+  updatedAt: string;
+  product: {
+    id: string;
+    name: string;
+    description: string;
+    cost: number;
+    price: number;
+    weightInGrams: number;
+    heightInCm: number;
+    widthInCm: number;
+    lengthInCm: number;
+    percentage: number;
+    published: boolean;
+    pictures: string[];
+    createdAt: string;
+    updatedAt: string;
+    userId: string;
+    subCategoryId: string;
+    shopId: string;
+    featuresAffectations: {
+      featureId: string;
+      createdAt: string;
+      updatedAt: string;
+      productId: string;
+      featuresAffectationsHasValues: {
+        price: number;
+        featureAffectationProductId: string;
+        featureAffectationFeatureId: string;
+        featureValueId: string;
+        createdAt: string;
+        updatedAt: string;
+        featureValue: {
+          id: string;
+          value: string;
+          createdAt: string;
+          updatedAt: string;
+        };
+      }[];
+    }[];
+  };
+  orderDetailFeatures: {
+    orderDetailId: string;
+    featureId: string;
+    featureValueId: string;
+    features: {
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    featureValue: {
+      id: string;
+      value: string;
+      createdAt: string;
+      updatedAt: string;
+      featuresAffectationsHasValues: {
+        price: number;
+        featureAffectationProductId: string;
+        featureAffectationFeatureId: string;
+        featureValueId: string;
+        createdAt: string;
+        updatedAt: string;
+      }[];
+    };
+  }[];
 };
 
 export type OrderDetailFeatures = {

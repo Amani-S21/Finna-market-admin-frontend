@@ -8,6 +8,7 @@ import {
   fetchRecentOrders,
   updateOrder,
 } from "./api";
+import { OrderResponse } from "./types";
 
 type UseFetchOrders = {
   axios: AxiosInstance;
@@ -42,7 +43,7 @@ export const useFetchOrderById = ({
   orderId,
   enabled,
 }: UseFetchOrderById) => {
-  return useQuery<Order>({
+  return useQuery<OrderResponse>({
     queryKey: ["order-by-id", orderId],
     queryFn: () => fetchOrderById(axios, orderId),
     staleTime: 60 * 1000 * 5,

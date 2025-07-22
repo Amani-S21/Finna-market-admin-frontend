@@ -1,5 +1,5 @@
 import { Status } from "@/app/lib/types";
-import { Badge } from "@radix-ui/themes";
+import { Badge, Text } from "@radix-ui/themes";
 
 const statusMap: Record<
   Status,
@@ -13,7 +13,9 @@ const statusMap: Record<
 
 const OrderStatusBadge = ({ status }: { status: Status }) => {
   return (
-    <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
+    <Badge color={statusMap[status].color}>
+      <Text size="2">{statusMap[status].label}</Text>
+    </Badge>
   );
 };
 

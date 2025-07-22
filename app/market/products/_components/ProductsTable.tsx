@@ -16,7 +16,7 @@ const ProductsTable = ({
 }) => {
   const router = useRouter();
   return (
-    <Table.Root variant="surface">
+    <Table.Root mt="6" mb="4" variant="surface">
       <Table.Header>
         <Table.Row>
           {productColumns.map((column) => (

@@ -11,7 +11,9 @@ const NavBar = () => {
       <Link href="/profile/details" className="flex gap-4 items-center ml-auto">
         <div className="flex gap-4 items-center ml-auto">
           <div className="text-right text-sm">
-            <span className="lowercase">{session?.data.fullName}</span>
+            <p className="lowercase first-letter:uppercase">
+              {session?.data.fullName}
+            </p>
             <p className="font-bold">{session?.data.phone}</p>
           </div>
           <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">

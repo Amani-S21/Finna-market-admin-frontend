@@ -39,7 +39,7 @@ const BuildProductsPage = () => {
   if (error) return;
 
   return (
-    <Flex direction="column" gap="4">
+    <Flex direction="column">
       <ProductsToolBar role={`${session?.data.role}` as Roles} />
       {productsResponse && (
         <ProductsTable productsResponse={productsResponse} />
