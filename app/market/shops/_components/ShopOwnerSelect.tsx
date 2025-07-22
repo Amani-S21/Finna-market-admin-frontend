@@ -2,13 +2,12 @@
 
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { User } from "@/app/lib/types";
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
 import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
-import { ShopType } from "../../orders/_features/types";
 import { useSearchUser } from "../../users/_features/hooks";
-import { User } from "@/app/lib/types";
 
 type Props = {
   selectedUser: User | undefined;

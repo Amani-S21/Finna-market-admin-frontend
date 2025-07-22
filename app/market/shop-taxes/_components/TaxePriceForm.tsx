@@ -3,7 +3,6 @@
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { CategorySchema, Taxe } from "@/app/lib/types";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -38,7 +37,7 @@ const TaxePriceForm = ({ taxe, shopId }: { taxe?: TaxePriceData, shopId : string
     error: updateError,
   } = useUpdateShopTaxes({ axios });
 
-  const onSubmit = async (data: CategorySchema) => {
+  const onSubmit = async () => {
     if (taxe) {
       try {
         await updateTaxe(

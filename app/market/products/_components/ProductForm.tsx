@@ -101,7 +101,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const shopIdToBePost = () => {
     if (role() === "SUPER_MARKET_ADMIN") {
-      return session?.data.shopAffectations[0].shopId;
+      return session?.data.shopAffectations[0].shop.id;
     } else if (role() === "SUPER_ADMIN") {
       return selectedShop?.id;
     }

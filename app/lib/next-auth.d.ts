@@ -1,5 +1,3 @@
-import { boolean } from "zod";
-
 declare module "next-auth" {
   interface Session {
     data: {
@@ -9,10 +7,16 @@ declare module "next-auth" {
       role: string;
       emailAddress: string;
       shopAffectations: {
-        role: string;
-        userId: string;
         shopId: string;
-        isActive: boolean;
+        role: string;
+        shop: {
+          id: string;
+          name: string;
+          address: string;
+          creatorId: string;
+          createdAt: string;
+          updatedAt: string;
+        };
       }[];
     };
     accessToken: string;
@@ -29,6 +33,7 @@ declare module "next-auth/jwt" {
       role: string;
       emailAddress: string;
       shopAffectations: {
+        shopId: string;
         role: string;
         shop: {
           id: string;
@@ -53,6 +58,7 @@ export interface User {
     role: string;
     emailAddress: string;
     shopAffectations: {
+      shopId: string;
       role: string;
       shop: {
         id: string;

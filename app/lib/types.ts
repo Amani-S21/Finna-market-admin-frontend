@@ -47,17 +47,17 @@ export type ShopsListResponse = {
 
 export type SubmitShop = {
   id?: string;
-  name: string;
-  address: string;
-  nationalId: string;
-  rccm: string;
+  name?: string;
+  address?: string;
+  nationalId?: string;
+  rccm?: string;
   emailAddress?: string;
   phone?: string;
   creatorId?: string;
   typeId?: string;
-  ownerId: string;
-  categories: { id: string }[];
-  shopExpeditions: { id: string }[];
+  ownerId?: string;
+  categories?: { id: string }[];
+  shopExpeditions?: { id: string }[];
 };
 
 export type Shop = {

@@ -1,15 +1,14 @@
 "use client";
 
+import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Text } from "@radix-ui/themes";
+import { DollarSign } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
-import React from "react";
-import LoadingTaxePricesDetailsPage from "./loading";
-import { BackButton } from "@/app/_components";
-import { Button, Grid, Heading, Link, Text } from "@radix-ui/themes";
-import { DollarSign } from "lucide-react";
 import { ShopTaxeForm } from "../../../_components";
 import { useFetchShopTaxe } from "../../../_features/hooks";
+import LoadingTaxePricesDetailsPage from "./loading";
 
 const EditShopTaxePage = () => {
   const { status } = useSession();

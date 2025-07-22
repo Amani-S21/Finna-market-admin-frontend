@@ -5,11 +5,10 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { ProductsTable, ProductsToolBar } from "../_components";
 import { useFetchProducts } from "../_features/hooks";
 import LoadingProductsPage from "./loading";
-import { Suspense } from "react";
-import { Roles } from "@/app/lib/types";
 
 const BuildProductsPage = () => {
   const { status, data: session } = useSession();
@@ -40,7 +39,7 @@ const BuildProductsPage = () => {
 
   return (
     <Flex direction="column">
-      <ProductsToolBar role={`${session?.data.role}` as Roles} />
+      <ProductsToolBar />
       {productsResponse && (
         <ProductsTable productsResponse={productsResponse} />
       )}

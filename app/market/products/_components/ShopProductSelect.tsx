@@ -7,7 +7,7 @@ import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
 import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
-import { useSearchShop, useSearchUser } from "../../users/_features/hooks";
+import { useSearchShop } from "../../users/_features/hooks";
 
 type Props = {
   selectedShop: Shop | undefined;

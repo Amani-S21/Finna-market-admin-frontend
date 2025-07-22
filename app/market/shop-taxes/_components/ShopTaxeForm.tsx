@@ -57,7 +57,7 @@ const ShopTaxeForm = ({ tax }: { tax?: TaxePriceData }) => {
             router.back();
           },
         });
-      } catch (error) {}
+      } finally {}
     } else {
       const dataSubmit: TaxePriceSubmit = {
         shopId: `${session?.data.shopAffectations[0].shopId}`,

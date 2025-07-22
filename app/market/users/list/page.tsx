@@ -21,21 +21,24 @@ const BuildUsersPage = () => {
   const role: Roles = searchParams.get("role") as Roles;
 
   const affectations = session?.data?.shopAffectations ?? [];
-  const shopId = affectations.length > 0 ? affectations[0]?.shopId : null;
+  const shopId = affectations.length > 0 ? affectations[0]?.shop.id : null;
 
-  const { data: usersResponse, isLoading } = shopId
-    ? useFetchUsersByShop({
-        axios,
-        shopId,
-        page,
-        enabled: status === "authenticated",
-      })
-    : useFetchUsers({
-        axios,
-        page,
-        role,
-        enabled: status === "authenticated",
-      });
+  const fetchUsers = useFetchUsers({
+    axios,
+    page,
+    role,
+    enabled: status === "authenticated" && !shopId,
+  });
+
+  const fetchUsersByShop = useFetchUsersByShop({
+    axios,
+    shopId: `${shopId}`,
+    page,
+    enabled: status === "authenticated" && !!shopId,
+  });
+
+  const usersResponse = shopId ? fetchUsersByShop.data : fetchUsers.data;
+  const isLoading = shopId ? fetchUsersByShop.isLoading : fetchUsers.isLoading;
 
   const currentUserRole = () => {
     if (affectations.length > 0) {

@@ -19,7 +19,7 @@ const MarketHomePage = () => {
   let shopId = undefined;
   if (session?.data.role !== "SUPER_ADMIN") {
     if (shopAffectation && shopAffectation.length > 0) {
-      shopId = shopAffectation[0].shopId;
+      shopId = shopAffectation[0].shop.id;
     }
   }
 

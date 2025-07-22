@@ -2,6 +2,7 @@
 
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { formattedDate } from "@/app/lib/tools";
 import { Product } from "@/app/lib/types";
 import {
   Button,
@@ -13,17 +14,16 @@ import {
   Text,
 } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import { ProductsFeaturesTable } from "../_components";
 import LoadingProductDetails from "./loading";
-import { formattedDate } from "@/app/lib/tools";
-import { useSession } from "next-auth/react";
 
 const BuildProductsDetailsPage = () => {
   const params = useParams<{ id: string }>();
-  const { data: session, status } = useSession();
+  const {  status } = useSession();
   const id = params.id;
   const axios = useAxiosAuth();
 

@@ -2,11 +2,10 @@
 
 import logo from "@/public/logo.png";
 import classNames from "classnames";
-import { DollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AiOutlineOrderedList, AiOutlineProduct } from "react-icons/ai";
+import { AiOutlineOrderedList } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa6";
 import { LuLayoutDashboard } from "react-icons/lu";
 

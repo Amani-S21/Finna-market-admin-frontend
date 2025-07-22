@@ -2,7 +2,10 @@
 
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { formattedDate } from "@/app/lib/tools";
+import { Roles, Status } from "@/app/lib/types";
 import { Badge, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Info } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -14,10 +17,6 @@ import {
 } from "../_components";
 import { useFetchOrderById } from "../_features/hooks";
 import LoadingOrderDetailsPage from "./loading";
-import { Roles, Status } from "@/app/lib/types";
-import { formattedDate } from "@/app/lib/tools";
-import { TbInfoSmall } from "react-icons/tb";
-import { Info } from "lucide-react";
 
 const BuildOrderDetailsPage = () => {
   const { status, data: session } = useSession();

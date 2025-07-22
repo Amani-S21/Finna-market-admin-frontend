@@ -1,10 +1,8 @@
-import { Roles } from "@/app/lib/types";
 import { Button, Flex, Link, Text } from "@radix-ui/themes";
-import { Search } from "lucide-react";
-import React from "react";
+// import { Search } from "lucide-react";
 import { IoStorefrontOutline } from "react-icons/io5";
 
-const ProductsToolBar = ({ role }: { role?: Roles }) => {
+const ProductsToolBar = () => {
   return (
     <Flex justify="between">
       <div>
@@ -18,7 +16,7 @@ const ProductsToolBar = ({ role }: { role?: Roles }) => {
       </div>
 
       <Flex gap="4" align="center">
-        <Search size={16} />
+        {/* <Search size={16} /> */}
         <Link href="/market/products/new">
           <Button>
             <span className="text-xs">Nouveau produit</span>

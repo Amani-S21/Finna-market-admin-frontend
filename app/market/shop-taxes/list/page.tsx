@@ -1,16 +1,14 @@
 "use client";
 
+import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import { TaxesToolBar } from "../_components";
+import TaxesPriceTable from "../_components/TaxesPriceTable";
 import { useFetchShopTaxes } from "../_features/hooks";
 import LoadingShopTaxesPage from "./loading";
-import { Flex } from "@radix-ui/themes";
-import { Pagination } from "@/app/_components";
-import TaxesPriceTable from "../_components/TaxesPriceTable";
-import { TaxesToolBar } from "../_components";
-import { Roles } from "@/app/lib/types";
 
 const ShopTaxesPage = () => {
   const { status, data: session } = useSession();

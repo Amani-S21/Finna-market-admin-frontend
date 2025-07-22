@@ -1,4 +1,4 @@
-import { Order, Status } from "@/app/lib/types";
+import { Status } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
 import { UpdateOrderSubmit } from "./types";

@@ -47,7 +47,7 @@ const RecentOrders = ({ orders }: { orders: Order[] }) => {
                       size="2"
                       className="lowercase first-letter:uppercase"
                     >
-                      {order.orderType.name}
+                      {order.orderType?.name}
                     </Text>
                   </Badge>
                 </Table.Cell>

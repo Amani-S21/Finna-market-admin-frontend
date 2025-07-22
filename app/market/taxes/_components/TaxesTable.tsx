@@ -3,10 +3,9 @@
 import { formattedDate } from "@/app/lib/tools";
 import { TaxesResponse } from "@/app/lib/types";
 import { IconButton, Table } from "@radix-ui/themes";
-import { IoIosMore } from "react-icons/io";
-import { taxesColumns } from "../list/loading";
-import { GoEye } from "react-icons/go";
 import { useRouter } from "next/navigation";
+import { GoEye } from "react-icons/go";
+import { taxesColumns } from "../list/loading";
 
 const TaxesTable = ({ taxesResponse }: { taxesResponse: TaxesResponse }) => {
   const router = useRouter();

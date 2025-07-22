@@ -4,7 +4,7 @@ import { FaUsers } from "react-icons/fa6";
 import UserRoleFilter from "./UserRoleFilter";
 import { Roles } from "@/app/lib/types";
 
-const UsersToolBar = ({ userRole }: { userRole: Roles }) => {
+const UsersToolBar = ({ userRole }: { userRole?: Roles }) => {
   return (
     <Flex justify="between">
       <div>
