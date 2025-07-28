@@ -10,6 +10,7 @@ export const signinSchema = z.object({
 export const newShopSchema = z.object({
   name: z.string().min(1, "Ce champs est obligatoire"),
   address: z.string().min(1, "Veuillez saisir l'addrèsse"),
+  percentage: z.coerce.number().min(1, "Le pourcentage doit etre au minimum 1"),
   nationalId: z.string(),
   rccm: z.string(),
   emailAddress: z.string().optional(),
@@ -23,6 +24,7 @@ export const affectShopSchema = z.object({
 export const editShopSchema = z.object({
   name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
   address: z.string().min(1, "Veuillez saisir l'addrèsse"),
+  percentage: z.coerce.number().min(1, "Le pourcentage doit etre au minimum 1"),
 });
 
 export const updatePasswordSchema = z
@@ -66,7 +68,6 @@ export const productSchema = z.object({
   name: z.string().min(1, "Veuillez saisir le nom de la boutique"),
   cost: z.coerce.number().min(1, "Le cout doit etre au minimum 1"),
   price: z.coerce.number().min(1, "Le prix doit etre au minimum 1"),
-  percentage: z.coerce.number().min(1, "Le pourcentage doit etre au minimum 1"),
   weightInGrams: z.coerce
     .number()
     .min(1, "Le poids en gramme doit etre au minimum 1")

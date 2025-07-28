@@ -215,7 +215,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
       name,
       cost,
       price,
-      percentage,
       description,
       weightInGrams,
       heightInCm,
@@ -226,7 +225,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
       name,
       cost,
       price,
-      percentage,
       weightInGrams,
       heightInCm,
       widthInCm,
@@ -235,7 +233,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
       shopId: shopIdToBePost(),
-      // shopId: session?.data.shopAffectations[0].shopId,
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
       features: (features ?? []).map((feature) => ({
@@ -395,17 +392,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
               <ErrorMessage>{errors.price?.message}</ErrorMessage>
             </div>
-            <div className="flex flex-col space-y-2 mt-4">
-              <p className="text-sm font-bold">Pourcentage</p>
-              <TextField.Root
-                {...register("percentage")}
-                type="number"
-                defaultValue={product?.percentage}
-                placeholder="Veuillez saisir le prix courant du produit"
-              />
-              <ErrorMessage>{errors.percentage?.message}</ErrorMessage>
-            </div>
-
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Poids en gramme</p>
               <TextField.Root

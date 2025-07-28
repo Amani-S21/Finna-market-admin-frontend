@@ -61,6 +61,7 @@ const NewShopForm = () => {
         creatorId: session?.data.id,
         typeId: selectedShopType?.id,
         ownerId: `${selectedUser?.id}`,
+        percentage : data.percentage,
         categories:
           selectedShopCategories?.map((category) => ({
             id: category.id,
@@ -158,6 +159,15 @@ const NewShopForm = () => {
                   placeholder="Entrer le numero de téléphone"
                 />
                 <ErrorMessage>{errors.phone?.message}</ErrorMessage>
+              </div>
+              <div className="flex flex-col space-y-2 mt-4">
+                <p className="text-sm font-bold">Pourcentage</p>
+                <TextField.Root
+                  {...register("percentage")}
+                  type="number"
+                  placeholder="Veuillez saisir le pourcentage"
+                />
+                <ErrorMessage>{errors.percentage?.message}</ErrorMessage>
               </div>
 
               <ShopTypeSelect

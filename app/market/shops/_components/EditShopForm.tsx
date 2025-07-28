@@ -77,6 +77,15 @@ const EditShopForm = ({ shop }: { shop?: Shop }) => {
           />
           <ErrorMessage>{errors.address?.message}</ErrorMessage>
         </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Pourcentage</p>
+          <TextField.Root
+            {...register("percentage")}
+            type="number"
+            placeholder="Veuillez saisir le pourcentage"
+          />
+          <ErrorMessage>{errors.percentage?.message}</ErrorMessage>
+        </div>
         <Button disabled={isSubmitting} mt="4">
           {shop ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
         </Button>
