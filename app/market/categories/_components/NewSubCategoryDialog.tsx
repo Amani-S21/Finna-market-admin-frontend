@@ -1,4 +1,4 @@
-import { ErrorMessage, Spinner } from "@/app/_components";
+import { Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   Button,
@@ -8,18 +8,18 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosInstance } from "axios";
 import { Plus } from "lucide-react";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
 import { ProductImage } from "../../products/_components";
+import { uploadUrl } from "../../products/_features/api";
 import {
   useCreateSubCategories,
   useUpdateSubCategories,
 } from "../_features/hooks";
-import { useMutation } from "@tanstack/react-query";
-import { AxiosInstance } from "axios";
-import { uploadUrl } from "../../products/_features/api";
-import toast from "react-hot-toast";
 
 type Props = {
   open: boolean;

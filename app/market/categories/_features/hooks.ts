@@ -2,6 +2,7 @@ import {
   CategoriesResponse,
   Category,
   CategorySchema,
+  SubCategoriesResponse,
   SubCategory,
   SubmitCategory,
 } from "@/app/lib/types";
@@ -16,6 +17,7 @@ import {
   fetchCategories,
   fetchCategoryById,
   searchCategories,
+  searchSubCategories,
   updateCategories,
   updateSubCategories,
 } from "./api";
@@ -117,8 +119,22 @@ export const useUpdateSubCategories = ({ axios }: { axios: AxiosInstance }) => {
   });
 };
 
-// export const useSubCategoryForm = () => {
-//   return useForm<SubCategorySchema>({
-//     resolver: zodResolver(subCategorySchema),
-//   });
-// };
+type UseSearchSubCategories = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchSubCategories = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchSubCategories) => {
+  return useQuery<SubCategoriesResponse>({
+    queryKey: ["searched-sub-categories", term],
+    queryFn: () => searchSubCategories(axios, term),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
+  });
+};

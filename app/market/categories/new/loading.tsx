@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const LoadingNewCategoryPage = () => {
-  return (
-    <div>LoadingNewCategoryPage</div>
-  )
-}
+  return <div>Chargement...</div>;
+};
 
-export default LoadingNewCategoryPage
+export default LoadingNewCategoryPage;

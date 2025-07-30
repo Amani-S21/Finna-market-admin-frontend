@@ -1,5 +1,6 @@
 import { SubCategory } from "@/app/lib/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { act } from "react";
 
 interface CategoryState {
   subCategories: SubCategory[] | null;
@@ -14,7 +15,12 @@ const categoriesSlice = createSlice({
   initialState,
   reducers: {
     addSubCategory: (state, action: PayloadAction<SubCategory>) => {
-      state.subCategories?.push(action.payload);
+      const exist = state.subCategories?.some(
+        (v) => v.id === action.payload.id
+      );
+      if (!exist) {
+        state.subCategories?.push(action.payload);
+      }
     },
 
     updateSubCategory: (state, action: PayloadAction<SubCategory>) => {

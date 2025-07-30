@@ -151,7 +151,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
             <Flex
               align="center"
               onClick={() => {
-                // productImageFiles.current = [];
                 setImage(undefined);
               }}
             >
@@ -208,15 +207,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
                 index={`${index}`}
                 onDeleteClick={() => {
                   dispatch(removeSubCategory({ category: `${v.name}` }));
-                }}
-                onDialogSave={(textValue) => {
-                  dispatch(
-                    updateSubCategory({
-                      id: v.id,
-                      index: v.index,
-                      name: textValue,
-                    })
-                  );
                 }}
               />
             ))}

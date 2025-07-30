@@ -24,6 +24,7 @@ export const fetchCategoryById = async (
   }
 };
 
+
 export const createCategories = async (
   axios: AxiosInstance,
   data: SubmitCategory
@@ -77,6 +78,15 @@ export const updateCategories = async (
 export const searchCategories = async (axios: AxiosInstance, term: string) => {
   try {
     const res = await axios.get(`/categories/search?term=${term}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
+export const searchSubCategories = async (axios: AxiosInstance, term: string) => {
+  try {
+    const res = await axios.get(`/sub-categories/search?term=${term}`);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));

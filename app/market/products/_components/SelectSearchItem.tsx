@@ -11,7 +11,7 @@ type Props = {
   editable?: boolean | undefined;
   id?: string;
   title: string;
-  index?: string; 
+  index?: string;
   valuePrice?: number;
   currency?: string;
   onClick?: (price: number) => void;
@@ -77,7 +77,7 @@ const SelectSearchItem = ({
                 onSave={onDialogSave}
               />
             )}
-            <IconButton type="button" variant="ghost" onClick={onDeleteClick}>
+            <IconButton type="button" variant="ghost" ml="2" onClick={onDeleteClick}>
               <IoIosCloseCircleOutline />
             </IconButton>
           </Flex>

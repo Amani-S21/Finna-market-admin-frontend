@@ -1,19 +1,28 @@
 "use client";
 
-import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
+import { useDebounce } from "@/app/lib/hooks/otherHooks";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
+import { useSearchSubCategories } from "../_features/hooks";
 import NewSubCategoryDialog from "./NewSubCategoryDialog";
-
-// type Props = {
-//   open: boolean;
-//   setOpen: (val: boolean) => void;
-// };
+import { addSubCategory } from "@/redux/features/categorySlice";
 
 const SubCategorySelect = () => {
+  const axios = useAxiosAuth();
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchValue, 300);
+
+  const { data: dataResponse, isLoading } = useSearchSubCategories({
+    axios,
+    term: debouncedSearchTerm,
+    enabled: !!debouncedSearchTerm,
+  });
 
   return (
     <Dialog.Root>
@@ -58,11 +67,28 @@ const SubCategorySelect = () => {
           />
         </Flex>
 
-        <Flex wrap="wrap" gap="4" mt="4" mb="8">
-          {[...Array(10)].map((_, index) => (
-            <SelectSearchItem key={index} title="Pantalon" />
-          ))}
-        </Flex>
+        {isLoading ? (
+          <Text>Chargement...</Text>
+        ) : (
+          <Flex wrap="wrap" gap="4" mt="4" mb="8">
+            {dataResponse?.data.map((subCategory, index) => (
+              <SelectSearchItem
+                key={index}
+                title={`${subCategory.name}`}
+                
+                onClick={() => {
+                  dispatch(
+                    addSubCategory({
+                      id: `${subCategory.id}`,
+                      index: dataResponse?.data?.length,
+                      name: `${subCategory.name}`,
+                    })
+                  );
+                }}
+              />
+            ))}
+          </Flex>
+        )}
 
         <Flex gap="3" mt="4" justify="between">
           {/* {isPending ? <Text size="1">Chargement...</Text> : <p></p>} */}
