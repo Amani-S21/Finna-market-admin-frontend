@@ -6,24 +6,24 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Category, CategorySchema } from "@/app/lib/types";
 import {
   addSubCategories,
-  addSubCategory,
   removeSubCategory,
-  updateSubCategory,
+  updateSubCategory
 } from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
-import { Button, Callout, Flex, TextField } from "@radix-ui/themes";
+import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { IoIosAdd } from "react-icons/io";
+import { CiTrash } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectSearchItem } from "../../products/_components";
+import { ProductImage, SelectSearchItem } from "../../products/_components";
 import {
   useCategoryForm,
   useCreateCategories,
   useUpdateCategories,
 } from "../_features/hooks";
-import { useQueryClient } from "@tanstack/react-query";
+import SubCategorySelect from "./SubCategorySelect";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -31,6 +31,8 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const { subCategories } = useSelector((state: RootState) => state.category);
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [image, setImage] = useState<string | undefined>();
+  const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
 
   useEffect(() => {
     if (category) {
@@ -139,7 +141,41 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
-        <div className="flex flex-col space-y-2 mt-4">
+        <div className="flex flex-col space-y-2 mt-4 mb-2">
+          <Flex justify="between" align="start">
+            <Flex direction="column" gap="2" mb="2">
+              <p className="text-sm font-bold">Photos</p>
+              <Text as="p" className="text-sm">
+                Cliquez sur le bouton si dessous pour ajouter une photo de la
+                catégorie
+              </Text>
+            </Flex>
+            <Flex
+              align="center"
+              onClick={() => {
+                // productImageFiles.current = [];
+                setImage(undefined);
+              }}
+            >
+              <CiTrash size={16} />
+              <p className="text-sm underline hover:cursor-default">
+                Réinitialiser
+              </p>
+            </Flex>
+          </Flex>
+          <ProductImage
+            image={image!}
+            setImage={setImage}
+            setFile={(fileToAdd) => {
+              // pushFileToList(0, fileToAdd);
+            }}
+          />
+        </div>
+        <SubCategorySelect
+          open={openSubCategoryDialog}
+          setOpen={setOpenSubCategoryDialog}
+        />
+        {/* <div className="flex flex-col space-y-2 mt-6">
           <Flex justify="between">
             <p className="text-sm font-bold">Sous catégorie</p>
             <Flex
@@ -165,7 +201,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
             {...register("subCategory")}
             placeholder="Type de la caractéristique"
           />
-        </div>
+        </div> */}
 
         {(subCategories ?? []).length > 0 && (
           <div className="mt-4 flex flex-wrap gap-4">

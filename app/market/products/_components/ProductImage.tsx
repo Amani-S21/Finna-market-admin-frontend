@@ -23,7 +23,7 @@ const ProductImage = ({ setFile, setImage, image }: Props) => {
 
   return (
     <div className="flex flex-col">
-      <div className="h-[80px]  w-[100px] flex justify-center items-center rounded-md bg-white relative">
+      <div className="h-[80px]  w-[100px] flex justify-center items-center rounded-md bg-white relative border border-gray-300">
         {image ? (
           <Image
             alt="product image"
