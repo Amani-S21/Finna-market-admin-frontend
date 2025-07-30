@@ -6,7 +6,6 @@ import {
   newShopSchema,
   productSchema,
   signinSchema,
-  subCategorySchema,
   taxeSchema,
   updatePasswordSchema,
   updateUserSchema,
@@ -32,7 +31,7 @@ export type FeatureSchema = z.infer<typeof featureSchema>;
 
 export type CategorySchema = z.infer<typeof categorySchema>;
 
-export type SubCategorySchema = z.infer<typeof subCategorySchema>;
+// export type SubCategorySchema = z.infer<typeof subCategorySchema>;
 
 export type TaxeSchema = z.infer<typeof taxeSchema>;
 

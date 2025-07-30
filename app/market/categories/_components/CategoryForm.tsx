@@ -32,7 +32,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [image, setImage] = useState<string | undefined>();
-  const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
 
   useEffect(() => {
     if (category) {
@@ -165,15 +164,12 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           <ProductImage
             image={image!}
             setImage={setImage}
-            setFile={(fileToAdd) => {
+            setFile={(filefToAdd) => {
               // pushFileToList(0, fileToAdd);
             }}
           />
         </div>
-        <SubCategorySelect
-          open={openSubCategoryDialog}
-          setOpen={setOpenSubCategoryDialog}
-        />
+        <SubCategorySelect />
         {/* <div className="flex flex-col space-y-2 mt-6">
           <Flex justify="between">
             <p className="text-sm font-bold">Sous catégorie</p>

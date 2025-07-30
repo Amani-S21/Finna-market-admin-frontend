@@ -1,38 +1,24 @@
 "use client";
 
-import {
-  Button,
-  Dialog,
-  Flex,
-  TextField
-} from "@radix-ui/themes";
+import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
 import { SelectSearchItem } from "../../products/_components";
 import NewSubCategoryDialog from "./NewSubCategoryDialog";
 
-type Props = {
-  // selectedUser: User | undefined;
-  // setSelectedUser: (val: User) => void;
-  open: boolean;
-  setOpen: (val: boolean) => void;
-};
+// type Props = {
+//   open: boolean;
+//   setOpen: (val: boolean) => void;
+// };
 
-const SubCategorySelect = ({
-  // setSelectedUser,
-  setOpen,
-  open,
-}: // selectedUser,
-Props) => {
+const SubCategorySelect = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root>
       <Dialog.Trigger>
-        <div
-          className="flex flex-col space-y-2 mt-6"
-          onClick={() => setOpen(true)}
-        >
+        <div className="flex flex-col space-y-2 mt-6">
           <p className="text-sm font-bold">Sous catégorie</p>
           <div className="relative">
             <TextField.Root
@@ -66,7 +52,10 @@ Props) => {
               <Search size={15} />
             </TextField.Slot>
           </TextField.Root>
-          <NewSubCategoryDialog />
+          <NewSubCategoryDialog
+            setOpen={setOpenSubCategoryDialog}
+            open={openSubCategoryDialog}
+          />
         </Flex>
 
         <Flex wrap="wrap" gap="4" mt="4" mb="8">

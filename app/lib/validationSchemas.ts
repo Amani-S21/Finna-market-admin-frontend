@@ -55,9 +55,9 @@ export const categorySchema = z.object({
   subCategory: z.string().optional(),
 });
 
-export const subCategorySchema = z.object({
-  name: z.string().min(1, "Veuillez remplir le nom"),
-});
+// export const subCategorySchema = z.object({
+//   name: z.string().min(1, "Nom de la sous catégorie obligatoire"),
+// });
 
 export const taxeSchema = z.object({
   name: z.string().min(1, "Veuillez remplir le nom"),

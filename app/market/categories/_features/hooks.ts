@@ -3,10 +3,9 @@ import {
   Category,
   CategorySchema,
   SubCategory,
-  SubCategorySchema,
   SubmitCategory,
 } from "@/app/lib/types";
-import { categorySchema, subCategorySchema } from "@/app/lib/validationSchemas";
+import { categorySchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
@@ -118,8 +117,8 @@ export const useUpdateSubCategories = ({ axios }: { axios: AxiosInstance }) => {
   });
 };
 
-export const useSubCategoryForm = () => {
-  return useForm<SubCategorySchema>({
-    resolver: zodResolver(subCategorySchema),
-  });
-};
+// export const useSubCategoryForm = () => {
+//   return useForm<SubCategorySchema>({
+//     resolver: zodResolver(subCategorySchema),
+//   });
+// };
