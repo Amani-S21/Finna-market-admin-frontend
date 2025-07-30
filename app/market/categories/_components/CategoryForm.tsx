@@ -7,13 +7,12 @@ import { Category, CategorySchema } from "@/app/lib/types";
 import {
   addSubCategories,
   removeSubCategory,
-  updateSubCategory,
 } from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
 import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +21,11 @@ import {
   useCategoryForm,
   useCreateCategories,
   useUpdateCategories,
+  useUpdateCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./SubCategorySelect";
+import { AxiosInstance } from "axios";
+import { uploadUrl } from "../../products/_features/api";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -32,6 +34,23 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [image, setImage] = useState<string | undefined>();
+  const categoryFile = useRef<File | null>(null);
+  const categoryUrl = useRef<string>("");
+
+  const { mutateAsync: uploadCategoryPicture } = useMutation({
+    mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
+      uploadUrl(axios, file),
+    retry: 0,
+  });
+
+  const uploadPicture = async (): Promise<string> => {
+    const data = await uploadCategoryPicture({
+      axios,
+      file: categoryFile.current!,
+    });
+    categoryUrl.current = `${data?.imgName}`;
+    return `${data?.imgName}`;
+  };
 
   useEffect(() => {
     if (category) {
@@ -53,11 +72,12 @@ const CategoryForm = ({ category }: { category?: Category }) => {
     formState: { errors, isSubmitting },
   } = useCategoryForm();
 
-  const {
-    mutateAsync: createCategory,
-    error: createError,
-    isSuccess: isCreateSuccess,
-  } = useCreateCategories({
+  const { mutateAsync: createCategory, error: createError } =
+    useCreateCategories({
+      axios,
+    });
+
+  const { mutateAsync: updateCategoryIcon } = useUpdateCategoryIcon({
     axios,
   });
 
@@ -84,28 +104,39 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       }
     } else {
       try {
-        await createCategory({
-          icon: "",
-          name: data.name,
-          subCategories:
-            subCategories?.map((v) => ({
-              id: v.id,
-            })) ?? [],
-        });
+        await createCategory(
+          {
+            name: data.name,
+            subCategories:
+              subCategories?.map((v) => ({
+                id: v.id,
+              })) ?? [],
+          },
+          {
+            onSuccess: async (category) => {
+              if (!categoryFile.current) return;
+
+              // ✅ Wait for upload to finish
+              const imageUrl = await uploadPicture();
+
+              // ✅ Update with the uploaded image URL
+              await updateCategoryIcon({
+                id: `${category?.createdCategory.id}`,
+                icon: imageUrl,
+              });
+
+              queryClient.invalidateQueries({ queryKey: ["categories"] });
+              queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
+              toast.success(`Catégorie crééee avec avec succèes`);
+              router.back();
+            },
+          }
+        );
       } catch (error: any) {
         toast.error(JSON.stringify(error));
       }
     }
   };
-
-  useEffect(() => {
-    if (isCreateSuccess) {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
-      toast.success(`Catégorie crééee avec avec succèes`);
-      router.back();
-    }
-  }, [queryClient, isCreateSuccess, router]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -164,7 +195,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
             image={image!}
             setImage={setImage}
             setFile={(filefToAdd) => {
-              // pushFileToList(0, fileToAdd);
+              categoryFile.current = filefToAdd;
             }}
           />
         </div>

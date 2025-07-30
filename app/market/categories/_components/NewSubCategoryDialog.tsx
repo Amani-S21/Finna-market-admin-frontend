@@ -133,7 +133,6 @@ const NewSubCategoryDialog = ({ setOpen, open }: Props) => {
             setImage={setImage}
             setFile={(fileToAdd) => {
               subCategoryFile.current = fileToAdd;
-              // pushFileToList(0, fileToAdd);
             }}
           />
         </div>
@@ -144,7 +143,7 @@ const NewSubCategoryDialog = ({ setOpen, open }: Props) => {
               Annuler
             </Button>
           </Dialog.Close>
-          <Button onClick={() => onSubmit()}>
+          <Button disabled={isSubmitting} onClick={() => onSubmit()}>
             {isSubmitting ? (
               <Flex gap="2">
                 <Spinner />

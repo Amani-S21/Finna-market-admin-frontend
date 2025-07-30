@@ -1,6 +1,5 @@
 import { SubCategory } from "@/app/lib/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "react";
 
 interface CategoryState {
   subCategories: SubCategory[] | null;

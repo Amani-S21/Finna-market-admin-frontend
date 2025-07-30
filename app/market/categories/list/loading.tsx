@@ -14,11 +14,12 @@ const LoadingCategoriesPage = () => {
 export const categoriesColumns: {
   label: string;
 }[] = [
-  { label: "N" },
-  { label: "Catégories" },
-  { label: "Date" },
-  { label: "Sous catégorie" },
-  { label: "Action" },
+  { label: "N"},
+  { label: "Photo"},
+  { label: "Catégories"},
+  { label: "Date"},
+  { label: "Sous catégorie"},
+  { label: "Action"},
 ];
 
 export default LoadingCategoriesPage;

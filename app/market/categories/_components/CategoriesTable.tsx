@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
 import { categoriesColumns } from "../list/loading";
-
+import Image from "next/image";
 
 const CategoriesTable = ({
   categoriesResponse,
@@ -29,14 +29,25 @@ const CategoriesTable = ({
       </Table.Header>
       <Table.Body>
         {categoriesResponse?.data.map((category, index) => (
-          <Table.Row key={category.id}>
+          <Table.Row key={category.id} align="center">
             <Table.Cell>{index + 1}</Table.Cell>
+            <Table.Cell>
+              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-white relative">
+                <Image
+                  height={50}
+                  width={60}
+                  alt="product image"
+                  src={`https://finna-media.buy-one-store.com/v1/uploads/images/${category.icon}`}
+                  className="object-cover rounded-md"
+                />
+              </div>
+            </Table.Cell>
             <Table.Cell>{category.name}</Table.Cell>
             <Table.Cell>{formattedDate(category.createdAt)}</Table.Cell>
             <Table.Cell>
               <div className="flex flex-wrap gap-2">
                 {category.subCategories.map((value) => (
-                  <SelectSearchItem key={value.id} title={value.name} />
+                  <SelectSearchItem key={value.id} title={`${value.name}`} />
                 ))}
               </div>
             </Table.Cell>

@@ -19,9 +19,10 @@ import {
   searchCategories,
   searchSubCategories,
   updateCategories,
+  updateCategoryIcon,
   updateSubCategories,
 } from "./api";
-import { SubmitSubCategory } from "./types";
+import { CreateCategoryResponse, SubmitSubCategory, UpdateCategoryIconType } from "./types";
 
 export const useCategoryForm = () => {
   return useForm<CategorySchema>({
@@ -70,7 +71,7 @@ export const useFetchCategoryById = ({
 };
 
 export const useCreateCategories = ({ axios }: { axios: AxiosInstance }) => {
-  return useMutation<void, Error, SubmitCategory>({
+  return useMutation<CreateCategoryResponse, Error, SubmitCategory>({
     mutationFn: (data: SubmitCategory) => createCategories(axios, data),
   });
 };
@@ -136,5 +137,12 @@ export const useSearchSubCategories = ({
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
+  });
+};
+
+export const useUpdateCategoryIcon = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<Category, Error, UpdateCategoryIconType>({
+    mutationFn: (data: UpdateCategoryIconType) =>
+      updateCategoryIcon(axios, data),
   });
 };

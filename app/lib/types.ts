@@ -143,6 +143,7 @@ export type SubCategoriesResponse = {
 
 export type Category = {
   id: string;
+  icon : string,
   name: string;
   createdAt: string;
   updatedAt: string;
