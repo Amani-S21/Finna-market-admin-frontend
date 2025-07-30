@@ -2,20 +2,25 @@ import {
   CategoriesResponse,
   Category,
   CategorySchema,
+  SubCategory,
+  SubCategorySchema,
   SubmitCategory,
 } from "@/app/lib/types";
-import { categorySchema } from "@/app/lib/validationSchemas";
+import { categorySchema, subCategorySchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import {
   createCategories,
+  createSubCategories,
   fetchCategories,
   fetchCategoryById,
   searchCategories,
   updateCategories,
+  updateSubCategories,
 } from "./api";
+import { SubmitSubCategory } from "./types";
 
 export const useCategoryForm = () => {
   return useForm<CategorySchema>({
@@ -98,5 +103,23 @@ export const useSearchCategories = ({
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
+  });
+};
+
+export const useCreateSubCategories = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<SubCategory, Error, SubmitSubCategory>({
+    mutationFn: (data: SubmitSubCategory) => createSubCategories(axios, data),
+  });
+};
+
+export const useUpdateSubCategories = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<SubCategory, Error, SubmitSubCategory>({
+    mutationFn: (data: SubmitSubCategory) => updateSubCategories(axios, data),
+  });
+};
+
+export const useSubCategoryForm = () => {
+  return useForm<SubCategorySchema>({
+    resolver: zodResolver(subCategorySchema),
   });
 };

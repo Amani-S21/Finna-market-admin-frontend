@@ -7,7 +7,7 @@ import { Category, CategorySchema } from "@/app/lib/types";
 import {
   addSubCategories,
   removeSubCategory,
-  updateSubCategory
+  updateSubCategory,
 } from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
 import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
@@ -50,8 +50,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
 
   const {
     register,
-    resetField,
-    watch,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useCategoryForm();
@@ -88,10 +86,11 @@ const CategoryForm = ({ category }: { category?: Category }) => {
     } else {
       try {
         await createCategory({
+          icon: "",
           name: data.name,
           subCategories:
             subCategories?.map((v) => ({
-              name: v.name,
+              id: v.id,
             })) ?? [],
         });
       } catch (error: any) {
@@ -207,12 +206,12 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           <div className="mt-4 flex flex-wrap gap-4">
             {subCategories?.map((v, index) => (
               <SelectSearchItem
-                key={v.name + index}
+                key={(v.name || "") + index}
                 id={v.id}
-                title={v.name}
+                title={v.name || ""}
                 index={`${index}`}
                 onDeleteClick={() => {
-                  dispatch(removeSubCategory({ category: v.name }));
+                  dispatch(removeSubCategory({ category: `${v.name}` }));
                 }}
                 onDialogSave={(textValue) => {
                   dispatch(

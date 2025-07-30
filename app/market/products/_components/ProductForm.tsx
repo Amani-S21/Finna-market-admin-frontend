@@ -458,7 +458,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                       key={value.id}
                       isSelected={value.id === selectedSubCategory?.id}
                       editable={false}
-                      title={value.name}
+                      title={`${value.name}`}
                       onClick={() => {
                         setSelectedSubCategory(value);
                       }}

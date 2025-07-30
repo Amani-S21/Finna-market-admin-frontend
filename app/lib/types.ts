@@ -6,6 +6,7 @@ import {
   newShopSchema,
   productSchema,
   signinSchema,
+  subCategorySchema,
   taxeSchema,
   updatePasswordSchema,
   updateUserSchema,
@@ -30,6 +31,8 @@ export type UserSchema = z.infer<typeof userSchema>;
 export type FeatureSchema = z.infer<typeof featureSchema>;
 
 export type CategorySchema = z.infer<typeof categorySchema>;
+
+export type SubCategorySchema = z.infer<typeof subCategorySchema>;
 
 export type TaxeSchema = z.infer<typeof taxeSchema>;
 
@@ -265,7 +268,7 @@ export type CategoriesResponse = {
 
 export type SubCategory = {
   id?: string;
-  name: string;
+  name?: string;
   index?: number;
   createdAt?: string;
   updatedAt?: string;
@@ -274,6 +277,7 @@ export type SubCategory = {
 
 export type SubmitCategory = {
   id?: string;
+  icon? : string;
   name: string;
   subCategories: SubCategory[];
 };

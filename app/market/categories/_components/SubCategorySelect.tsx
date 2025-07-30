@@ -1,18 +1,14 @@
 "use client";
 
-import { User } from "@/app/lib/types";
 import {
   Button,
   Dialog,
   Flex,
-  IconButton,
-  Text,
-  TextField,
+  TextField
 } from "@radix-ui/themes";
-import { ChevronDown, Plus, Search } from "lucide-react";
-import { CiTrash } from "react-icons/ci";
-import { ProductImage, SelectSearchItem } from "../../products/_components";
+import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
+import { SelectSearchItem } from "../../products/_components";
 import NewSubCategoryDialog from "./NewSubCategoryDialog";
 
 type Props = {
