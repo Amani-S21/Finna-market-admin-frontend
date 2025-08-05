@@ -46,7 +46,7 @@ const BuildCategoryDetails = () => {
           {(category?.subCategories ?? []).length > 0 && (
             <div className="mt-4 flex flex-wrap gap-4">
               {category?.subCategories?.map((v) => (
-                <SelectSearchItem key={v.id} title={v.name} />
+                <SelectSearchItem key={v.id} title={`${v.name}`} />
               ))}
             </div>
           )}

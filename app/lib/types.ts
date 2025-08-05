@@ -72,7 +72,7 @@ export type Shop = {
   phone: string;
   creatorId: string;
   typeId: string;
-  shopCode: string;
+  code: string;
   createdAt: string;
   updatedAt: string;
   ExpeditionRegions: ExpeditionRegion[];
@@ -119,6 +119,7 @@ export type Product = {
   description: string;
   cost: number;
   price: number;
+  discountPrice : number;
   percentage?: number;
   weightInGrams?: number;
   heightInCm?: number;
@@ -143,7 +144,7 @@ export type SubCategoriesResponse = {
 
 export type Category = {
   id: string;
-  icon : string,
+  icon: string;
   name: string;
   createdAt: string;
   updatedAt: string;
@@ -238,9 +239,8 @@ export type SubmitFeatureWithValues = {
 export type SubmitProduct = {
   id?: string;
   name?: string;
-  purchasedPrice?: number;
-  oldPrice?: number;
-  currentPrice?: number;
+  price? : number;
+  discountPrice?: number;
   published?: boolean;
   userId?: string;
   pictures?: string[];
@@ -277,7 +277,7 @@ export type SubCategory = {
 
 export type SubmitCategory = {
   id?: string;
-  icon? : string;
+  icon?: string;
   name: string;
   subCategories: SubCategory[];
 };
@@ -307,7 +307,7 @@ export type OrdersResponse = {
 
 export type Order = {
   id: string;
-  totalAmount? : string;
+  totalAmount?: string;
   status?: Status;
   createdAt?: string;
   updatedAt?: string;

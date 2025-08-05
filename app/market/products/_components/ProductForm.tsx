@@ -215,6 +215,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       name,
       cost,
       price,
+      discountPrice,
       description,
       weightInGrams,
       heightInCm,
@@ -225,6 +226,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       name,
       cost,
       price,
+      discountPrice,
       weightInGrams,
       heightInCm,
       widthInCm,
@@ -388,6 +390,16 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 {...register("price")}
                 type="number"
                 defaultValue={product?.price}
+                placeholder="Veuillez saisir l'ancien prix"
+              />
+              <ErrorMessage>{errors.price?.message}</ErrorMessage>
+            </div>
+            <div className="flex flex-col space-y-2 mt-4">
+              <p className="text-sm font-bold">Prix de réduction</p>
+              <TextField.Root
+                {...register("discountPrice")}
+                type="number"
+                defaultValue={product?.discountPrice}
                 placeholder="Veuillez saisir l'ancien prix"
               />
               <ErrorMessage>{errors.price?.message}</ErrorMessage>

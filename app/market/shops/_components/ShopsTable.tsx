@@ -33,7 +33,7 @@ const ShopsTable = ({
             <Table.Cell>{shop.nationalId}</Table.Cell>
             <Table.Cell>{shop.rccm}</Table.Cell>
             <Table.Cell className="truncate max-w-[300px]">
-              {shop.shopCode}
+              {shop.code}
             </Table.Cell>
             <Table.Cell>{formattedDate(shop.createdAt)}</Table.Cell>
             <Table.Cell>

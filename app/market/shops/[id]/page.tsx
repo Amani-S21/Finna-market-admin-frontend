@@ -89,7 +89,7 @@ const BuildShopsDetailPage = () => {
             <Text size="2" className="text-gray-600 font-bold">
               Code
             </Text>
-            <p className="mt-1">{shop?.shopCode}</p>
+            <p className="mt-1">{shop?.code}</p>
           </Card>
           <Card mt="4" variant="ghost">
             <Text size="2" className="text-gray-600 font-bold">
