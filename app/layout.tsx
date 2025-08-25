@@ -28,7 +28,7 @@ export default function RootLayout({
   session: any;
 }>) {
   return (
-    <html lang="en"  className={`${montserrat.variable} antialiased`}>
+    <html lang="en" className={`${montserrat.variable} antialiased`}>
       <body className={`${montserrat.variable} antialiased`}>
         <NextSessionProvider>
           <QueryProvider>
