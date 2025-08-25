@@ -85,6 +85,11 @@ const links = [
     icon: <TbCategoryMinus />,
   },
   {
+    href: "/market/sub-categories/list?page=1",
+    label: "Sous-Catégories",
+    icon: <TbCategoryMinus />,
+  },
+  {
     href: "/market/features/list?page=1",
     label: "Caractéristiques",
     icon: <MdOutlineFeaturedPlayList />,
