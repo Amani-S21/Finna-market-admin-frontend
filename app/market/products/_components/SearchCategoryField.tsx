@@ -2,11 +2,9 @@
 
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { CategoriesResponse, Category } from "@/app/lib/types";
+import { Category } from "@/app/lib/types";
 import { TextField } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { searchCategories } from "../../categories/_features/api";
 import { useSearchCategories } from "../../categories/_features/hooks";
 
 type Props = {

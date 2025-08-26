@@ -68,7 +68,6 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
   const {
     mutateAsync: updateSubCategory,
     error: updateError,
-    isSuccess: isUpdateSuccess,
   } = useUpdateSubCategories({ axios });
 
   const onSubmit = async (data: CategorySchema) => {
@@ -80,7 +79,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
             name: data.name,
           },
           {
-            onSuccess: async (subCategory) => {
+            onSuccess: async () => {
               queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
               queryClient.invalidateQueries({ queryKey: ["sub-category"] });
               toast.success(`Sous catégorie modifiée avec avec succèes`);

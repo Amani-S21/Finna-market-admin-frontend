@@ -7,7 +7,6 @@ import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
 import { Badge, ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSearchCategories } from "../../categories/_features/hooks";
 
 type Props = {
@@ -24,9 +23,7 @@ const CategorySelect = ({
   setOpen,
 }: Props) => {
   const axios = useAxiosAuth();
-  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
-  const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
   const { data: dataResponse, isLoading } = useSearchCategories({
