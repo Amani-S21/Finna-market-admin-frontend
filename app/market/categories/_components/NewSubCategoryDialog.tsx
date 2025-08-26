@@ -16,10 +16,7 @@ import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
 import { ProductImage } from "../../products/_components";
 import { uploadUrl } from "../../products/_features/api";
-import {
-  useCreateSubCategories,
-  useUpdateSubCategories,
-} from "../_features/hooks";
+import { useUpdateSubCategories, useCreateSubCategories } from "../../sub-categories/_features/hooks";
 
 type Props = {
   open: boolean;

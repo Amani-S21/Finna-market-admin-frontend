@@ -27,7 +27,7 @@ const SubCategorySelect = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <div className="flex flex-col space-y-2 mt-6">
+        <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Sous catégorie</p>
           <div className="relative">
             <TextField.Root

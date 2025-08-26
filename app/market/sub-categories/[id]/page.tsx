@@ -39,10 +39,6 @@ const BuildCategoryDetails = () => {
             {subCategory?.name}
           </Heading>
           <Text size="2">{subCategory?.createdAt}</Text>
-          <Text mt="4" size="2" as="p" className="font-bold">
-            Sous catégories
-          </Text>
-          
         </div>
         <div>
           <Link href={`/market/sub-categories/edit/${subCategory?.id}`}>

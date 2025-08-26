@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { subCategorySchema } from "./validations";
+
 export type SubmitSubCategory = {
   id? : string;
   icon?: string;
@@ -16,4 +19,11 @@ export type CreatedSubCategory = {
 export type SubCategoriesResponse = {
   count : number,
   data : CreatedSubCategory
+}
+
+export type SubCategorySchema = z.infer<typeof subCategorySchema>;
+
+export type UpdateSubCategoryIconType = {
+  id : string,
+  icon : string,
 }

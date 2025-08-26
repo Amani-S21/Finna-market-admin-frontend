@@ -237,9 +237,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
       shopId: shopIdToBePost(),
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
-      features: (features ?? []).map((feature) => ({
+      features: (features ?? []).map((feature : any) => ({
         featureId: feature.featureId,
-        featureValues: feature.featureValues.map((fv) => ({
+        featureValues: feature.featureValues.map((fv : any) => ({
           featureValueId: fv.featureValueId,
           price: fv.price,
         })),
@@ -268,7 +268,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
         await createProductMutation(productSubmit, {
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["products"] });
-            queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+            queryClient.invalidateQueries({ queryKey: ["product"] });
           },
         });
       } catch (error: any) {
@@ -329,7 +329,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   useEffect(() => {
     if (sendProductLinksSuccess) {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+      queryClient.invalidateQueries({ queryKey: ["product"] });
       toast.success(`Produit créé avec succès`);
       router.back(); // Only navigate after everything finishes
     }
@@ -344,7 +344,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   useEffect(() => {
     if (isUpdateSuccess) {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["products-by-id"] });
+      queryClient.invalidateQueries({ queryKey: ["product"] });
       toast.success(`Produit modifié avec avec succèes`);
       router.back();
     }

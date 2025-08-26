@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
-import { SubmitSubCategory } from "./types";
+import { SubmitSubCategory, UpdateSubCategoryIconType } from "./types";
 
 export const fetchSubCategories = async (axios: AxiosInstance, page: string) => {
   try {
@@ -64,6 +64,31 @@ export const updateSubCategories = async (
 ) => {
   try {
     const res = await axios.patch(`/sub-categories`, data);
+    return res.data;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Informations déjà utilisées, veuillez utiliser un autre nom";
+        break;
+
+      default:
+        message = "An unexpected error occurred";
+    }
+
+    const customError = new Error(message);
+    throw customError;
+  }
+};
+
+export const updateSubCategoryIcon = async (
+  axios: AxiosInstance,
+  data: UpdateSubCategoryIconType
+) => {
+  try {
+    const res = await axios.patch(`/sub-categories/icon`, data);
     return res.data;
   } catch (error: any) {
     const statusCode = error?.response?.status;

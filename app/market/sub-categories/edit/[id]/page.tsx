@@ -7,23 +7,23 @@ import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import { TbCategoryMinus } from "react-icons/tb";
-import CategoryForm from "../../_components/CategoryForm";
-import { useFetchCategoryById } from "../../_features/hooks";
+import SubCategoryForm from "../../_components/SubCategoryForm";
+import { useFetchSubCategoryById } from "../../_features/hooks";
 import LoadingEditCategoriesPage from "./loading";
 
-const BuildEditCategoryPage = () => {
+const BuildEditSubCategoryPage = () => {
   const { status } = useSession();
   const params = useParams<{ id: string }>();
   const id = params.id;
   const axios = useAxiosAuth();
 
   const {
-    data: category,
+    data: subCategory,
     isLoading,
     error,
-  } = useFetchCategoryById({
+  } = useFetchSubCategoryById({
     axios,
-    categoryId: id,
+    id,
     enabled: status === "authenticated",
   });
 
@@ -37,14 +37,14 @@ const BuildEditCategoryPage = () => {
         <BackButton />
         <div className="flex items-center space-x-4 mt-5">
           <TbCategoryMinus />
-          <span className="font-bold">Catégorie</span>
+          <span className="font-bold">Sous catégorie</span>
         </div>
         <Text as="p" size="2" mb="4">
-          Vous pouvez modifier la catégorie
+          Vous pouvez modifier la sous catégorie
         </Text>
       </div>
 
-      <CategoryForm category={category} />
+      <SubCategoryForm subCategory={subCategory} />
     </>
   );
 };
@@ -52,7 +52,7 @@ const BuildEditCategoryPage = () => {
 const EditCategoryPage = () => {
   return (
     <Suspense fallback={<LoadingEditCategoriesPage />}>
-      <BuildEditCategoryPage />
+      <BuildEditSubCategoryPage />
     </Suspense>
   );
 };

@@ -7,8 +7,19 @@ import {
   fetchSubCategoryById,
   searchSubCategories,
   updateSubCategories,
+  updateSubCategoryIcon,
 } from "./api";
-import { SubmitSubCategory } from "./types";
+import { SubCategorySchema, SubmitSubCategory, UpdateSubCategoryIconType } from "./types";
+import { categorySchema } from "@/app/lib/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+
+export const useSubCategoryForm = () => {
+  return useForm<SubCategorySchema>({
+    resolver: zodResolver(categorySchema),
+  });
+};
 
 type UseFetchCategories = {
   axios: AxiosInstance;
@@ -42,7 +53,7 @@ export const useFetchSubCategoryById = ({
   enabled,
 }: UseFetchCategoryById) => {
   return useQuery<SubCategory>({
-    queryKey: ["sub-categories", id],
+    queryKey: ["sub-category", id],
     queryFn: () => fetchSubCategoryById(axios, id),
     staleTime: 60 * 1000 * 60,
     retry: 3,
@@ -79,5 +90,12 @@ export const useSearchSubCategories = ({
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
+  });
+};
+
+export const useUpdateSubCategoryIcon = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<SubCategory, Error, UpdateSubCategoryIconType>({
+    mutationFn: (data: UpdateSubCategoryIconType) =>
+      updateSubCategoryIcon(axios, data),
   });
 };

@@ -1,26 +1,25 @@
 import { BackButton } from "@/app/_components";
 import { Text } from "@radix-ui/themes";
-import React from "react";
 import { TbCategoryMinus } from "react-icons/tb";
-import CategoryForm from "../_components/CategoryForm";
+import SubCategoryForm from "../_components/SubCategoryForm";
 
-const NewCategoryPage = () => {
+const NewSubCategoryPage = () => {
   return (
     <>
       <div className="mb-2">
         <BackButton />
         <div className="flex items-center space-x-4 mt-5">
           <TbCategoryMinus />
-          <span className="font-bold">Catégorie</span>
+          <span className="font-bold">Sous catégorie</span>
         </div>
         <Text as="p" size="2" mb="4">
-          Remplissez les champs ci dessous pour créer une nouvelle catégorie
+          Remplissez les champs ci dessous pour créer une nouvelle sous catégorie
         </Text>
       </div>
 
-      <CategoryForm />
+      <SubCategoryForm />
     </>
   );
 };
 
-export default NewCategoryPage;
+export default NewSubCategoryPage;

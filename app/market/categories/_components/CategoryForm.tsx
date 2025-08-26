@@ -11,12 +11,14 @@ import {
 import { RootState } from "@/redux/store";
 import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosInstance } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductImage, SelectSearchItem } from "../../products/_components";
+import { uploadUrl } from "../../products/_features/api";
 import {
   useCategoryForm,
   useCreateCategories,
@@ -24,8 +26,6 @@ import {
   useUpdateCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./SubCategorySelect";
-import { AxiosInstance } from "axios";
-import { uploadUrl } from "../../products/_features/api";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -170,6 +170,23 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
+        <SubCategorySelect />
+        {(subCategories ?? []).length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-4">
+            {subCategories?.map((v, index) => (
+              <SelectSearchItem
+                key={(v.name || "") + index}
+                id={v.id}
+                title={v.name || ""}
+                index={`${index}`}
+                onDeleteClick={() => {
+                  dispatch(removeSubCategory({ category: `${v.name}` }));
+                }}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="flex flex-col space-y-2 mt-4 mb-2">
           <Flex justify="between" align="start">
             <Flex direction="column" gap="2" mb="2">
@@ -199,7 +216,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
             }}
           />
         </div>
-        <SubCategorySelect />
+
         {/* <div className="flex flex-col space-y-2 mt-6">
           <Flex justify="between">
             <p className="text-sm font-bold">Sous catégorie</p>
@@ -227,22 +244,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
             placeholder="Type de la caractéristique"
           />
         </div> */}
-
-        {(subCategories ?? []).length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-4">
-            {subCategories?.map((v, index) => (
-              <SelectSearchItem
-                key={(v.name || "") + index}
-                id={v.id}
-                title={v.name || ""}
-                index={`${index}`}
-                onDeleteClick={() => {
-                  dispatch(removeSubCategory({ category: `${v.name}` }));
-                }}
-              />
-            ))}
-          </div>
-        )}
 
         <Button disabled={isSubmitting} mt="4">
           {category ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}

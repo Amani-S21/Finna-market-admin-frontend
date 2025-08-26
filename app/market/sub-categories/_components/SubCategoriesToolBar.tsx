@@ -15,7 +15,7 @@ const SubCategoriesToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/market/categories/new">
+      <Link href="/market/sub-categories/new">
         <Button>
           <span className="text-xs">Nouvelle sous catégorie</span>
         </Button>

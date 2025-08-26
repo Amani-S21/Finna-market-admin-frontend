@@ -90,7 +90,7 @@ export const useFetchProductById = ({
   enabled,
 }: UseFetchProductById) => {
   return useQuery<Product>({
-    queryKey: ["product-by-id", productId],
+    queryKey: ["product", productId],
     queryFn: () => fetchProductById(axios, productId),
     staleTime: 60 * 1000 * 5,
     retry: 3,

@@ -6,6 +6,8 @@ import { CategoriesResponse, Category } from "@/app/lib/types";
 import { TextField } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { searchCategories } from "../../categories/_features/api";
+import { useSearchCategories } from "../../categories/_features/hooks";
 
 type Props = {
   value: string;
@@ -31,17 +33,12 @@ const SearchCategoryTextField = ({
     data: categories,
     isLoading,
     refetch,
-  } = useQuery<CategoriesResponse>({
-    queryKey: ["search-categories", debouncedSearchTerm],
-    queryFn: () =>
-      axios
-        .get(`/categories/search?term=${debouncedSearchTerm}`)
-        .then((res) => res.data),
+  } = useSearchCategories({
+    axios,
+    term: debouncedSearchTerm,
     enabled: !!debouncedSearchTerm,
-    staleTime: 60 * 1000,
   });
 
-  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
