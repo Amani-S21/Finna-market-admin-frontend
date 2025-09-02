@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { VehicleTypePayload, VehicleTypeResponse } from "./types";
-import { createVehicleType, fetchVehicleTypes, updateVehicleType } from "./api";
+import { VehicleType, VehicleTypePayload, VehicleTypeResponse } from "./types";
+import { createVehicleType, fetchVehicleType, fetchVehicleTypes, updateVehicleType } from "./api";
 
 type UseFetchVehicleTypes = {
   axios: AxiosInstance;
@@ -20,6 +20,26 @@ export const useFetchVehicleTypes = ({
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,
+  });
+};
+
+type UseFetchVehicleType = {
+  axios: AxiosInstance;
+  id: string;
+  enabled : boolean
+};
+
+export const useFetchVehicleType = ({
+  axios,
+  id,
+  enabled,
+}: UseFetchVehicleType) => {
+  return useQuery<VehicleType>({
+    queryKey: ["vehicle-type", id],
+    queryFn: () => fetchVehicleType(axios, id),
+    staleTime: 60 * 1000 * 60,
+    retry: 3,
+    enabled
   });
 };
 

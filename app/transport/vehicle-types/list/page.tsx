@@ -6,9 +6,9 @@ import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import VehicleTypeToolBar from "../../_components/VehicleTypeToolBar";
-import VehicleTypesTable from "../../_components/VehicleTypesTable";
 import { useFetchVehicleTypes } from "../_features/hooks";
 import LoadingVehicleTypePage from "./loading";
+import VehicleTypesTable from "../_components/VehicleTypesTable";
 
 const VehicleTypePage = () => {
   const { status } = useSession();

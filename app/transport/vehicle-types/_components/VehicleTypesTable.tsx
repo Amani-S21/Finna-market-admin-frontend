@@ -3,8 +3,9 @@
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-import { VehicleTypeResponse } from "../vehicle-types/_features/types";
-import { vehicleColumns } from "../vehicle-types/list/loading";
+import { VehicleTypeResponse } from "../../vehicle-types/_features/types";
+import { vehicleColumns } from "../../vehicle-types/list/loading";
+import { formattedDate } from "@/app/lib/tools";
 
 const VehicleTypesTable = ({
   vehicleTypeResponse,
@@ -28,13 +29,14 @@ const VehicleTypesTable = ({
         {vehicleTypeResponse?.data.map((vehicleType, index) => (
           <Table.Row align="center" key={vehicleType.id}>
             <Table.Cell>{index + 1}</Table.Cell>
+            <Table.Cell>{formattedDate(vehicleType.createdAt)}</Table.Cell>
             <Table.Cell>{vehicleType.name}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
                 ml="4"
                 onClick={() =>
-                  router.push(`/transport/vehicle-types/${vehicleType.id}`)
+                  router.push(`/transport/vehicle-types/edit/${vehicleType.id}`)
                 }
               >
                 <IoIosMore size={20} color="black" />

@@ -8,6 +8,7 @@ export const vehicleColumns: {
   label: string;
 }[] = [
   { label: "N" },
+  { label: "Date" },
   { label: "Name" },
   { label: "Action" },
 ];

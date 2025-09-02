@@ -3,25 +3,18 @@
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Category, CategorySchema } from "@/app/lib/types";
-import {
-  addSubCategories,
-  removeSubCategory,
-} from "@/redux/features/categorySlice";
-import { RootState } from "@/redux/store";
+import { ProductImage } from "@/app/market/products/_components";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
-import { useDispatch, useSelector } from "react-redux";
 import { useCreateAgency, useUpdateAgency } from "../agencies/_features/hooks";
 import { NewAgencySchema, TransportAgency } from "../agencies/_features/type";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { newAgencySchema } from "../agencies/_features/validations";
-import { ProductImage } from "@/app/market/products/_components";
 
 const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   const axios = useAxiosAuth();
