@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { TransportAgencyResponse } from "../agencies/_features/type";
 import { agenciesColumns } from "../agencies/list/loading";
-import Image from "next/image";
 
 const AgenciesTable = ({
   agenciesResponse,

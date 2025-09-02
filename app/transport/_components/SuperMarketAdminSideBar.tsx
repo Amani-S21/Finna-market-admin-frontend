@@ -59,6 +59,11 @@ const links = [
     label: "Agences",
     icon: <AiOutlineProduct />,
   },
+  {
+    href: "/transport/vehicle-types/list?page=1",
+    label: "Type d'engins",
+    icon: <AiOutlineProduct />,
+  },
 ];
 
 export default TranportSuperAdminSideBar;
