@@ -64,6 +64,11 @@ const links = [
     label: "Type d'engins",
     icon: <AiOutlineProduct />,
   },
+  {
+    href: "/transport/places/list?page=1",
+    label: "Places",
+    icon: <AiOutlineProduct />,
+  },
 ];
 
 export default TranportSuperAdminSideBar;
