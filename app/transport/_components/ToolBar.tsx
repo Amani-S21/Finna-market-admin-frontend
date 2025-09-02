@@ -16,7 +16,7 @@ const AgenciesToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/market/shops/new">
+      <Link href="/transport/agencies/new">
         <Button>
           <span className="text-xs">Nouvelle Agence</span>
         </Button>

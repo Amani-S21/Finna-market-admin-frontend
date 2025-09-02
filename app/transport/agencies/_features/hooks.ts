@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { TransportAgencyResponse } from "./type";
-import { fetchAgencies } from "./api";
+import { TransportAgencyPayload, TransportAgencyResponse } from "./type";
+import { createAgency, fetchAgencies, updateAgency } from "./api";
 
 type UseFetchAgencies = {
   axios: AxiosInstance;
@@ -15,10 +15,31 @@ export const useFetchAgencies = ({
   enabled,
 }: UseFetchAgencies) => {
   return useQuery<TransportAgencyResponse>({
-    queryKey: ["shops", page],
+    queryKey: ["agencies", page],
     queryFn: () => fetchAgencies(axios, page),
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,
+  });
+};
+
+type UseCreateOrUpdateShop = {
+  axios: AxiosInstance;
+};
+
+export const useCreateAgency = ({ axios }: UseCreateOrUpdateShop) => {
+  return useMutation<void, Error, TransportAgencyPayload>({
+    mutationFn: (data: TransportAgencyPayload) => createAgency(axios, data),
+  });
+};
+
+type UseUpdateShop = {
+  axios: AxiosInstance;
+  id: string;
+};
+
+export const useUpdateAgency = ({ axios, id }: UseUpdateShop) => {
+  return useMutation<void, Error, TransportAgencyPayload>({
+    mutationFn: (data: TransportAgencyPayload) => updateAgency(axios, id, data),
   });
 };

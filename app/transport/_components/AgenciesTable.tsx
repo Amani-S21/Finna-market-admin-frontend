@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { TransportAgencyResponse } from "../agencies/_features/type";
 import { agenciesColumns } from "../agencies/list/loading";
+import Image from "next/image";
 
 const AgenciesTable = ({
   agenciesResponse,
@@ -26,9 +27,19 @@ const AgenciesTable = ({
       </Table.Header>
       <Table.Body>
         {agenciesResponse?.data.map((agency, index) => (
-          <Table.Row key={agency.id}>
+          <Table.Row align="center" key={agency.id}>
             <Table.Cell>{index + 1}</Table.Cell>
-            <Table.Cell>{agency.photo}</Table.Cell>
+            <Table.Cell>
+              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-200 relative">
+                {/* <Image
+                  height={50}
+                  width={60}
+                  alt="product image"
+                  src={`https://fr.asiastarbuses.com/uploads/202024954/js6600g12554343632.jpg`}
+                  className="object-cover rounded-md"
+                /> */}
+              </div>
+            </Table.Cell>
             <Table.Cell>{agency.name}</Table.Cell>
             <Table.Cell>{agency.phone}</Table.Cell>
             <Table.Cell>
