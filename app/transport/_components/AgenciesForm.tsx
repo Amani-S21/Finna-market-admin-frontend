@@ -69,34 +69,43 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   //   axios,
   // });
 
-  const {
-    mutateAsync: updateAgency,
-    error: updateError,
-    isSuccess: isUpdateSuccess,
-  } = useUpdateAgency({ axios, id: `${agency?.id}` });
+  const { mutateAsync: updateAgency, error: updateError } = useUpdateAgency({
+    axios,
+    id: `${agency?.id}`,
+  });
 
   const onSubmit = async (data: NewAgencySchema) => {
     if (agency) {
       try {
-        await updateAgency(agency, {
-          onSuccess: async (agency) => {
-            // if (!categoryFile.current) return;
-
-            // // ✅ Wait for upload to finish
-            // const imageUrl = await uploadPicture();
-
-            // // ✅ Update with the uploaded image URL
-            // await updateCategoryIcon({
-            //   id: `${category?.createdCategory.id}`,
-            //   icon: imageUrl,
-            // });
-
-            queryClient.invalidateQueries({ queryKey: ["agencies"] });
-            queryClient.invalidateQueries({ queryKey: ["agency"] });
-            toast.success(`Agence crééee avec avec succèes`);
-            router.back();
+        await updateAgency(
+          {
+            address: data.address ?? "",
+            documents: "",
+            email: data.email,
+            name: data.name,
+            phone: data.phone ?? "",
+            photo: "photo.png",
           },
-        });
+          {
+            onSuccess: async (agency) => {
+              // if (!categoryFile.current) return;
+
+              // // ✅ Wait for upload to finish
+              // const imageUrl = await uploadPicture();
+
+              // // ✅ Update with the uploaded image URL
+              // await updateCategoryIcon({
+              //   id: `${category?.createdCategory.id}`,
+              //   icon: imageUrl,
+              // });
+
+              queryClient.invalidateQueries({ queryKey: ["agencies"] });
+              queryClient.invalidateQueries({ queryKey: ["agency"] });
+              toast.success(`Agence crééee avec avec succèes`);
+              router.back();
+            },
+          }
+        );
       } catch (error: any) {
         toast.error(JSON.stringify(error));
       }
@@ -180,7 +189,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
           />
           <ErrorMessage>{errors.phone?.message}</ErrorMessage>
         </div>
-
 
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Documents</p>

@@ -48,7 +48,7 @@ const AgenciesTable = ({
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/transport/agencies/${agency.id}`)}
+                onClick={() => router.push(`/transport/agencies/edit/${agency.id}`)}
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>

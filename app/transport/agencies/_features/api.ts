@@ -11,6 +11,15 @@ export const fetchAgencies = async (axios: AxiosInstance, page: string) => {
   }
 };
 
+export const fetchAgency = async (axios: AxiosInstance, id: string) => {
+  try {
+    const res = await axios.get(`/transport-agencies/${id}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
 export const createAgency = async (
   axios: AxiosInstance,
   data: TransportAgencyPayload
