@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { TransportAgencyResponse } from "../agencies/_features/type";
 import { agenciesColumns } from "../agencies/list/loading";
+import { useDispatch } from "react-redux";
+import { setAgency } from "@/redux/features/agencySlice";
 
 const AgenciesTable = ({
   agenciesResponse,
@@ -12,6 +14,7 @@ const AgenciesTable = ({
   agenciesResponse: TransportAgencyResponse;
 }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   return (
     <Table.Root variant="surface">
@@ -48,7 +51,10 @@ const AgenciesTable = ({
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/transport/agencies/${agency.id}`)}
+                onClick={() => {
+                  dispatch(setAgency(agency));
+                  router.push(`/transport/agencies/${agency.id}`);
+                }}
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>

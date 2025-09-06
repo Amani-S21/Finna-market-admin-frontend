@@ -4,18 +4,20 @@ import React from "react";
 import VehiclesListLoading from "./loading";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { BackButton, Pagination } from "@/app/_components";
 import { Flex } from "@radix-ui/themes";
-import VehiclesTable from "../../agencies/_components/VehiclesTable";
-import VehiclesToolBar from "../_components/VehiclesToolBar";
-import { useFetchVehicles } from "../_features/hooks";
+import VehiclesTable from "../../../agencies/_components/VehiclesTable";
+import VehiclesToolBar from "../../_components/VehiclesToolBar";
+import { useFetchVehicles } from "../../_features/hooks";
 
 const VehiclesListPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "";
+  const params = useParams<{ id: string }>();
+  const id = params.id;
 
   const {
     data: vehiclesResponse,
@@ -34,7 +36,7 @@ const VehiclesListPage = () => {
   return (
     <Flex direction="column" gap="4">
       <BackButton />
-      <VehiclesToolBar />
+      <VehiclesToolBar agencyId={id} />
       {vehiclesResponse && (
         <VehiclesTable vehiclesResponse={vehiclesResponse} />
       )}

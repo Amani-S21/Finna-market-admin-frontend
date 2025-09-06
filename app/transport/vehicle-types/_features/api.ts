@@ -1,13 +1,21 @@
 import { AxiosInstance } from "axios";
-import {  VehicleTypePayload } from "./types";
+import { VehicleTypePayload } from "./types";
 
 export const fetchVehicleTypes = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/vehicle-types?page=${page}&limit=10`);
     return res.data;
-  } catch (error: any) {
-    
-  }
+  } catch (error: any) {}
+};
+
+export const searchVehicleTypes = async (
+  axios: AxiosInstance,
+  term: string
+) => {
+  try {
+    const res = await axios.get(`/vehicle-types/search?term=${term}`);
+    return res.data;
+  } catch (error: any) {}
 };
 
 export const createVehicleType = async (
@@ -61,7 +69,10 @@ export const updateVehicleType = async (
   }
 };
 
-export const fetchVehicleType = async (axios: AxiosInstance, vehicleTypeId: string) => {
+export const fetchVehicleType = async (
+  axios: AxiosInstance,
+  vehicleTypeId: string
+) => {
   try {
     const res = await axios.get(`/vehicle-types/${vehicleTypeId}`);
     return res.data;

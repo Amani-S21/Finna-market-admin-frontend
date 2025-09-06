@@ -2,23 +2,20 @@
 
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { formattedDate } from "@/app/lib/tools";
 import {
   Button,
   Card,
-  Flex,
   Grid,
   Heading,
   Link,
-  Text,
+  Text
 } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import { useFetchVehicle } from "../_features/hooks";
 import LoadingVehicleDetails from "./loading";
-import { formattedDate } from "@/app/lib/tools";
-import router from "next/router";
-import VehiclesTable from "../../agencies/_components/VehiclesTable";
 
 const BuildVehicleDetailsPage = () => {
   const { status } = useSession();

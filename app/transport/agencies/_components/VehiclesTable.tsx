@@ -28,17 +28,7 @@ const VehiclesTable = ({
         {vehiclesResponse?.data.map((vehicle, index) => (
           <Table.Row align="center" key={vehicle.id}>
             <Table.Cell>{index + 1}</Table.Cell>
-            <Table.Cell>
-              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-200 relative">
-                {/* <Image
-                  height={50}
-                  width={60}
-                  alt="product image"
-                  src={`https://fr.asiastarbuses.com/uploads/202024954/js6600g12554343632.jpg`}
-                  className="object-cover rounded-md"
-                /> */}
-              </div>
-            </Table.Cell>
+            <Table.Cell>{vehicle.model}</Table.Cell>
             <Table.Cell>{vehicle.plateNumber}</Table.Cell>
 
             <Table.Cell>

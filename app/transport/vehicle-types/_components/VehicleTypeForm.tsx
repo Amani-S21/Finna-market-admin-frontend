@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import { useCreateVehicleType, UseUpdateVehicleType } from "../_features/hooks";
 import { VehicleType } from "../_features/types";
 import { newVehicleSchema, NewVehicleSchema } from "../_features/validations";
+import VehicleTypeSelect from "./VehicleTypesSelect";
+import { useState } from "react";
 
 const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
   const axios = useAxiosAuth();
@@ -55,7 +57,7 @@ const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
           }
         );
       } catch (error: any) {
-        toast.error(JSON.stringify(error));
+        // toast.error(JSON.stringify(error));
       }
     } else {
       try {
@@ -73,7 +75,7 @@ const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
           }
         );
       } catch (error: any) {
-        toast.error(JSON.stringify(error));
+        // toast.error(JSON.stringify(error));
       }
     }
   };
@@ -101,6 +103,8 @@ const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
+
+       
 
         {/* <div className="flex flex-col space-y-2 mt-6">
           <Flex justify="between">

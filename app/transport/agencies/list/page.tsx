@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
 import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import AgenciesTable from "../../_components/AgenciesTable";
 import AgenciesToolBar from "../../_components/ToolBar";
 import { useFetchAgencies } from "../_features/hooks";
@@ -15,6 +15,8 @@ const AgenciesPage = () => {
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "";
+  // const params = useParams<{ id: string }>();
+  // const id = params.id;
 
   const {
     data: agenciesResponse,
@@ -28,8 +30,10 @@ const AgenciesPage = () => {
 
   return (
     <Flex direction="column" gap="4">
-      <AgenciesToolBar />
-      {agenciesResponse && <AgenciesTable agenciesResponse={agenciesResponse} />}
+      <AgenciesToolBar  />
+      {agenciesResponse && (
+        <AgenciesTable agenciesResponse={agenciesResponse} />
+      )}
       <Pagination
         pageSize={10}
         currentPage={parseInt(page)}

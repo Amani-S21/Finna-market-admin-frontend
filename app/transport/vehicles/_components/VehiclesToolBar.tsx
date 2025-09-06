@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { IoStorefrontOutline } from "react-icons/io5";
 
-const VehiclesToolBar = () => {
+const VehiclesToolBar = ({ agencyId }: { agencyId: string }) => {
   return (
     <Flex justify="between">
       <div>
@@ -16,7 +16,7 @@ const VehiclesToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/transport/agencies/new">
+      <Link href={`/transport/vehicles/new/${agencyId}`}>
         <Button>
           <span className="text-xs">Nouveau vehicule</span>
         </Button>

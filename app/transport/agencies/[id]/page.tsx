@@ -83,7 +83,9 @@ const BuildAgencyDetailPage = () => {
             </Heading>
             <Text
               className="hover:cursor-pointer"
-              onClick={() => router.push(`/transport/vehicles/list?page=1`)}
+              onClick={() =>
+                router.push(`/transport/vehicles/list/${agency?.id}?page=1`)
+              }
             >
               Voir plus
             </Text>
@@ -94,7 +96,7 @@ const BuildAgencyDetailPage = () => {
         </div>
         <div>
           <Link href={`/transport/agencies/edit/${agency?.id}`}>
-            <Button>Modifier</Button>
+            <Button>Modifier l'agence</Button>
           </Link>
         </div>
       </Grid>
