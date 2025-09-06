@@ -6,12 +6,12 @@ import { formattedDate } from "@/app/lib/tools";
 import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
-import { useFetchAgency, useFetchVehicles } from "../_features/hooks";
-import LoadingAgencyDetails from "./loading";
 import VehiclesTable from "../_components/VehiclesTable";
-import { Row } from "@radix-ui/themes/components/table";
+import { useFetchAgency } from "../_features/hooks";
+import LoadingAgencyDetails from "./loading";
+import { useFetchVehicles } from "../../vehicles/_features/hooks";
 
 const BuildAgencyDetailPage = () => {
   const { status } = useSession();
@@ -19,6 +19,7 @@ const BuildAgencyDetailPage = () => {
   const params = useParams<{ id: string }>();
   const id = params.id;
   const axios = useAxiosAuth();
+  const router = useRouter();
 
   const {
     data: agency,
@@ -80,7 +81,12 @@ const BuildAgencyDetailPage = () => {
             <Heading className="lowercase first-letter:uppercase" mb="4">
               Quelques engins
             </Heading>
-            <Text className="hover:cursor-pointer">Voir plus</Text>
+            <Text
+              className="hover:cursor-pointer"
+              onClick={() => router.push(`/transport/vehicles/list?page=1`)}
+            >
+              Voir plus
+            </Text>
           </Flex>
           {vehiclesResponse && (
             <VehiclesTable vehiclesResponse={vehiclesResponse} />

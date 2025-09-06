@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { TransportAgency, TransportAgencyPayload, TransportAgencyResponse, VehiclesResponse } from "./type";
-import { createAgency, fetchAgencies, fetchAgency, fetchVehicles, updateAgency } from "./api";
+import { createAgency, fetchAgencies, fetchAgency, updateAgency } from "./api";
+import { TransportAgency, TransportAgencyPayload, TransportAgencyResponse } from "./type";
 
 type UseFetchAgencies = {
   axios: AxiosInstance;
@@ -61,26 +61,5 @@ type UseUpdateShop = {
 export const useUpdateAgency = ({ axios, id }: UseUpdateShop) => {
   return useMutation<void, Error, TransportAgencyPayload>({
     mutationFn: (data: TransportAgencyPayload) => updateAgency(axios, id, data),
-  });
-};
-
-
-type UseFetchVehicles = {
-  axios: AxiosInstance;
-  page: number;
-  enabled: boolean;
-};
-
-export const useFetchVehicles = ({
-  axios,
-  page,
-  enabled,
-}: UseFetchVehicles) => {
-  return useQuery<VehiclesResponse>({
-    queryKey: ["vehicles", page],
-    queryFn: () => fetchVehicles(axios, page),
-    staleTime: 60 * 1000 * 60,
-    retry: 3,
-    enabled,
   });
 };

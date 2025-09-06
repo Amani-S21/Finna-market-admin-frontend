@@ -71,14 +71,4 @@ export const updateAgency = async (
   }
 };
 
-export const fetchVehicles = async (
-  axios: AxiosInstance,
-  page: number,
-) => {
-  try {
-    const res = await axios.get(`/vehicles?page=${page}&limit=10`);
-    return res.data;
-  } catch (error: any) {
-    toast.error(JSON.stringify(error));
-  }
-};
+
