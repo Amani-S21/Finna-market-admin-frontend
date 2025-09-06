@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Vehicle } from "../../agencies/_features/type";
@@ -34,10 +34,24 @@ const VehicleForm = ({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<NewVehicleSchema>({
     resolver: zodResolver(newVehicleSchema),
+    defaultValues: {
+      plateNumber: vehicle?.plateNumber ?? "",
+      model: vehicle?.model ?? "",
+      capacity: `${vehicle?.capacity}`,
+    },
   });
+
+  useEffect(() => {
+    if (vehicle) {
+      setValue("plateNumber", vehicle.plateNumber);
+      setValue("model", vehicle.model);
+      setValue("capacity", `${vehicle.capacity}`);
+    }
+  }, [vehicle, setValue]);
 
   const { mutateAsync: createVehicle, error: createError } = useCreateVehicle({
     axios,
@@ -57,7 +71,7 @@ const VehicleForm = ({
             model: data.model,
             capacity: Number(data.capacity),
             vehicleTypeId: `${selectedVehicleType?.id}`,
-            agencyId,
+            agencyId: vehicle.agencyId,
           },
           {
             onSuccess: () => {
@@ -96,6 +110,12 @@ const VehicleForm = ({
     }
   };
 
+  useEffect(() => {
+    if (vehicle) {
+      setSelectedVehicleType(vehicle.vehicleType);
+    }
+  }, [vehicle]);
+
   return (
     <div className="max-w-xl">
       {createError && (
@@ -114,7 +134,7 @@ const VehicleForm = ({
           <p className="text-sm font-bold">Numero plaque</p>
           <TextField.Root
             {...register("plateNumber")}
-            defaultValue={vehicle?.plateNumber}
+            // defaultValue={vehicle?.plateNumber}
             placeholder="Entrer le numero de la plaque"
           />
           <ErrorMessage>{errors.plateNumber?.message}</ErrorMessage>
@@ -124,7 +144,7 @@ const VehicleForm = ({
           <p className="text-sm font-bold">Model</p>
           <TextField.Root
             {...register("model")}
-            defaultValue={vehicle?.plateNumber}
+            // defaultValue={vehicle?.model}
             placeholder="Entrer le numero du model"
           />
           <ErrorMessage>{errors.model?.message}</ErrorMessage>
@@ -134,7 +154,7 @@ const VehicleForm = ({
           <p className="text-sm font-bold">Capacité</p>
           <TextField.Root
             {...register("capacity")}
-            defaultValue={vehicle?.capacity}
+            // defaultValue={vehicle?.capacity}
             placeholder="Entrer la capacité"
           />
           <ErrorMessage>{errors.capacity?.message}</ErrorMessage>
