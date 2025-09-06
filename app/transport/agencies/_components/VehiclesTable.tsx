@@ -3,13 +3,13 @@
 import { Badge, IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-import { TransportAgencyResponse } from "../agencies/_features/type";
-import { agenciesColumns } from "../agencies/list/loading";
+import { VehiclesResponse } from "../_features/type";
+import { vehiclesColumns } from "../[id]/loading";
 
-const AgenciesTable = ({
-  agenciesResponse,
+const VehiclesTable = ({
+  vehiclesResponse,
 }: {
-  agenciesResponse: TransportAgencyResponse;
+  vehiclesResponse: VehiclesResponse;
 }) => {
   const router = useRouter();
 
@@ -17,7 +17,7 @@ const AgenciesTable = ({
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {agenciesColumns.map((column) => (
+          {vehiclesColumns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
               {column.label}
             </Table.ColumnHeaderCell>
@@ -25,8 +25,8 @@ const AgenciesTable = ({
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {agenciesResponse?.data.map((agency, index) => (
-          <Table.Row align="center" key={agency.id}>
+        {vehiclesResponse?.data.map((vehicle, index) => (
+          <Table.Row align="center" key={vehicle.id}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
               <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-200 relative">
@@ -39,16 +39,16 @@ const AgenciesTable = ({
                 /> */}
               </div>
             </Table.Cell>
-            <Table.Cell>{agency.name}</Table.Cell>
-            <Table.Cell>{agency.phone}</Table.Cell>
+            <Table.Cell>{vehicle.plateNumber}</Table.Cell>
+
             <Table.Cell>
-              {agency.visible ? <Badge>Visible</Badge> : <Badge>Caché</Badge>}
+              {vehicle.visible ? <Badge>Visible</Badge> : <Badge>Caché</Badge>}
             </Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/transport/agencies/${agency.id}`)}
+                // onClick={() => router.push(`/transport/agencies/${agency.id}`)}
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>
@@ -60,4 +60,4 @@ const AgenciesTable = ({
   );
 };
 
-export default AgenciesTable;
+export default VehiclesTable;

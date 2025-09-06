@@ -39,19 +39,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   //   return `${data?.imgName}`;
   // };
 
-  // useEffect(() => {
-  //   if (agency) {
-  //     dispatch(
-  //       addSubCategories([
-  //         ...category.subCategories.map((v, index) => ({
-  //           id: v.id,
-  //           index: index,
-  //           name: v.name,
-  //         })),
-  //       ])
-  //     );
-  //   }
-  // }, [category, dispatch]);
 
   const {
     register,
@@ -65,9 +52,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
     axios,
   });
 
-  // const { mutateAsync: updateCategoryIcon } = useUpdateCategoryIcon({
-  //   axios,
-  // });
 
   const { mutateAsync: updateAgency, error: updateError } = useUpdateAgency({
     axios,
@@ -225,34 +209,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
             }}
           />
         </div>
-
-        {/* <div className="flex flex-col space-y-2 mt-6">
-          <Flex justify="between">
-            <p className="text-sm font-bold">Sous catégorie</p>
-            <Flex
-              align="center"
-              onClick={() => {
-                dispatch(
-                  addSubCategory({
-                    index: subCategories?.length,
-                    name: watch("subCategory") ?? "",
-                  })
-                );
-
-                resetField("subCategory");
-              }}
-            >
-              <IoIosAdd size={20} />
-              <p className="text-sm underline hover:cursor-default">
-                Ajoutrer à la liste
-              </p>
-            </Flex>
-          </Flex>
-          <TextField.Root
-            {...register("subCategory")}
-            placeholder="Type de la caractéristique"
-          />
-        </div> */}
 
         <Button disabled={isSubmitting} mt="4">
           {agency ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}

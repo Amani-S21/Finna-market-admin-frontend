@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { newAgencySchema } from "./validations";
+import { VehicleType } from "../../vehicle-types/_features/types";
 
 export interface TransportAgencyResponse {
   count: number;
@@ -28,5 +29,22 @@ export type TransportAgencyPayload = {
   photo: string | null;
 };
 
-
 export type NewAgencySchema = z.infer<typeof newAgencySchema>;
+
+export type VehiclesResponse = {
+  count: number;
+  data: Vehicle[];
+};
+
+export type Vehicle = {
+  id: string;
+  plateNumber: string;
+  model: string;
+  capacity: number;
+  visible: boolean;
+  agencyId: string;
+  vehicleTypeId: string;
+  createdAt: string;
+  updatedAt: string;
+  vehicleType: VehicleType;
+};
