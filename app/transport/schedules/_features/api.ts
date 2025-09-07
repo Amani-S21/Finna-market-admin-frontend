@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { TripPayload } from "./types";
+import { getErrorMessage } from "@/app/lib/axiosErrorHandler";
 
 export const createTripes = async (axios: AxiosInstance, data: TripPayload) => {
   try {
@@ -15,26 +16,23 @@ export const updateTripes = async (axios: AxiosInstance, data: TripPayload) => {
     const res = await axios.put("/schedules", data);
     return res.data;
   } catch (error: any) {
-    const statusCode = error?.response?.status;
-    let message = "";
-
-    switch (statusCode) {
-      case 409:
-        message = "Element existant";
-        break;
-
-      default:
-        message = "Une erreur inconue est survenue";
-    }
-
-    const customError = new Error(message);
-    throw customError;
+    getErrorMessage(error);
   }
 };
 
-export const getErrorMessage = (error: any): string => {
-  const statusCode = error?.response?.status;
-  const backendMessage =
-    error?.response?.data?.message ?? "Une erreur est survenue";
-  throw Error(backendMessage);
+export const fetchVehicleSchedules = async (
+  axios: AxiosInstance,
+  page: string,
+  vehicleId?: string
+) => {
+  try {
+    const res = vehicleId
+      ? await axios.get(
+          `/schedules?page=${page}&limit=10&vehicleId=${vehicleId}`
+        )
+      : await axios.get(`/schedules?page=${page}&limit=10`);
+    return res.data;
+  } catch (error: any) {
+    getErrorMessage(error);
+  }
 };

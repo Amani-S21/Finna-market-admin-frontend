@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
-import { TripPayload } from "./types";
-import { createTripes, updateTripes } from "./api";
-import { useMutation } from "@tanstack/react-query";
+import { SchedulesResponse, TripPayload } from "./types";
+import { createTripes, fetchVehicleSchedules, updateTripes } from "./api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type UseCreatePlace = {
   axios: AxiosInstance;
@@ -20,5 +20,27 @@ type UseUpdatePlace = {
 export const useUpdateTrip = ({ axios }: UseUpdatePlace) => {
   return useMutation<void, Error, TripPayload>({
     mutationFn: (data: TripPayload) => updateTripes(axios, data),
+  });
+};
+
+type UseFetchVehicleSchedules = {
+  axios: AxiosInstance;
+  page: string;
+  vehicleId?: string;
+  enabled: boolean;
+};
+
+export const useFetchVehicleSchedules = ({
+  axios,
+  page,
+  vehicleId,
+  enabled,
+}: UseFetchVehicleSchedules) => {
+  return useQuery<SchedulesResponse>({
+    queryKey: ["vehicles", vehicleId],
+    queryFn: () => fetchVehicleSchedules(axios, page, vehicleId),
+    staleTime: 60 * 1000,
+    retry: 3,
+    enabled,
   });
 };

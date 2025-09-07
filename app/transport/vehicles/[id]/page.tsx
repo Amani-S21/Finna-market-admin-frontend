@@ -7,8 +7,10 @@ import { Button, Card, Grid, Heading, Link, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
-import { useFetchVehicle } from "../_features/hooks";
+import { useFetchVehicle, useFetchVehicles } from "../_features/hooks";
 import LoadingVehicleDetails from "./loading";
+import { useFetchVehicleSchedules } from "../../schedules/_features/hooks";
+import VehicleSchedulesTable from "../_components/VehicleSchedulesTable";
 
 const BuildVehicleDetailsPage = () => {
   const { status } = useSession();
@@ -25,6 +27,14 @@ const BuildVehicleDetailsPage = () => {
     id,
     enabled: status === "authenticated",
   });
+
+  const { data: vehicleSchedulesResponse, isLoading: isLoadingSchedules } =
+    useFetchVehicleSchedules({
+      axios,
+      page: "1",
+      vehicleId: id,
+      enabled: status === "authenticated",
+    });
 
   if (status === "loading" || isLoading) return <LoadingVehicleDetails />;
 
@@ -63,6 +73,15 @@ const BuildVehicleDetailsPage = () => {
             </Text>
             <p className="mt-1">{vehicleDetails?.plateNumber}</p>
           </Card>
+
+          <Heading className="lowercase first-letter:uppercase" mt="6" mb="4">
+            Quelques horaires du buss
+          </Heading>
+          {vehicleSchedulesResponse && (
+            <VehicleSchedulesTable
+              schedulesResponse={vehicleSchedulesResponse}
+            />
+          )}
         </div>
         <div className="flex gap-4">
           <Link href={`/transport/vehicles/edit/${vehicleDetails?.id}`}>
