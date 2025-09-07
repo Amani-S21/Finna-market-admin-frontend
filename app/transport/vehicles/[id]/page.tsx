@@ -7,10 +7,12 @@ import { Button, Card, Grid, Heading, Link, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
-import { useFetchVehicle, useFetchVehicles } from "../_features/hooks";
-import LoadingVehicleDetails from "./loading";
 import { useFetchVehicleSchedules } from "../../schedules/_features/hooks";
 import VehicleSchedulesTable from "../_components/VehicleSchedulesTable";
+import { useFetchVehicle } from "../_features/hooks";
+import LoadingVehicleDetails from "./loading";
+import { useFetchSeats } from "../../seats/_features/hooks";
+import SeatsTable from "../../seats/_components/SeatsTable";
 
 const BuildVehicleDetailsPage = () => {
   const { status } = useSession();
@@ -28,6 +30,13 @@ const BuildVehicleDetailsPage = () => {
     enabled: status === "authenticated",
   });
 
+  const { data: seatsResponse, isLoading: isLoadingSeats } = useFetchSeats({
+    axios,
+    page: "1",
+    vehicleId: id,
+    enabled: status === "authenticated",
+  });
+
   const { data: vehicleSchedulesResponse, isLoading: isLoadingSchedules } =
     useFetchVehicleSchedules({
       axios,
@@ -36,7 +45,8 @@ const BuildVehicleDetailsPage = () => {
       enabled: status === "authenticated",
     });
 
-  if (status === "loading" || isLoading) return <LoadingVehicleDetails />;
+  if (status === "loading" || isLoading || isLoadingSeats)
+    return <LoadingVehicleDetails />;
 
   if (error) notFound();
 
@@ -73,6 +83,10 @@ const BuildVehicleDetailsPage = () => {
             </Text>
             <p className="mt-1">{vehicleDetails?.plateNumber}</p>
           </Card>
+          <Heading className="lowercase first-letter:uppercase" mt="6" mb="4">
+            Sieges
+          </Heading>
+          {seatsResponse && <SeatsTable seatsResponse={seatsResponse} />}
 
           <Heading className="lowercase first-letter:uppercase" mt="6" mb="4">
             Quelques horaires du buss
@@ -83,12 +97,15 @@ const BuildVehicleDetailsPage = () => {
             />
           )}
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           <Link href={`/transport/vehicles/edit/${vehicleDetails?.id}`}>
             <Button>Modifier le vehicule</Button>
           </Link>
           <Link href={`/transport/schedules/new/${vehicleDetails?.id}`}>
             <Button variant="outline">Nouvel horaire</Button>
+          </Link>
+          <Link href={`/transport/seats/new/${vehicleDetails?.id}`}>
+            <Button variant="outline">Créer une place</Button>
           </Link>
         </div>
       </Grid>

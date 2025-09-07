@@ -13,4 +13,13 @@ export const vehicleSchedulesColumns: {
   { label: "Action" },
 ];
 
+export const seatsColumns: {
+  label: string;
+}[] = [
+  { label: "N" },
+  { label: "Nom" },
+  { label: "Type" },
+  { label: "Action" },
+];
+
 export default LoadingVehicleDetails;
