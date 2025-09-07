@@ -12,8 +12,6 @@ import toast from "react-hot-toast";
 import { useCreateVehicleType, UseUpdateVehicleType } from "../_features/hooks";
 import { VehicleType } from "../_features/types";
 import { newVehicleSchema, NewVehicleSchema } from "../_features/validations";
-import VehicleTypeSelect from "./VehicleTypesSelect";
-import { useState } from "react";
 
 const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
   const axios = useAxiosAuth();

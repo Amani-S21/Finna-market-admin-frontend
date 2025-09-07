@@ -3,14 +3,7 @@
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { formattedDate } from "@/app/lib/tools";
-import {
-  Button,
-  Card,
-  Grid,
-  Heading,
-  Link,
-  Text
-} from "@radix-ui/themes";
+import { Button, Card, Grid, Heading, Link, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
@@ -62,22 +55,21 @@ const BuildVehicleDetailsPage = () => {
             <Text size="2" className="text-gray-600 font-bold">
               Type
             </Text>
-            <p className="mt-1">
-              {vehicleDetails?.vehicleType.name}
-            </p>
+            <p className="mt-1">{vehicleDetails?.vehicleType.name}</p>
           </Card>
           <Card mt="4" variant="ghost">
             <Text size="2" className="text-gray-600 font-bold">
               Numero de plaque
             </Text>
-            <p className="mt-1">
-              {vehicleDetails?.plateNumber}
-            </p>
+            <p className="mt-1">{vehicleDetails?.plateNumber}</p>
           </Card>
         </div>
-        <div>
+        <div className="flex gap-4">
           <Link href={`/transport/vehicles/edit/${vehicleDetails?.id}`}>
-            <Button>Modifier</Button>
+            <Button>Modifier le vehicule</Button>
+          </Link>
+          <Link href={`/transport/schedules/new/${vehicleDetails?.id}`}>
+            <Button variant="outline">Nouvel horaire</Button>
           </Link>
         </div>
       </Grid>

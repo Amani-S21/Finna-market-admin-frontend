@@ -15,6 +15,7 @@ import { CiTrash } from "react-icons/ci";
 import { useCreateAgency, useUpdateAgency } from "../agencies/_features/hooks";
 import { NewAgencySchema, TransportAgency } from "../agencies/_features/type";
 import { newAgencySchema } from "../agencies/_features/validations";
+import TimePickerComponent from "@/app/_components/TimePicker";
 
 const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   const axios = useAxiosAuth();
@@ -39,7 +40,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   //   return `${data?.imgName}`;
   // };
 
-
   const {
     register,
     handleSubmit,
@@ -51,7 +51,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   const { mutateAsync: createAgency, error: createError } = useCreateAgency({
     axios,
   });
-
 
   const { mutateAsync: updateAgency, error: updateError } = useUpdateAgency({
     axios,
@@ -142,6 +141,7 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
           <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
+
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">

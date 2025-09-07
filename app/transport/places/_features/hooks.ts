@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { PlacesResponse, PlaceType, PlaceTypePayload } from "./types";
-import { createPlaces, fetchPlace, fetchPlaces, updatePlace } from "./api";
+import { createPlaces, fetchPlace, fetchPlaces, searchPlaces, updatePlace } from "./api";
 
 type UseFetchPlaces = {
   axios: AxiosInstance;
@@ -53,5 +53,25 @@ type UseUpdatePlace = {
 export const useUpdatePlace = ({ axios, id }: UseUpdatePlace) => {
   return useMutation<void, Error, PlaceTypePayload>({
     mutationFn: (data: PlaceTypePayload) => updatePlace(axios, id, data),
+  });
+};
+
+type UseSearchPlaces = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchPlaces = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchPlaces) => {
+  return useQuery<PlaceType[]>({
+    queryKey: ["places", term],
+    queryFn: () => searchPlaces(axios, term),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
   });
 };

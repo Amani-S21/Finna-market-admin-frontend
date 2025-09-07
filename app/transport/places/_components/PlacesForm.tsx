@@ -29,11 +29,7 @@ const PlacesForm = ({ placeType }: { placeType?: PlaceType }) => {
   const { mutateAsync: createPlace, error: createError } = useCreatePlace({
     axios,
   });
-
-  // const { mutateAsync: updateCategoryIcon } = useUpdateCategoryIcon({
-  //   axios,
-  // });
-
+  
   const { mutateAsync: updatePlace, error: updateError } = useUpdatePlace({
     axios,
     id: `${placeType?.id}`,

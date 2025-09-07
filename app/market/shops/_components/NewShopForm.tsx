@@ -26,7 +26,6 @@ const NewShopForm = () => {
   const router = useRouter();
 
   const [selectedShopType, setSelectedshopType] = useState<ShopType>();
-
   const [openDialog, setOpenDialog] = useState(false);
 
   const [selectedShopCategories, setSelectedShopCategories] =
