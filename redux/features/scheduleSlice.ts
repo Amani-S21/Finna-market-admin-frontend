@@ -34,8 +34,12 @@ const scheduleSlice = createSlice({
         toast.success("Segment supprimé de la liste");
       }
     },
+    clearTripLeg: (state) => {
+      state.tripLegs = [];
+    },
   },
 });
 
-export const { addTripLeg, deleteTripLeg } = scheduleSlice.actions;
+export const { addTripLeg, deleteTripLeg, clearTripLeg } =
+  scheduleSlice.actions;
 export default scheduleSlice.reducer;

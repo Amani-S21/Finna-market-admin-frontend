@@ -6,17 +6,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Select, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { DateObject } from "react-multi-date-picker";
 import { useSelector } from "react-redux";
 import PlaceSelect from "../../places/_components/PlacesSelect";
 import { PlaceType } from "../../places/_features/types";
-import { useCreateTrip } from "../_features/hooks";
+import { useCreateTrip, useUpdateTrip } from "../_features/hooks";
 import { Schedule, TripPayload } from "../_features/types";
 import { NewTripSchema, newTripSchema } from "../_features/validations";
 import { AxiosError } from "axios";
+import { formatTime } from "@/app/lib/timeformat";
 
 export const weekDays: { day: string; value: number }[] = [
   { day: "Lundi", value: 1 },
@@ -52,6 +53,7 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<NewTripSchema>({
     resolver: zodResolver(newTripSchema),
@@ -61,36 +63,87 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
     axios,
   });
 
-  // const { mutateAsync: updateSchedule, error: updateError } = useUpdateTrip({
-  //   axios,
-  //   id: `${placeType?.id}`,
-  // });
+  const { mutateAsync: updateSchedule, error: updateError } = useUpdateTrip({
+    axios,
+    id: `${schedule?.id}`,
+  });
 
   const onSubmit = async (data: NewTripSchema) => {
-    const trip: TripPayload = {
-      departure: `${depatureTime}`,
-      arrival: `${arrivalTime}`,
-      fromId: `${selectedPlace?.id}`,
-      toId: `${selectedDestinationPlace?.id}`,
-      price: Number(data.price),
-      vehicleId,
-      dayOfWeek: Number(`${selectedDay}`),
-      legs: (tripLegs ?? []).map(({ id, ...others }) => others),
-    };
+    if (schedule) {
+      try {
+        const trip: TripPayload = {
+          departure: depatureTime?.format("HH:mm") ?? "",
+          arrival: arrivalTime?.format("HH:mm") ?? "",
+          fromId: `${selectedPlace?.id}`,
+          toId: `${selectedDestinationPlace?.id}`,
+          price: Number(data.price),
+          vehicleId: schedule.vehicleId,
+          dayOfWeek: Number(`${selectedDay}`),
+          legs: (tripLegs ?? []).map(
+            ({ id, departure, arrival, ...others }) => ({
+              ...others,
+              departure: formatTime(departure),
+              arrival: formatTime(arrival),
+            })
+          ),
+        };
 
-    try {
-      await createSchedule(trip, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["schedules"] });
-          queryClient.invalidateQueries({ queryKey: ["schedule"] });
-          toast.success(`Horaire créé avec avec succèes`);
-          router.back();
-        },
-      });
-    } catch (error: any) {
-      toast.error(error.message);
+        console.log(JSON.stringify(trip));
+        await updateSchedule(trip, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["schedules"] });
+            queryClient.invalidateQueries({ queryKey: ["schedule"] });
+            toast.success(`Horaire modifé avec avec succèes`);
+            router.back();
+          },
+        });
+      } catch (error: any) {
+        toast.error(error.message);
+      }
+    } else {
+      try {
+        const trip: TripPayload = {
+          departure: `${depatureTime}`,
+          arrival: `${arrivalTime}`,
+          fromId: `${selectedPlace?.id}`,
+          toId: `${selectedDestinationPlace?.id}`,
+          price: Number(data.price),
+          vehicleId,
+          dayOfWeek: Number(`${selectedDay}`),
+          legs: (tripLegs ?? []).map(({ id, ...others }) => others),
+        };
+
+        console.log(JSON.stringify(trip));
+
+        await createSchedule(trip, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["schedules"] });
+            queryClient.invalidateQueries({ queryKey: ["schedule"] });
+            toast.success(`Horaire créé avec avec succèes`);
+            router.back();
+          },
+        });
+      } catch (error: any) {
+        toast.error(error.message);
+      }
     }
   };
+
+  useEffect(() => {
+    if (schedule) {
+      setValue("price", `${schedule.price}`);
+    }
+  }, [schedule, setValue]);
+
+  useEffect(() => {
+    if (schedule) {
+      setSelectedPlace(schedule.from);
+      setSelectedDestinationPlace(schedule.to);
+      setArrivalTime(new DateObject(new Date(schedule.arrival)));
+      setDepatureTime(new DateObject(new Date(schedule.departure)));
+      setSelectedDay(schedule.dayOfWeek);
+    }
+  }, [schedule]);
 
   return (
     <div className="w-full">
@@ -98,14 +151,19 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Jour</p>
           <Select.Root
+            value={
+              selectedDay
+                ? String(selectedDay)
+                : String(schedule?.dayOfWeek ?? "")
+            }
             onValueChange={(selectedDay) => {
               setSelectedDay(Number(selectedDay));
             }}
           >
-            <Select.Trigger placeholder="Séléctionner un status" />
+            <Select.Trigger placeholder="Séléctionner un jour" />
             <Select.Content>
               {weekDays.map((day) => (
-                <Select.Item key={day.day} value={`${day.value}`}>
+                <Select.Item key={day.value} value={String(day.value)}>
                   {day.day}
                 </Select.Item>
               ))}

@@ -11,9 +11,13 @@ export const createTripes = async (axios: AxiosInstance, data: TripPayload) => {
   }
 };
 
-export const updateTripes = async (axios: AxiosInstance, data: TripPayload) => {
+export const updateTripes = async (
+  axios: AxiosInstance,
+  data: TripPayload,
+  id: string
+) => {
   try {
-    const res = await axios.put("/schedules", data);
+    const res = await axios.put(`/schedules/${id}`, data);
     return res.data;
   } catch (error: any) {
     getErrorMessage(error);

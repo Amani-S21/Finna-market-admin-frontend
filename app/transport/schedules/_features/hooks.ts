@@ -20,11 +20,12 @@ export const useCreateTrip = ({ axios }: UseCreatePlace) => {
 
 type UseUpdatePlace = {
   axios: AxiosInstance;
+  id: string;
 };
 
-export const useUpdateTrip = ({ axios }: UseUpdatePlace) => {
+export const useUpdateTrip = ({ axios, id }: UseUpdatePlace) => {
   return useMutation<void, Error, TripPayload>({
-    mutationFn: (data: TripPayload) => updateTripes(axios, data),
+    mutationFn: (data: TripPayload) => updateTripes(axios, data, id),
   });
 };
 

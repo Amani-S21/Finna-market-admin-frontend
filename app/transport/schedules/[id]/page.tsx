@@ -35,14 +35,18 @@ const BuildScheduleDetailPage = () => {
     enabled: status === "authenticated",
   });
 
-  const { data: vehiclesResponse, isLoading: isLoadingVehicles } =
-    useFetchVehicles({
-      axios,
-      page: 1,
-      enabled: status === "authenticated",
-    });
+  // const { data: vehiclesResponse, isLoading: isLoadingVehicles } =
+  //   useFetchVehicles({
+  //     axios,
+  //     page: 1,
+  //     enabled: status === "authenticated",
+  //   });
 
-  if (isLoading || isLoadingVehicles || status === "loading")
+  if (
+    isLoading ||
+    // || isLoadingVehicles
+    status === "loading"
+  )
     return <LoadingScheduleDetailsPage />;
 
   if (error) notFound();
@@ -88,6 +92,12 @@ const BuildScheduleDetailPage = () => {
               Heure d'arrivé
             </Text>
             <p className="mt-1">{formatTime(`${schedule?.arrival}`)}</p>
+          </Card>
+          <Card mt="4" variant="ghost">
+            <Text size="2" className="text-gray-600 font-bold">
+              Prix
+            </Text>
+            <p className="mt-1">{schedule?.price}</p>
           </Card>
 
           <Flex justify="between" align="center" mt="6">

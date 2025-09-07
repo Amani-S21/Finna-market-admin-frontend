@@ -74,20 +74,6 @@ const NewScheduleLegDialog = ({ setOpen, open }: Props) => {
         </Dialog.Description>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <div className="flex flex-col space-y-2 mt-6">
-            <p className="text-sm font-bold">Jour</p>
-            <Select.Root onValueChange={(status) => {}}>
-              <Select.Trigger placeholder="Séléctionner un jour" />
-              <Select.Content>
-                {weekDays.map((day) => (
-                  <Select.Item key={day.day} value={`${day.value}`}>
-                    {day.day}
-                  </Select.Item>
-                ))}
-              </Select.Content>
-            </Select.Root>
-          </div> */}
-
           <div className="flex flex-col space-y-2 mt-6">
             <p className="text-sm font-bold">Heure de départ</p>
             <TimePickerComponent
