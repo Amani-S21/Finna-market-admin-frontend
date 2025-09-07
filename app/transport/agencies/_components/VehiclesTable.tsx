@@ -38,7 +38,9 @@ const VehiclesTable = ({
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/transport/vehicles/${vehicle.id}`)}
+                onClick={() =>
+                  router.push(`/transport/vehicles/${vehicle.id}`)
+                }
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>

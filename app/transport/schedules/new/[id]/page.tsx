@@ -54,7 +54,6 @@ const NewSchedulePage = () => {
                 </Text>
               </Flex>
               <NewScheduleLegDialog
-                vehicleId=""
                 open={open}
                 setOpen={setOpen}
               />

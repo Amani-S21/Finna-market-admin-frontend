@@ -37,8 +37,7 @@ const VehicleSchedulesTable = ({
                 variant="ghost"
                 ml="4"
                 onClick={() => {
-                  // dispatch(setschedule(schedule));
-                  // router.push(`/transport/agencies/${schedule.id}`);
+                  router.push(`/transport/schedules/${schedule.id}`);
                 }}
               >
                 <IoIosMore size={20} color="black" />

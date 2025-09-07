@@ -19,7 +19,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 type Props = {
-  vehicleId: string;
   open: boolean;
   setOpen: (val: boolean) => void;
 };

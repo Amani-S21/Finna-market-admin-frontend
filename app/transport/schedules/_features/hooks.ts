@@ -1,6 +1,11 @@
 import { AxiosInstance } from "axios";
-import { SchedulesResponse, TripPayload } from "./types";
-import { createTripes, fetchVehicleSchedules, updateTripes } from "./api";
+import { Schedule, SchedulesResponse, TripPayload } from "./types";
+import {
+  createTripes,
+  fetchSchedule,
+  fetchVehicleSchedules,
+  updateTripes,
+} from "./api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 type UseCreatePlace = {
@@ -37,8 +42,24 @@ export const useFetchVehicleSchedules = ({
   enabled,
 }: UseFetchVehicleSchedules) => {
   return useQuery<SchedulesResponse>({
-    queryKey: ["vehicles", vehicleId],
+    queryKey: ["schedules-by-vehicle", vehicleId],
     queryFn: () => fetchVehicleSchedules(axios, page, vehicleId),
+    staleTime: 60 * 1000,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseFetchSchedule = {
+  axios: AxiosInstance;
+  id: string;
+  enabled: boolean;
+};
+
+export const useFetchSchedule = ({ axios, id, enabled }: UseFetchSchedule) => {
+  return useQuery<Schedule>({
+    queryKey: ["schedule", id],
+    queryFn: () => fetchSchedule(axios, id),
     staleTime: 60 * 1000,
     retry: 3,
     enabled,

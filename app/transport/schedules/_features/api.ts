@@ -20,6 +20,14 @@ export const updateTripes = async (axios: AxiosInstance, data: TripPayload) => {
   }
 };
 
+export const fetchSchedule = async (axios: AxiosInstance, id: string) => {
+  try {
+    const res = await axios.get(`/schedules/${id}`);
+    return res.data;
+  } catch (error: any) {
+    getErrorMessage(error);
+  }
+};
 export const fetchVehicleSchedules = async (
   axios: AxiosInstance,
   page: string,
