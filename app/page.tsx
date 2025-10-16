@@ -57,7 +57,7 @@ export default function Home() {
           </Card>
           <Card
             className="hover:cursor-pointer hover:bg-gray-300"
-            onClick={() => router.push("/market")}
+            onClick={() => router.push("/booking/dashboard")}
           >
             <div className="flex flex-col items-center justify-center h-full gap-4 py-4 px-6">
               <Heading size="3" color="gray">
