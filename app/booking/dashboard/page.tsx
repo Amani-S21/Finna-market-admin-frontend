@@ -1,7 +1,7 @@
 import React from "react";
 
 const TransportDashboard = () => {
-  return <div>Booking...</div>;
+  return <div>Dashboard</div>;
 };
 
 export default TransportDashboard;

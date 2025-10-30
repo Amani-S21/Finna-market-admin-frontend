@@ -10,8 +10,8 @@ export const hotelsColumns: {
   label: string;
 }[] = [
   { label: "N"},
+  { label: "Photos"},
   { label: "Nom"},
-  { label: "Catégories"},
   { label: "Date de création"},
   { label: "Action"},
 ];

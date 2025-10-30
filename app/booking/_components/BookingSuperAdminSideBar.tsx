@@ -2,12 +2,10 @@
 
 import logo from "@/public/logo.png";
 import classNames from "classnames";
-import { Hotel } from "lucide-react";
+import { BedDouble, Hotel } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AiOutlineProduct } from "react-icons/ai";
-import { LuLayoutDashboard } from "react-icons/lu";
 
 const BookingSuperAdminSideBar = () => {
   return (
@@ -54,6 +52,11 @@ const links = [
     href: "/booking/hotels/list?page=1",
     label: "Hotels",
     icon: <Hotel />,
+  },
+  {
+    href: "/booking/bookings/list?page=1",
+    label: "Réservations",
+    icon: <BedDouble />,
   },
 ];
 

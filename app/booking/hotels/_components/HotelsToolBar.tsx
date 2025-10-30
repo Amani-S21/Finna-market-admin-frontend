@@ -15,7 +15,7 @@ const HotelsToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/market/categories/new">
+      <Link href="/booking/hotels/new">
         <Button>
           <span className="text-xs">Nouvel hotel</span>
         </Button>

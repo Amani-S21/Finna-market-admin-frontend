@@ -1,0 +1,181 @@
+{
+  "countries": [
+    {
+      "name": "république démocratique du congo",
+      "code": "cd",
+      "accronym": "rdc",
+      "flag": "🇨🇩",
+      "provinces": [
+        {
+          "name": "Kongo Central",
+          "code": "KC",
+          "cities": [
+            { "name": "Matadi" },
+            { "name": "Boma" },
+            { "name": "Mbanza-Ngungu" },
+            { "name": "Moanda" },
+            { "name": "Kasangulu" },
+            { "name": "Tshikapa" },
+            { "name": "Kimpese" },
+            { "name": "Seke-Banza" },
+            { "name": "Songololo" },
+            { "name": "Lukula" }
+          ]
+        },
+        {
+          "name": "Kinshasa",
+          "cities": [{ "name": "Kinshasa" }]
+        },
+        {
+          "name": "Kwango",
+          "cities": [{ "name": "Kenge" }, { "name": "Popokabaka" }]
+        },
+        {
+          "name": "Kwilu",
+          "cities": [
+            { "name": "Bandundu" },
+            { "name": "Kikwit" },
+            { "name": "Idiofa" }
+          ]
+        },
+        {
+          "name": "Mai-Ndombe",
+          "cities": [{ "name": "Inongo" }, { "name": "Oshwe" }]
+        },
+        {
+          "name": "Sankuru",
+          "cities": [{ "name": "Lomela" }, { "name": "Lusambo" }]
+        },
+        {
+          "name": "Kasai",
+          "cities": [{ "name": "Luebo" }, { "name": "Tshikapa" }]
+        },
+        {
+          "name": "Kasai-Central",
+          "cities": [{ "name": "Kananga" }]
+        },
+        {
+          "name": "Kasai-Oriental",
+          "cities": [{ "name": "Mbuji-Mayi" }]
+        },
+        {
+          "name": "Lomami",
+          "cities": [{ "name": "Kabinda" }]
+        },
+        {
+          "name": "Haut-Lomami",
+          "cities": [{ "name": "Kamina" }]
+        },
+        {
+          "name": "Lualaba",
+          "cities": [{ "name": "Kolwezi" }]
+        },
+        {
+          "name": "Haut-Katanga",
+          "cities": [{ "name": "Lubumbashi" }, { "name": "Likasi" }]
+        },
+        {
+          "name": "Tanganyika",
+          "cities": [{ "name": "Kalemie" }]
+        },
+        {
+          "name": "Haut-Uele",
+          "cities": [{ "name": "Isiro" }]
+        },
+        {
+          "name": "Bas-Uele",
+          "cities": [{ "name": "Buta" }]
+        },
+        {
+          "name": "Ituri",
+          "cities": [{ "name": "Bunia" }]
+        },
+        {
+          "name": "Tshopo",
+          "cities": [{ "name": "Kisangani" }]
+        },
+        {
+          "name": "Haut-Mbomou",
+          "cities": [{ "name": "Isangi" }]
+        },
+        {
+          "name": "Nord Kivu",
+          "cities": [
+            { "name": "Goma" },
+            { "name": "Beni" },
+            { "name": "Butembo" },
+            { "name": "Rutshuru" },
+            { "name": "Masisi" },
+            { "name": "Nyiragongo" },
+            { "name": "Lubero" },
+            { "name": "Kanya Bayonga" }
+          ]
+        },
+        {
+          "name": "Sud Kivu",
+          "cities": [
+            { "name": "Bukavu" },
+            { "name": "Uvira" },
+            { "name": "Baraka" },
+            { "name": "Fizi" },
+            { "name": "Kalehe" },
+            { "name": "Mwenga" },
+            { "name": "Shabunda" },
+            { "name": "Kabare" },
+            { "name": "Idjwi" }
+          ]
+        },
+        {
+          "name": "Kwilu",
+          "cities": [{ "name": "Bandundu" }, { "name": "Kikwit" }]
+        },
+        {
+          "name": "Mongala",
+          "cities": [{ "name": "Bumba" }]
+        },
+        {
+          "name": "Nord-Ubangi",
+          "cities": [{ "name": "Gbadolite" }]
+        },
+        {
+          "name": "Sud-Ubangi",
+          "cities": [{ "name": "Gemena" }]
+        },
+        {
+          "name": "Haut-Uele",
+          "cities": [{ "name": "Isiro" }]
+        },
+        {
+          "name": "Bas-Congo",
+          "cities": [{ "name": "Matadi" }]
+        }
+      ]
+    },
+    {
+      "name": "United States of America",
+      "code": "US",
+      "accronym": "USA",
+      "flag": "🇺🇸",
+      "provinces": [
+        {
+          "name": "California",
+          "code": "CA",
+          "cities": [
+            { "name": "Los Angeles" },
+            { "name": "San Francisco" },
+            { "name": "San Diego" }
+          ]
+        },
+        {
+          "name": "New York",
+          "code": "NY",
+          "cities": [
+            { "name": "New York City" },
+            { "name": "Buffalo" },
+            { "name": "Rochester" }
+          ]
+        }
+      ]
+    }
+  ]
+}
