@@ -1,20 +1,14 @@
 "use client";
 
-import React from "react";
-import { useFetchHotels } from "../_features/hooks";
-import LoadingHotelsList from "./loading";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { BackButton } from "@/app/_components";
+import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { Flex, Text } from "@radix-ui/themes";
-import { BackButton, Pagination } from "@/app/_components";
-import HotelsToolBar from "../_components/HotelsToolBar";
-import HotelsTable from "../_components/HotelsTable";
 import { TbCategoryMinus } from "react-icons/tb";
 import HotelForm from "../_components/HotelForm";
+import NewHotelPageLoading from "./loading";
 
 const NewHotelPage = () => {
-  // const { status } = useSession();
+  const { data: session, status } = useSession();
   // const axios = useAxiosAuth();
   // const searchParams = useSearchParams();
   // const page: string = searchParams.get("page") ?? "";
@@ -25,9 +19,8 @@ const NewHotelPage = () => {
   //   error,
   // } = useFetchHotels({ axios, page, enabled: status === "authenticated" });
 
-  // if (isLoading || status === "loading") return <LoadingHotelsList />;
+  if (status === "loading") return <NewHotelPageLoading />;
 
-  // if (error) return;
 
   return (
     <>

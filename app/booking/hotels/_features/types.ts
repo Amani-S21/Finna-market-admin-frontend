@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { hotelSchema } from "./validationSchemas";
+
 export type HotelPicture = {
   id: string;
   hotelId: string;
@@ -40,3 +43,35 @@ export interface Country {
 export interface CountriesData {
   countries: Country[];
 }
+
+
+export interface Picture {
+  id: string;
+  url: string;
+}
+
+export interface RoomCategoryPayload {
+  name: string;
+  description: string;
+  capacity: number;
+  totalRooms: number;
+  pricePerNight: number;
+  hotelId: string;
+  createdById: string;
+  visible: boolean;
+  pictures: Picture[];
+}
+
+
+export interface HotelPayload {
+  createdById: string;
+  name: string;
+  country?: string;
+  city?: string;
+  visible: boolean;
+  address: string;
+  description?: string;
+  pictures: Picture[];
+}
+
+export type HotelSchema = z.infer<typeof hotelSchema>;

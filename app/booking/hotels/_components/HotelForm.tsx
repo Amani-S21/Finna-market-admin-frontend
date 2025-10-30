@@ -1,19 +1,34 @@
 "use client";
 
-import { ErrorMessage } from "@/app/_components";
+import { ErrorMessage, Spinner } from "@/app/_components";
 import ProductImage from "@/app/_components/ProductImage";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
-import { Country, Hotel } from "../_features/types";
+import { useCreateHotels } from "../_features/hooks";
+import { Country, Hotel, HotelSchema } from "../_features/types";
+import { hotelSchema } from "../_features/validationSchemas";
 import HotelCitiesSelect from "./HotelCitiesSelect";
 import HotelCountriesSelect from "./HotelCountriesSelect";
 
 const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
+  const axios = useAxiosAuth();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const productImageFiles = useRef<File[]>([]);
 
   const [selectedCountry, setSelectedCountry] = useState<Country>();
   const [openCountryDialog, setOpenCountryDialog] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const [selectedCity, setSelectedCity] = useState<string>();
   const [openCityDialog, setOpenCityDialog] = useState(false);
@@ -24,6 +39,10 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const [image1, setImage1] = useState<string | undefined>();
   const [image2, setImage2] = useState<string | undefined>();
   const [image3, setImage3] = useState<string | undefined>();
+
+  const { mutateAsync: createHotel, error: createError } = useCreateHotels({
+    axios,
+  });
 
   const pushFileToList = (
     indexFileToRemove: number | undefined,
@@ -51,7 +70,37 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
     return true;
   };
 
-  const onSubmit = () => {};
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<HotelSchema>({
+    resolver: zodResolver(hotelSchema),
+  });
+
+  const onSubmit = async (data: HotelSchema) => {
+    await createHotel(
+      {
+        name: data.name,
+        country: selectedCountry?.name,
+        city: selectedCity,
+        description: data.description,
+        address: `${data.address}`,
+        createdById: `${session?.data.id}`,
+        pictures: [],
+        visible: isPublished,
+      },
+      {
+        onSuccess: async () => {
+          queryClient.invalidateQueries({ queryKey: ["hotels"] });
+          queryClient.invalidateQueries({ queryKey: ["hotel"] });
+          toast.success(`Catégorie crééee avec avec succèes`);
+          router.back();
+        },
+      }
+    );
+  };
+
 
   return (
     <div className="max-w-xl">
@@ -66,17 +115,15 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         </Callout.Root>
       )} */}
 
-      <form
-      // onSubmit={handleSubmi(onSubmit)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root
-            // {...register("name")}
+            {...register("name")}
             // defaultValue={category?.name}
             placeholder="Nom de l'hotel"
           />
-          {/* <ErrorMessage>{errors.name?.message}</ErrorMessage> */}
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
         <HotelCountriesSelect
           setSelectedCountry={setSelectedCountry}
@@ -94,22 +141,22 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Addrèsse</p>
           <TextField.Root
-            // {...register("name")}
+            {...register("address")}
             // defaultValue={category?.name}
             placeholder="Addrèsse de l'hotel"
           />
-          {/* <ErrorMessage>{errors.name?.message}</ErrorMessage> */}
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
 
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Déscription</p>
           <TextArea
-            // {...register("description")}
+            {...register("description")}
             // defaultValue={product?.description}
             rows={3}
             placeholder="Veuillez saisir déscription de l'hotel"
           />
-          {/* <ErrorMessage>{errors.description?.message}</ErrorMessage> */}
+          <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
 
         <div className="flex flex-col space-y-2 mt-6 mb-6">
@@ -168,7 +215,9 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )}
 
-        <Button mt="4">Enregistrer</Button>
+        <Button disabled={isSubmitting} mt="4">
+          {hotel ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );

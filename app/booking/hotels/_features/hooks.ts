@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
-import { HotelResponse } from "./types";
-import { fetchHotels } from "./api";
+import { HotelPayload, HotelResponse } from "./types";
+import { createHotels, fetchHotels } from "./api";
+import { CategoriesResponse } from "@/app/lib/types";
 
 type UseFetchHotels = {
   axios: AxiosInstance;
@@ -16,5 +17,11 @@ export const useFetchHotels = ({ axios, page, enabled }: UseFetchHotels) => {
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,
+  });
+};
+
+export const useCreateHotels = ({ axios }: { axios: AxiosInstance }) => {
+  return useMutation<CategoriesResponse, Error, HotelPayload>({
+    mutationFn: (data: HotelPayload) => createHotels(axios, data),
   });
 };

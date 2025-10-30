@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
+import { HotelPayload } from "./types";
 
 export const fetchHotels = async (axios: AxiosInstance, page: string) => {
   try {
@@ -22,30 +23,30 @@ export const fetchHotels = async (axios: AxiosInstance, page: string) => {
 //   }
 // };
 
-// export const createCategories = async (
-//   axios: AxiosInstance,
-//   data: SubmitCategory
-// ) => {
-//   try {
-//     const res = await axios.post(`/categories`, data);
-//     return res.data;
-//   } catch (error: any) {
-//     const statusCode = error?.response?.status;
-//     let message = "";
+export const createHotels = async (
+  axios: AxiosInstance,
+  data: HotelPayload
+) => {
+  try {
+    const res = await axios.post(`/hotels`, data);
+    return res.data;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
 
-//     switch (statusCode) {
-//       case 409:
-//         message = "Informations déjà utilisées, veuillez utiliser un autre nom";
-//         break;
+    switch (statusCode) {
+      case 409:
+        message = "Informations déjà utilisées, veuillez utiliser un autre nom";
+        break;
 
-//       default:
-//         message = "An unexpected error occurred";
-//     }
+      default:
+        message = "An unexpected error occurred";
+    }
 
-//     const customError = new Error(message);
-//     throw customError;
-//   }
-// };
+    const customError = new Error(message);
+    throw customError;
+  }
+};
 
 // export const updateCategories = async (
 //   axios: AxiosInstance,
