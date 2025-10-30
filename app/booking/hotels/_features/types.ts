@@ -24,3 +24,19 @@ export type HotelResponse = {
   count: number;
   data: Hotel[];
 }
+
+// export interface City {
+//   name: string;
+// }
+
+export interface Country {
+  name: string;
+  code: string;
+  accronym: string;
+  flag: string;
+  cities: string[],
+}
+
+export interface CountriesData {
+  countries: Country[];
+}

@@ -5,17 +5,17 @@ import ProductImage from "@/app/_components/ProductImage";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useRef, useState } from "react";
 import { CiTrash } from "react-icons/ci";
-import { Hotel } from "../_features/types";
+import { Country, Hotel } from "../_features/types";
 import HotelCitiesSelect from "./HotelCitiesSelect";
 import HotelCountriesSelect from "./HotelCountriesSelect";
 
 const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const productImageFiles = useRef<File[]>([]);
 
-  const [selectedCountry, setSelectedCountry] = useState<String>();
+  const [selectedCountry, setSelectedCountry] = useState<Country>();
   const [openCountryDialog, setOpenCountryDialog] = useState(false);
 
-  const [selectedCity, setSelectedCity] = useState<String>();
+  const [selectedCity, setSelectedCity] = useState<string>();
   const [openCityDialog, setOpenCityDialog] = useState(false);
 
   const [isPublished, setIsPublished] = useState(true);
@@ -85,10 +85,11 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           setOpen={setOpenCountryDialog}
         />
         <HotelCitiesSelect
-          setSelectedCity={setSelectedCity}
           selectedCity={selectedCity}
+          setSelectedCity={setSelectedCity}
           open={openCityDialog}
           setOpen={setOpenCityDialog}
+          selectedCountry={selectedCountry}
         />
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Addrèsse</p>

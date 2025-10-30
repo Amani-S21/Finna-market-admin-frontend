@@ -1,31 +1,44 @@
 "use client";
 
-import { useDebounce } from "@/app/lib/hooks/otherHooks";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Badge, Button, Dialog, Flex, TextField } from "@radix-ui/themes";
+import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { ChevronDown, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Country } from "../_features/types";
 
 type Props = {
-  selectedCity: String | undefined;
-  setSelectedCity: (val: String) => void;
+  selectedCity: string | undefined;
+  setSelectedCity: (val: string) => void;
   open: boolean;
   setOpen: (val: boolean) => void;
+  selectedCountry: Country | undefined;
 };
 
 const HotelCitiesSelect = ({
-  setSelectedCity,
+  selectedCity,
   setOpen,
   open,
-  selectedCity,
+  setSelectedCity,
+  selectedCountry,
 }: Props) => {
-  const axios = useAxiosAuth();
-
+  const [cities, setCities] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState("");
-  const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  const handleItemClicked = async (country: String) => {
-    setSelectedCity(country);
+  useEffect(() => {
+    if (selectedCountry) {
+      // ✅ Load cities from selected country
+      setCities(selectedCountry.cities || []);
+    } else {
+      setCities([]);
+    }
+  }, [selectedCountry]);
+
+  // ✅ Filter cities when searching
+  const filteredCities = cities.filter((city) =>
+    city?.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const handleItemClicked = (city: string) => {
+    setSelectedCity(city);
     setOpen(false);
   };
 
@@ -40,8 +53,8 @@ const HotelCitiesSelect = ({
           <div className="relative">
             <TextField.Root
               placeholder="Sélectionner le lieu d'expédition"
-              // value={selectedExpedition?.name ?? ""}
-              onChange={() => {}}
+              value={selectedCity ?? ""}
+              onChange={(e) => setSearchValue(e.target.value)}
             >
               <TextField.Slot>
                 <ChevronDown size={15} />
@@ -53,10 +66,11 @@ const HotelCitiesSelect = ({
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title size="4">Séléctionner un type</Dialog.Title>
+        <Dialog.Title size="4">Séléctionner une ville</Dialog.Title>
         <Dialog.Description size="1">
-          Vous pouvez séléctionner un type après recherche
+          Vous pouvez séléctionner une ville après recherche
         </Dialog.Description>
+        
 
         <TextField.Root
           value={searchValue}
@@ -69,22 +83,22 @@ const HotelCitiesSelect = ({
           </TextField.Slot>
         </TextField.Root>
 
-        <div className="min-h-[60px] mt-2">
-          <div
-          // className={classNames({
-          //   "border-b border-gray-200":
-          //     index + 1 !== shopExpeditionRegionsResponse?.data.length,
-          //   "cursor-default hover:bg-gray-50 py-2": true,
-          // })}
-          // key={expeditionRegion.id}
-          // onClick={() => handleItemClicked(expeditionRegion)}
-          >
-            <Flex gap="2" align="center">
-              <Badge radius="medium" className="uppercase">
-                Goma
-              </Badge>
-            </Flex>
-          </div>
+        <div className="max-h-60 overflow-y-auto space-y-2 mt-4">
+          {filteredCities.length > 0 ? (
+            filteredCities.map((city, index) => (
+              <div
+                key={`${index}${city}`}
+                className="p-2 rounded hover:bg-gray-100 flex items-center justify-between cursor-pointer"
+                onClick={() => handleItemClicked(city)}
+              >
+                <span className="text-sm text-gray-500 uppercase">{city}</span>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500 text-center">
+              Aucune ville trouvée
+            </p>
+          )}
         </div>
 
         <Flex gap="3" mt="4" justify="between">
