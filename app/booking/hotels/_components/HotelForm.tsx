@@ -90,6 +90,37 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           open={openCityDialog}
           setOpen={setOpenCityDialog}
         />
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Addrèsse</p>
+          <TextField.Root
+            // {...register("name")}
+            // defaultValue={category?.name}
+            placeholder="Addrèsse de l'hotel"
+          />
+          {/* <ErrorMessage>{errors.name?.message}</ErrorMessage> */}
+        </div>
+
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Déscription</p>
+          <TextArea
+            // {...register("description")}
+            // defaultValue={product?.description}
+            rows={3}
+            placeholder="Veuillez saisir déscription de l'hotel"
+          />
+          {/* <ErrorMessage>{errors.description?.message}</ErrorMessage> */}
+        </div>
+
+        <div className="flex flex-col space-y-2 mt-6 mb-6">
+          <p className="text-sm font-bold">Publié</p>
+          <Switch
+            defaultChecked
+            onCheckedChange={(value) => {
+              setIsPublished(value);
+            }}
+          />
+        </div>
+
         <div className="flex flex-col space-y-2 mt-4 mb-2">
           <Flex justify="between">
             <p className="text-sm font-bold">Photos</p>
@@ -135,37 +166,6 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         {testImageSelection() === false && (
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )}
-
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Addrèsse</p>
-          <TextField.Root
-            // {...register("name")}
-            // defaultValue={category?.name}
-            placeholder="Addrèsse de l'hotel"
-          />
-          {/* <ErrorMessage>{errors.name?.message}</ErrorMessage> */}
-        </div>
-
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Déscription</p>
-          <TextArea
-            // {...register("description")}
-            // defaultValue={product?.description}
-            rows={3}
-            placeholder="Veuillez saisir déscription de l'hotel"
-          />
-          {/* <ErrorMessage>{errors.description?.message}</ErrorMessage> */}
-        </div>
-
-        <div className="flex flex-col space-y-2 mt-6 mb-6">
-          <p className="text-sm font-bold">Publié</p>
-          <Switch
-            defaultChecked
-            onCheckedChange={(value) => {
-              setIsPublished(value);
-            }}
-          />
-        </div>
 
         <Button mt="4">Enregistrer</Button>
       </form>
