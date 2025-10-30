@@ -4,17 +4,17 @@ import { formattedDate } from "@/app/lib/tools";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-import { HotelResponse } from "../_features/types";
-import { hotelsColumns } from "../list/loading";
+import { RoomCategoriesResponse } from "../_features/types";
+import { roomCategoriesColumns } from "../list/loading";
 
-const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
+const RoomCategoriesTable = ({ roomCategoriesResponse }: { roomCategoriesResponse: RoomCategoriesResponse }) => {
   const router = useRouter();
 
   return (
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {hotelsColumns.map((column) => (
+          {roomCategoriesColumns.map((column) => (
             <Table.ColumnHeaderCell key={column.label}>
               {column.label}
             </Table.ColumnHeaderCell>
@@ -22,8 +22,8 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {hotelResponse?.data.map((hotel, index) => (
-          <Table.Row key={hotel.id} align="center">
+        {roomCategoriesResponse?.data.map((category, index) => (
+          <Table.Row key={category.id} align="center">
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
               <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-100 relative">
@@ -37,14 +37,14 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
               </div>
             </Table.Cell>
             <Table.Cell>
-              <p className="first-letter:uppercase">{hotel.name}</p>
+              <p className="first-letter:uppercase">{category.name}</p>
             </Table.Cell>
-            <Table.Cell>{formattedDate(hotel.createdAt)}</Table.Cell>
+            <Table.Cell>{category.totalRooms}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/booking/hotels/${hotel.id}`)}
+                onClick={() => router.push(`/booking/room-categories/${category.id}`)}
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>
@@ -56,4 +56,4 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
   );
 };
 
-export default HotelsTable;
+export default RoomCategoriesTable;

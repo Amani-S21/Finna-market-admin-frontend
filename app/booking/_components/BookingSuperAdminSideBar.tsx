@@ -54,6 +54,11 @@ const links = [
     icon: <Hotel />,
   },
   {
+    href: "/booking/room-categories/list?page=1",
+    label: "Chambres",
+    icon: <BedDouble />,
+  },
+  {
     href: "/booking/bookings/list?page=1",
     label: "Réservations",
     icon: <BedDouble />,
