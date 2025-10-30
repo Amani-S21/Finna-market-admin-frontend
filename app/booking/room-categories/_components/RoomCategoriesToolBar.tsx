@@ -15,7 +15,7 @@ const RoomCategoriesToolBar = () => {
         </Text>
       </div>
 
-      <Link href="/booking/hotels/new">
+      <Link href="/booking/room-categories/new">
         <Button>
           <span className="text-xs">Nouvelle catégorie de chambre</span>
         </Button>

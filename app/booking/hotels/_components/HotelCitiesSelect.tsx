@@ -52,7 +52,7 @@ const HotelCitiesSelect = ({
           <p className="text-sm font-bold">Ville</p>
           <div className="relative">
             <TextField.Root
-              placeholder="Sélectionner le lieu d'expédition"
+              placeholder="Sélectionner la vile"
               value={selectedCity ?? ""}
               onChange={(e) => setSearchValue(e.target.value)}
             >

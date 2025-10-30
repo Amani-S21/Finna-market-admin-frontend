@@ -1,3 +1,7 @@
+import { z } from "zod";
+import { roomCategoriesSchema } from "./validationSchemas";
+import { Hotel } from "../../hotels/_features/types";
+
 export interface ApiResponse<T> {
   count: number;
   data: T[];
@@ -12,19 +16,19 @@ export interface Picture {
   roomCategoryId?: string;
 }
 
-export interface Hotel {
-  id: string;
-  name: string;
-  visible: boolean;
-  country: string;
-  city: string;
-  createdById: string;
-  address: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  pictures: Picture[];
-}
+// export interface Hotel {
+//   id: string;
+//   name: string;
+//   visible: boolean;
+//   country: string;
+//   city: string;
+//   createdById: string;
+//   address: string;
+//   description: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   pictures: Picture[];
+// }
 
 export interface RoomCategory {
   id: string;
@@ -44,3 +48,5 @@ export interface RoomCategory {
 
 // ✅ Example usage for your JSON:
 export type RoomCategoriesResponse = ApiResponse<RoomCategory>;
+
+export type RoomCategoriesSchema = z.infer<typeof roomCategoriesSchema>;
