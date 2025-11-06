@@ -39,11 +39,7 @@ export const uploadUrl = async (axios: AxiosInstance, image: File) => {
     const formData = new FormData();
     formData.append("file", image);
 
-    const res = await axios.post<UploadFileResponse>(`/upload`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const res = await axios.post<UploadFileResponse>(`/images`, formData);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "finna-media.buy-one-store.com",
+        hostname: "medias.finna-entreprise.com",
       },
     ],
   },

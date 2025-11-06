@@ -20,6 +20,7 @@ import {
   useUpdateSubCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./CategorySelect";
+import { axiosMedias } from "@/app/lib/axios";
 
 const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
   const axios = useAxiosAuth();
@@ -47,7 +48,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
     if (!subCategoryFile.current) return;
 
     const data = await uploadCategoryPicture({
-      axios,
+      axios: axiosMedias,
       file: subCategoryFile.current!,
     });
     categoryUrl.current = `${data?.imgName}`;
@@ -65,10 +66,8 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
       axios,
     });
 
-  const {
-    mutateAsync: updateSubCategory,
-    error: updateError,
-  } = useUpdateSubCategories({ axios });
+  const { mutateAsync: updateSubCategory, error: updateError } =
+    useUpdateSubCategories({ axios });
 
   const onSubmit = async (data: CategorySchema) => {
     if (subCategory) {

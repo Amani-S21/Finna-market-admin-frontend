@@ -26,9 +26,11 @@ import {
   useUpdateCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./SubCategorySelect";
+import { axiosMedias } from "@/app/lib/axios";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
+
   const dispatch = useDispatch();
   const { subCategories } = useSelector((state: RootState) => state.category);
   const router = useRouter();
@@ -45,7 +47,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
 
   const uploadPicture = async (): Promise<string> => {
     const data = await uploadCategoryPicture({
-      axios,
+      axios: axiosMedias,
       file: categoryFile.current!,
     });
     categoryUrl.current = `${data?.imgName}`;

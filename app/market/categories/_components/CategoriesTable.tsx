@@ -37,7 +37,7 @@ const CategoriesTable = ({
                   height={50}
                   width={60}
                   alt="product image"
-                  src={`https://finna-media.buy-one-store.com/v1/uploads/images/${category.icon}`}
+                  src={`https://medias.finna-entreprise.com/v1/uploads/images/${category.icon}`}
                   className="object-cover rounded-md"
                 />
               </div>
