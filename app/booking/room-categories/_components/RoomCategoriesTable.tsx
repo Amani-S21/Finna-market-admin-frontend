@@ -1,13 +1,16 @@
 "use client";
 
-import { formattedDate } from "@/app/lib/tools";
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { RoomCategoriesResponse } from "../_features/types";
 import { roomCategoriesColumns } from "../list/loading";
 
-const RoomCategoriesTable = ({ roomCategoriesResponse }: { roomCategoriesResponse: RoomCategoriesResponse }) => {
+const RoomCategoriesTable = ({
+  roomCategoriesResponse,
+}: {
+  roomCategoriesResponse: RoomCategoriesResponse;
+}) => {
   const router = useRouter();
 
   return (
@@ -37,14 +40,23 @@ const RoomCategoriesTable = ({ roomCategoriesResponse }: { roomCategoriesRespons
               </div>
             </Table.Cell>
             <Table.Cell>
-              <p className="first-letter:uppercase">{category.name}</p>
+              <p className="first-letter:uppercase">
+                {category.roomCategoryType?.name}
+              </p>
+            </Table.Cell>
+            <Table.Cell>
+              <p className="first-letter:uppercase">
+                {category.pricePerNight}
+              </p>
             </Table.Cell>
             <Table.Cell>{category.totalRooms}</Table.Cell>
             <Table.Cell>
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/booking/room-categories/${category.id}`)}
+                onClick={() =>
+                  router.push(`/booking/room-categories/${category.id}`)
+                }
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>

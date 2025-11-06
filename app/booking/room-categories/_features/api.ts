@@ -11,6 +11,15 @@ export const fetchRoomCategories = async (axios: AxiosInstance, page: string) =>
   }
 };
 
+export const fetchRoomCategoryTypes = async (axios: AxiosInstance, page: string) => {
+  try {
+    const res = await axios.get(`/room-category-types?page=${page}&limit=10`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
 export const createRoomCategpries = async (
   axios: AxiosInstance,
   data: RoomCategoryPayload

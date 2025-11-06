@@ -94,13 +94,12 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         onSuccess: async () => {
           queryClient.invalidateQueries({ queryKey: ["hotels"] });
           queryClient.invalidateQueries({ queryKey: ["hotel"] });
-          toast.success(`Catégorie crééee avec avec succèes`);
+          toast.success(`Hotel crééee avec avec succèes`);
           router.back();
         },
       }
     );
   };
-
 
   return (
     <div className="max-w-xl">

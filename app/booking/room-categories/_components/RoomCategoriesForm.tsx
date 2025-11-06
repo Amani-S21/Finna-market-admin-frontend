@@ -1,4 +1,5 @@
 import { ErrorMessage, Spinner } from "@/app/_components";
+import ProductImage from "@/app/_components/ProductImage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
@@ -8,13 +9,23 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useCreateRoomCategories } from "../_features/hooks";
-import { RoomCategoriesSchema } from "../_features/types";
-import { roomCategoriesSchema } from "../_features/validationSchemas";
 import { CiTrash } from "react-icons/ci";
-import ProductImage from "@/app/_components/ProductImage";
+import { useCreateRoomCategories } from "../_features/hooks";
+import { RoomCategoriesSchema, RoomCategoryType } from "../_features/types";
+import { roomCategoriesSchema } from "../_features/validationSchemas";
+import classNames from "classnames";
 
-const RoomCategoriesForm = () => {
+type Props = {
+  roomCategoryTypes: RoomCategoryType[];
+  setSelectedType: (val: RoomCategoryType) => void;
+  selectedType: RoomCategoryType | undefined;
+};
+
+const RoomCategoriesForm = ({
+  roomCategoryTypes,
+  setSelectedType,
+  selectedType,
+}: Props) => {
   const axios = useAxiosAuth();
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -71,13 +82,13 @@ const RoomCategoriesForm = () => {
   const onSubmit = async (data: RoomCategoriesSchema) => {
     await create(
       {
-        name: data.name,
         description: data.description,
         createdById: `${session?.data.id}`,
         pictures: [],
         visible: isPublished,
         capacity: parseInt(`${data.capacity}`),
-        hotelId: "672912e4-cfc5-4ec5-b2dc-d75b74ae3b69",
+        hotelId: "d80f5fed-6aba-45fe-bfb7-03f8f88d6329",
+        roomCategoryTypeId: `${selectedType?.id}`,
         totalRooms: parseInt(`${data.totalRooms}`),
         pricePerNight: parseInt(`${data.pricePerNight}`),
       },
@@ -96,13 +107,23 @@ const RoomCategoriesForm = () => {
     <div className="max-w-xl">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Nom</p>
-          <TextField.Root
-            {...register("name")}
-            // defaultValue={category?.name}
-            placeholder="Nom de la catégorie"
-          />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          <p className="text-sm font-bold">Type de chambre</p>
+          <div className="flex flex-wrap gap-4 mt-2 mb-4">
+            {roomCategoryTypes.map((type) => (
+              <div
+                key={type.id}
+                onClick={() => setSelectedType(type)}
+                className={classNames({
+                  " font-bold border bg-blue-700 text-white":
+                    selectedType?.id === type.id,
+                  " rounded-full px-4 py-1 border border-gray-400 hover:cursor-default":
+                    true,
+                })}
+              >
+                {type.name}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Capacité</p>
@@ -111,7 +132,7 @@ const RoomCategoriesForm = () => {
             // defaultValue={category?.name}
             placeholder="Capacité de la chambre"
           />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          <ErrorMessage>{errors.capacity?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Prix par nuit</p>
@@ -120,7 +141,7 @@ const RoomCategoriesForm = () => {
             // defaultValue={category?.name}
             placeholder="Prix par nuit"
           />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          <ErrorMessage>{errors.pricePerNight?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nombre des chambres</p>
@@ -129,7 +150,7 @@ const RoomCategoriesForm = () => {
             // defaultValue={category?.name}
             placeholder="Nombre des chambres"
           />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          <ErrorMessage>{errors.totalRooms?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Déscription</p>

@@ -4,23 +4,34 @@ import { BackButton } from "@/app/_components";
 import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { TbCategoryMinus } from "react-icons/tb";
-import NewHotelPageLoading from "./loading";
-import NewRoomCategoriesPageLoading from "./loading";
 import RoomCategoriesForm from "../_components/RoomCategoriesForm";
+import NewRoomCategoriesPageLoading from "./loading";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { useFetchRoomCategoryTypes } from "../_features/hooks";
+import { useState } from "react";
+import { RoomCategoryType } from "../_features/types";
 
 const NewRoomCategoriesPage = () => {
   const { data: session, status } = useSession();
-  // const axios = useAxiosAuth();
+  const axios = useAxiosAuth();
+  const [selectedType, setSelectedType] = useState<
+    RoomCategoryType | undefined
+  >();
   // const searchParams = useSearchParams();
   // const page: string = searchParams.get("page") ?? "";
 
-  // const {
-  //   data: hotelsResponse,
-  //   isLoading,
-  //   error,
-  // } = useFetchHotels({ axios, page, enabled: status === "authenticated" });
+  const {
+    data: roomCategoriesResponse,
+    isLoading,
+    
+  } = useFetchRoomCategoryTypes({
+    axios,
+    page: "1",
+    enabled: status === "authenticated",
+  });
 
-  if (status === "loading") return <NewRoomCategoriesPageLoading />;
+  if (status === "loading" || isLoading)
+    return <NewRoomCategoriesPageLoading />;
 
   return (
     <>
@@ -35,7 +46,11 @@ const NewRoomCategoriesPage = () => {
           chambre
         </Text>
       </div>
-      <RoomCategoriesForm />
+      <RoomCategoriesForm
+        roomCategoryTypes={roomCategoriesResponse?.data ?? []}
+        setSelectedType={setSelectedType}
+        selectedType={selectedType}
+      />
     </>
   );
 };

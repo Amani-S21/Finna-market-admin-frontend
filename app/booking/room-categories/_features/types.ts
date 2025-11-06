@@ -32,7 +32,6 @@ export interface Picture {
 
 export interface RoomCategory {
   id: string;
-  name: string;
   description: string;
   visible: boolean;
   capacity: number;
@@ -44,9 +43,22 @@ export interface RoomCategory {
   updatedAt: string;
   hotel: Hotel;
   pictures: Picture[];
+  roomCategoryType : RoomCategoryType
 }
 
 // ✅ Example usage for your JSON:
 export type RoomCategoriesResponse = ApiResponse<RoomCategory>;
 
 export type RoomCategoriesSchema = z.infer<typeof roomCategoriesSchema>;
+
+export interface RoomCategoryType {
+  id: string;
+  name: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+}
+
+export interface RoomCategoryTypeListResponse {
+  count: number;
+  data: RoomCategoryType[];
+}

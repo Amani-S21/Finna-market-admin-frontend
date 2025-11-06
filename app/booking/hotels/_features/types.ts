@@ -51,12 +51,13 @@ export interface Picture {
 }
 
 export interface RoomCategoryPayload {
-  name: string;
+  
   description?: string;
   capacity: number;
   totalRooms: number;
   pricePerNight: number;
   hotelId: string;
+  roomCategoryTypeId: string;
   createdById: string;
   visible: boolean;
   pictures: Picture[];
