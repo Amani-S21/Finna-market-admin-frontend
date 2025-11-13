@@ -42,7 +42,7 @@ const ShopProductSelect = ({
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
         <div
-          className="flex flex-col space-y-2 mt-6"
+          className="flex flex-col space-y-2 mt-4"
           onClick={() => setOpen(true)}
         >
           <p className="text-sm font-bold">Boutique</p>

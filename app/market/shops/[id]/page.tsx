@@ -124,8 +124,8 @@ const BuildShopsDetailPage = () => {
           <Link href={`/market/shops/edit/${shop?.id}`}>
             <Button>Modifier la boutique</Button>
           </Link>
-          <Link href={`/market/shops/edit/${shop?.id}`}>
-            <Button>Ajouter des produit</Button>
+          <Link href="/market/shops/products/new">
+            <Button>Ajouter des produits</Button>
           </Link>
         </div>
       </Grid>

@@ -71,7 +71,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const productImageFiles = useRef<File[]>([]);
 
   const [selectedShop, setSelectedShop] = useState<Shop>();
-  const [openDialog, setOpenDialog] = useState(false);
+  
 
   // Images
   const [image1, setImage1] = useState<string | undefined>();
@@ -373,36 +373,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
               <ErrorMessage>{errors.name?.message}</ErrorMessage>
             </div>
-            {/* <div className="flex flex-col space-y-2 mt-4">
-              <p className="text-sm font-bold">Coût</p>
-              <TextField.Root
-                {...register("cost")}
-                type="number"
-                placeholder="Saisissez le prix d'achat"
-                defaultValue={product?.cost}
-              />
-              <ErrorMessage>{errors.cost?.message}</ErrorMessage>
-            </div>
-            <div className="flex flex-col space-y-2 mt-4">
-              <p className="text-sm font-bold">Prix</p>
-              <TextField.Root
-                {...register("price")}
-                type="number"
-                defaultValue={product?.price}
-                placeholder="Veuillez saisir l'ancien prix"
-              />
-              <ErrorMessage>{errors.price?.message}</ErrorMessage>
-            </div>
-            <div className="flex flex-col space-y-2 mt-4">
-              <p className="text-sm font-bold">Prix de réduction</p>
-              <TextField.Root
-                {...register("discountPrice")}
-                type="number"
-                defaultValue={product?.discountPrice}
-                placeholder="Veuillez saisir l'ancien prix"
-              />
-              <ErrorMessage>{errors.price?.message}</ErrorMessage>
-            </div> */}
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Poids en gramme</p>
               <TextField.Root
