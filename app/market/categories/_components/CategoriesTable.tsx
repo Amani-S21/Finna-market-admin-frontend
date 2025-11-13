@@ -8,6 +8,7 @@ import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
 import { categoriesColumns } from "../list/loading";
 import Image from "next/image";
+import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const CategoriesTable = ({
   categoriesResponse,
@@ -37,7 +38,7 @@ const CategoriesTable = ({
                   height={50}
                   width={60}
                   alt="product image"
-                  src={`https://medias.finna-entreprise.com/v1/uploads/images/${category.icon}`}
+                  src={`${MEDIAS_UPLOAD_BASE_URL}/images/${category.icon}`}
                   className="object-cover rounded-md"
                 />
               </div>

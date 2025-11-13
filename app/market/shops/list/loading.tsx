@@ -12,6 +12,16 @@ const LoadingShopspPage = () => {
   );
 };
 
+export const shopProductsColumns: {
+  label: string;
+}[] = [
+  { label: "Produit" },
+  { label: "Cout" },
+  { label: "Prix" },
+  { label: "Prix de réduction" },
+  { label: "Action" },
+];
+
 export const shopsColumns: {
   label: string;
 }[] = [

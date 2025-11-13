@@ -12,6 +12,7 @@ import { useFetchShopsById } from "../_features/hooks";
 import LoadingShopDetails from "./loading";
 import { formattedDate } from "@/app/lib/tools";
 import { Edit } from "lucide-react";
+import ShopsProductsTable from "../_components/ShopsProductsTable";
 
 const BuildShopsDetailPage = () => {
   const { status } = useSession();
@@ -109,10 +110,22 @@ const BuildShopsDetailPage = () => {
             </Text>
             <p className="mt-1">{shop?.address}</p>
           </Card>
+          <Heading
+            size="4"
+            mt="6"
+            mb="4"
+            className="lowercase first-letter:uppercase "
+          >
+            produits
+          </Heading>
+          <ShopsProductsTable />
         </div>
-        <div>
+        <div className=" flex flex-col space-y-4">
           <Link href={`/market/shops/edit/${shop?.id}`}>
-            <Button>Modifier</Button>
+            <Button>Modifier la boutique</Button>
+          </Link>
+          <Link href={`/market/shops/edit/${shop?.id}`}>
+            <Button>Ajouter des produit</Button>
           </Link>
         </div>
       </Grid>

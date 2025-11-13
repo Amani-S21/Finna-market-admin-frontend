@@ -43,7 +43,10 @@ const ShopExpeditionRegionsSelect = ({
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <div className="flex flex-col space-y-2 mt-6" onClick={() => setOpen(true)}>
+        <div
+          className="flex flex-col space-y-2 mt-6"
+          onClick={() => setOpen(true)}
+        >
           <p className="text-sm font-bold">Lieu d'expédition</p>
           <div className="relative">
             <TextField.Root
@@ -61,11 +64,10 @@ const ShopExpeditionRegionsSelect = ({
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title size="4">Séléctionner un type</Dialog.Title>
+        <Dialog.Title size="4">Séléctionner un lieu d'expédition</Dialog.Title>
         <Dialog.Description size="1">
-          Vous pouvez séléctionner un type après recherche
+          Vous pouvez séléctionner un lieu d'expédition après recherche
         </Dialog.Description>
-
         <TextField.Root
           value={searchValue}
           placeholder="Ce champs est obligatoire"
@@ -76,7 +78,16 @@ const ShopExpeditionRegionsSelect = ({
             <Search size={15} />
           </TextField.Slot>
         </TextField.Root>
-
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti
+        dignissimos eos error consequuntur officia quis, atque voluptates
+        consequatur ipsum in, nostrum facilis suscipit veritatis quam tempora
+        est voluptate corrupti perspiciatis Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Aliquam amet qui adipisci aperiam
+        cupiditate tempore unde quia nisi nam soluta rerum quibusdam, dolorum
+        hic. A sint vero sit hic earum? Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Consequatur vero assumenda dignissimos iusto sint non
+        eligendi vel voluptatibus ad quibusdam in, reiciendis ipsum veniam
+        tempora temporibus omnis repudiandae neque odit!
         {isLoadingTypes ? (
           <div className="min-h-[60px]">
             <Text size="1" mt="4">
@@ -113,7 +124,6 @@ const ShopExpeditionRegionsSelect = ({
             </Text>
           </div>
         )}
-
         <Flex gap="3" mt="4" justify="between">
           {/* {isPending ? <Text size="1">Chargement...</Text> : <p></p>} */}
           <Dialog.Close>

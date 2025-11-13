@@ -5,6 +5,7 @@ export type SubmitSubCategory = {
   id? : string;
   icon?: string;
   name?: string;
+  categoryId?: string;
 };
 
 export type CreatedSubCategory = {

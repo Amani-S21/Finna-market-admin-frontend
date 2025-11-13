@@ -46,13 +46,13 @@ import {
   useUpdateProduct,
 } from "../_features/hooks";
 
+import { AxiosInstance } from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useFetchFeaturesByValue } from "../../features/_features/hooks";
-import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
-import { AxiosInstance } from "axios";
 import { uploadUrl } from "../_features/api";
-import ShopProductSelect from "./ShopProductSelect";
+import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
+import { axiosMedias } from "@/app/lib/axios";
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const { data: session } = useSession();
@@ -116,7 +116,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const { mutateAsync: uploadProductPicture } = useMutation({
     mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
-      uploadUrl(axios, file),
+      uploadUrl(axiosMedias, file),
     retry: 0,
   });
 
@@ -210,12 +210,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
   } = useSendProductsLinks({ axios });
 
   const onSubmit = async (data: ProductSchema) => {
-    // Post product
     const {
       name,
-      cost,
-      price,
-      discountPrice,
       description,
       weightInGrams,
       heightInCm,
@@ -224,34 +220,36 @@ const ProductForm = ({ product }: { product?: Product }) => {
     } = data;
     const productSubmit = {
       name,
-      cost,
-      price,
-      discountPrice,
-      weightInGrams,
-      heightInCm,
-      widthInCm,
-      lengthInCm,
+      weightInGrams: weightInGrams,
+      heightInCm: heightInCm,
+      widthInCm: widthInCm,
+      lengthInCm: lengthInCm,
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
-      shopId: shopIdToBePost(),
+      // shopId: shopIdToBePost(),
       subCategoryId: `${selectedSubCategory?.id}`,
       published: isPublished,
-      features: (features ?? []).map((feature : any) => ({
+      features: (features ?? []).map((feature: any) => ({
         featureId: feature.featureId,
-        featureValues: feature.featureValues.map((fv : any) => ({
+        featureValues: feature.featureValues.map((fv: any) => ({
           featureValueId: fv.featureValueId,
           price: fv.price,
         })),
       })),
     };
 
+    // Remove keys that are null, undefined, or empty strings
+    const cleanedPayload = Object.fromEntries(
+      Object.entries(productSubmit).filter(([_, v]) => v != null && v !== "")
+    );
+
     if (product) {
       try {
         await patchProductMutation(
           {
             id: product?.id,
-            ...productSubmit,
+            ...cleanedPayload,
           },
           {
             onSuccess: () => {
@@ -264,8 +262,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
         toast.error(error);
       }
     } else {
+      // console.log(JSON.stringify(cleanedPayload));
       try {
-        await createProductMutation(productSubmit, {
+        await createProductMutation(cleanedPayload, {
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["products"] });
             queryClient.invalidateQueries({ queryKey: ["product"] });
@@ -362,7 +361,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
           <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>        
         <Flex gap="6">
           <div className="w-full">
             <div className="flex flex-col space-y-2 mt-4">
@@ -374,7 +373,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
               <ErrorMessage>{errors.name?.message}</ErrorMessage>
             </div>
-            <div className="flex flex-col space-y-2 mt-4">
+            {/* <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Coût</p>
               <TextField.Root
                 {...register("cost")}
@@ -403,7 +402,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 placeholder="Veuillez saisir l'ancien prix"
               />
               <ErrorMessage>{errors.price?.message}</ErrorMessage>
-            </div>
+            </div> */}
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Poids en gramme</p>
               <TextField.Root
@@ -444,8 +443,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
               <ErrorMessage>{errors.lengthInCm?.message}</ErrorMessage>
             </div>
-          </div>
-          <div className="w-full">
             <Controller
               control={control}
               name="category"
@@ -461,6 +458,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 </div>
               )}
             />
+            
+          </div>
+          <div className="w-full">
             {categoriesResponse?.data && (
               <>
                 <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
@@ -484,7 +484,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 )}
               </>
             )}
-            <div className="flex flex-col mt-4">
+            <div className="flex flex-col mt-6">
               <Flex
                 justify="between"
                 onClick={() => {
@@ -552,20 +552,20 @@ const ProductForm = ({ product }: { product?: Product }) => {
               {features && features?.length > 0 && (
                 <FeaturesToPostTable features={features!} />
               )}
-              {features && features?.length < 1 && (
+              {/* {features && features?.length < 1 && (
                 <ErrorMessage>
                   Les caractéristiques du produit sont obligatoires
                 </ErrorMessage>
-              )}
+              )} */}
             </div>
-            {role() === "SUPER_ADMIN" && (
+            {/* {role() === "SUPER_ADMIN" && (
               <ShopProductSelect
                 setSelectedShop={setSelectedShop}
                 selectedShop={selectedShop}
                 open={openDialog}
                 setOpen={setOpenDialog}
               />
-            )}
+            )} */}
 
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Déscription</p>

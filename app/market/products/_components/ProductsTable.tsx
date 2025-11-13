@@ -36,7 +36,7 @@ const ProductsTable = ({
                   height={50}
                   width={60}
                   alt="product image"
-                  src={`https://finna-media.buy-one-store.com/v1/uploads/images/${product.pictures[0]}`}
+                  src={`https://medias.finna-entreprise.com/v1/uploads/images/${product.pictures[0]}`}
                   className="object-cover rounded-md"
                 />
               </div>

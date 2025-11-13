@@ -62,7 +62,7 @@ const SigninForm = () => {
         <p className="text-sm font-bold">Mot de passe</p>
         <TextField.Root
           {...register("password")}
-          defaultValue="12345"
+          defaultValue="gedyala"
           type="password"
           placeholder="Mot de passe"
         >

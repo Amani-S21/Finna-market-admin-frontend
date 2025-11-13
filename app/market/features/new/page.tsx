@@ -1,10 +1,13 @@
+"use client";
+
 import { BackButton } from "@/app/_components";
 import { Text } from "@radix-ui/themes";
-import React from "react";
+import React, { Suspense } from "react";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { FeatureForm } from "../_components";
+import NewFeaturesLoadingPage from "../new2/loading";
 
-const NewFeaturePage = () => {
+const BuildNewFeaturePage = () => {
   return (
     <>
       <div className="mb-2">
@@ -21,6 +24,14 @@ const NewFeaturePage = () => {
 
       <FeatureForm />
     </>
+  );
+};
+
+const NewFeaturePage = () => {
+  return (
+    <Suspense fallback={<NewFeaturesLoadingPage />}>
+      <BuildNewFeaturePage />
+    </Suspense>
   );
 };
 

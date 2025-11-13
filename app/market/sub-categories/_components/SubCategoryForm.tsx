@@ -76,6 +76,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           {
             id: subCategory.id,
             name: data.name,
+            categoryId: selectedCategory?.id,
           },
           {
             onSuccess: async () => {
@@ -94,6 +95,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
         await createSubCategory(
           {
             name: data.name,
+            categoryId: selectedCategory?.id,
           },
           {
             onSuccess: async (subCategory) => {
@@ -188,7 +190,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
 
         <Button disabled={isSubmitting || isUploading} mt="4">
           {subCategory ? "Modifier" : "Enregistrer"}{" "}
-          {isSubmitting && <Spinner />}
+          {(isSubmitting || isUploading) && <Spinner />}
         </Button>
       </form>
     </div>

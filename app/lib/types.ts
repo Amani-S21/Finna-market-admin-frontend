@@ -271,6 +271,7 @@ export type SubCategory = {
   name?: string;
   index?: number;
   icon? : string;
+  categoryId? : string;
   createdAt?: string;
   updatedAt?: string;
   category?: Category;

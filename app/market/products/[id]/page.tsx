@@ -20,6 +20,7 @@ import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import { ProductsFeaturesTable } from "../_components";
 import LoadingProductDetails from "./loading";
+import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const BuildProductsDetailsPage = () => {
   const params = useParams<{ id: string }>();
@@ -52,7 +53,6 @@ const BuildProductsDetailsPage = () => {
             {product?.name}
           </Heading>
           <Text size="2">{formattedDate(`${product?.createdAt}`)}</Text>
-
           <Card my="4">
             <Flex direction="column" gap="4">
               <Text size="2" className="font-bold">
@@ -90,7 +90,7 @@ const BuildProductsDetailsPage = () => {
                     height={80}
                     width={100}
                     alt="product image"
-                    src={`https://finna-media.buy-one-store.com/v1/uploads/images/${picture}`}
+                    src={`${MEDIAS_UPLOAD_BASE_URL}/images/${picture}`}
                     className="object-cover rounded-md"
                   />
                 </div>
@@ -107,17 +107,17 @@ const BuildProductsDetailsPage = () => {
               <Text size="2" className="font-bold">
                 Catégorie
               </Text>
-              <p className="mt-1 lowercase first-letter:uppercase">
+              {/* <p className="mt-1 lowercase first-letter:uppercase">
                 {product?.subCategory?.category?.name}
-              </p>
+              </p> */}
             </Card>
             <Card mt="4" variant="ghost">
               <Text size="2" className="font-bold">
                 Sous Catgégorie
               </Text>
-              <p className="mt-1 lowercase first-letter:uppercase">
+              {/* <p className="mt-1 lowercase first-letter:uppercase">
                 {product?.subCategory.name}
-              </p>
+              </p> */}
             </Card>
           </Flex>
           <ProductsFeaturesTable

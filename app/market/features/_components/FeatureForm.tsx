@@ -53,53 +53,51 @@ const FeatureForm = ({ feature }: { feature?: Feature }) => {
     resolver: zodResolver(featureSchema),
   });
 
-  const {
-    mutateAsync: createFeature,
-    isSuccess: isCreateSuccess,
-    error: createError,
-  } = useCreateFeatures({ axios });
+  const { mutateAsync: createFeature, error: createError } = useCreateFeatures({
+    axios,
+  });
 
-  const {
-    mutateAsync: updateFeature,
-    isSuccess: isUpdateSuccess,
-    error: updateError,
-  } = useUpdateFeatures({ axios });
+  const { mutateAsync: updateFeature, error: updateError } = useUpdateFeatures({
+    axios,
+  });
 
   const onSubmit = async (data: FeatureSchema) => {
     if (feature) {
-      await updateFeature({
-        id: feature.id,
-        name: data.name,
-        featureValues:
-          featureValues?.map((v) => ({
-            id: v.id,
-            value: v.value,
-          })) ?? [],
-      });
+      await updateFeature(
+        {
+          id: feature.id,
+          name: data.name,
+          featureValues:
+            featureValues?.map((v) => ({
+              id: v.id,
+              value: v.value,
+            })) ?? [],
+        },
+        {
+          onSuccess: () => {
+            toast.success(`Caractéristique modifiée avec avec succèes`);
+            router.back();
+          },
+        }
+      );
     } else {
-      await createFeature({
-        name: data.name,
-        featureValues:
-          featureValues?.map((v) => ({
-            value: v.value,
-          })) ?? [],
-      });
+      await createFeature(
+        {
+          name: data.name,
+          featureValues:
+            featureValues?.map((v) => ({
+              value: v.value,
+            })) ?? [],
+        },
+        {
+          onSuccess: () => {
+            toast.success(`Caractéristique créée avec avec succèes`);
+            router.back();
+          },
+        }
+      );
     }
   };
-
-  useEffect(() => {
-    if (isCreateSuccess) {
-      toast.success(`Caractéristique créée avec avec succèes`);
-      router.back();
-    }
-  }, [isCreateSuccess, router]);
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      toast.success(`Caractéristique modifiée avec avec succèes`);
-      router.back();
-    }
-  }, [isUpdateSuccess, router]);
 
   return (
     <div className="max-w-xl">
