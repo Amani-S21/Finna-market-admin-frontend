@@ -18,7 +18,6 @@ const EditVehicleTypePage = () => {
 
   const {
     data: vehicleType,
-    isLoading,
     error,
   } = useFetchVehicleType({
     axios,

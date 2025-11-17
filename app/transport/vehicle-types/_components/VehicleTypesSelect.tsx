@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import classNames from "classnames";
-import { Vehicle } from "../../agencies/_features/type";
 import { useSearchVehicleType } from "../_features/hooks";
 import { VehicleType } from "../_features/types";
 

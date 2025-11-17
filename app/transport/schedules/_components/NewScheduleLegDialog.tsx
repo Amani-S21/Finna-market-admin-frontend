@@ -1,12 +1,8 @@
 import {
   Button,
   Dialog,
-  Flex,
-  Select,
-  Text,
   TextField,
 } from "@radix-ui/themes";
-import { weekDays } from "./NewScheduleForm";
 import TimePickerComponent from "@/app/_components/TimePicker";
 import PlaceSelect from "../../places/_components/PlacesSelect";
 import { useState } from "react";
@@ -38,7 +34,7 @@ const NewScheduleLegDialog = ({ setOpen, open }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    
   } = useForm<NewScheduleSchema>({
     resolver: zodResolver(newScheduleSchema),
   });
@@ -148,29 +144,6 @@ const NewScheduleLegDialog = ({ setOpen, open }: Props) => {
       </Dialog.Content>
     </Dialog.Root>
   );
-};
-
-const ddd = {
-  departure: "10:18",
-  arrival: "10:18",
-  fromId: "3aab571b-c09d-4a6c-973c-1eb8c0681b5e",
-  toId: "3d3d424a-db01-4142-a27c-7dc08a905641",
-  price: 7000,
-  vehicleId: "80089169-52e6-4d31-99d4-16bfc1601300",
-  dayOfWeek: 1,
-  legs: [
-    {
-      id: "Sun Sep 07 2025 10:19:14 GMT+0200 (Central Africa Time)",
-      departure: "10:18",
-      arrival: "10:18",
-      fromId: "3aab571b-c09d-4a6c-973c-1eb8c0681b5e",
-      fromName: "nyabugogo",
-      toId: "cbcdb2fb-54be-49d6-99a5-995cec51e325",
-      toName: "nda ku piga",
-      order: 1,
-      price: 1000,
-    },
-  ],
 };
 
 export default NewScheduleLegDialog;

@@ -8,7 +8,7 @@ import HotelForm from "../_components/HotelForm";
 import NewHotelPageLoading from "./loading";
 
 const NewHotelPage = () => {
-  const { data: session, status } = useSession();
+  const {  status } = useSession();
   // const axios = useAxiosAuth();
   // const searchParams = useSearchParams();
   // const page: string = searchParams.get("page") ?? "";

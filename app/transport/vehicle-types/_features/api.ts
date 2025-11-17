@@ -5,7 +5,7 @@ export const fetchVehicleTypes = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/vehicle-types?page=${page}&limit=10`);
     return res.data;
-  } catch (error: any) {}
+  } finally {}
 };
 
 export const searchVehicleTypes = async (
@@ -15,7 +15,7 @@ export const searchVehicleTypes = async (
   try {
     const res = await axios.get(`/vehicle-types/search?term=${term}`);
     return res.data;
-  } catch (error: any) {}
+  } finally {}
 };
 
 export const createVehicleType = async (

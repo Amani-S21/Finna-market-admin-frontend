@@ -60,8 +60,7 @@ const VehicleTypeForm = ({ seat, vehicleId }: Props) => {
             },
           }
         );
-      } catch (error: any) {
-        // toast.error(JSON.stringify(error));
+      } finally {
       }
     } else {
       try {
@@ -80,9 +79,7 @@ const VehicleTypeForm = ({ seat, vehicleId }: Props) => {
             },
           }
         );
-      } catch (error: any) {
-        // toast.error(JSON.stringify(error));
-      }
+      } finally{}
     }
   };
 

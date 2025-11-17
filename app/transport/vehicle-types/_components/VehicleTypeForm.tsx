@@ -54,9 +54,7 @@ const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
             },
           }
         );
-      } catch (error: any) {
-        // toast.error(JSON.stringify(error));
-      }
+      } finally{}
     } else {
       try {
         await createVehicleType(
@@ -72,9 +70,7 @@ const VehicleTypeForm = ({ vehicleType }: { vehicleType?: VehicleType }) => {
             },
           }
         );
-      } catch (error: any) {
-        // toast.error(JSON.stringify(error));
-      }
+      } finally{}
     }
   };
 

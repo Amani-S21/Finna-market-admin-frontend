@@ -1,23 +1,19 @@
 import { AxiosInstance } from "axios";
 import { PlaceTypePayload } from "./types";
 
-export const searchPlaces = async (
-  axios: AxiosInstance,
-  term: string
-) => {
+export const searchPlaces = async (axios: AxiosInstance, term: string) => {
   try {
     const res = await axios.get(`/places/search?term=${term}`);
     return res.data;
-  } catch (error: any) {}
+  } finally {
+  }
 };
-
 
 export const fetchPlaces = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/places?page=${page}&limit=10`);
     return res.data;
-  } catch (error: any) {
-    
+  } finally {
   }
 };
 

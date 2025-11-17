@@ -1,7 +1,6 @@
 import { BackButton } from "@/app/_components";
 import { Text } from "@radix-ui/themes";
 import { TbCategoryMinus } from "react-icons/tb";
-import VehicleTypeForm from "../_components/PlacesForm";
 import PlacesForm from "../_components/PlacesForm";
 
 const NewVehicleTypePage = () => {

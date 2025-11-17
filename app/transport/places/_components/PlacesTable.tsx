@@ -3,7 +3,6 @@
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-import { vehicleColumns } from "../../vehicle-types/list/loading";
 import { formattedDate } from "@/app/lib/tools";
 import { PlacesResponse } from "../_features/types";
 import { placesColumns } from "../list/loading";

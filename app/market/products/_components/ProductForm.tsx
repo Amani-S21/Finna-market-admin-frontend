@@ -6,8 +6,6 @@ import {
   Feature,
   Product,
   ProductSchema,
-  Roles,
-  Shop,
   SubCategory,
 } from "@/app/lib/types";
 import {
@@ -70,7 +68,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const productImageUrls = useRef<string[]>([]);
   const productImageFiles = useRef<File[]>([]);
 
-  const [selectedShop, setSelectedShop] = useState<Shop>();
+  // const [selectedShop, setSelectedShop] = useState<Shop>();
   
 
   // Images
@@ -88,24 +86,18 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const dispatch = useDispatch();
 
-  const affectations = session?.data?.shopAffectations ?? [];
-  const role = () => {
-    if (affectations.length > 0) {
-      if (affectations && affectations.length > 0) {
-        return affectations[0].role as Roles;
-      }
-    } else {
-      return session?.data.role as Roles;
-    }
-  };
+  // const affectations = session?.data?.shopAffectations ?? [];
+  // const role = () => {
+  //   if (affectations.length > 0) {
+  //     if (affectations && affectations.length > 0) {
+  //       return affectations[0].role as Roles;
+  //     }
+  //   } else {
+  //     return session?.data.role as Roles;
+  //   }
+  // };
 
-  const shopIdToBePost = () => {
-    if (role() === "SUPER_MARKET_ADMIN") {
-      return session?.data.shopAffectations[0].shop.id;
-    } else if (role() === "SUPER_ADMIN") {
-      return selectedShop?.id;
-    }
-  };
+  
 
   const {
     register,
@@ -115,7 +107,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   } = useProductForm({ product });
 
   const { mutateAsync: uploadProductPicture } = useMutation({
-    mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
+    mutationFn: ({ file }: { axios: AxiosInstance; file: File }) =>
       uploadUrl(axiosMedias, file),
     retry: 0,
   });
@@ -125,7 +117,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       // Category relating
       setSelectedCategoryId(`${product?.subCategory?.category?.id}`);
       setSelectedSubCategory(product.subCategory);
-      setSelectedShop(product.shop);
+      // setSelectedShop(product.shop);
 
       // Images
       productImageUrls.current = [];
@@ -241,7 +233,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
     // Remove keys that are null, undefined, or empty strings
     const cleanedPayload = Object.fromEntries(
-      Object.entries(productSubmit).filter(([_, v]) => v != null && v !== "")
+      Object.entries(productSubmit).filter(([ v]) => v != null && v !== "")
     );
 
     if (product) {

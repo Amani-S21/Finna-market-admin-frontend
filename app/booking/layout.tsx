@@ -3,7 +3,6 @@
 import { Flex } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import NavBar from "../_components/NavBar";
-import { SideBar } from "../_components";
 import BookingSideBar from "./_components/SideBar";
 
 const BookingPage = ({ children }: { children: ReactNode }) => {

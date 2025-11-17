@@ -7,7 +7,6 @@ import { IoIosMore } from "react-icons/io";
 import { HotelResponse } from "../_features/types";
 import { hotelsColumns } from "../list/loading";
 import Image from "next/image";
-import { uploadUrl } from "@/app/market/products/_features/api";
 import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {

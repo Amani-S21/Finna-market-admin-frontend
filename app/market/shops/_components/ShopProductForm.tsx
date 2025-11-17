@@ -29,7 +29,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
 
   const {
     register,
-    control,
+  
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ShopProductSchema>({

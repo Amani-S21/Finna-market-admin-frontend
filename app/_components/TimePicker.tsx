@@ -16,7 +16,7 @@ const TimePickerComponent = ({ dateTime, setDateTime }: Props) => {
         if (!Array.isArray(date)) setDateTime(date);
       }}
       format="HH:mm"
-      plugins={[<TimePicker position="bottom" />]}
+      plugins={[<TimePicker key="time-picker" position="bottom" />]}
       render={(value, openCalendar) => (
         <TextField.Root
           value={value}

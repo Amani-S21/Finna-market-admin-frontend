@@ -16,11 +16,7 @@ const EditVehiclePage = () => {
   const id = params.id;
   const axios = useAxiosAuth();
 
-  const {
-    data: vehicleDetails,
-    isLoading,
-    error,
-  } = useFetchVehicle({
+  const { data: vehicleDetails } = useFetchVehicle({
     axios,
     id,
     enabled: status === "authenticated",

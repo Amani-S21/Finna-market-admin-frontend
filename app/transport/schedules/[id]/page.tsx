@@ -6,16 +6,14 @@ import { formatTime } from "@/app/lib/timeformat";
 import { Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { notFound, useParams, useRouter } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
-import { useFetchVehicles } from "../../vehicles/_features/hooks";
 import { useFetchSchedule } from "../_features/hooks";
 import {
   default as LoadingAgencyDetails,
   default as LoadingScheduleDetailsPage,
 } from "./loading";
-import { Scada } from "next/font/google";
-import { weekDays } from "../_components/NewScheduleForm";
+import { getDayLabel } from "@/app/lib/tools";
 
 const BuildScheduleDetailPage = () => {
   const { status } = useSession();
@@ -23,7 +21,6 @@ const BuildScheduleDetailPage = () => {
   const params = useParams<{ id: string }>();
   const id = params.id;
   const axios = useAxiosAuth();
-  const router = useRouter();
 
   const {
     data: schedule,
@@ -168,9 +165,6 @@ const AgenciesDetailPage = () => {
   );
 };
 
-export const getDayLabel = (dayValue: number): string => {
-  const day = weekDays.find((d) => d.value === dayValue);
-  return day ? day.day : "";
-};
+
 
 export default AgenciesDetailPage;

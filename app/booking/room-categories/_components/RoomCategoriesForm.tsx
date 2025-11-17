@@ -27,7 +27,7 @@ const RoomCategoriesForm = ({
   selectedType,
 }: Props) => {
   const axios = useAxiosAuth();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const productImageFiles = useRef<File[]>([]);

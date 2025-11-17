@@ -3,13 +3,11 @@
 import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-import { useDispatch } from "react-redux";
 import { seatsColumns } from "../../vehicles/[id]/loading";
 import { SeatsResponse } from "../_features/types";
 
 const SeatsTable = ({ seatsResponse }: { seatsResponse: SeatsResponse }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   return (
     <Table.Root variant="surface">

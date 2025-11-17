@@ -12,7 +12,7 @@ import { useState } from "react";
 import { RoomCategoryType } from "../_features/types";
 
 const NewRoomCategoriesPage = () => {
-  const { data: session, status } = useSession();
+  const {  status } = useSession();
   const axios = useAxiosAuth();
   const [selectedType, setSelectedType] = useState<
     RoomCategoryType | undefined

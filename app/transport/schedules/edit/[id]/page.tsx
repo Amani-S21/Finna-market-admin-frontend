@@ -31,8 +31,6 @@ const EditSchedulePage = () => {
 
   const {
     data: schedule,
-    isLoading,
-    error,
   } = useFetchSchedule({
     axios,
     id,
@@ -41,7 +39,7 @@ const EditSchedulePage = () => {
 
   useEffect(() => {
     if (schedule) {
-      for (var e of schedule.legs) {
+      for (const e of schedule.legs) {
         dispatch(
           addTripLeg({
             id: `${new Date()}`,
@@ -57,7 +55,7 @@ const EditSchedulePage = () => {
         );
       }
     }
-  }, [schedule]);
+  }, [schedule, dispatch]);
 
   return (
     <div>

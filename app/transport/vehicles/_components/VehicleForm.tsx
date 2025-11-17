@@ -83,9 +83,7 @@ const VehicleForm = ({
             },
           }
         );
-      } catch (error: any) {
-        // toast.error(JSON.stringify(error));
-      }
+      } finally{}
     } else {
       try {
         await createVehicle(
@@ -105,7 +103,7 @@ const VehicleForm = ({
             },
           }
         );
-      } catch (error: any) {
+      } finally {
         // toast.error(JSON.stringify(error));
       }
     }

@@ -1,3 +1,5 @@
+"use client"
+
 import { ErrorMessage, Spinner } from "@/app/_components";
 import TimePickerComponent from "@/app/_components/TimePicker";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
@@ -16,7 +18,6 @@ import { PlaceType } from "../../places/_features/types";
 import { useCreateTrip, useUpdateTrip } from "../_features/hooks";
 import { Schedule, TripPayload } from "../_features/types";
 import { NewTripSchema, newTripSchema } from "../_features/validations";
-import { AxiosError } from "axios";
 import { formatTime } from "@/app/lib/timeformat";
 
 export const weekDays: { day: string; value: number }[] = [
@@ -59,11 +60,11 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
     resolver: zodResolver(newTripSchema),
   });
 
-  const { mutateAsync: createSchedule, error: createError } = useCreateTrip({
+  const { mutateAsync: createSchedule} = useCreateTrip({
     axios,
   });
 
-  const { mutateAsync: updateSchedule, error: updateError } = useUpdateTrip({
+  const { mutateAsync: updateSchedule } = useUpdateTrip({
     axios,
     id: `${schedule?.id}`,
   });
@@ -80,7 +81,7 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
           vehicleId: schedule.vehicleId,
           dayOfWeek: Number(`${selectedDay}`),
           legs: (tripLegs ?? []).map(
-            ({ id, departure, arrival, ...others }) => ({
+            ({  departure, arrival, ...others }) => ({
               ...others,
               departure: formatTime(departure),
               arrival: formatTime(arrival),
@@ -110,7 +111,7 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
           price: Number(data.price),
           vehicleId,
           dayOfWeek: Number(`${selectedDay}`),
-          legs: (tripLegs ?? []).map(({ id, ...others }) => others),
+          legs: (tripLegs ?? []).map(({  ...others }) => others),
         };
 
         console.log(JSON.stringify(trip));

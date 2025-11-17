@@ -1,9 +1,8 @@
 "use client";
 
-import { Badge, IconButton, Table } from "@radix-ui/themes";
+import {  IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
-import { useDispatch } from "react-redux";
 import { SchedulesResponse } from "../../schedules/_features/types";
 import { vehicleSchedulesColumns } from "../[id]/loading";
 
@@ -13,7 +12,6 @@ const VehicleSchedulesTable = ({
   schedulesResponse: SchedulesResponse;
 }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   return (
     <Table.Root variant="surface">

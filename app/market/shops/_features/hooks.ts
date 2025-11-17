@@ -1,6 +1,4 @@
 import {
-  Product,
-  ProductsListResponse,
   Shop,
   ShopHasProductsListResponse,
   ShopsListResponse,

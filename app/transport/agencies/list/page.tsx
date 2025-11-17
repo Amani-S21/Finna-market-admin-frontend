@@ -4,7 +4,7 @@ import { Pagination } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { useParams, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import AgenciesTable from "../../_components/AgenciesTable";
 import AgenciesToolBar from "../../_components/ToolBar";
 import { useFetchAgencies } from "../_features/hooks";

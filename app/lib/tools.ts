@@ -1,3 +1,5 @@
+import { weekDays } from "../transport/schedules/_components/NewScheduleForm";
+
 export const formattedDate = (date: string): string => {
   const myDate = new Date(date);
   const formated = new Intl.DateTimeFormat("fr-FR", {
@@ -9,4 +11,10 @@ export const formattedDate = (date: string): string => {
   }).format(myDate);
 
   return `${formated}`;
+};
+
+
+export const getDayLabel = (dayValue: number): string => {
+  const day = weekDays.find((d) => d.value === dayValue);
+  return day ? day.day : "";
 };

@@ -37,7 +37,7 @@ const BuildVehicleDetailsPage = () => {
     enabled: status === "authenticated",
   });
 
-  const { data: vehicleSchedulesResponse, isLoading: isLoadingSchedules } =
+  const { data: vehicleSchedulesResponse } =
     useFetchVehicleSchedules({
       axios,
       page: "1",

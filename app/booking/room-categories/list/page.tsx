@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useFetchRooms } from "../_features/hooks";
 import { Flex } from "@radix-ui/themes";
-import HotelsToolBar from "../../hotels/_components/HotelsToolBar";
 import RoomCategoriesTable from "../_components/RoomCategoriesTable";
 import { Pagination } from "@/app/_components";
 import RoomCategoriesToolBar from "../_components/RoomCategoriesToolBar";

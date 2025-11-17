@@ -20,7 +20,7 @@ import HotelCountriesSelect from "./HotelCountriesSelect";
 
 const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const axios = useAxiosAuth();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const productImageFiles = useRef<File[]>([]);
@@ -40,7 +40,7 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const [image2, setImage2] = useState<string | undefined>();
   const [image3, setImage3] = useState<string | undefined>();
 
-  const { mutateAsync: createHotel, error: createError } = useCreateHotels({
+  const { mutateAsync: createHotel } = useCreateHotels({
     axios,
   });
 

@@ -15,7 +15,6 @@ import { CiTrash } from "react-icons/ci";
 import { useCreateAgency, useUpdateAgency } from "../agencies/_features/hooks";
 import { NewAgencySchema, TransportAgency } from "../agencies/_features/type";
 import { newAgencySchema } from "../agencies/_features/validations";
-import TimePickerComponent from "@/app/_components/TimePicker";
 
 const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   const axios = useAxiosAuth();
@@ -23,7 +22,6 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
   const queryClient = useQueryClient();
   const [image, setImage] = useState<string | undefined>();
   const categoryFile = useRef<File | null>(null);
-  const categoryUrl = useRef<string>("");
 
   // const { mutateAsync: uploadCategoryPicture } = useMutation({
   //   mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
@@ -70,7 +68,7 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
             photo: "photo.png",
           },
           {
-            onSuccess: async (agency) => {
+            onSuccess: async () => {
               // if (!categoryFile.current) return;
 
               // // ✅ Wait for upload to finish
@@ -104,7 +102,7 @@ const AgencyForm = ({ agency }: { agency?: TransportAgency }) => {
             photo: "",
           },
           {
-            onSuccess: async (agency) => {
+            onSuccess: async () => {
               // if (!categoryFile.current) return;
 
               // // ✅ Wait for upload to finish
