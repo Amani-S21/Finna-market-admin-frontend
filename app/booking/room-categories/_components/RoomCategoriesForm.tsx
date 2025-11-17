@@ -87,7 +87,7 @@ const RoomCategoriesForm = ({
         pictures: [],
         visible: isPublished,
         capacity: parseInt(`${data.capacity}`),
-        hotelId: "d80f5fed-6aba-45fe-bfb7-03f8f88d6329",
+        hotelId: "006adde8-bb9c-4f31-9978-dd6cd8288d13",
         roomCategoryTypeId: `${selectedType?.id}`,
         totalRooms: parseInt(`${data.totalRooms}`),
         pricePerNight: parseInt(`${data.pricePerNight}`),

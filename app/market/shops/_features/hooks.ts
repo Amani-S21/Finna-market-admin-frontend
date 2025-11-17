@@ -1,14 +1,28 @@
 import {
+  Product,
+  ProductsListResponse,
   Shop,
+  ShopHasProductsListResponse,
   ShopsListResponse,
   SubmitAffectShop,
   SubmitShop,
 } from "@/app/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { affectShop, createShop, fetchShopById, fetchShops, searchExpeditionRegions, searchShopType, updateShop } from "./api";
+import {
+  affectProductToShop,
+  affectShop,
+  createShop,
+  fetchShopById,
+  fetchShopProducts,
+  fetchShops,
+  searchExpeditionRegions,
+  searchShopType,
+  updateShop,
+} from "./api";
 import { AxiosInstance } from "axios";
 import { ShopTypesResponse } from "../../orders/_features/types";
 import { ExpeditionRegionsResponse } from "./types";
+import { ShopProductSubmit } from "../../products/_features/types";
 
 type UseFetchShops = {
   axios: AxiosInstance;
@@ -20,6 +34,28 @@ export const useFetchShops = ({ axios, page, enabled }: UseFetchShops) => {
   return useQuery<ShopsListResponse>({
     queryKey: ["shops", page],
     queryFn: () => fetchShops(axios, page),
+    staleTime: 60 * 1000 * 60,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseFetchShopProducts = {
+  axios: AxiosInstance;
+  page: string;
+  shopId: string;
+  enabled: boolean;
+};
+
+export const useFetchShopProducts = ({
+  axios,
+  page,
+  shopId,
+  enabled,
+}: UseFetchShopProducts) => {
+  return useQuery<ShopHasProductsListResponse>({
+    queryKey: ["shop-products", page],
+    queryFn: () => fetchShopProducts(axios, page, shopId),
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,
@@ -121,5 +157,15 @@ export const useSearchExpeditionRegions = ({
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
+  });
+};
+
+type UseAffectProductToShop = {
+  axios: AxiosInstance;
+};
+
+export const useAffectProductToShop = ({ axios }: UseAffectProductToShop) => {
+  return useMutation<void, Error, ShopProductSubmit>({
+    mutationFn: (data: ShopProductSubmit) => affectProductToShop(axios, data),
   });
 };

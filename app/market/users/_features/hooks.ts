@@ -1,4 +1,4 @@
-import { Roles, Shop, User, UserSchema, UsersResponse } from "@/app/lib/types";
+import { Product, Roles, Shop, User, UserSchema, UsersResponse } from "@/app/lib/types";
 import { userSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -8,7 +8,7 @@ import {
 import { AxiosInstance } from "axios";
 import { useForm } from "react-hook-form";
 import { fetchUser, fetchUsers, fetchUsersByShop, searchUser, updateUser } from "./api";
-import { searchShop } from "../../shops/_features/api";
+import { searchGlobalProduct, searchShop } from "../../shops/_features/api";
 
 type UseSearchUser = {
   axios: AxiosInstance;
@@ -46,6 +46,26 @@ export const useSearchShop = ({
   return useQuery<Shop[]>({
     queryKey: ["searched-shops", term],
     queryFn: () => searchShop(axios, term),
+    staleTime: 60 * 1000 * 5,
+    retry: 3,
+    enabled,
+  });
+};
+
+type UseSearchGlobalProduct = {
+  axios: AxiosInstance;
+  term: string;
+  enabled: boolean;
+};
+
+export const useSearchGlobalProduct = ({
+  axios,
+  term,
+  enabled,
+}: UseSearchGlobalProduct) => {
+  return useQuery<Product[]>({
+    queryKey: ["searched-global-products", term],
+    queryFn: () => searchGlobalProduct(axios, term),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

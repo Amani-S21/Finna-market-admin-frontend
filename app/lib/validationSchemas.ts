@@ -85,3 +85,14 @@ export const productSchema = z.object({
   category: z.string().min(1, "Veuillez sélectionner la catégorie"),
   feature: z.string().optional(),
 });
+
+export const shopProductSchema = z.object({
+  cost: z.coerce.number().min(1, "Le cout doit etre au minimum 1"),
+  price: z.coerce.number().min(1, "Le prix doit etre au minimum 1"),
+  discountPrice: z.coerce
+    .number()
+    .min(1, "Le prix de reduction doit etre au minimum 1"),
+  deliveryFees: z.coerce
+    .number()
+    .min(1, "Le prix de reduction doit etre au minimum 1"),
+});

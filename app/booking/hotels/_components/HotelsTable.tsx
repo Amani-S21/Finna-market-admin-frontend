@@ -6,6 +6,9 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { HotelResponse } from "../_features/types";
 import { hotelsColumns } from "../list/loading";
+import Image from "next/image";
+import { uploadUrl } from "@/app/market/products/_features/api";
+import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
   const router = useRouter();
@@ -27,13 +30,13 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
               <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-100 relative">
-                {/* <Image
+                <Image
                   height={50}
                   width={60}
                   alt="product image"
-                  src={`https://finna-media.buy-one-store.com/v1/uploads/images/${hotel.icon}`}
+                  src={`${MEDIAS_UPLOAD_BASE_URL}/images/${hotel.pictures[0]}`}
                   className="object-cover rounded-md"
-                /> */}
+                />
               </div>
             </Table.Cell>
             <Table.Cell>

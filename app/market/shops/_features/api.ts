@@ -1,10 +1,26 @@
 import { SubmitAffectShop, SubmitShop } from "@/app/lib/types";
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
+import { ShopProductSubmit } from "../../products/_features/types";
 
 export const fetchShops = async (axios: AxiosInstance, page: string) => {
   try {
     const res = await axios.get(`/shops?page=${page}&limit=10`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
+export const fetchShopProducts = async (
+  axios: AxiosInstance,
+  page: string,
+  shopId: string
+) => {
+  try {
+    const res = await axios.get(
+      `/products/by-shops?shopId=${shopId}&page=${page}&limit=10`
+    );
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
@@ -109,10 +125,7 @@ export const updateShop = async (axios: AxiosInstance, data: SubmitShop) => {
   }
 };
 
-export const searchShopType = async (
-  axios: AxiosInstance,
-  term: string,
-) => {
+export const searchShopType = async (axios: AxiosInstance, term: string) => {
   try {
     const res = await axios.get(`/shop-types/search?term=${term}`);
     return res.data;
@@ -123,7 +136,7 @@ export const searchShopType = async (
 
 export const searchExpeditionRegions = async (
   axios: AxiosInstance,
-  term: string,
+  term: string
 ) => {
   try {
     const res = await axios.get(`/expedition-regions/search?term=${term}`);
@@ -133,14 +146,49 @@ export const searchExpeditionRegions = async (
   }
 };
 
-export const searchShop = async (
-  axios: AxiosInstance,
-  term: string,
-) => {
+export const searchShop = async (axios: AxiosInstance, term: string) => {
   try {
-    const res = await axios.get(`/shops/search?term=${term}`)
+    const res = await axios.get(`/shops/search?term=${term}`);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
+  }
+};
+
+export const searchGlobalProduct = async (
+  axios: AxiosInstance,
+  term: string
+) => {
+  try {
+    const res = await axios.get(`/products/global/search?term=${term}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
+export const affectProductToShop = async (
+  axios: AxiosInstance,
+  data: ShopProductSubmit
+) => {
+  try {
+    const res = await axios.post("/products/affect-to-shop", data);
+    return res.data;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Affectation produit deja existante";
+        break;
+
+
+      default:
+        message = "Une erreur inconue est survenue";
+    }
+
+    const customError = new Error(message);
+    throw customError;
   }
 };

@@ -5,6 +5,7 @@ import {
   featureSchema,
   newShopSchema,
   productSchema,
+  shopProductSchema,
   signinSchema,
   taxeSchema,
   updatePasswordSchema,
@@ -36,6 +37,8 @@ export type CategorySchema = z.infer<typeof categorySchema>;
 export type TaxeSchema = z.infer<typeof taxeSchema>;
 
 export type ProductSchema = z.infer<typeof productSchema>;
+
+export type ShopProductSchema = z.infer<typeof shopProductSchema>;
 
 export type ExpeditionRegion = {
   shopId: string;
@@ -108,6 +111,65 @@ export type Roles =
   | "DELIVERER"
   | "DELIVERER_ADMIN";
 
+export type ShopHasProductsListResponse = {
+  count: number;
+  data: ShopProductWithDetails[];
+};
+
+export type ShopProductWithDetails = {
+  id: string;
+  price: number;
+  deliveryFees: number;
+  cost: number;
+  discountPrice: number;
+  published: boolean;
+  shopId: string;
+  productId: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  product: {
+    id: string;
+    name: string;
+    description: string;
+    weightInGrams: number | null;
+    heightInCm: number | null;
+    widthInCm: number | null;
+    lengthInCm: number | null;
+    pictures: string[];
+    createdAt: string;
+    updatedAt: string;
+    userId: string;
+    subCategoryId: string;
+    user: {
+      id: string;
+      fullName: string;
+      role: string;
+      idCardCopy: string | null;
+      idCardNumber: string | null;
+      emailAddress: string;
+      phone: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    subCategory: {
+      id: string;
+      name: string;
+      icon: string;
+      categoryId: string;
+      createdAt: string;
+      updatedAt: string;
+      category: {
+        id: string;
+        name: string;
+        icon: string;
+        createdAt: string;
+        updatedAt: string;
+      };
+    };
+    featuresAffectations: any[]; // or a more specific type if known
+  };
+};
+
 export type ProductsListResponse = {
   count: number;
   data: Product[];
@@ -119,7 +181,7 @@ export type Product = {
   description: string;
   cost: number;
   price: number;
-  discountPrice : number;
+  discountPrice: number;
   percentage?: number;
   weightInGrams?: number;
   heightInCm?: number;
@@ -239,7 +301,7 @@ export type SubmitFeatureWithValues = {
 export type SubmitProduct = {
   id?: string;
   name?: string;
-  price? : number;
+  price?: number;
   discountPrice?: number;
   published?: boolean;
   userId?: string;
@@ -270,8 +332,8 @@ export type SubCategory = {
   id?: string;
   name?: string;
   index?: number;
-  icon? : string;
-  categoryId? : string;
+  icon?: string;
+  categoryId?: string;
   createdAt?: string;
   updatedAt?: string;
   category?: Category;

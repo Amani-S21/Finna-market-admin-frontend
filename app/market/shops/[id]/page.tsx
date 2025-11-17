@@ -8,7 +8,7 @@ import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
 import LoadingEditProductPage from "../../products/edit/[id]/loading";
-import { useFetchShopsById } from "../_features/hooks";
+import { useFetchShopProducts, useFetchShopsById } from "../_features/hooks";
 import LoadingShopDetails from "./loading";
 import { formattedDate } from "@/app/lib/tools";
 import { Edit } from "lucide-react";
@@ -31,7 +31,17 @@ const BuildShopsDetailPage = () => {
     enabled: status === "authenticated",
   });
 
-  if (isLoading || status === "loading") return <LoadingShopDetails />;
+  const { data: products, isLoading: isLoadingProducts } = useFetchShopProducts(
+    {
+      axios,
+      page: "1",
+      shopId: id,
+      enabled: status === "authenticated",
+    }
+  );
+
+  if (isLoading || isLoadingProducts || status === "loading")
+    return <LoadingShopDetails />;
 
   if (error) notFound();
 
@@ -118,14 +128,14 @@ const BuildShopsDetailPage = () => {
           >
             produits
           </Heading>
-          <ShopsProductsTable />
+          <ShopsProductsTable products={products?.data ?? []} />
         </div>
         <div className=" flex flex-col space-y-4">
           <Link href={`/market/shops/edit/${shop?.id}`}>
             <Button>Modifier la boutique</Button>
           </Link>
           <Link href="/market/shops/products/new">
-            <Button>Ajouter des produits</Button>
+            <Button variant="outline"  >Ajouter des produits</Button>
           </Link>
         </div>
       </Grid>
