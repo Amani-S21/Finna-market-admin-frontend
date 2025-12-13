@@ -10,7 +10,7 @@ services:
       LETSENCRYPT_HOST: admin.finna-entreprise.com
       LETSENCRYPT_EMAIL: gedeonyalakuhanda@gmail.com
     expose:
-      - "3000"
+      - "3001"
     networks:
       - nginx-network
 
