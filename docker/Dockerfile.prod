@@ -5,7 +5,7 @@ FROM node:20 AS build-stage
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm install
+RUN yarn install
 
 COPY . .
 RUN yarn build

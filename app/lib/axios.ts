@@ -1,6 +1,6 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:3000/v1";
-// const BASE_URL = "https://api.finna-entreprise.com/v1";
+// const BASE_URL = "http://localhost:3000/v1";
+const BASE_URL = "https://api.finna-entreprise.com/v1";
 export const MEDIAS_UPLOAD_BASE_URL = "https://medias.finna-entreprise.com/v1/uploads";
 
 export default axios.create({
