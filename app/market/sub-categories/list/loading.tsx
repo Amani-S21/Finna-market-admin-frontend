@@ -15,7 +15,7 @@ export const subCategoriesColumns: {
   label: string;
 }[] = [
   { label: "N"},
-  { label: "Photo"},
+  // { label: "Photo"},
   { label: "Sous catégorie"},
   { label: "Date"},
   { label: "Action"},

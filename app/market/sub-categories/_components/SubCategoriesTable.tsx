@@ -30,7 +30,7 @@ const SubCategoriesTable = ({
         {subCategoriesResponse?.data.map((subCategory, index) => (
           <Table.Row key={subCategory.id} align="center">
             <Table.Cell>{index + 1}</Table.Cell>
-            <Table.Cell>
+            {/* <Table.Cell>
               <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-white relative">
                 <Image
                   height={50}
@@ -40,7 +40,7 @@ const SubCategoriesTable = ({
                   className="object-cover rounded-md"
                 />
               </div>
-            </Table.Cell>
+            </Table.Cell> */}
             <Table.Cell>{subCategory.name}</Table.Cell>
             <Table.Cell>{formattedDate(`${subCategory.createdAt}`)}</Table.Cell>
             <Table.Cell>

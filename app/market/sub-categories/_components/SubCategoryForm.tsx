@@ -44,16 +44,16 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
     axios,
   });
 
-  const uploadPicture = async (): Promise<string | undefined> => {
-    if (!subCategoryFile.current) return;
+  // const uploadPicture = async (): Promise<string | undefined> => {
+  //   if (!subCategoryFile.current) return;
 
-    const data = await uploadCategoryPicture({
-      axios: axiosMedias,
-      file: subCategoryFile.current!,
-    });
-    categoryUrl.current = `${data?.imgName}`;
-    return `${data?.imgName}`;
-  };
+  //   const data = await uploadCategoryPicture({
+  //     axios: axiosMedias,
+  //     file: subCategoryFile.current!,
+  //   });
+  //   categoryUrl.current = `${data?.imgName}`;
+  //   return `${data?.imgName}`;
+  // };
 
   const {
     register,
@@ -99,16 +99,16 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           },
           {
             onSuccess: async (subCategory) => {
-              if (!subCategoryFile.current) return;
+              // if (!subCategoryFile.current) return;
 
-              const imageUrl = await uploadPicture();
+              // const imageUrl = await uploadPicture();
 
-              if (!imageUrl) return;
+              // if (!imageUrl) return;
 
-              await updateSubCategoryIcon({
-                id: `${subCategory?.id}`,
-                icon: imageUrl,
-              });
+              // await updateSubCategoryIcon({
+              //   id: `${subCategory?.id}`,
+              //   icon: imageUrl,
+              // });
 
               queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
               queryClient.invalidateQueries({ queryKey: ["sub-category"] });
@@ -158,7 +158,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           open={openDialog}
           setOpen={setOpenDialog}
         />
-        <div className="flex flex-col space-y-2 mt-4 mb-2">
+        {/* <div className="flex flex-col space-y-2 mt-4 mb-2">
           <Flex justify="between" align="start">
             <Flex direction="column" gap="2" mb="2">
               <p className="text-sm font-bold">Photos</p>
@@ -186,7 +186,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
               subCategoryFile.current = filefToAdd;
             }}
           />
-        </div>
+        </div> */}
 
         <Button disabled={isSubmitting || isUploading} mt="4">
           {subCategory ? "Modifier" : "Enregistrer"}{" "}
