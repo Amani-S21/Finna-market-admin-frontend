@@ -4,45 +4,39 @@ import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Category, CategorySchema, SubCategory } from "@/app/lib/types";
-import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosInstance } from "axios";
+import { Button, Callout, TextField } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { CiTrash } from "react-icons/ci";
-import { ProductImage } from "../../products/_components";
-import { uploadUrl } from "../../products/_features/api";
 import {
   useCreateSubCategories,
   useSubCategoryForm,
   useUpdateSubCategories,
-  useUpdateSubCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./CategorySelect";
-import { axiosMedias } from "@/app/lib/axios";
 
 const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
   const axios = useAxiosAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [image, setImage] = useState<string | undefined>();
-  const subCategoryFile = useRef<File | null>(null);
-  const categoryUrl = useRef<string>("");
+  // const [image, setImage] = useState<string | undefined>();
+  // const subCategoryFile = useRef<File | null>(null);
+  // const categoryUrl = useRef<string>("");
 
   const [selectedCategory, setSelectedCategory] = useState<Category>();
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { mutateAsync: uploadCategoryPicture, isPending: isUploading } =
-    useMutation({
-      mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
-        uploadUrl(axios, file),
-      retry: 0,
-    });
+  // const { mutateAsync: uploadCategoryPicture, isPending: isUploading } =
+  //   useMutation({
+  //     mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
+  //       uploadUrl(axios, file),
+  //     retry: 0,
+  //   });
 
-  const { mutateAsync: updateSubCategoryIcon } = useUpdateSubCategoryIcon({
-    axios,
-  });
+  // const { mutateAsync: updateSubCategoryIcon } = useUpdateSubCategoryIcon({
+  //   axios,
+  // });
 
   // const uploadPicture = async (): Promise<string | undefined> => {
   //   if (!subCategoryFile.current) return;
@@ -98,23 +92,25 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
             categoryId: selectedCategory?.id,
           },
           {
-            onSuccess: async (subCategory) => {
-              // if (!subCategoryFile.current) return;
+            onSuccess: async () =>
+              // subCategory
+              {
+                // if (!subCategoryFile.current) return;
 
-              // const imageUrl = await uploadPicture();
+                // const imageUrl = await uploadPicture();
 
-              // if (!imageUrl) return;
+                // if (!imageUrl) return;
 
-              // await updateSubCategoryIcon({
-              //   id: `${subCategory?.id}`,
-              //   icon: imageUrl,
-              // });
+                // await updateSubCategoryIcon({
+                //   id: `${subCategory?.id}`,
+                //   icon: imageUrl,
+                // });
 
-              queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
-              queryClient.invalidateQueries({ queryKey: ["sub-category"] });
-              toast.success(`Sous catégorie crééee avec avec succè`);
-              router.back();
-            },
+                queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
+                queryClient.invalidateQueries({ queryKey: ["sub-category"] });
+                toast.success(`Sous catégorie crééee avec avec succè`);
+                router.back();
+              },
           }
         );
       } catch (error: any) {
@@ -188,9 +184,16 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           />
         </div> */}
 
-        <Button disabled={isSubmitting || isUploading} mt="4">
+        <Button
+          disabled={
+            isSubmitting // || isUploading
+          }
+          mt="4"
+        >
           {subCategory ? "Modifier" : "Enregistrer"}{" "}
-          {(isSubmitting || isUploading) && <Spinner />}
+          {isSubmitting && ( // || isUploading
+            <Spinner />
+          )}
         </Button>
       </form>
     </div>
