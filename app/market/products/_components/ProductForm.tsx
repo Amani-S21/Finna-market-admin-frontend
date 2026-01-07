@@ -2,12 +2,7 @@
 
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import {
-  Feature,
-  Product,
-  ProductSchema,
-  SubCategory,
-} from "@/app/lib/types";
+import { Feature, Product, ProductSchema, SubCategory } from "@/app/lib/types";
 import {
   addAndRemoveFeaturePrices,
   addFeature,
@@ -69,7 +64,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const productImageFiles = useRef<File[]>([]);
 
   // const [selectedShop, setSelectedShop] = useState<Shop>();
-  
 
   // Images
   const [image1, setImage1] = useState<string | undefined>();
@@ -96,8 +90,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
   //     return session?.data.role as Roles;
   //   }
   // };
-
-  
 
   const {
     register,
@@ -206,16 +198,16 @@ const ProductForm = ({ product }: { product?: Product }) => {
       name,
       description,
       weightInGrams,
-      heightInCm,
-      widthInCm,
-      lengthInCm,
+      // heightInCm,
+      // widthInCm,
+      // lengthInCm,
     } = data;
     const productSubmit = {
       name,
       weightInGrams: weightInGrams,
-      heightInCm: heightInCm,
-      widthInCm: widthInCm,
-      lengthInCm: lengthInCm,
+      // heightInCm: heightInCm,
+      // widthInCm: widthInCm,
+      // lengthInCm: lengthInCm,
       description,
       userId: `${session?.data.id}`,
       categoryId: selectedCategoryId,
@@ -233,7 +225,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
     // Remove keys that are null, undefined, or empty strings
     const cleanedPayload = Object.fromEntries(
-      Object.entries(productSubmit).filter(([ v]) => v != null && v !== "")
+      Object.entries(productSubmit).filter(([v]) => v != null && v !== "")
     );
 
     if (product) {
@@ -353,7 +345,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
           <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>        
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Flex gap="6">
           <div className="w-full">
             <div className="flex flex-col space-y-2 mt-4">
@@ -375,7 +367,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
               <ErrorMessage>{errors.weightInGrams?.message}</ErrorMessage>
             </div>
-            <div className="flex flex-col space-y-2 mt-4">
+            {/* <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Hauteur en cm</p>
               <TextField.Root
                 {...register("heightInCm")}
@@ -404,7 +396,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 placeholder="Veuillez saisir le prix courant du produit"
               />
               <ErrorMessage>{errors.lengthInCm?.message}</ErrorMessage>
-            </div>
+            </div> */}
             <Controller
               control={control}
               name="category"
@@ -420,9 +412,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 </div>
               )}
             />
-            
-          </div>
-          <div className="w-full">
+
             {categoriesResponse?.data && (
               <>
                 <p className="text-sm font-bold mt-4 mb-2">Sous catégories</p>
@@ -520,14 +510,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 </ErrorMessage>
               )} */}
             </div>
-            {/* {role() === "SUPER_ADMIN" && (
-              <ShopProductSelect
-                setSelectedShop={setSelectedShop}
-                selectedShop={selectedShop}
-                open={openDialog}
-                setOpen={setOpenDialog}
-              />
-            )} */}
 
             <div className="flex flex-col space-y-2 mt-4">
               <p className="text-sm font-bold">Déscription</p>
@@ -539,9 +521,19 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
               <ErrorMessage>{errors.description?.message}</ErrorMessage>
             </div>
+          </div>
+          <div className="w-full">
+            {/* {role() === "SUPER_ADMIN" && (
+              <ShopProductSelect
+                setSelectedShop={setSelectedShop}
+                selectedShop={selectedShop}
+                open={openDialog}
+                setOpen={setOpenDialog}
+              />
+            )} */}
 
             <div className="flex flex-col space-y-2 mt-4 mb-2">
-              <Flex justify="between">
+              <Flex gap="6">
                 <p className="text-sm font-bold">Photos</p>
                 <Flex
                   align="center"
@@ -554,7 +546,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 >
                   <CiTrash size={16} />
                   <p className="text-sm underline hover:cursor-default">
-                    Réinitialiser
+                    Réinitialiser les photos
                   </p>
                 </Flex>
               </Flex>

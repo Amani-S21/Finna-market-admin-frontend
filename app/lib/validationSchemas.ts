@@ -76,9 +76,9 @@ export const productSchema = z.object({
   //   .number()
   //   .min(1, "Le prix de reduction doit etre au minimum 1"),
   weightInGrams: z.string().optional(),
-  heightInCm: z.string().optional(),
-  widthInCm: z.string().optional(),
-  lengthInCm: z.string().optional(),
+  // heightInCm: z.string().optional(),
+  // widthInCm: z.string().optional(),
+  // lengthInCm: z.string().optional(),
   description: z
     .string()
     .min(5, "La déscription doit avoir au minimum 5 caracteres"),
