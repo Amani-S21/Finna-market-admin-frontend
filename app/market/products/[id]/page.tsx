@@ -59,7 +59,7 @@ const BuildProductsDetailsPage = () => {
                 Créé par
               </Text>
               <Flex align="center" gap="2">
-                <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">
+                <div className="h-10 w-10 border border-gray-200 rounded-full uppercase flex items-center justify-center">
                   {product?.user?.fullName
                     ? product.user.fullName.substring(0, 1)
                     : ""}
@@ -84,7 +84,7 @@ const BuildProductsDetailsPage = () => {
               product?.pictures.map((picture) => (
                 <div
                   key={picture}
-                  className="h-[80px] w-[100px] flex justify-center items-center rounded-md bg-white relative"
+                  className="h-20 w-25 flex justify-center items-center rounded-md bg-white relative"
                 >
                   <Image
                     height={80}

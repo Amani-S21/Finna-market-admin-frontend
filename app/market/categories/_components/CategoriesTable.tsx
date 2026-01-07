@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { SelectSearchItem } from "../../products/_components";
 import { categoriesColumns } from "../list/loading";
-import Image from "next/image";
-import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
+// import Image from "next/image";
+// import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const CategoriesTable = ({
   categoriesResponse,

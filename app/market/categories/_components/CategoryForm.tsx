@@ -2,6 +2,7 @@
 
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
+import { axiosMedias } from "@/app/lib/axios";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Category, CategorySchema } from "@/app/lib/types";
 import {
@@ -9,15 +10,14 @@ import {
   removeSubCategory,
 } from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
-import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import { CiTrash } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductImage, SelectSearchItem } from "../../products/_components";
+import { SelectSearchItem } from "../../products/_components";
 import { uploadUrl } from "../../products/_features/api";
 import {
   useCategoryForm,
@@ -26,7 +26,6 @@ import {
   useUpdateCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./SubCategorySelect";
-import { axiosMedias } from "@/app/lib/axios";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -35,7 +34,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const { subCategories } = useSelector((state: RootState) => state.category);
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [image, setImage] = useState<string | undefined>();
+  // const [image, setImage] = useState<string | undefined>();
   const categoryFile = useRef<File | null>(null);
   const categoryUrl = useRef<string>("");
 
