@@ -26,7 +26,7 @@ export const fetchSubCategoryById = async (
 
 export const searchSubCategories = async (axios: AxiosInstance, term: string) => {
   try {
-    const res = await axios.get(`/sub-categories/search?term=${term}`);
+    const res = await axios.get(`/sub-categories/search-non-affected?term=${term}`);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));

@@ -32,8 +32,8 @@ const CategoriesTable = ({
         {categoriesResponse?.data.map((category, index) => (
           <Table.Row key={category.id} align="center">
             <Table.Cell>{index + 1}</Table.Cell>
-            <Table.Cell>
-              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-white relative">
+            {/* <Table.Cell>
+              <div className="h-12.5 w-12.5 flex justify-center items-center rounded-md bg-white relative">
                 <Image
                   height={50}
                   width={60}
@@ -42,7 +42,7 @@ const CategoriesTable = ({
                   className="object-cover rounded-md"
                 />
               </div>
-            </Table.Cell>
+            </Table.Cell> */}
             <Table.Cell>{category.name}</Table.Cell>
             <Table.Cell>{formattedDate(category.createdAt)}</Table.Cell>
             <Table.Cell>

@@ -20,7 +20,7 @@ export default function Home() {
             <span className="lowercase">{session?.data.fullName}</span>
             <p className="font-bold">{session?.data.phone}</p>
           </div>
-          <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
+          <div className="h-15 w-15 rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
             <p className="uppercase">
               {session?.data.fullName.substring(0, 2)}
             </p>

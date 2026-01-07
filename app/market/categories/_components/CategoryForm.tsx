@@ -189,7 +189,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           </div>
         )}
 
-        <div className="flex flex-col space-y-2 mt-4 mb-2">
+        {/* <div className="flex flex-col space-y-2 mt-4 mb-2">
           <Flex justify="between" align="start">
             <Flex direction="column" gap="2" mb="2">
               <p className="text-sm font-bold">Photos</p>
@@ -217,7 +217,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               categoryFile.current = filefToAdd;
             }}
           />
-        </div>
+        </div> */}
 
         {/* <div className="flex flex-col space-y-2 mt-6">
           <Flex justify="between">
@@ -247,7 +247,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           />
         </div> */}
 
-        <Button disabled={isSubmitting} mt="4">
+        <Button disabled={isSubmitting} mt="6">
           {category ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
         </Button>
       </form>
