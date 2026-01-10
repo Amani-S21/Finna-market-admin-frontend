@@ -204,7 +204,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
     } = data;
     const productSubmit = {
       name,
-      weightInGrams: weightInGrams,
+      weightInGrams: Number(weightInGrams),
       // heightInCm: heightInCm,
       // widthInCm: widthInCm,
       // lengthInCm: lengthInCm,

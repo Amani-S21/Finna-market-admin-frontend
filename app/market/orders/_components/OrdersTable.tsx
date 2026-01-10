@@ -32,7 +32,7 @@ const OrdersTable = ({
           <Table.Row align="center" key={order.id}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
-              <div className="h-[60px] w-[60px] mt-4">
+              <div className="h-15 w-15 mt-4">
                 <QRCode
                   size={256}
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -55,7 +55,7 @@ const OrdersTable = ({
                 </Text>
               </Badge>
             </Table.Cell>
-            <Table.Cell className="truncate max-w-[300px]">
+            <Table.Cell className="truncate max-w-75">
               {order.status && <OrderStatusBadge status={order.status} />}
             </Table.Cell>
             <Table.Cell>

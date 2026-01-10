@@ -1,7 +1,5 @@
 import { OrderDetail } from "@/app/lib/types";
 import { Table } from "@radix-ui/themes";
-import React from "react";
-import { SelectSearchItem } from "../../products/_components";
 
 const OrderDetailsFeaturesTable = ({
   orderDetails,
@@ -17,7 +15,7 @@ const OrderDetailsFeaturesTable = ({
         return (sum += 0);
       }
     }, 0);
-    return total + orderDetail.product.price;
+    return  total + orderDetail.shopHasProduct.price;
   };
 
   return (
@@ -39,9 +37,9 @@ const OrderDetailsFeaturesTable = ({
               {orderDetail.quantity}
             </Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
-              {orderDetail.product.name}
+              {orderDetail.shopHasProduct.product.name}
             </Table.Cell>
-            <Table.Cell>
+            {/* <Table.Cell>
               <div className="flex flex-wrap gap-2">
                 {orderDetail.orderDetailFeatures.map((value) => (
                   <SelectSearchItem
@@ -58,9 +56,9 @@ const OrderDetailsFeaturesTable = ({
                   />
                 ))}
               </div>
-            </Table.Cell>
+            </Table.Cell> */}
             <Table.Cell className="lowercase first-letter:uppercase">
-              {`${orderDetail.product.price}`}
+              {orderDetail.shopHasProduct.price}
             </Table.Cell>
             <Table.Cell className="lowercase first-letter:uppercase">
               {totalOrderFeaturesPrice(orderDetail) * orderDetail.quantity}
@@ -78,7 +76,7 @@ const orderDetailsColumns: {
   { label: "N" },
   { label: "Quantité" },
   { label: "Produit" },
-  { label: "Propriétés" },
+  // { label: "Propriétés" },
   { label: "Pu" },
   { label: "Pt" },
 ];

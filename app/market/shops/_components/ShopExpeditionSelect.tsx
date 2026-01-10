@@ -4,7 +4,7 @@ import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import classNames from "classnames";
-import { ChevronDown, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { ShopType } from "../../orders/_features/types";
 import { useSearchExpeditionRegions } from "../_features/hooks";
@@ -21,7 +21,6 @@ const ShopExpeditionRegionsSelect = ({
   setSelectedExpeditionRegion,
   setOpen,
   open,
-  selectedExpedition,
 }: Props) => {
   const axios = useAxiosAuth();
 
@@ -42,7 +41,7 @@ const ShopExpeditionRegionsSelect = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger>
+      {/* <Dialog.Trigger>
         <div
           className="flex flex-col space-y-2 mt-6"
           onClick={() => setOpen(true)}
@@ -61,7 +60,7 @@ const ShopExpeditionRegionsSelect = ({
             <div className="inset-0 absolute hover:cursor-default"></div>
           </div>
         </div>
-      </Dialog.Trigger>
+      </Dialog.Trigger> */}
 
       <Dialog.Content maxWidth="450px">
         <Dialog.Title size="4">Séléctionner un lieu d'expédition</Dialog.Title>
@@ -78,24 +77,14 @@ const ShopExpeditionRegionsSelect = ({
             <Search size={15} />
           </TextField.Slot>
         </TextField.Root>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti
-        dignissimos eos error consequuntur officia quis, atque voluptates
-        consequatur ipsum in, nostrum facilis suscipit veritatis quam tempora
-        est voluptate corrupti perspiciatis Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Aliquam amet qui adipisci aperiam
-        cupiditate tempore unde quia nisi nam soluta rerum quibusdam, dolorum
-        hic. A sint vero sit hic earum? Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Consequatur vero assumenda dignissimos iusto sint non
-        eligendi vel voluptatibus ad quibusdam in, reiciendis ipsum veniam
-        tempora temporibus omnis repudiandae neque odit!
         {isLoadingTypes ? (
-          <div className="min-h-[60px]">
+          <div className="min-h-15">
             <Text size="1" mt="4">
               Chargement...
             </Text>
           </div>
         ) : (shopExpeditionRegionsResponse?.data ?? []).length > 0 ? (
-          <div className="min-h-[60px] mt-2">
+          <div className="min-h-15 mt-2">
             {shopExpeditionRegionsResponse?.data?.map(
               (expeditionRegion, index) => (
                 <div
@@ -118,7 +107,7 @@ const ShopExpeditionRegionsSelect = ({
             )}
           </div>
         ) : (
-          <div className="min-h-[60px]">
+          <div className="min-h-15">
             <Text size="1" mt="4">
               Aucun élément
             </Text>

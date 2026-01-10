@@ -1,6 +1,7 @@
 "use client";
 
 import { BackButton } from "@/app/_components";
+import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { formattedDate } from "@/app/lib/tools";
 import { Product } from "@/app/lib/types";
@@ -18,13 +19,11 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import { Suspense } from "react";
-import { ProductsFeaturesTable } from "../_components";
 import LoadingProductDetails from "./loading";
-import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const BuildProductsDetailsPage = () => {
   const params = useParams<{ id: string }>();
-  const {  status } = useSession();
+  const { status } = useSession();
   const id = params.id;
   const axios = useAxiosAuth();
 
@@ -107,58 +106,58 @@ const BuildProductsDetailsPage = () => {
               <Text size="2" className="font-bold">
                 Catégorie
               </Text>
-              {/* <p className="mt-1 lowercase first-letter:uppercase">
+              <p className="mt-1 lowercase first-letter:uppercase">
                 {product?.subCategory?.category?.name}
-              </p> */}
+              </p>
             </Card>
             <Card mt="4" variant="ghost">
               <Text size="2" className="font-bold">
                 Sous Catgégorie
               </Text>
-              {/* <p className="mt-1 lowercase first-letter:uppercase">
+              <p className="mt-1 lowercase first-letter:uppercase">
                 {product?.subCategory.name}
-              </p> */}
+              </p>
             </Card>
           </Flex>
-          <ProductsFeaturesTable
+          {/* <ProductsFeaturesTable
             featureAffectations={product?.featuresAffectations ?? []}
-          />
-          <Card mt="4" variant="ghost">
+          /> */}
+          {/* <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Coût
             </Text>
             <p className="mt-1">{product?.cost}</p>
-          </Card>
-          <Card mt="4" variant="ghost">
+          </Card> */}
+          {/* <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Prix
             </Text>
             <p className="mt-1">{product?.price}</p>
-          </Card>
+          </Card> */}
           <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Poids en gramme
             </Text>
             <p className="mt-1">{product?.weightInGrams}</p>
           </Card>
-          <Card mt="4" variant="ghost">
+          {/* <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Hauteur en cm
             </Text>
             <p className="mt-1">{product?.heightInCm}</p>
-          </Card>
-          <Card mt="4" variant="ghost">
+          </Card> */}
+          {/* <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Largeur en cm
             </Text>
             <p className="mt-1">{product?.widthInCm}</p>
-          </Card>
-          <Card mt="4" variant="ghost">
+          </Card> */}
+          {/* <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Longuer en cm
             </Text>
             <p className="mt-1">{product?.lengthInCm}</p>
-          </Card>
+          </Card> */}
           <Card mt="4" variant="ghost">
             <Text size="2" className="font-bold">
               Pourcentage

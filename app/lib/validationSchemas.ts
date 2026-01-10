@@ -9,12 +9,27 @@ export const signinSchema = z.object({
 
 export const newShopSchema = z.object({
   name: z.string().min(1, "Ce champs est obligatoire"),
-  address: z.string().min(1, "Veuillez saisir l'addrèsse"),
-  percentage: z.coerce.number().min(1, "Le pourcentage doit etre au minimum 1"),
-  nationalId: z.string(),
-  rccm: z.string(),
-  emailAddress: z.string().optional(),
-  phone: z.string().optional(),
+  address: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  percentage: z.coerce.number().optional(),
+  nationalId: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  rccm: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  emailAddress: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
+  phone: z
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val)),
 });
 
 export const affectShopSchema = z.object({

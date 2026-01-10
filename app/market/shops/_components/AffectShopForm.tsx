@@ -79,6 +79,7 @@ const AffectShopForm = ({ shopId }: { shopId: string }) => {
           Enregistrer {(isSubmitting || isPending) && <Spinner />}
         </Button>
       </form>
+      
     </div>
   );
 };

@@ -60,19 +60,27 @@ const BuildOrderDetailsPage = () => {
           <Heading mb="1" className="lowercase first-letter:uppercase">
             {formattedDate(`${ordersResponse?.data?.createdAt}`)}
           </Heading>
-          <Flex gap="2" mt="4" mb="5">
-            {ordersResponse?.data?.status && (
-              <OrderStatusBadge
-                status={ordersResponse?.data?.status as Status}
-              />
-            )}
+          <Flex gap="2" mt="6" mb="5" align="center">
+            <Text size="2">Catgégorie</Text>
             <Badge>
               <Text size="2">{ordersResponse?.data.orderType.name}</Text>
             </Badge>
           </Flex>
-          <Card mt="4" mb="5">
+          {ordersResponse?.data?.status && (
+            <Flex gap="2" mt="4" mb="5" align="center">
+              <Text size="2">Status</Text>
+              <OrderStatusBadge
+                status={ordersResponse?.data?.status as Status}
+              />
+            </Flex>
+          )}
+
+          <Text mt="4" size="2" className="font-bold mt-4">
+            Client propriétaire de la commande
+          </Text>
+          <Card mt="1" mb="5">
             <Flex align="center" gap="2">
-              <div className="h-[40px] w-[40px] border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${ordersResponse?.data?.customer?.fullName?.substring(
+              <div className="h-10 w-10 border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${ordersResponse?.data?.customer?.fullName?.substring(
                 0,
                 1
               )}`}</div>
@@ -86,6 +94,30 @@ const BuildOrderDetailsPage = () => {
               </Flex>
             </Flex>
           </Card>
+
+          {ordersResponse?.data?.deliverer && (
+            <>
+              <Text mt="4" size="2" className="font-bold mt-4">
+                Livreur responsable de la commande
+              </Text>
+              <Card mt="1" mb="5">
+                <Flex align="center" gap="2">
+                  <div className="h-10 w-10 border border-gray-200 rounded-full uppercase flex items-center justify-center">
+                    {ordersResponse?.data?.deliverer?.fullName?.substring(0, 1)}
+                  </div>
+                  <Flex direction="column">
+                    <p className="lowercase first-letter:uppercase">
+                      {ordersResponse?.data?.deliverer?.fullName}
+                    </p>
+                    <p className="text-sm font-bold text-gray-600">
+                      {ordersResponse?.data?.deliverer?.phone}
+                    </p>
+                  </Flex>
+                </Flex>
+              </Card>
+            </>
+          )}
+
           <Text as="p" size="2" className="font-bold">
             Produits commandés
           </Text>
@@ -99,7 +131,7 @@ const BuildOrderDetailsPage = () => {
             />
           )}
           <Flex mt="5" gap="4" align="start">
-            <div className="h-[150px] w-[150px] mt-4">
+            <div className="h-37.5 w-37.5 mt-4">
               <QRCode
                 size={256}
                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -117,29 +149,7 @@ const BuildOrderDetailsPage = () => {
             </div>
           </Flex>
 
-          {ordersResponse?.data?.deliverer && (
-            <>
-              <Text as="p" size="2" mt="6" className="font-bold mt-4">
-                Livreur
-              </Text>
-              <Text as="p" size="2" mt="1" mr="2">
-                Agent résponsable de la livraison
-              </Text>
-              <Flex mt="3" gap="2" align="center">
-                <div className="h-[60px] w-[60px] bg- flex justify-center items-center rounded-full bg-blue-400">
-                  <p className="text-xl text-white">
-                    {ordersResponse?.data?.deliverer?.fullName?.substring(0, 1)}
-                  </p>
-                </div>
-                <Flex direction="column">
-                  <Text>{ordersResponse?.data?.deliverer?.fullName}</Text>
-                  <Text size="1" className="font-bold text-gray-600">
-                    {ordersResponse?.data?.deliverer?.phone}
-                  </Text>
-                </Flex>
-              </Flex>
-            </>
-          )}
+          
         </div>
         {role() === "DELIVERER_ADMIN" ||
           (role() === "SUPER_ADMIN" && (

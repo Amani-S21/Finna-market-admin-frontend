@@ -55,21 +55,23 @@ const NewShopForm = () => {
 
   const onSubmit = async (data: NewShopSchema) => {
     try {
+      // const { rccm, address, nationalId, ...shop } = data;
       const submitData = {
         ...data,
         creatorId: session?.data.id,
         typeId: selectedShopType?.id,
         ownerId: `${selectedUser?.id}`,
-        percentage : data.percentage,
+        percentage: data.percentage,
         categories:
           selectedShopCategories?.map((category) => ({
             id: category.id,
           })) ?? [],
-        shopExpeditions: [
-          {
-            id: selectedExpedition?.id ?? "",
-          },
-        ],
+
+        // shopExpeditions: [
+        //   {
+        //     id: selectedExpedition?.id ?? "",
+        //   },
+        // ],
       };
 
       await createShop(submitData);

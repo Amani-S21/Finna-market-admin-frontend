@@ -395,74 +395,39 @@ export type OrderDetail = {
   id: string;
   quantity: number;
   orderId: string;
-  code: string;
-  productId: string;
+  shopHasProductId: string;
   createdAt: string;
   updatedAt: string;
-  product: {
+
+  shopHasProduct: {
     id: string;
-    name: string;
-    description: string;
-    cost: number;
     price: number;
-    weightInGrams: number;
-    heightInCm: number;
-    widthInCm: number;
-    lengthInCm: number;
-    percentage: number;
+    deliveryFees: number;
+    cost: number;
+    discountPrice: number;
     published: boolean;
-    pictures: string[];
+    shopId: string;
+    productId: string;
     createdAt: string;
     updatedAt: string;
-    userId: string;
-    subCategoryId: string;
-    shopId: string;
-    featuresAffectations: {
-      featureId: string;
-      createdAt: string;
-      updatedAt: string;
-      productId: string;
-      featuresAffectationsHasValues: {
-        price: number;
-        featureAffectationProductId: string;
-        featureAffectationFeatureId: string;
-        featureValueId: string;
-        createdAt: string;
-        updatedAt: string;
-        featureValue: {
-          id: string;
-          value: string;
-          createdAt: string;
-          updatedAt: string;
-        };
-      }[];
-    }[];
-  };
-  orderDetailFeatures: {
-    orderDetailId: string;
-    featureId: string;
-    featureValueId: string;
-    features: {
+
+    product: {
       id: string;
       name: string;
+      description: string;
+      weightInGrams: number;
+      heightInCm: number | null;
+      widthInCm: number | null;
+      lengthInCm: number | null;
+      pictures: string[];
       createdAt: string;
       updatedAt: string;
+      userId: string;
+      subCategoryId: string;
     };
-    featureValue: {
-      id: string;
-      value: string;
-      createdAt: string;
-      updatedAt: string;
-      featuresAffectationsHasValues: {
-        price: number;
-        featureAffectationProductId: string;
-        featureAffectationFeatureId: string;
-        featureValueId: string;
-        createdAt: string;
-        updatedAt: string;
-      }[];
-    };
-  }[];
+  };
+
+  orderDetailFeatures: any[];
 };
 
 export type OrderDetailFeatures = {
