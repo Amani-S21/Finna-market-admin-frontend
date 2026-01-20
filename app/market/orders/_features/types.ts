@@ -50,3 +50,8 @@ export type UpdateOrderSubmit = {
   id: string;
   delivererId: string;
 };
+
+export type ProductTakingPayload = {
+  id: string;
+  shopAgentId: string;
+};

@@ -398,7 +398,16 @@ export type OrderDetail = {
   shopHasProductId: string;
   createdAt: string;
   updatedAt: string;
-
+  orderProductTaking: {
+    id: string;
+    shopAgentId: string | null;
+    delivererId: string;
+    orderDetailId: string;
+    orderId: string;
+    createdAt: string; // ISO date string
+    updatedAt: string; // ISO date string;
+    deliverer: User;
+  };
   shopHasProduct: {
     id: string;
     price: number;

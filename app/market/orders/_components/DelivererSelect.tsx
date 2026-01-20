@@ -1,3 +1,5 @@
+"use client"
+
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { User } from "@/app/lib/types";
@@ -75,13 +77,13 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
         />
 
         {isLoadingUsers ? (
-          <div className="min-h-[60px]">
+          <div className="min-h-15">
             <Text size="1" mt="4">
               Chargement...
             </Text>
           </div>
         ) : (searchedUsers ?? []).length > 0 ? (
-          <div className="min-h-[60px] mt-2">
+          <div className="min-h-15 mt-2">
             {searchedUsers?.map((user, index) => (
               <div
                 className={classNames({
@@ -102,7 +104,7 @@ const DelivererSelect = ({ orderId, open, setOpen }: Props) => {
             ))}
           </div>
         ) : (
-          <div className="min-h-[60px]">
+          <div className="min-h-15">
             <Text size="1" mt="4">
               Aucun élément
             </Text>

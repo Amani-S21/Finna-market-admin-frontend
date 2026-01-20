@@ -13,12 +13,15 @@ const SideBar = () => {
   const affectations = session?.data?.shopAffectations ?? [];
 
   const role = () => {
-    if (affectations.length > 0) {
+    const userRole = session?.data.role as Roles;
+    if (userRole === "SUPER_ADMIN") {
+      return userRole;
+    } else if (affectations.length > 0) {
       if (affectations && affectations.length > 0) {
         return affectations[0].role as Roles;
       }
     } else {
-      return session?.data.role as Roles;
+      return userRole;
     }
   };
 
