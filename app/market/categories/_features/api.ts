@@ -5,7 +5,7 @@ import { UpdateCategoryIconType } from "./types";
 
 export const fetchCategories = async (axios: AxiosInstance, page: string) => {
   try {
-    const res = await axios.get(`/categories?page=${page}&limit=10`);
+    const res = await axios.get(`/categories?page=${page}&limit=10&withSubCategories=true`);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));

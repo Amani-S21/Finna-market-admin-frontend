@@ -1,5 +1,5 @@
 import { OrderDetail } from "@/app/lib/types";
-import { Table, Text } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import RequizitionItem from "./RequizitionItem";
 
 const ShopOrderDetailsFeaturesTable = ({
