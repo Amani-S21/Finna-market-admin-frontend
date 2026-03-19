@@ -3,39 +3,39 @@
 import { Badge, Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import { ChevronDown, Search } from "lucide-react";
 import React, { useState } from "react";
-import { ShopType } from "../../orders/_features/types";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { useDebounce } from "@/app/lib/hooks/otherHooks";
-import { useSearchShopType } from "../_features/hooks";
 import classNames from "classnames";
+import { Hotel } from "../../hotels/_features/types";
+import { useSearchHotels } from "../_features/hooks";
 
 type Props = {
-  selectedShop: ShopType | undefined;
-  setSelectedType: (val: ShopType) => void;
+  selectedHotel: Hotel | undefined;
+  setSelectedHotel: (val: Hotel) => void;
   open: boolean;
   setOpen: (val: boolean) => void;
 };
 
-const ShopTypeSelect = ({
-  setSelectedType,
+const HotelsSelect = ({
+  setSelectedHotel,
   setOpen,
   open,
-  selectedShop,
+  selectedHotel,
 }: Props) => {
   const axios = useAxiosAuth();
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  const { data: shopTypesResponse, isLoading: isLoadingTypes } =
-    useSearchShopType({
+  const { data: hotelsResponse, isLoading: isLoadingTypes } =
+    useSearchHotels({
       axios,
       term: debouncedSearchTerm,
       enabled: !!debouncedSearchTerm,
     });
 
-  const handleItemClicked = async (shopType: ShopType) => {
-    setSelectedType(shopType);
+  const handleItemClicked = async (hotel: Hotel) => {
+    setSelectedHotel(hotel);
     setOpen(false);
   };
 
@@ -43,11 +43,11 @@ const ShopTypeSelect = ({
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
         <div className="flex flex-col space-y-2 mt-4" onClick={() => setOpen(true)}>
-          <p className="text-sm font-bold">Type boutique</p>
+          <p className="text-sm font-bold">Hotel</p>
           <div className="relative">
             <TextField.Root
               placeholder="Sélectionner le type"
-              value={selectedShop?.name ?? ""}
+              value={selectedHotel?.name ?? ""}
               onChange={() => {}}
             >
               <TextField.Slot>
@@ -82,13 +82,13 @@ const ShopTypeSelect = ({
               Chargement...
             </Text>
           </div>
-        ) : (shopTypesResponse?.data ?? []).length > 0 ? (
+        ) : (hotelsResponse ?? []).length > 0 ? (
           <div className="min-h-15 mt-2">
-            {shopTypesResponse?.data?.map((shopType, index) => (
+            {hotelsResponse?.map((shopType, index) => (
               <div
                 className={classNames({
                   "border-b border-gray-200":
-                    index + 1 !== shopTypesResponse?.data.length,
+                    index + 1 !== hotelsResponse?.length,
                   "cursor-default hover:bg-gray-50 py-2": true,
                 })}
                 key={shopType.id}
@@ -124,4 +124,4 @@ const ShopTypeSelect = ({
   );
 };
 
-export default ShopTypeSelect;
+export default HotelsSelect;

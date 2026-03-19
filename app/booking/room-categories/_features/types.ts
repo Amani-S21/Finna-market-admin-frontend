@@ -43,7 +43,7 @@ export interface RoomCategory {
   updatedAt: string;
   hotel: Hotel;
   pictures: Picture[];
-  roomCategoryType : RoomCategoryType
+  roomCategoryType: RoomCategoryType;
 }
 
 // ✅ Example usage for your JSON:
@@ -61,4 +61,16 @@ export interface RoomCategoryType {
 export interface RoomCategoryTypeListResponse {
   count: number;
   data: RoomCategoryType[];
+}
+
+export interface ComoditiesListResponse {
+  count: number;
+  data: Comodity[];
+}
+
+export interface Comodity {
+  id: string;
+  name: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
 }

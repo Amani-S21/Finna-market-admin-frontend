@@ -7,30 +7,51 @@ import { TbCategoryMinus } from "react-icons/tb";
 import RoomCategoriesForm from "../_components/RoomCategoriesForm";
 import NewRoomCategoriesPageLoading from "./loading";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useFetchRoomCategoryTypes } from "../_features/hooks";
-import { useState } from "react";
+import {
+  useFetchBookingTypes,
+  useFetchComodities,
+  useFetchRoomCategoryTypes,
+} from "../_features/hooks";
+import { useEffect, useState } from "react";
 import { RoomCategoryType } from "../_features/types";
+import { BookingType } from "@/app/lib/types";
+import { fetchComodities } from "../_features/api";
 
 const NewRoomCategoriesPage = () => {
-  const {  status } = useSession();
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const [selectedType, setSelectedType] = useState<
     RoomCategoryType | undefined
   >();
-  // const searchParams = useSearchParams();
-  // const page: string = searchParams.get("page") ?? "";
+  const [selectedBookingType, setSelectedBookingType] = useState<
+    BookingType | undefined
+  >();
 
-  const {
-    data: roomCategoriesResponse,
-    isLoading,
-    
-  } = useFetchRoomCategoryTypes({
+  const [selectedCommodities, setSelectedCommodities] = useState<string[]>([]);
+
+  const { data: roomCategoriesResponse, isLoading } = useFetchRoomCategoryTypes(
+    {
+      axios,
+      page: "1",
+      bookingTypeId: `${selectedBookingType?.id}`,
+      enabled: status === "authenticated" && !!selectedBookingType,
+    },
+  );
+
+  const { data: comoditiesResponse, isLoading: isLoadingComodities } =
+    useFetchComodities({
+      axios,
+      page: "1",
+      enabled: status === "authenticated",
+    });
+
+  const { data: bookingTypesResponse } = useFetchBookingTypes({
     axios,
     page: "1",
     enabled: status === "authenticated",
   });
 
-  if (status === "loading" || isLoading)
+  if (status === "loading" || isLoading || isLoadingComodities)
     return <NewRoomCategoriesPageLoading />;
 
   return (
@@ -48,8 +69,14 @@ const NewRoomCategoriesPage = () => {
       </div>
       <RoomCategoriesForm
         roomCategoryTypes={roomCategoriesResponse?.data ?? []}
+        commodities={comoditiesResponse?.data ?? []}
+        bookingTypes={bookingTypesResponse?.data ?? []}
         setSelectedType={setSelectedType}
         selectedType={selectedType}
+        setSelectedBookingType={setSelectedBookingType}
+        selectedBookingType={selectedBookingType}
+        selectedCommodities={selectedCommodities}
+        setSelectedCommodities={setSelectedCommodities}
       />
     </>
   );

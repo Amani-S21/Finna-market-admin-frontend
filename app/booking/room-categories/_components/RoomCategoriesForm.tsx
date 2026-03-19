@@ -1,9 +1,11 @@
 import { ErrorMessage, Spinner } from "@/app/_components";
 import ProductImage from "@/app/_components/ProductImage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { BookingType } from "@/app/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
+import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -11,20 +13,37 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
 import { useCreateRoomCategories } from "../_features/hooks";
-import { RoomCategoriesSchema, RoomCategoryType } from "../_features/types";
+import {
+  Comodity,
+  RoomCategoriesSchema,
+  RoomCategoryType,
+} from "../_features/types";
 import { roomCategoriesSchema } from "../_features/validationSchemas";
-import classNames from "classnames";
+import { Hotel } from "../../hotels/_features/types";
+import HotelsSelect from "./HotelSelect";
 
 type Props = {
   roomCategoryTypes: RoomCategoryType[];
+  commodities: Comodity[];
+  bookingTypes: BookingType[];
   setSelectedType: (val: RoomCategoryType) => void;
   selectedType: RoomCategoryType | undefined;
+  setSelectedBookingType: (val: BookingType) => void;
+  selectedBookingType: BookingType | undefined;
+  selectedCommodities: string[];
+  setSelectedCommodities: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const RoomCategoriesForm = ({
   roomCategoryTypes,
+  commodities,
+  bookingTypes,
   setSelectedType,
   selectedType,
+  setSelectedBookingType,
+  selectedBookingType,
+  selectedCommodities,
+  setSelectedCommodities,
 }: Props) => {
   const axios = useAxiosAuth();
   const { data: session } = useSession();
@@ -36,6 +55,9 @@ const RoomCategoriesForm = ({
 
   const [isPublished, setIsPublished] = useState(true);
 
+  const [selectedHotel, setSelectedHotel] = useState<Hotel>();
+  const [openDialog, setOpenDialog] = useState(false);
+
   // Images
   const [image1, setImage1] = useState<string | undefined>();
   const [image2, setImage2] = useState<string | undefined>();
@@ -43,7 +65,7 @@ const RoomCategoriesForm = ({
 
   const pushFileToList = (
     indexFileToRemove: number | undefined,
-    fileToAdd: File
+    fileToAdd: File,
   ) => {
     // Remove a given file
     switch (indexFileToRemove) {
@@ -65,6 +87,15 @@ const RoomCategoriesForm = ({
       return false;
     }
     return true;
+  };
+
+  const handleToggleCommodity = (id: string) => {
+    setSelectedCommodities(
+      (prev) =>
+        prev.includes(id)
+          ? prev.filter((item) => item !== id) // remove if unchecked
+          : [...prev, id], //  add if checked
+    );
   };
 
   const {
@@ -99,7 +130,7 @@ const RoomCategoriesForm = ({
           toast.success(`Catégorie de chambre crééee avec avec succèes`);
           router.back();
         },
-      }
+      },
     );
   };
 
@@ -107,17 +138,16 @@ const RoomCategoriesForm = ({
     <div className="max-w-xl">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Type de chambre</p>
+          <p className="text-sm font-bold">Type de réservation</p>
           <div className="flex flex-wrap gap-4 mt-2 mb-4">
-            {roomCategoryTypes.map((type) => (
+            {bookingTypes.map((type) => (
               <div
                 key={type.id}
-                onClick={() => setSelectedType(type)}
+                onClick={() => setSelectedBookingType(type)}
                 className={classNames({
                   " font-bold border bg-blue-700 text-white":
-                    selectedType?.id === type.id,
-                  " rounded-full px-4 py-1 border border-gray-400 hover:cursor-default":
-                    true,
+                    selectedBookingType?.id === type.id,
+                  " rounded-full px-4 py-1 border border-gray-400 hover:cursor-default": true,
                 })}
               >
                 {type.name}
@@ -125,6 +155,32 @@ const RoomCategoriesForm = ({
             ))}
           </div>
         </div>
+        {roomCategoryTypes.length > 0 && (
+          <div className="flex flex-col space-y-2 mt-4">
+            <p className="text-sm font-bold">Type de chambre</p>
+            <div className="flex flex-wrap gap-4 mt-2 mb-4">
+              {roomCategoryTypes.map((type) => (
+                <div
+                  key={type.id}
+                  onClick={() => setSelectedType(type)}
+                  className={classNames({
+                    " font-bold border bg-blue-700 text-white":
+                      selectedType?.id === type.id,
+                    " rounded-full px-4 py-1 border border-gray-400 hover:cursor-default": true,
+                  })}
+                >
+                  {type.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        <HotelsSelect
+          setSelectedHotel={setSelectedHotel}
+          selectedHotel={selectedHotel}
+          open={openDialog}
+          setOpen={setOpenDialog}
+        />
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Capacité</p>
           <TextField.Root
@@ -161,6 +217,25 @@ const RoomCategoriesForm = ({
             placeholder="Veuillez saisir déscription de l'hotel"
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Comodités</p>
+          <div className="flex flex-wrap gap-4 mt-2 mb-4">
+            {commodities.map((commodity) => (
+              <label
+                key={commodity.id}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  className="w-5 h-5 cursor-pointer"
+                  checked={selectedCommodities.includes(commodity.id)}
+                  onChange={() => handleToggleCommodity(commodity.id)}
+                />
+                <span className="text-sm">{commodity.name}</span>
+              </label>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col space-y-2 mt-6 mb-6">
           <p className="text-sm font-bold">Publié</p>

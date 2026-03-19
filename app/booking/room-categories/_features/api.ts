@@ -2,7 +2,19 @@ import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
 import { RoomCategoryPayload } from "../../hotels/_features/types";
 
-export const fetchRoomCategories = async (axios: AxiosInstance, page: string) => {
+export const fetchBookingTypes = async (axios: AxiosInstance, page: string) => {
+  try {
+    const res = await axios.get(`/booking-types?page=${page}&limit=10`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
+export const fetchRoomCategories = async (
+  axios: AxiosInstance,
+  page: string,
+) => {
   try {
     const res = await axios.get(`/room-categories?page=${page}&limit=10`);
     return res.data;
@@ -11,9 +23,33 @@ export const fetchRoomCategories = async (axios: AxiosInstance, page: string) =>
   }
 };
 
-export const fetchRoomCategoryTypes = async (axios: AxiosInstance, page: string) => {
+export const fetchRoomCategoryTypes = async (
+  axios: AxiosInstance,
+  page: string,
+  bookingTypeId: string,
+) => {
   try {
-    const res = await axios.get(`/room-category-types?page=${page}&limit=10`);
+    const res = await axios.get(
+      `/room-category-types?page=${page}&limit=10&bookingTypeId=${bookingTypeId}`,
+    );
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
+export const fetchComodities = async (axios: AxiosInstance, page: string) => {
+  try {
+    const res = await axios.get(`/comodities?page=${page}&limit=10`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};
+
+export const searchHotels = async (axios: AxiosInstance, term: string) => {
+  try {
+    const res = await axios.get(`/hotels/search?term=${term}`);
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
@@ -22,7 +58,7 @@ export const fetchRoomCategoryTypes = async (axios: AxiosInstance, page: string)
 
 export const createRoomCategpries = async (
   axios: AxiosInstance,
-  data: RoomCategoryPayload
+  data: RoomCategoryPayload,
 ) => {
   try {
     const res = await axios.post(`/room-categories`, data);

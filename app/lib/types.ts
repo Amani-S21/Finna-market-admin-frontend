@@ -318,6 +318,18 @@ type SubmitFeature = {
   featureValues: SubmitFeatureValue[];
 };
 
+export type BookingTypeResponse = {
+  count: number;
+  data: BookingType[];
+};
+
+export type BookingType = {
+  id?: string;
+  name?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 type SubmitFeatureValue = {
   featureValueId: string;
   price: number;

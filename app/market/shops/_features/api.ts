@@ -134,6 +134,8 @@ export const searchShopType = async (axios: AxiosInstance, term: string) => {
   }
 };
 
+
+
 export const searchExpeditionRegions = async (
   axios: AxiosInstance,
   term: string
