@@ -5,24 +5,28 @@ import ProductImage from "@/app/_components/ProductImage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { axiosMedias } from "@/app/lib/axios";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
-import { useCreateHotels } from "../_features/hooks";
+import { useCreateHotel, useSendHotelLinks } from "../_features/hooks";
 import { Country, Hotel, HotelSchema } from "../_features/types";
 import { hotelSchema } from "../_features/validationSchemas";
 import HotelCitiesSelect from "./HotelCitiesSelect";
 import HotelCountriesSelect from "./HotelCountriesSelect";
+import { AxiosInstance } from "axios";
+import { uploadImgFile } from "@/app/market/products/_features/api";
 
 const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const axios = useAxiosAuth();
   const { data: session } = useSession();
   const router = useRouter();
 
+  const hotelImageUrls = useRef<string[]>([]);
   const productImageFiles = useRef<File[]>([]);
 
   const [selectedCountry, setSelectedCountry] = useState<Country>();
@@ -39,14 +43,21 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const [image1, setImage1] = useState<string | undefined>();
   const [image2, setImage2] = useState<string | undefined>();
   const [image3, setImage3] = useState<string | undefined>();
+  const [isUploading, setIsUploading] = useState(false);
 
-  const { mutateAsync: createHotel } = useCreateHotels({
+  const {
+    mutateAsync: sendHotelsLinks,
+    isSuccess: sendHotelLinksSuccess,
+    isPending: isPendingSendingLinks,
+  } = useSendHotelLinks({ axios });
+
+  const { mutateAsync: createHotel, data: createdHotelData } = useCreateHotel({
     axios,
   });
 
   const pushFileToList = (
     indexFileToRemove: number | undefined,
-    fileToAdd: File
+    fileToAdd: File,
   ) => {
     // Remove a given file
     switch (indexFileToRemove) {
@@ -70,6 +81,42 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
     return true;
   };
 
+  const { mutateAsync: uploadItemPictures } = useMutation({
+    mutationFn: ({ file }: { axios: AxiosInstance; file: File }) =>
+      uploadImgFile(axiosMedias, file),
+    retry: 0,
+  });
+
+  // upload pictures
+  const uploadPictures = useCallback(async () => {
+    try {
+      setIsUploading(true);
+      if (hotelImageUrls.current.length < 3)
+        for (let i = 0; i < productImageFiles.current.length; i++) {
+          const data = await uploadItemPictures({
+            axios,
+            file: productImageFiles.current[i],
+          });
+          hotelImageUrls.current.push(`${data?.imgName}`);
+        }
+
+      // Now we can send the uploaded pictures and update the product
+      await sendHotelsLinks({
+        hotelId: `${createdHotelData?.id}`,
+        pictures: hotelImageUrls.current.map((url) => ({ url })),
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  }, [
+    uploadItemPictures,
+    sendHotelsLinks,
+    axios,
+    productImageFiles,
+    hotelImageUrls,
+    createdHotelData?.id,
+  ]);
+
   const {
     register,
     handleSubmit,
@@ -92,12 +139,15 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
       },
       {
         onSuccess: async () => {
+          // Upload picture only when everything regarding the hotel creation is Ok
+          await uploadPictures();
+
           queryClient.invalidateQueries({ queryKey: ["hotels"] });
           queryClient.invalidateQueries({ queryKey: ["hotel"] });
           toast.success(`Hotel crééee avec avec succèes`);
           router.back();
         },
-      }
+      },
     );
   };
 

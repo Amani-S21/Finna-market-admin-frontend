@@ -43,7 +43,7 @@ import { AxiosInstance } from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useFetchFeaturesByValue } from "../../features/_features/hooks";
-import { uploadUrl } from "../_features/api";
+import { uploadImgFile } from "../_features/api";
 import FeaturesToPostTable from "../new/_components/FeaturesToPostTable";
 import { axiosMedias } from "@/app/lib/axios";
 
@@ -100,7 +100,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
 
   const { mutateAsync: uploadProductPicture } = useMutation({
     mutationFn: ({ file }: { axios: AxiosInstance; file: File }) =>
-      uploadUrl(axiosMedias, file),
+      uploadImgFile(axiosMedias, file),
     retry: 0,
   });
 

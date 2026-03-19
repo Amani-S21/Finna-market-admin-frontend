@@ -75,4 +75,11 @@ export interface HotelPayload {
   pictures: Picture[];
 }
 
+export type UploadHotelPicturesDto = {
+  hotelId: string;
+  pictures: {
+    url: string;
+  }[];
+};
+
 export type HotelSchema = z.infer<typeof hotelSchema>;

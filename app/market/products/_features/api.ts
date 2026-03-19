@@ -34,7 +34,7 @@ export const fetchProductById = async (
   }
 };
 
-export const uploadUrl = async (axios: AxiosInstance, image: File) => {
+export const uploadImgFile = async (axios: AxiosInstance, image: File) => {
   try {
     const formData = new FormData();
     formData.append("file", image);

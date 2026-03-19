@@ -1,6 +1,23 @@
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
-import { HotelPayload } from "./types";
+import { HotelPayload, SubmitHotelPictures } from "./types";
+
+export const sendHotelLinks = async (
+  axios: AxiosInstance,
+  productLinks: SubmitHotelPictures
+) => {
+  try {
+    const res = await axios.post(
+      `/hotels/send-pictures-links`,
+      productLinks
+    );
+    return res.data;
+  } catch (error: any) {
+    const message = "Une erreur inconue est survenue" + error;
+    const customError = new Error(message);
+    throw customError;
+  }
+};
 
 export const fetchHotels = async (axios: AxiosInstance, page: string) => {
   try {

@@ -28,12 +28,12 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
           <Table.Row key={hotel.id} align="center">
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
-              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-100 relative">
+              <div className="h-12.5 w-12.5 flex justify-center items-center rounded-md bg-gray-100 relative">
                 <Image
                   height={50}
                   width={60}
                   alt="product image"
-                  src={`${MEDIAS_UPLOAD_BASE_URL}/images/${hotel.pictures[0]}`}
+                  src={`${MEDIAS_UPLOAD_BASE_URL}/images/${hotel.pictures[0].url}`}
                   className="object-cover rounded-md"
                 />
               </div>

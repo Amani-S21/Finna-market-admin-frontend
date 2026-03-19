@@ -6,4 +6,5 @@ export type ShopProductSubmit = {
   discountPrice: number;
   published: boolean;
   price: number;
+  quantityInStock : number
 };

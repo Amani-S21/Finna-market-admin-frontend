@@ -49,7 +49,7 @@ const SigninForm = () => {
         <p className="text-sm font-bold">Numero de téléphone</p>
         <TextField.Root
           {...register("phone")}
-          defaultValue="+243971945367"
+          defaultValue="+243835102434"
           placeholder="Numero de téléphone"
         >
           <TextField.Slot>
@@ -62,7 +62,7 @@ const SigninForm = () => {
         <p className="text-sm font-bold">Mot de passe</p>
         <TextField.Root
           {...register("password")}
-          defaultValue="gedyala"
+          defaultValue="12345"
           type="password"
           placeholder="Mot de passe"
         >
