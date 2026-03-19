@@ -88,34 +88,37 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   });
 
   // upload pictures
-  const uploadPictures = useCallback(async () => {
-    try {
-      setIsUploading(true);
-      if (hotelImageUrls.current.length < 3)
-        for (let i = 0; i < productImageFiles.current.length; i++) {
-          const data = await uploadItemPictures({
-            axios,
-            file: productImageFiles.current[i],
-          });
-          hotelImageUrls.current.push(`${data?.imgName}`);
-        }
+  const uploadPictures = useCallback(
+    async (hotelId: string) => {
+      try {
+        setIsUploading(true);
+        if (hotelImageUrls.current.length < 3)
+          for (let i = 0; i < productImageFiles.current.length; i++) {
+            const data = await uploadItemPictures({
+              axios,
+              file: productImageFiles.current[i],
+            });
+            hotelImageUrls.current.push(`${data?.imgName}`);
+          }
 
-      // Now we can send the uploaded pictures and update the product
-      await sendHotelsLinks({
-        hotelId: `${createdHotelData?.id}`,
-        pictures: hotelImageUrls.current.map((url) => ({ url })),
-      });
-    } finally {
-      setIsUploading(false);
-    }
-  }, [
-    uploadItemPictures,
-    sendHotelsLinks,
-    axios,
-    productImageFiles,
-    hotelImageUrls,
-    createdHotelData?.id,
-  ]);
+        // Now we can send the uploaded pictures and update the product
+        await sendHotelsLinks({
+          hotelId: `${hotelId}`,
+          pictures: hotelImageUrls.current.map((url) => ({ url })),
+        });
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [
+      uploadItemPictures,
+      sendHotelsLinks,
+      axios,
+      productImageFiles,
+      hotelImageUrls,
+      createdHotelData?.id,
+    ],
+  );
 
   const {
     register,
@@ -138,9 +141,10 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         visible: isPublished,
       },
       {
-        onSuccess: async () => {
+        onSuccess: async (data) => {
+          console.log("Ged gfgfgfgfgfgfgfgf" + JSON.stringify(data));
           // Upload picture only when everything regarding the hotel creation is Ok
-          await uploadPictures();
+          await uploadPictures(data.id);
 
           queryClient.invalidateQueries({ queryKey: ["hotels"] });
           queryClient.invalidateQueries({ queryKey: ["hotel"] });
@@ -264,8 +268,9 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )}
 
-        <Button disabled={isSubmitting} mt="4">
-          {hotel ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
+        <Button disabled={isSubmitting || isUploading} mt="4">
+          {hotel ? "Modifier" : "Enregistrer"}{" "}
+          {(isSubmitting || isUploading) && <Spinner />}
         </Button>
       </form>
     </div>

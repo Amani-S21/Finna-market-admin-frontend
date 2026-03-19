@@ -29,13 +29,17 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
               <div className="h-12.5 w-12.5 flex justify-center items-center rounded-md bg-gray-100 relative">
-                <Image
-                  height={50}
-                  width={60}
-                  alt="product image"
-                  src={`${MEDIAS_UPLOAD_BASE_URL}/images/${hotel.pictures[0].url}`}
-                  className="object-cover rounded-md"
-                />
+                {hotel.pictures.length > 0 ? (
+                  <Image
+                    height={50}
+                    width={60}
+                    alt="product image"
+                    src={`${MEDIAS_UPLOAD_BASE_URL}/images/${hotel.pictures[0].url}`}
+                    className="object-cover rounded-md"
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </Table.Cell>
             <Table.Cell>

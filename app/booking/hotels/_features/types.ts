@@ -75,7 +75,7 @@ export interface HotelPayload {
   pictures: Picture[];
 }
 
-export type UploadHotelPicturesDto = {
+export type SubmitHotelPictures = {
   hotelId: string;
   pictures: {
     url: string;
