@@ -1,21 +1,20 @@
 "use client";
 
 import { BackButton } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { BookingType } from "@/app/lib/types";
 import { Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { TbCategoryMinus } from "react-icons/tb";
 import RoomCategoriesForm from "../_components/RoomCategoriesForm";
-import NewRoomCategoriesPageLoading from "./loading";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import {
   useFetchBookingTypes,
   useFetchComodities,
   useFetchRoomCategoryTypes,
 } from "../_features/hooks";
-import { useEffect, useState } from "react";
 import { RoomCategoryType } from "../_features/types";
-import { BookingType } from "@/app/lib/types";
-import { fetchComodities } from "../_features/api";
+import NewRoomCategoriesPageLoading from "./loading";
 
 const NewRoomCategoriesPage = () => {
   const { status } = useSession();

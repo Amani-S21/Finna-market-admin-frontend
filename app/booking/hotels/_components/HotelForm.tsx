@@ -142,7 +142,7 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
       },
       {
         onSuccess: async (data) => {
-          console.log("Ged gfgfgfgfgfgfgfgf" + JSON.stringify(data));
+          
           // Upload picture only when everything regarding the hotel creation is Ok
           await uploadPictures(data.id);
 

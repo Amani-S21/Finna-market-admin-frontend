@@ -74,3 +74,10 @@ export interface Comodity {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 }
+
+export type SubmitRoomCategoriesPictures = {
+  roomCategoryId: string;
+  pictures: {
+    url: string;
+  }[];
+};

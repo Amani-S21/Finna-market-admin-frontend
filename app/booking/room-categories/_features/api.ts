@@ -1,6 +1,7 @@
 import { AxiosInstance } from "axios";
 import toast from "react-hot-toast";
 import { RoomCategoryPayload } from "../../hotels/_features/types";
+import { SubmitRoomCategoriesPictures } from "./types";
 
 export const fetchBookingTypes = async (axios: AxiosInstance, page: string) => {
   try {
@@ -76,6 +77,23 @@ export const createRoomCategpries = async (
         message = "An unexpected error occurred";
     }
 
+    const customError = new Error(message);
+    throw customError;
+  }
+};
+
+export const sendRoomCategoriesLinks = async (
+  axios: AxiosInstance,
+  productLinks: SubmitRoomCategoriesPictures
+) => {
+  try {
+    const res = await axios.post(
+      `/room-categories/send-pictures-links`,
+      productLinks
+    );
+    return res.data;
+  } catch (error: any) {
+    const message = "Une erreur inconue est survenue" + error;
     const customError = new Error(message);
     throw customError;
   }

@@ -4,15 +4,18 @@ import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { BookingType } from "@/app/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
-import { useCreateRoomCategories } from "../_features/hooks";
+import {
+  useCreateRoomCategories,
+  usesendRoomCategoriesLinks,
+} from "../_features/hooks";
 import {
   Comodity,
   RoomCategoriesSchema,
@@ -21,6 +24,9 @@ import {
 import { roomCategoriesSchema } from "../_features/validationSchemas";
 import { Hotel } from "../../hotels/_features/types";
 import HotelsSelect from "./HotelSelect";
+import { axiosMedias } from "@/app/lib/axios";
+import { uploadImgFile } from "@/app/market/products/_features/api";
+import { AxiosInstance } from "axios";
 
 type Props = {
   roomCategoryTypes: RoomCategoryType[];
@@ -49,7 +55,8 @@ const RoomCategoriesForm = ({
   const { data: session } = useSession();
   const router = useRouter();
 
-  const productImageFiles = useRef<File[]>([]);
+  const roomImageUrls = useRef<string[]>([]);
+  const roomImageFiles = useRef<File[]>([]);
 
   const queryClient = useQueryClient();
 
@@ -62,6 +69,13 @@ const RoomCategoriesForm = ({
   const [image1, setImage1] = useState<string | undefined>();
   const [image2, setImage2] = useState<string | undefined>();
   const [image3, setImage3] = useState<string | undefined>();
+  const [isUploading, setIsUploading] = useState(false);
+
+  const {
+    mutateAsync: sendRoomLinks,
+    isSuccess: sendRoomLinksSuccess,
+    isPending: isPendingSendingLinks,
+  } = usesendRoomCategoriesLinks({ axios });
 
   const pushFileToList = (
     indexFileToRemove: number | undefined,
@@ -70,17 +84,22 @@ const RoomCategoriesForm = ({
     // Remove a given file
     switch (indexFileToRemove) {
       case 0:
-        productImageFiles.current.splice(0, 1, fileToAdd);
+        roomImageFiles.current.splice(0, 1, fileToAdd);
         break;
       case 1:
-        productImageFiles.current.splice(1, 1, fileToAdd);
+        roomImageFiles.current.splice(1, 1, fileToAdd);
         break;
       default:
       case 2:
-        productImageFiles.current.splice(2, 1, fileToAdd);
+        roomImageFiles.current.splice(2, 1, fileToAdd);
         break;
     }
   };
+
+  const { mutateAsync: create, data: createdRoomData } =
+    useCreateRoomCategories({
+      axios,
+    });
 
   const testImageSelection = () => {
     if (!image1 || !image2 || !image3) {
@@ -98,16 +117,51 @@ const RoomCategoriesForm = ({
     );
   };
 
+  const { mutateAsync: uploadItemPictures } = useMutation({
+    mutationFn: ({ file }: { axios: AxiosInstance; file: File }) =>
+      uploadImgFile(axiosMedias, file),
+    retry: 0,
+  });
+
+  // upload pictures
+  const uploadPictures = useCallback(
+    async (roomCategoryId: string) => {
+      try {
+        setIsUploading(true);
+        if (roomImageFiles.current.length < 3)
+          for (let i = 0; i < roomImageFiles.current.length; i++) {
+            const data = await uploadItemPictures({
+              axios,
+              file: roomImageFiles.current[i],
+            });
+            roomImageUrls.current.push(`${data?.imgName}`);
+          }
+
+        // Now we can send the uploaded pictures and update the product
+        await sendRoomLinks({
+          roomCategoryId: `${roomCategoryId}`,
+          pictures: roomImageUrls.current.map((url) => ({ url })),
+        });
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [
+      uploadItemPictures,
+      sendRoomLinks,
+      axios,
+      roomImageFiles,
+      roomImageFiles,
+      createdRoomData?.id,
+    ],
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RoomCategoriesSchema>({
     resolver: zodResolver(roomCategoriesSchema),
-  });
-
-  const { mutateAsync: create } = useCreateRoomCategories({
-    axios,
   });
 
   const onSubmit = async (data: RoomCategoriesSchema) => {
@@ -124,7 +178,10 @@ const RoomCategoriesForm = ({
         pricePerNight: parseInt(`${data.pricePerNight}`),
       },
       {
-        onSuccess: async () => {
+        onSuccess: async (data) => {
+          // Upload picture only when everything regarding the room creation is Ok
+          await uploadPictures(data.id);
+
           queryClient.invalidateQueries({ queryKey: ["room-categories"] });
           queryClient.invalidateQueries({ queryKey: ["room-category"] });
           toast.success(`Catégorie de chambre crééee avec avec succèes`);
@@ -253,7 +310,7 @@ const RoomCategoriesForm = ({
             <Flex
               align="center"
               onClick={() => {
-                productImageFiles.current = [];
+                roomImageFiles.current = [];
                 setImage1(undefined);
                 setImage2(undefined);
                 setImage3(undefined);
@@ -293,8 +350,9 @@ const RoomCategoriesForm = ({
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )}
 
-        <Button disabled={isSubmitting} mt="4">
-          {"Enregistrer"} {isSubmitting && <Spinner />}
+        <Button disabled={isSubmitting || isPendingSendingLinks} mt="4">
+          {"Enregistrer"}
+          {(isSubmitting || isPendingSendingLinks) && <Spinner />}
         </Button>
       </form>
     </div>

@@ -7,11 +7,14 @@ import {
   fetchRoomCategories,
   fetchRoomCategoryTypes,
   searchHotels,
+  sendRoomCategoriesLinks,
 } from "./api";
 import {
   ComoditiesListResponse,
   RoomCategoriesResponse,
+  RoomCategory,
   RoomCategoryTypeListResponse,
+  SubmitRoomCategoriesPictures,
 } from "./types";
 
 import { BookingTypeResponse, CategoriesResponse } from "@/app/lib/types";
@@ -78,7 +81,7 @@ export const useCreateRoomCategories = ({
 }: {
   axios: AxiosInstance;
 }) => {
-  return useMutation<CategoriesResponse, Error, RoomCategoryPayload>({
+  return useMutation<RoomCategory, Error, RoomCategoryPayload>({
     mutationFn: (data: RoomCategoryPayload) =>
       createRoomCategpries(axios, data),
   });
@@ -123,5 +126,18 @@ export const useFetchComodities = ({
     staleTime: 60 * 1000 * 60,
     retry: 3,
     enabled,
+  });
+};
+
+type UseCreateRoomCategoryPictures = {
+  axios: AxiosInstance;
+};
+
+export const usesendRoomCategoriesLinks = ({
+  axios,
+}: UseCreateRoomCategoryPictures) => {
+  return useMutation<RoomCategory, Error, SubmitRoomCategoriesPictures>({
+    mutationFn: (data: SubmitRoomCategoriesPictures) =>
+      sendRoomCategoriesLinks(axios, data),
   });
 };
