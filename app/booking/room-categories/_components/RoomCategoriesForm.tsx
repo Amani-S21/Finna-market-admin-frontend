@@ -1,10 +1,13 @@
 import { ErrorMessage, Spinner } from "@/app/_components";
 import ProductImage from "@/app/_components/ProductImage";
+import { axiosMedias } from "@/app/lib/axios";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { BookingType } from "@/app/lib/types";
+import { uploadImgFile } from "@/app/market/products/_features/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosInstance } from "axios";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -12,6 +15,7 @@ import { useCallback, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
+import { CommodityPayload, Hotel } from "../../hotels/_features/types";
 import {
   useCreateRoomCategories,
   usesendRoomCategoriesLinks,
@@ -22,11 +26,7 @@ import {
   RoomCategoryType,
 } from "../_features/types";
 import { roomCategoriesSchema } from "../_features/validationSchemas";
-import { Hotel } from "../../hotels/_features/types";
 import HotelsSelect from "./HotelSelect";
-import { axiosMedias } from "@/app/lib/axios";
-import { uploadImgFile } from "@/app/market/products/_features/api";
-import { AxiosInstance } from "axios";
 
 type Props = {
   roomCategoryTypes: RoomCategoryType[];
@@ -128,7 +128,7 @@ const RoomCategoriesForm = ({
     async (roomCategoryId: string) => {
       try {
         setIsUploading(true);
-        if (roomImageFiles.current.length < 3)
+        if (roomImageUrls.current.length < 3)
           for (let i = 0; i < roomImageFiles.current.length; i++) {
             const data = await uploadItemPictures({
               axios,
@@ -151,7 +151,7 @@ const RoomCategoriesForm = ({
       sendRoomLinks,
       axios,
       roomImageFiles,
-      roomImageFiles,
+      roomImageUrls,
       createdRoomData?.id,
     ],
   );
@@ -172,10 +172,12 @@ const RoomCategoriesForm = ({
         pictures: [],
         visible: isPublished,
         capacity: parseInt(`${data.capacity}`),
-        hotelId: "006adde8-bb9c-4f31-9978-dd6cd8288d13",
+        hotelId: `${selectedHotel?.id}`,
         roomCategoryTypeId: `${selectedType?.id}`,
         totalRooms: parseInt(`${data.totalRooms}`),
         pricePerNight: parseInt(`${data.pricePerNight}`),
+        location: data.location,
+        comodities: selectedCommodities.map((comodityId) => ({ comodityId })),
       },
       {
         onSuccess: async (data) => {
@@ -257,11 +259,11 @@ const RoomCategoriesForm = ({
           <ErrorMessage>{errors.pricePerNight?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Nombre des chambres</p>
+          <p className="text-sm font-bold">Quantité disponible</p>
           <TextField.Root
             {...register("totalRooms")}
             // defaultValue={category?.name}
-            placeholder="Nombre des chambres"
+            placeholder="Quantité disponible"
           />
           <ErrorMessage>{errors.totalRooms?.message}</ErrorMessage>
         </div>
@@ -274,6 +276,15 @@ const RoomCategoriesForm = ({
             placeholder="Veuillez saisir déscription de l'hotel"
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Localisation</p>
+          <TextField.Root
+            {...register("location")}
+            // defaultValue={category?.name}
+            placeholder="Entrer la localisation"
+          />
+          <ErrorMessage>{errors.location?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Comodités</p>
@@ -350,9 +361,9 @@ const RoomCategoriesForm = ({
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )}
 
-        <Button disabled={isSubmitting || isPendingSendingLinks} mt="4">
+        <Button disabled={isSubmitting || isUploading} mt="4">
           {"Enregistrer"}
-          {(isSubmitting || isPendingSendingLinks) && <Spinner />}
+          {(isSubmitting || isUploading) && <Spinner />}
         </Button>
       </form>
     </div>

@@ -7,7 +7,7 @@ export type HotelPicture = {
   url: string;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
-}
+};
 
 export type Hotel = {
   id: string;
@@ -21,12 +21,12 @@ export type Hotel = {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
   pictures: HotelPicture[];
-}
+};
 
 export type HotelResponse = {
   count: number;
   data: Hotel[];
-}
+};
 
 // export interface City {
 //   name: string;
@@ -37,13 +37,12 @@ export interface Country {
   code: string;
   accronym: string;
   flag: string;
-  cities: string[],
+  cities: string[];
 }
 
 export interface CountriesData {
   countries: Country[];
 }
-
 
 export interface Picture {
   id: string;
@@ -51,7 +50,6 @@ export interface Picture {
 }
 
 export interface RoomCategoryPayload {
-  
   description?: string;
   capacity: number;
   totalRooms: number;
@@ -61,8 +59,13 @@ export interface RoomCategoryPayload {
   createdById: string;
   visible: boolean;
   pictures: Picture[];
+  location: string;
+  comodities: CommodityPayload[];
 }
 
+export interface CommodityPayload {
+  comodityId: string;
+}
 
 export interface HotelPayload {
   createdById: string;

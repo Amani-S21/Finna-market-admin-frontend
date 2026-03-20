@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { RoomCategoriesResponse } from "../_features/types";
 import { roomCategoriesColumns } from "../list/loading";
+import Image from "next/image";
+import { MEDIAS_UPLOAD_BASE_URL } from "@/app/lib/axios";
 
 const RoomCategoriesTable = ({
   roomCategoriesResponse,
@@ -29,25 +31,24 @@ const RoomCategoriesTable = ({
           <Table.Row key={category.id} align="center">
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
-              <div className="h-[50px] w-[50px] flex justify-center items-center rounded-md bg-gray-100 relative">
-                {/* <Image
-                  height={50}
+              <div className="h-12.5 w-12.5 flex justify-center items-center rounded-md bg-gray-100 relative overflow-hidden">
+                <Image
+                  height={20}
                   width={60}
                   alt="product image"
-                  src={`https://finna-media.buy-one-store.com/v1/uploads/images/${hotel.icon}`}
+                  src={`${MEDIAS_UPLOAD_BASE_URL}/images/${category.pictures[0]?.url}`}
                   className="object-cover rounded-md"
-                /> */}
+                />
               </div>
             </Table.Cell>
             <Table.Cell>
               <p className="first-letter:uppercase">
                 {category.roomCategoryType?.name}
+                {/* {JSON.stringify(category.pictures[0]?.url)} */}
               </p>
             </Table.Cell>
             <Table.Cell>
-              <p className="first-letter:uppercase">
-                {category.pricePerNight}
-              </p>
+              <p className="first-letter:uppercase">{category.pricePerNight}</p>
             </Table.Cell>
             <Table.Cell>{category.totalRooms}</Table.Cell>
             <Table.Cell>
