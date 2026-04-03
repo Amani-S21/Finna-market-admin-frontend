@@ -15,7 +15,7 @@ import { useCallback, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
-import { CommodityPayload, Hotel } from "../../hotels/_features/types";
+import { Hotel } from "../../hotels/_features/types";
 import {
   useCreateRoomCategories,
   usesendRoomCategoriesLinks,
