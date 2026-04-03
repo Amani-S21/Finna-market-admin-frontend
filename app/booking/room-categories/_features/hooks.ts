@@ -17,10 +17,9 @@ import {
   SubmitRoomCategoriesPictures,
 } from "./types";
 
-import { BookingTypeResponse, CategoriesResponse } from "@/app/lib/types";
+import { BookingTypeResponse } from "@/app/lib/types";
 import {
   Hotel,
-  HotelResponse,
   RoomCategoryPayload,
 } from "../../hotels/_features/types";
 
@@ -133,7 +132,7 @@ type UseCreateRoomCategoryPictures = {
   axios: AxiosInstance;
 };
 
-export const usesendRoomCategoriesLinks = ({
+export const useSendRoomCategoriesLinks = ({
   axios,
 }: UseCreateRoomCategoryPictures) => {
   return useMutation<RoomCategory, Error, SubmitRoomCategoriesPictures>({

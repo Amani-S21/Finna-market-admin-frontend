@@ -15,7 +15,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
 import { ProductImage } from "../../products/_components";
-import { uploadUrl } from "../../products/_features/api";
+import { uploadImgFile } from "../../products/_features/api";
 import { useUpdateSubCategories, useCreateSubCategories } from "../../sub-categories/_features/hooks";
 
 type Props = {
@@ -42,7 +42,7 @@ const NewSubCategoryDialog = ({ setOpen, open }: Props) => {
 
   const { mutateAsync: uploadSubCategoryPicture } = useMutation({
     mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
-      uploadUrl(axios, file),
+      uploadImgFile(axios, file),
     retry: 0,
   });
 

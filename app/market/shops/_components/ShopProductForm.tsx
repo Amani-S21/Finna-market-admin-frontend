@@ -49,6 +49,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
       productId: `${selectedProduct?.id}`,
       shopId: `${selectedShop?.id}`,
       published: true,
+      quantityInStock : data.quantityInStock,
     };
 
     // Remove keys that are null, undefined, or empty strings
@@ -104,6 +105,16 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
             placeholder="Veuillez saisir l'ancien prix"
           />
           <ErrorMessage>{errors.price?.message}</ErrorMessage>
+        </div>
+        <div className="flex flex-col space-y-2 mt-4">
+          <p className="text-sm font-bold">Quantité en stock</p>
+          <TextField.Root
+            {...register("quantityInStock")}
+            type="number"
+            defaultValue={product?.quantityInStock}
+            placeholder="Veuillez saisir l'ancien prix"
+          />
+          <ErrorMessage>{errors.quantityInStock?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Prix de réduction</p>

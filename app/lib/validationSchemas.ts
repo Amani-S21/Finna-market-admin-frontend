@@ -107,6 +107,9 @@ export const shopProductSchema = z.object({
   discountPrice: z.coerce
     .number()
     .min(1, "Le prix de reduction doit etre au minimum 1"),
+  quantityInStock: z.coerce
+    .number()
+    .min(1, "La quantité en stock doit etre au minimum 1"),
   deliveryFees: z.coerce
     .number()
     .min(1, "Le prix de reduction doit etre au minimum 1"),

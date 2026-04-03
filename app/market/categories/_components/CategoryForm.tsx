@@ -18,7 +18,7 @@ import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
-import { uploadUrl } from "../../products/_features/api";
+
 import {
   useCategoryForm,
   useCreateCategories,
@@ -26,6 +26,7 @@ import {
   useUpdateCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./SubCategorySelect";
+import { uploadImgFile } from "../../products/_features/api";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -40,7 +41,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
 
   const { mutateAsync: uploadCategoryPicture } = useMutation({
     mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
-      uploadUrl(axios, file),
+      uploadImgFile(axios, file),
     retry: 0,
   });
 

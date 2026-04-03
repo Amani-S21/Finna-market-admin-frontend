@@ -18,7 +18,7 @@ import { CiTrash } from "react-icons/ci";
 import { Hotel } from "../../hotels/_features/types";
 import {
   useCreateRoomCategories,
-  usesendRoomCategoriesLinks,
+  useSendRoomCategoriesLinks,
 } from "../_features/hooks";
 import {
   Comodity,
@@ -73,9 +73,7 @@ const RoomCategoriesForm = ({
 
   const {
     mutateAsync: sendRoomLinks,
-    isSuccess: sendRoomLinksSuccess,
-    isPending: isPendingSendingLinks,
-  } = usesendRoomCategoriesLinks({ axios });
+  } = useSendRoomCategoriesLinks({ axios });
 
   const pushFileToList = (
     indexFileToRemove: number | undefined,
@@ -96,7 +94,7 @@ const RoomCategoriesForm = ({
     }
   };
 
-  const { mutateAsync: create, data: createdRoomData } =
+  const { mutateAsync: create } =
     useCreateRoomCategories({
       axios,
     });
@@ -151,8 +149,7 @@ const RoomCategoriesForm = ({
       sendRoomLinks,
       axios,
       roomImageFiles,
-      roomImageUrls,
-      createdRoomData?.id,
+      roomImageUrls,      
     ],
   );
 

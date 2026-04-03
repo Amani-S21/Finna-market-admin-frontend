@@ -47,11 +47,9 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
 
   const {
     mutateAsync: sendHotelsLinks,
-    isSuccess: sendHotelLinksSuccess,
-    isPending: isPendingSendingLinks,
   } = useSendHotelLinks({ axios });
 
-  const { mutateAsync: createHotel, data: createdHotelData } = useCreateHotel({
+  const { mutateAsync: createHotel } = useCreateHotel({
     axios,
   });
 
@@ -116,7 +114,6 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
       axios,
       productImageFiles,
       hotelImageUrls,
-      createdHotelData?.id,
     ],
   );
 

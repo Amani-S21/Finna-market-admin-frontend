@@ -193,6 +193,7 @@ export type Product = {
   updatedAt: string;
   userId: string;
   subCategoryId: string;
+  quantityInStock : number;
   shop: Shop;
   user?: User;
   subCategory: SubCategory;

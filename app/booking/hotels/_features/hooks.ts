@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { Hotel, HotelPayload, HotelResponse, SubmitHotelPictures } from "./types";
 import { createHotels, fetchHotels, sendHotelLinks } from "./api";
-import { CategoriesResponse } from "@/app/lib/types";
 
 type UseFetchHotels = {
   axios: AxiosInstance;
