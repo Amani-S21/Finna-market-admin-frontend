@@ -7,8 +7,10 @@ const statusMap: Record<
 > = {
   OPEN: { label: "Ouvert", color: "green" },
   IN_PROGRESS: { label: "En cours", color: "yellow" },
+  PENDING: { label: "En cours", color: "yellow" },
   CANCELED: { label: "Annulé", color: "red" },
   CLOSED: { label: "Succès", color: "blue" },
+  CONFIRMED: { label: "Succès", color: "blue" },
 };
 
 const OrderStatusBadge = ({ status }: { status: Status }) => {

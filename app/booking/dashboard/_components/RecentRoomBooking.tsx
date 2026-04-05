@@ -1,6 +1,5 @@
-// "use client";
+"use client"
 
-import { Order } from "@/app/lib/types";
 import {
   Badge,
   Card,
@@ -11,24 +10,24 @@ import {
   Text,
 } from "@radix-ui/themes";
 
-import React from "react";
-import { OrderStatusBadge } from "../../orders/_components";
-import { GoEye } from "react-icons/go";
+import { OrderStatusBadge } from "@/app/market/orders/_components";
 import { useRouter } from "next/navigation";
+import { GoEye } from "react-icons/go";
+import { RoomBooking } from "../_features/types";
 
-const RecentOrders = ({ orders }: { orders: Order[] }) => {
+const RecentRoomBookings = ({ roomBookings }: { roomBookings: RoomBooking[] }) => {
   const router = useRouter();
   return (
     <Card className="min-h-full">
       <Flex direction="column">
-        <Heading size="4">Commandes récentes</Heading>
+        <Heading size="4">Réservations récentes</Heading>
         <Text as="p" size="2" mb="4">
-          La liste des commandes les plus récentes
+          La liste des réservations les plus récentes
         </Text>
         <Table.Root>
           <Table.Header>
             <Table.Row>
-              {recentOrdersColumns.map((column) => (
+              {recentRoomBookingsColumns.map((column) => (
                 <Table.ColumnHeaderCell key={column.label}>
                   {column.label}
                 </Table.ColumnHeaderCell>
@@ -36,10 +35,10 @@ const RecentOrders = ({ orders }: { orders: Order[] }) => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {orders.map((order, index) => (
-              <Table.Row key={order.id}>
+            {roomBookings.map((booking, index) => (
+              <Table.Row key={booking.id}>
                 <Table.Cell>{index + 1}</Table.Cell>
-                <Table.Cell>{order?.customer?.fullName}</Table.Cell>
+                <Table.Cell>{booking?.customer?.fullName}</Table.Cell>
                 <Table.Cell>
                   <Badge>
                     <Text
@@ -47,18 +46,18 @@ const RecentOrders = ({ orders }: { orders: Order[] }) => {
                       size="2"
                       className="lowercase first-letter:uppercase"
                     >
-                      {order.orderType?.name}
+                      {booking.hotel?.name}
                     </Text>
                   </Badge>
                 </Table.Cell>
                 <Table.Cell className="truncate max-w-75">
-                  {order.status && <OrderStatusBadge status={order.status} />}
+                  {booking.status && <OrderStatusBadge status={booking.status} />}
                 </Table.Cell>
                 <Table.Cell>
                   <IconButton
                     variant="ghost"
                     ml="4"
-                    onClick={() => router.push(`/market/orders/${order.id}`)}
+                    onClick={() => router.push(`/booking/${booking.id}`)}
                   >
                     <GoEye size={18} color="black" />
                   </IconButton>
@@ -72,14 +71,14 @@ const RecentOrders = ({ orders }: { orders: Order[] }) => {
   );
 };
 
-export const recentOrdersColumns: {
+export const recentRoomBookingsColumns: {
   label: string;
 }[] = [
   { label: "N" },
   { label: "Client" },
-  { label: "Type" },
+  { label: "Hotel" },
   { label: "Status" },
   { label: "Action" },
 ];
 
-export default RecentOrders;
+export default RecentRoomBookings;

@@ -402,7 +402,7 @@ export type Order = {
   ordersDetails?: OrderDetail[];
 };
 
-export type Status = "OPEN" | "IN_PROGRESS" | "CANCELED" | "CLOSED";
+export type Status = "OPEN" | "IN_PROGRESS" | "CANCELED" | "CLOSED" | "PENDING" | "CONFIRMED";
 
 export type OrderDetail = {
   id: string;

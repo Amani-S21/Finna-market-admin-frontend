@@ -1,9 +1,9 @@
 import React from 'react'
 
-const LoadingTransportDashboard = () => {
+const LoadingRoomBookingDashboard = () => {
   return (
     <div>Chargement...</div>
   )
 }
 
-export default LoadingTransportDashboard
+export default LoadingRoomBookingDashboard

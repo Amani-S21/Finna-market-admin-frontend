@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 
 const BookingSuperAdminSideBar = () => {
   return (
-    <div className="min-w-[250px] border-r border-gray-200 h-screen bg-gray-50 flex flex-col items-start sticky top-0 px-10">
+    <div className="min-w-62.5 border-r border-gray-200 h-screen bg-gray-50 flex flex-col items-start sticky top-0 px-10">
       <div className="self-center mt-8 mb-16">
         <Link href="/">
           <Image src={logo} height={30} width={150} alt="logo" />
@@ -49,8 +49,13 @@ const NavLinks = () => {
 
 const links = [
   {
+    href: "/booking/dashboard",
+    label: "Accueil",
+    icon: <Hotel />,
+  },
+  {
     href: "/booking/hotels/list?page=1",
-    label: "Hotels",
+    label: "Entréprises",
     icon: <Hotel />,
   },
   {
