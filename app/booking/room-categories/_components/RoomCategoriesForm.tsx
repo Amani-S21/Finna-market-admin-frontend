@@ -213,7 +213,7 @@ const RoomCategoriesForm = ({
         </div>
         {roomCategoryTypes.length > 0 && (
           <div className="flex flex-col space-y-2 mt-4">
-            <p className="text-sm font-bold">Type de chambre</p>
+            <p className="text-sm font-bold">Type de catégorie à réserver</p>
             <div className="flex flex-wrap gap-4 mt-2 mb-4">
               {roomCategoryTypes.map((type) => (
                 <div
@@ -242,12 +242,12 @@ const RoomCategoriesForm = ({
           <TextField.Root
             {...register("capacity")}
             // defaultValue={category?.name}
-            placeholder="Capacité de la chambre"
+            placeholder="Capacité de la catégorie à réserver"
           />
           <ErrorMessage>{errors.capacity?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Prix par nuit</p>
+          <p className="text-sm font-bold">Prix de réservation</p>
           <TextField.Root
             {...register("pricePerNight")}
             // defaultValue={category?.name}
@@ -256,11 +256,11 @@ const RoomCategoriesForm = ({
           <ErrorMessage>{errors.pricePerNight?.message}</ErrorMessage>
         </div>
         <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Quantité disponible</p>
+          <p className="text-sm font-bold">Nombre des catégoris disponibles</p>
           <TextField.Root
             {...register("totalRooms")}
             // defaultValue={category?.name}
-            placeholder="Quantité disponible"
+            placeholder="Nombre des catégoris disponibles"
           />
           <ErrorMessage>{errors.totalRooms?.message}</ErrorMessage>
         </div>

@@ -60,7 +60,7 @@ const links = [
   },
   {
     href: "/booking/room-categories/list?page=1",
-    label: "Chambres",
+    label: "Catégories",
     icon: <BedDouble />,
   },
   {

@@ -15,7 +15,7 @@ export const roomCategoriesColumns: {
   { label: "Photos"},
   { label: "Nom"},
   { label: "Prix"},
-  { label: "Nombre"},
+  { label: "Nbre. disponibles"},
   { label: "Action"},
 ];
 

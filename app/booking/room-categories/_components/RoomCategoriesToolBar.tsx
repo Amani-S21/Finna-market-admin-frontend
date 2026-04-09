@@ -8,10 +8,10 @@ const RoomCategoriesToolBar = () => {
       <div>
         <div className="flex items-center space-x-4">
           <TbCategoryMinus />
-          <span className="font-bold">Catégories des chambres</span>
+          <span className="font-bold">Catégories</span>
         </div>
         <Text as="p" size="2">
-          Toutes les catégories des chambres disponibles dans l'entreprise
+          Toutes les catégories disponibles dans l'entreprise
         </Text>
       </div>
 

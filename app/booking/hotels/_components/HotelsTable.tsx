@@ -30,6 +30,12 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
             <Table.Cell>
               <p className="first-letter:uppercase">{hotel.name}</p>
             </Table.Cell>
+            <Table.Cell>
+              <p className="first-letter:uppercase">{hotel.country}</p>
+            </Table.Cell>
+            <Table.Cell>
+              <p className="first-letter:uppercase">{hotel.city}</p>
+            </Table.Cell>
             <Table.Cell>{formattedDate(hotel.createdAt)}</Table.Cell>
             <Table.Cell>
               <IconButton

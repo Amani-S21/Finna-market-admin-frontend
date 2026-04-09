@@ -11,6 +11,8 @@ export const hotelsColumns: {
 }[] = [
   { label: "N"},
   { label: "Nom"},
+  { label: "Pays"},
+  { label: "Ville"},
   { label: "Date de création"},
   { label: "Action"},
 ];

@@ -43,10 +43,10 @@ const HotelsSelect = ({
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
         <div className="flex flex-col space-y-2 mt-4" onClick={() => setOpen(true)}>
-          <p className="text-sm font-bold">Hotel</p>
+          <p className="text-sm font-bold">Entréprise propriétaire</p>
           <div className="relative">
             <TextField.Root
-              placeholder="Sélectionner le type"
+              placeholder="Sélectionner l'entréprise"
               value={selectedHotel?.name ?? ""}
               onChange={() => {}}
             >
@@ -60,7 +60,7 @@ const HotelsSelect = ({
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title size="4">Séléctionner un type</Dialog.Title>
+        <Dialog.Title size="4">Séléctionner l'entréprise</Dialog.Title>
         <Dialog.Description size="1">
           Vous pouvez séléctionner un type après recherche
         </Dialog.Description>
