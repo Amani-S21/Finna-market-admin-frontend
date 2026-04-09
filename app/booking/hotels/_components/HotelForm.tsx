@@ -40,14 +40,12 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const [isPublished, setIsPublished] = useState(true);
 
   // Images
-  const [image1, setImage1] = useState<string | undefined>();
-  const [image2, setImage2] = useState<string | undefined>();
-  const [image3, setImage3] = useState<string | undefined>();
-  const [isUploading, setIsUploading] = useState(false);
+  // const [image1, setImage1] = useState<string | undefined>();
+  // const [image2, setImage2] = useState<string | undefined>();
+  // const [image3, setImage3] = useState<string | undefined>();
+  // const [isUploading, setIsUploading] = useState(false);
 
-  const {
-    mutateAsync: sendHotelsLinks,
-  } = useSendHotelLinks({ axios });
+  const { mutateAsync: sendHotelsLinks } = useSendHotelLinks({ axios });
 
   const { mutateAsync: createHotel } = useCreateHotel({
     axios,
@@ -86,36 +84,36 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   });
 
   // upload pictures
-  const uploadPictures = useCallback(
-    async (hotelId: string) => {
-      try {
-        setIsUploading(true);
-        if (hotelImageUrls.current.length < 3)
-          for (let i = 0; i < productImageFiles.current.length; i++) {
-            const data = await uploadItemPictures({
-              axios,
-              file: productImageFiles.current[i],
-            });
-            hotelImageUrls.current.push(`${data?.imgName}`);
-          }
+  // const uploadPictures = useCallback(
+  //   async (hotelId: string) => {
+  //     try {
+  //       setIsUploading(true);
+  //       if (hotelImageUrls.current.length < 3)
+  //         for (let i = 0; i < productImageFiles.current.length; i++) {
+  //           const data = await uploadItemPictures({
+  //             axios,
+  //             file: productImageFiles.current[i],
+  //           });
+  //           hotelImageUrls.current.push(`${data?.imgName}`);
+  //         }
 
-        // Now we can send the uploaded pictures and update the product
-        await sendHotelsLinks({
-          hotelId: `${hotelId}`,
-          pictures: hotelImageUrls.current.map((url) => ({ url })),
-        });
-      } finally {
-        setIsUploading(false);
-      }
-    },
-    [
-      uploadItemPictures,
-      sendHotelsLinks,
-      axios,
-      productImageFiles,
-      hotelImageUrls,
-    ],
-  );
+  //       // Now we can send the uploaded pictures and update the product
+  //       await sendHotelsLinks({
+  //         hotelId: `${hotelId}`,
+  //         pictures: hotelImageUrls.current.map((url) => ({ url })),
+  //       });
+  //     } finally {
+  //       setIsUploading(false);
+  //     }
+  //   },
+  //   [
+  //     uploadItemPictures,
+  //     sendHotelsLinks,
+  //     axios,
+  //     productImageFiles,
+  //     hotelImageUrls,
+  //   ],
+  // );
 
   const {
     register,
@@ -138,10 +136,9 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         visible: isPublished,
       },
       {
-        onSuccess: async (data) => {
-          
+        onSuccess: () => {
           // Upload picture only when everything regarding the hotel creation is Ok
-          await uploadPictures(data.id);
+          // await uploadPictures(data.id);
 
           queryClient.invalidateQueries({ queryKey: ["hotels"] });
           queryClient.invalidateQueries({ queryKey: ["hotel"] });
@@ -219,7 +216,7 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           />
         </div>
 
-        <div className="flex flex-col space-y-2 mt-4 mb-2">
+        {/* <div className="flex flex-col space-y-2 mt-4 mb-2">
           <Flex justify="between">
             <p className="text-sm font-bold">Photos</p>
             <Flex
@@ -263,11 +260,10 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         </div>
         {testImageSelection() === false && (
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
-        )}
+        )} */}
 
-        <Button disabled={isSubmitting || isUploading} mt="4">
-          {hotel ? "Modifier" : "Enregistrer"}{" "}
-          {(isSubmitting || isUploading) && <Spinner />}
+        <Button disabled={isSubmitting} mt="4">
+          {hotel ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>

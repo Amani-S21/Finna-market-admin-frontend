@@ -8,16 +8,16 @@ const HotelsToolBar = () => {
       <div>
         <div className="flex items-center space-x-4">
           <TbCategoryMinus />
-          <span className="font-bold">Hotels</span>
+          <span className="font-bold">Entréprises</span>
         </div>
         <Text as="p" size="2">
-          Tous les hotels disponibles dans l'entreprise
+          Toutes les entreprise disponibles
         </Text>
       </div>
 
       <Link href="/booking/hotels/new">
         <Button>
-          <span className="text-xs">Nouvel hotel</span>
+          <span className="text-xs">Nouvel entréprise</span>
         </Button>
       </Link>
     </Flex>
