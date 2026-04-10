@@ -36,18 +36,15 @@ const RoomBookingTable = ({
               </p>
             </Table.Cell>
             <Table.Cell>
-              <Badge>
-                <Text
-                  as="p"
-                  size="2"
-                  className="lowercase first-letter:uppercase"
-                >
-                  {roomBooking.hotel?.name}
-                </Text>
-              </Badge>
+              {roomBooking.roomCategory.roomCategoryType.name}
+            </Table.Cell>
+             <Table.Cell>
+              {roomBooking.hotel.name}
             </Table.Cell>
             <Table.Cell className="truncate max-w-75">
-              {roomBooking.status && <OrderStatusBadge status={roomBooking.status} />}
+              {roomBooking.status && (
+                <OrderStatusBadge status={roomBooking.status} />
+              )}
             </Table.Cell>
             <Table.Cell>
               <p className="first-letter:uppercase">

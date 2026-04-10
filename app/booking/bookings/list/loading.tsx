@@ -11,6 +11,7 @@ export const roomBookingColumns: {
 }[] = [
   { label: "N"},
   { label: "Client"},
+  { label: "Catégorie"},
   { label: "Entréprise"},
   { label: "Status"},
   { label: "Date début"},
