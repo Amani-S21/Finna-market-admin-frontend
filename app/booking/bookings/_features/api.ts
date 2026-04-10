@@ -9,3 +9,15 @@ export const fetchRoomBookings = async (axios: AxiosInstance, page: string) => {
     toast.error(JSON.stringify(error));
   }
 };
+
+export const fetchRoomBookingById = async (
+  axios: AxiosInstance,
+  id: string,
+) => {
+  try {
+    const res = await axios.get(`/room-bookings/${id}`);
+    return res.data;
+  } catch (error: any) {
+    toast.error(JSON.stringify(error));
+  }
+};

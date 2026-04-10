@@ -60,7 +60,7 @@ const RoomBookingTable = ({
               <IconButton
                 variant="ghost"
                 ml="4"
-                onClick={() => router.push(`/booking/hotels/${roomBooking.id}`)}
+                onClick={() => router.push(`/booking/bookings/${roomBooking.id}`)}
               >
                 <IoIosMore size={20} color="black" />
               </IconButton>
