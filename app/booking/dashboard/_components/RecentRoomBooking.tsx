@@ -76,7 +76,7 @@ export const recentRoomBookingsColumns: {
 }[] = [
   { label: "N" },
   { label: "Client" },
-  { label: "Hotel" },
+  { label: "Entréprise" },
   { label: "Status" },
   { label: "Action" },
 ];

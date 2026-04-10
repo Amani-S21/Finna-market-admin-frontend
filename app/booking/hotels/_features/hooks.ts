@@ -1,7 +1,23 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { Hotel, HotelPayload, HotelResponse, SubmitHotelPictures } from "./types";
-import { createHotels, fetchHotels, sendHotelLinks } from "./api";
+import { createHotels, fetchHotelById, fetchHotels, sendHotelLinks } from "./api";
+
+type UseFetchHotelById = {
+  axios: AxiosInstance;
+  id: string;
+  enabled: boolean;
+};
+
+export const useFetchHotelById = ({ axios, id, enabled }: UseFetchHotelById) => {
+  return useQuery<Hotel>({
+    queryKey: ["hotel", id],
+    queryFn: () => fetchHotelById(axios, id),
+    staleTime: 60 * 1000 * 60,
+    retry: 3,
+    enabled,
+  });
+};
 
 type UseFetchHotels = {
   axios: AxiosInstance;
