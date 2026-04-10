@@ -1,12 +1,12 @@
 "use client";
 
-import { Badge, IconButton, Table, Text } from "@radix-ui/themes";
+import { formattedDate } from "@/app/lib/tools";
+import { OrderStatusBadge } from "@/app/market/orders/_components";
+import { IconButton, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { IoIosMore } from "react-icons/io";
 import { RoomBookingResponse } from "../../dashboard/_features/types";
 import { roomBookingColumns } from "../list/loading";
-import { OrderStatusBadge } from "@/app/market/orders/_components";
-import { formattedDate } from "@/app/lib/tools";
 
 const RoomBookingTable = ({
   roomBookingResponse,

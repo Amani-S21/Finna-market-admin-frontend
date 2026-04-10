@@ -10,7 +10,7 @@ import { Card, Grid, Heading, Text } from "@radix-ui/themes";
 import { formattedDate } from "@/app/lib/tools";
 
 const BookingDetailsPage = () => {
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const params = useParams<{ id: string }>();
   const id = params.id ?? "";

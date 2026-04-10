@@ -11,7 +11,7 @@ import { Text } from "@radix-ui/themes";
 import HotelForm from "../../_components/HotelForm";
 
 const EditHotelPage = () => {
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const params = useParams<{ id: string }>();
   const id = params.id ?? "";

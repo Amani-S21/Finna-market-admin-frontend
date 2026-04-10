@@ -156,7 +156,7 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         ),
       );
     }
-  }, [selectedCountry]);
+  }, [selectedCountry, hotel?.city]);
 
   const onSubmit = async (data: HotelSchema) => {
     if (hotel) {
