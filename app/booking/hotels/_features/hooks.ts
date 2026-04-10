@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import { Hotel, HotelPayload, HotelResponse, SubmitHotelPictures } from "./types";
-import { createHotels, fetchHotelById, fetchHotels, sendHotelLinks } from "./api";
+import { createHotels, fetchHotelById, fetchHotels, sendHotelLinks, updateHotels } from "./api";
 
 type UseFetchHotelById = {
   axios: AxiosInstance;
@@ -48,5 +48,11 @@ export const useSendHotelLinks = ({ axios }: UseCreateHotelPictures) => {
 export const useCreateHotel = ({ axios }: { axios: AxiosInstance }) => {
   return useMutation<Hotel, Error, HotelPayload>({
     mutationFn: (data: HotelPayload) => createHotels(axios, data),
+  });
+};
+
+export const useUpdateHotel = ({ axios, id  }: { axios: AxiosInstance, id : string }) => {
+  return useMutation<Hotel, Error, HotelPayload>({
+    mutationFn: (data: HotelPayload) => updateHotels(axios, data, id),
   });
 };

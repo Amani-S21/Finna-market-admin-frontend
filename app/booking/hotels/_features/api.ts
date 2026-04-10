@@ -60,3 +60,29 @@ export const createHotels = async (
     throw customError;
   }
 };
+
+export const updateHotels = async (
+  axios: AxiosInstance,
+  data: HotelPayload,
+  id : string,
+) => {
+  try {
+    const res = await axios.put(`/hotels/${id}`, data);
+    return res.data;
+  } catch (error: any) {
+    const statusCode = error?.response?.status;
+    let message = "";
+
+    switch (statusCode) {
+      case 409:
+        message = "Informations déjà utilisées, veuillez utiliser un autre nom";
+        break;
+
+      default:
+        message = "An unexpected error occurred";
+    }
+
+    const customError = new Error(message);
+    throw customError;
+  }
+};

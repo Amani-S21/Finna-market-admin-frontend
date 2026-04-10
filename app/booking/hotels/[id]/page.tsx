@@ -66,7 +66,7 @@ const HotelDetailsPage = () => {
           </Card>
         </div>
         <div>
-          <Link href={`/market/products/edit/${enterprise?.id}`}>
+          <Link href={`/booking/hotels/edit/${enterprise?.id}`}>
             <Button>Modifier</Button>
           </Link>
         </div>

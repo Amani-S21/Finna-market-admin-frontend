@@ -8,29 +8,34 @@ import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { axiosMedias } from "@/app/lib/axios";
 import toast from "react-hot-toast";
 import { CiTrash } from "react-icons/ci";
-import { useCreateHotel, useSendHotelLinks } from "../_features/hooks";
+import {
+  useCreateHotel,
+  useSendHotelLinks,
+  useUpdateHotel,
+} from "../_features/hooks";
 import { Country, Hotel, HotelSchema } from "../_features/types";
 import { hotelSchema } from "../_features/validationSchemas";
 import HotelCitiesSelect from "./HotelCitiesSelect";
 import HotelCountriesSelect from "./HotelCountriesSelect";
-import { AxiosInstance } from "axios";
-import { uploadImgFile } from "@/app/market/products/_features/api";
+// import { AxiosInstance } from "axios";
+// import { uploadImgFile } from "@/app/market/products/_features/api";
 
 const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   const axios = useAxiosAuth();
   const { data: session } = useSession();
   const router = useRouter();
 
-  const hotelImageUrls = useRef<string[]>([]);
-  const productImageFiles = useRef<File[]>([]);
+  // const hotelImageUrls = useRef<string[]>([]);
+  // const productImageFiles = useRef<File[]>([]);
 
   const [selectedCountry, setSelectedCountry] = useState<Country>();
   const [openCountryDialog, setOpenCountryDialog] = useState(false);
+  const [countries, setCountries] = useState<Country[]>([]);
 
   const queryClient = useQueryClient();
 
@@ -45,43 +50,48 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
   // const [image3, setImage3] = useState<string | undefined>();
   // const [isUploading, setIsUploading] = useState(false);
 
-  const { mutateAsync: sendHotelsLinks } = useSendHotelLinks({ axios });
+  // const { mutateAsync: sendHotelsLinks } = useSendHotelLinks({ axios });
 
   const { mutateAsync: createHotel } = useCreateHotel({
     axios,
   });
 
-  const pushFileToList = (
-    indexFileToRemove: number | undefined,
-    fileToAdd: File,
-  ) => {
-    // Remove a given file
-    switch (indexFileToRemove) {
-      case 0:
-        productImageFiles.current.splice(0, 1, fileToAdd);
-        break;
-      case 1:
-        productImageFiles.current.splice(1, 1, fileToAdd);
-        break;
-      default:
-      case 2:
-        productImageFiles.current.splice(2, 1, fileToAdd);
-        break;
-    }
-  };
-
-  const testImageSelection = () => {
-    if (!image1 || !image2 || !image3) {
-      return false;
-    }
-    return true;
-  };
-
-  const { mutateAsync: uploadItemPictures } = useMutation({
-    mutationFn: ({ file }: { axios: AxiosInstance; file: File }) =>
-      uploadImgFile(axiosMedias, file),
-    retry: 0,
+  const { mutateAsync: updateHotel } = useUpdateHotel({
+    axios,
+    id : `${hotel?.id}`,
   });
+
+  // const pushFileToList = (
+  //   indexFileToRemove: number | undefined,
+  //   fileToAdd: File,
+  // ) => {
+  //   // Remove a given file
+  //   switch (indexFileToRemove) {
+  //     case 0:
+  //       productImageFiles.current.splice(0, 1, fileToAdd);
+  //       break;
+  //     case 1:
+  //       productImageFiles.current.splice(1, 1, fileToAdd);
+  //       break;
+  //     default:
+  //     case 2:
+  //       productImageFiles.current.splice(2, 1, fileToAdd);
+  //       break;
+  //   }
+  // };
+
+  // const testImageSelection = () => {
+  //   if (!image1 || !image2 || !image3) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
+
+  // const { mutateAsync: uploadItemPictures } = useMutation({
+  //   mutationFn: ({ file }: { axios: AxiosInstance; file: File }) =>
+  //     uploadImgFile(axiosMedias, file),
+  //   retry: 0,
+  // });
 
   // upload pictures
   // const uploadPictures = useCallback(
@@ -123,30 +133,85 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
     resolver: zodResolver(hotelSchema),
   });
 
-  const onSubmit = async (data: HotelSchema) => {
-    await createHotel(
-      {
-        name: data.name,
-        country: selectedCountry?.name,
-        city: selectedCity,
-        description: data.description,
-        address: `${data.address}`,
-        createdById: `${session?.data.id}`,
-        pictures: [],
-        visible: isPublished,
-      },
-      {
-        onSuccess: () => {
-          // Upload picture only when everything regarding the hotel creation is Ok
-          // await uploadPictures(data.id);
+  useEffect(() => {
+    fetch("/data/world_countries.json")
+      .then((res) => res.json())
+      .then((data) => setCountries(data.countries))
+      .catch((err) => console.error("Error loading countries:", err));
+  }, []);
 
-          queryClient.invalidateQueries({ queryKey: ["hotels"] });
-          queryClient.invalidateQueries({ queryKey: ["hotel"] });
-          toast.success(`Hotel crééee avec avec succèes`);
-          router.back();
+  useEffect(() => {
+    if (hotel && countries.length > 0) {
+      const matchedCountry = countries.find(
+        (country) => country.name.toLowerCase() === hotel.country.toLowerCase(),
+      );
+
+      if (matchedCountry) {
+        setSelectedCountry(matchedCountry);
+      }
+    }
+  }, [hotel, countries]);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      setSelectedCity(
+        selectedCountry.cities.find(
+          (city) => city.toLocaleLowerCase() === hotel?.city.toLowerCase(),
+        ),
+      );
+    }
+  }, [selectedCountry]);
+
+  const onSubmit = async (data: HotelSchema) => {
+    if (hotel) {
+      await updateHotel(
+        {
+          name: data.name,
+          country: selectedCountry?.name,
+          city: selectedCity,
+          description: data.description,
+          address: `${data.address}`,
+          createdById: `${session?.data.id}`,
+          pictures: [],
+          visible: isPublished,
         },
-      },
-    );
+        {
+          onSuccess: () => {
+            // Upload picture only when everything regarding the hotel creation is Ok
+            // await uploadPictures(data.id);
+
+            queryClient.invalidateQueries({ queryKey: ["hotels"] });
+            queryClient.invalidateQueries({ queryKey: ["hotel"] });
+            toast.success(`Entréprise modifiée avec avec succèes`);
+            router.back();
+          },
+        },
+      );
+    } else {
+      await createHotel(
+        {
+          name: data.name,
+          country: selectedCountry?.name,
+          city: selectedCity,
+          description: data.description,
+          address: `${data.address}`,
+          createdById: `${session?.data.id}`,
+          pictures: [],
+          visible: isPublished,
+        },
+        {
+          onSuccess: () => {
+            // Upload picture only when everything regarding the hotel creation is Ok
+            // await uploadPictures(data.id);
+
+            queryClient.invalidateQueries({ queryKey: ["hotels"] });
+            queryClient.invalidateQueries({ queryKey: ["hotel"] });
+            toast.success(`Entréprise crééee avec avec succèes`);
+            router.back();
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -167,8 +232,8 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root
             {...register("name")}
-            // defaultValue={category?.name}
-            placeholder="Nom de l'hotel"
+            defaultValue={hotel?.name}
+            placeholder="Nom de l'entréprise"
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
@@ -189,8 +254,8 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           <p className="text-sm font-bold">Addrèsse</p>
           <TextField.Root
             {...register("address")}
-            // defaultValue={category?.name}
-            placeholder="Addrèsse de l'hotel"
+            defaultValue={hotel?.name}
+            placeholder="Addrèsse de l'entréprise"
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
@@ -199,9 +264,9 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           <p className="text-sm font-bold">Déscription</p>
           <TextArea
             {...register("description")}
-            // defaultValue={product?.description}
+            defaultValue={hotel?.description}
             rows={3}
-            placeholder="Veuillez saisir déscription de l'hotel"
+            placeholder="Veuillez saisir déscription de l'entréprise"
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
