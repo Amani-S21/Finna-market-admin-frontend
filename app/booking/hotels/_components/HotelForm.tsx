@@ -1,22 +1,18 @@
 "use client";
 
 import { ErrorMessage, Spinner } from "@/app/_components";
-import ProductImage from "@/app/_components/ProductImage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, Switch, TextArea, TextField } from "@radix-ui/themes";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button, Switch, TextArea, TextField } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { axiosMedias } from "@/app/lib/axios";
 import toast from "react-hot-toast";
-import { CiTrash } from "react-icons/ci";
 import {
   useCreateHotel,
-  useSendHotelLinks,
-  useUpdateHotel,
+  useUpdateHotel
 } from "../_features/hooks";
 import { Country, Hotel, HotelSchema } from "../_features/types";
 import { hotelSchema } from "../_features/validationSchemas";

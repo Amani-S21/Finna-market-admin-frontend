@@ -1,3 +1,8 @@
+export interface RoomBookingResponse {
+  count: number;
+  data: RoomBooking[];
+}
+
 export interface RoomBooking {
   id: string;
   hotelId: string;
