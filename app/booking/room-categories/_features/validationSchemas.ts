@@ -5,5 +5,4 @@ export const roomCategoriesSchema = z.object({
   capacity: z.string().optional(),
   totalRooms: z.string().optional(),
   pricePerNight: z.string().optional(),
-  location: z.string(),
 });

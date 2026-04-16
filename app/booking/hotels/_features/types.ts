@@ -59,7 +59,6 @@ export interface RoomCategoryPayload {
   createdById: string;
   visible: boolean;
   pictures: Picture[];
-  location: string;
   comodities: CommodityPayload[];
 }
 

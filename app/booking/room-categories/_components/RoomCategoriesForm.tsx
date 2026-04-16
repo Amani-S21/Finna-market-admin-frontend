@@ -67,8 +67,7 @@ const RoomCategoriesForm = ({
 
   // Images
   const [image1, setImage1] = useState<string | undefined>();
-  const [image2, setImage2] = useState<string | undefined>();
-  const [image3, setImage3] = useState<string | undefined>();
+
   const [isUploading, setIsUploading] = useState(false);
 
   const {
@@ -84,13 +83,7 @@ const RoomCategoriesForm = ({
       case 0:
         roomImageFiles.current.splice(0, 1, fileToAdd);
         break;
-      case 1:
-        roomImageFiles.current.splice(1, 1, fileToAdd);
-        break;
-      default:
-      case 2:
-        roomImageFiles.current.splice(2, 1, fileToAdd);
-        break;
+      
     }
   };
 
@@ -100,7 +93,7 @@ const RoomCategoriesForm = ({
     });
 
   const testImageSelection = () => {
-    if (!image1 || !image2 || !image3) {
+    if (!image1 ) {
       return false;
     }
     return true;
@@ -173,7 +166,6 @@ const RoomCategoriesForm = ({
         roomCategoryTypeId: `${selectedType?.id}`,
         totalRooms: parseInt(`${data.totalRooms}`),
         pricePerNight: parseInt(`${data.pricePerNight}`),
-        location: data.location,
         comodities: selectedCommodities.map((comodityId) => ({ comodityId })),
       },
       {
@@ -251,7 +243,7 @@ const RoomCategoriesForm = ({
           <TextField.Root
             {...register("pricePerNight")}
             // defaultValue={category?.name}
-            placeholder="Prix par nuit"
+            placeholder="Prix"
           />
           <ErrorMessage>{errors.pricePerNight?.message}</ErrorMessage>
         </div>
@@ -274,15 +266,7 @@ const RoomCategoriesForm = ({
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
-        <div className="flex flex-col space-y-2 mt-4">
-          <p className="text-sm font-bold">Localisation</p>
-          <TextField.Root
-            {...register("location")}
-            // defaultValue={category?.name}
-            placeholder="Entrer la localisation"
-          />
-          <ErrorMessage>{errors.location?.message}</ErrorMessage>
-        </div>
+        
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Comodités</p>
           <div className="flex flex-wrap gap-4 mt-2 mb-4">
@@ -320,8 +304,6 @@ const RoomCategoriesForm = ({
               onClick={() => {
                 roomImageFiles.current = [];
                 setImage1(undefined);
-                setImage2(undefined);
-                setImage3(undefined);
               }}
             >
               <CiTrash size={16} />
@@ -338,24 +320,10 @@ const RoomCategoriesForm = ({
                 pushFileToList(0, fileToAdd);
               }}
             />
-            <ProductImage
-              image={image2!}
-              setImage={setImage2}
-              setFile={(fileToAdd) => {
-                pushFileToList(1, fileToAdd);
-              }}
-            />
-            <ProductImage
-              image={image3!}
-              setImage={setImage3}
-              setFile={(fileToAdd) => {
-                pushFileToList(2, fileToAdd);
-              }}
-            />
           </Flex>
         </div>
         {testImageSelection() === false && (
-          <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
+          <ErrorMessage>Veuillez séléctionner une photo de la catégorie</ErrorMessage>
         )}
 
         <Button disabled={isSubmitting || isUploading} mt="4">

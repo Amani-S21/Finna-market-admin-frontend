@@ -17,7 +17,7 @@ const RoomCategoriesToolBar = () => {
 
       <Link href="/booking/room-categories/new">
         <Button>
-          <span className="text-xs">Nouvelle catégorie de chambre</span>
+          <span className="text-xs">Nouvelle catégorie</span>
         </Button>
       </Link>
     </Flex>
