@@ -20,6 +20,7 @@ const NewProductPage = () => {
       </div>
 
       <ProductForm />
+    
     </div>
   );
 };

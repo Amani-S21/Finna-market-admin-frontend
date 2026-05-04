@@ -262,7 +262,7 @@ const RoomCategoriesForm = ({
             {...register("description")}
             // defaultValue={product?.description}
             rows={3}
-            placeholder="Veuillez saisir déscription de l'hotel"
+            placeholder="Veuillez saisir déscription"
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
