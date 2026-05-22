@@ -32,7 +32,7 @@ const UsersTable = ({
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>{user.fullName}</Table.Cell>
             <Table.Cell><UserRoleBadge role={user.role!}/></Table.Cell>
-            <Table.Cell className="truncate max-w-[300px]">
+            <Table.Cell className="truncate max-w-75">
               {user.phone}
             </Table.Cell>
             <Table.Cell>{formattedDate(`${user?.createdAt}`)}</Table.Cell>

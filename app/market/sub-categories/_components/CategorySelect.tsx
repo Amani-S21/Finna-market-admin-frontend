@@ -29,6 +29,8 @@ const CategorySelect = ({
   const { data: dataResponse, isLoading } = useSearchCategories({
     axios,
     term: debouncedSearchTerm,
+    page: 1,
+    limit: 20,
     enabled: !!debouncedSearchTerm,
   });
 

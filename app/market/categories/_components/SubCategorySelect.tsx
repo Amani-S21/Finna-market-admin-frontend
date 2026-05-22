@@ -61,10 +61,10 @@ const SubCategorySelect = () => {
               <Search size={15} />
             </TextField.Slot>
           </TextField.Root>
-          <NewSubCategoryDialog
+          {/* <NewSubCategoryDialog
             setOpen={setOpenSubCategoryDialog}
             open={openSubCategoryDialog}
-          />
+          /> */}
         </Flex>
 
         {isLoading ? (

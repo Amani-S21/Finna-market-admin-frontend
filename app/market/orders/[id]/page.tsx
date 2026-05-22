@@ -27,7 +27,9 @@ const BuildOrderDetailsPage = () => {
   const affectations = session?.data?.shopAffectations ?? [];
 
   const role = () => {
-    if (affectations.length > 0) {
+    if (session?.data.role === "SUPER_ADMIN") {
+      return session?.data.role as Roles;
+    } else if (affectations.length > 0) {
       if (affectations && affectations.length > 0) {
         return affectations[0].role as Roles;
       }
@@ -82,7 +84,7 @@ const BuildOrderDetailsPage = () => {
             <Flex align="center" gap="2">
               <div className="h-10 w-10 border border-gray-200 rounded-full uppercase flex items-center justify-center">{`${ordersResponse?.data?.customer?.fullName?.substring(
                 0,
-                1
+                1,
               )}`}</div>
               <Flex direction="column">
                 <p className="lowercase first-letter:uppercase">
@@ -148,8 +150,6 @@ const BuildOrderDetailsPage = () => {
               </Text>
             </div>
           </Flex>
-
-          
         </div>
         {role() === "DELIVERER_ADMIN" ||
           (role() === "SUPER_ADMIN" && (

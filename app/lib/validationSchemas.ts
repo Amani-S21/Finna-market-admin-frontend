@@ -102,15 +102,15 @@ export const productSchema = z.object({
 });
 
 export const shopProductSchema = z.object({
-  cost: z.coerce.number().min(1, "Le cout doit etre au minimum 1"),
-  price: z.coerce.number().min(1, "Le prix doit etre au minimum 1"),
+  cost: z.coerce.number().min(0, "Le cout doit etre superieur a 0"),
+  price: z.coerce.number().min(0, "Le prix doit etre superieur a 0"),
   discountPrice: z.coerce
     .number()
-    .min(1, "Le prix de reduction doit etre au minimum 1"),
+    .min(0, "Le prix de reduction doit etre superieur a 0"),
   quantityInStock: z.coerce
     .number()
     .min(1, "La quantité en stock doit etre au minimum 1"),
   deliveryFees: z.coerce
     .number()
-    .min(1, "Le prix de reduction doit etre au minimum 1"),
+    .min(0, "Le prix de reduction doit etre superieur a 0"),
 });

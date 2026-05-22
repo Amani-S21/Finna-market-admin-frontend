@@ -88,17 +88,21 @@ export const useUpdateCategories = ({ axios }: { axios: AxiosInstance }) => {
 type UseSearchCategories = {
   axios: AxiosInstance;
   term: string;
+  page: number;
+  limit: number;
   enabled: boolean;
 };
 
 export const useSearchCategories = ({
   axios,
   term,
+  page,
+  limit,
   enabled,
 }: UseSearchCategories) => {
   return useQuery<CategoriesResponse>({
-    queryKey: ["searched-categories", term],
-    queryFn: () => searchCategories(axios, term),
+    queryKey: ["searched-categories", term, page, limit],
+    queryFn: () => searchCategories(axios, term, page, limit),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,

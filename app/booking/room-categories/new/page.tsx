@@ -62,7 +62,7 @@ const NewRoomCategoriesPage = () => {
           <span className="font-bold">Catégories</span>
         </div>
         <Text as="p" size="2" mb="4">
-          Remplissez les champs ci dessous pour créer une nouvelle catégorie
+          Remplissez les champs ci dessous pour créer une nouvelle catégorie de réservation
         </Text>
       </div>
       <RoomCategoriesForm

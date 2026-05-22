@@ -5,7 +5,9 @@ import { UpdateCategoryIconType } from "./types";
 
 export const fetchCategories = async (axios: AxiosInstance, page: string) => {
   try {
-    const res = await axios.get(`/categories?page=${page}&limit=10&withSubCategories=true`);
+    const res = await axios.get(
+      `/categories?page=${page}&limit=10&withSubCategories=true`,
+    );
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
@@ -14,7 +16,7 @@ export const fetchCategories = async (axios: AxiosInstance, page: string) => {
 
 export const fetchCategoryById = async (
   axios: AxiosInstance,
-  categoryId: string
+  categoryId: string,
 ) => {
   try {
     const res = await axios.get(`/categories/${categoryId}`);
@@ -26,7 +28,7 @@ export const fetchCategoryById = async (
 
 export const createCategories = async (
   axios: AxiosInstance,
-  data: SubmitCategory
+  data: SubmitCategory,
 ) => {
   try {
     const res = await axios.post(`/categories`, data);
@@ -51,7 +53,7 @@ export const createCategories = async (
 
 export const updateCategories = async (
   axios: AxiosInstance,
-  data: SubmitCategory
+  data: SubmitCategory,
 ) => {
   try {
     const res = await axios.patch(`/categories`, data);
@@ -74,9 +76,16 @@ export const updateCategories = async (
   }
 };
 
-export const searchCategories = async (axios: AxiosInstance, term: string) => {
+export const searchCategories = async (
+  axios: AxiosInstance,
+  term: string,
+  page: number,
+  limit: number,
+) => {
   try {
-    const res = await axios.get(`/categories/search?term=${term}`);
+    const res = await axios.get(
+      `/categories/search?page=${page}&limit=${limit}&term=${term}`,
+    );
     return res.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
@@ -85,7 +94,7 @@ export const searchCategories = async (axios: AxiosInstance, term: string) => {
 
 export const updateCategoryIcon = async (
   axios: AxiosInstance,
-  data: UpdateCategoryIconType
+  data: UpdateCategoryIconType,
 ) => {
   try {
     const res = await axios.patch(`/categories/icon`, data);

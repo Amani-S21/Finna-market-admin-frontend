@@ -29,7 +29,6 @@ const BuildProductsPage = () => {
   } = useFetchProducts({
     axios,
     page,
-    shopId,
     enabled: status === "authenticated",
   });
 

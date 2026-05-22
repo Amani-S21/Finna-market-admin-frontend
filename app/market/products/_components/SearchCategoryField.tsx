@@ -34,6 +34,8 @@ const SearchCategoryTextField = ({
   } = useSearchCategories({
     axios,
     term: debouncedSearchTerm,
+    page : 1,
+    limit : 20,
     enabled: !!debouncedSearchTerm,
   });
 

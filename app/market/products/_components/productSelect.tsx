@@ -31,6 +31,8 @@ const ProductSelect = ({
     useSearchGlobalProduct({
       axios,
       term: debouncedSearchTerm,
+      page: 1,
+      limit: 20,
       enabled: !!debouncedSearchTerm,
     });
 

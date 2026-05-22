@@ -24,8 +24,8 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
   // const subCategoryFile = useRef<File | null>(null);
   // const categoryUrl = useRef<string>("");
 
-  const [selectedCategory, setSelectedCategory] = useState<Category>();
-  const [openDialog, setOpenDialog] = useState(false);
+  // const [selectedCategory, setSelectedCategory] = useState<Category>();
+  // const [openDialog, setOpenDialog] = useState(false);
 
   // const { mutateAsync: uploadCategoryPicture, isPending: isUploading } =
   //   useMutation({
@@ -70,7 +70,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           {
             id: subCategory.id,
             name: data.name,
-            categoryId: selectedCategory?.id,
+            // categoryId: selectedCategory?.id,
           },
           {
             onSuccess: async () => {
@@ -89,7 +89,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
         await createSubCategory(
           {
             name: data.name,
-            categoryId: selectedCategory?.id,
+            // categoryId: selectedCategory?.id,
           },
           {
             onSuccess: async () =>
@@ -119,11 +119,11 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
     }
   };
 
-  useEffect(() => {
-    if (subCategory) {
-      setSelectedCategory(subCategory.category);
-    }
-  }, [subCategory]);
+  // useEffect(() => {
+  //   if (subCategory) {
+  //     setSelectedCategory(subCategory.category);
+  //   }
+  // }, [subCategory]);
 
   return (
     <div className="max-w-xl">
@@ -148,12 +148,12 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
-        <SubCategorySelect
+        {/* <SubCategorySelect
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           open={openDialog}
           setOpen={setOpenDialog}
-        />
+        /> */}
         {/* <div className="flex flex-col space-y-2 mt-4 mb-2">
           <Flex justify="between" align="start">
             <Flex direction="column" gap="2" mb="2">

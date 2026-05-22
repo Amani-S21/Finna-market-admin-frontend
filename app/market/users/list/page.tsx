@@ -20,28 +20,10 @@ const BuildUsersPage = () => {
   const page: string = searchParams.get("page") ?? "";
   const role: Roles = searchParams.get("role") as Roles;
 
-  const affectations = session?.data?.shopAffectations ?? [];
-  const shopId = affectations.length > 0 ? affectations[0]?.shop.id : null;
-
-  const fetchUsers = useFetchUsers({
-    axios,
-    page,
-    role,
-    enabled: status === "authenticated" && !shopId,
-  });
-
-  const fetchUsersByShop = useFetchUsersByShop({
-    axios,
-    shopId: `${shopId}`,
-    page,
-    enabled: status === "authenticated" && !!shopId,
-  });
-
-  const usersResponse = shopId ? fetchUsersByShop.data : fetchUsers.data;
-  const isLoading = shopId ? fetchUsersByShop.isLoading : fetchUsers.isLoading;
-
   const currentUserRole = () => {
-    if (affectations.length > 0) {
+    if (session?.data.role === "SUPER_ADMIN") {
+      return session?.data.role as Roles;
+    } else if (affectations.length > 0) {
       if (affectations && affectations.length > 0) {
         return affectations[0].role as Roles;
       }
@@ -49,6 +31,32 @@ const BuildUsersPage = () => {
       return session?.data.role as Roles;
     }
   };
+
+  const affectations = session?.data?.shopAffectations ?? [];
+  const shopId = affectations.length > 0 ? affectations[0]?.shop.id : null;
+
+  const fetchUsers = useFetchUsers({
+    axios,
+    page,
+    role,
+    enabled: status === "authenticated" && currentUserRole() === "SUPER_ADMIN",
+  });
+
+  const fetchUsersByShop = useFetchUsersByShop({
+    axios,
+    shopId: `${shopId}`,
+    page,
+    enabled: status === "authenticated" && currentUserRole() !== "SUPER_ADMIN",
+  });
+
+  const usersResponse =
+    currentUserRole() === "SUPER_ADMIN"
+      ? fetchUsers.data
+      : fetchUsersByShop.data;
+  const isLoading =
+    currentUserRole() === "SUPER_ADMIN"
+      ? fetchUsers.isLoading
+      : fetchUsersByShop.isLoading;
 
   if (isLoading || status === "loading") return <LoadingUsersPage />;
 

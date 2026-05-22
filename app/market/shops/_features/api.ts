@@ -15,11 +15,11 @@ export const fetchShops = async (axios: AxiosInstance, page: string) => {
 export const fetchShopProducts = async (
   axios: AxiosInstance,
   page: string,
-  shopId: string
+  shopId: string,
 ) => {
   try {
     const res = await axios.get(
-      `/products/by-shops?shopId=${shopId}&page=${page}&limit=10`
+      `/products/by-shops?shopId=${shopId}&page=${page}&limit=10`,
     );
     return res.data;
   } catch (error: any) {
@@ -75,7 +75,7 @@ export const createShop = async (axios: AxiosInstance, data: SubmitShop) => {
 
 export const affectShop = async (
   axios: AxiosInstance,
-  data: SubmitAffectShop
+  data: SubmitAffectShop,
 ) => {
   try {
     const res = await axios.put("/shops/affect-user-to-shop", data);
@@ -134,11 +134,9 @@ export const searchShopType = async (axios: AxiosInstance, term: string) => {
   }
 };
 
-
-
 export const searchExpeditionRegions = async (
   axios: AxiosInstance,
-  term: string
+  term: string,
 ) => {
   try {
     const res = await axios.get(`/expedition-regions/search?term=${term}`);
@@ -159,11 +157,15 @@ export const searchShop = async (axios: AxiosInstance, term: string) => {
 
 export const searchGlobalProduct = async (
   axios: AxiosInstance,
-  term: string
+  term: string,
+  page: number,
+  limit: number,
 ) => {
   try {
-    const res = await axios.get(`/products/global/search?term=${term}`);
-    return res.data;
+    const res = await axios.get(
+      `/products/global/search?page=${page}&limit=${limit}&term=${term}`,
+    );
+    return res.data.data;
   } catch (error: any) {
     toast.error(JSON.stringify(error));
   }
@@ -171,7 +173,7 @@ export const searchGlobalProduct = async (
 
 export const affectProductToShop = async (
   axios: AxiosInstance,
-  data: ShopProductSubmit
+  data: ShopProductSubmit,
 ) => {
   try {
     const res = await axios.post("/products/affect-to-shop", data);
@@ -184,7 +186,6 @@ export const affectProductToShop = async (
       case 409:
         message = "Affectation produit deja existante";
         break;
-
 
       default:
         message = "Une erreur inconue est survenue";

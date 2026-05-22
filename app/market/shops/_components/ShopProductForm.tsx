@@ -29,7 +29,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
 
   const {
     register,
-  
+
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ShopProductSchema>({
@@ -49,7 +49,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
       productId: `${selectedProduct?.id}`,
       shopId: `${selectedShop?.id}`,
       published: true,
-      quantityInStock : data.quantityInStock,
+      quantityInStock: data.quantityInStock,
     };
 
     // Remove keys that are null, undefined, or empty strings
@@ -91,6 +91,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
           <TextField.Root
             {...register("cost")}
             type="number"
+            step="0.01"
             placeholder="Saisissez le prix d'achat"
             defaultValue={product?.cost}
           />
@@ -101,6 +102,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
           <TextField.Root
             {...register("price")}
             type="number"
+            step="0.01"
             defaultValue={product?.price}
             placeholder="Veuillez saisir l'ancien prix"
           />
@@ -121,6 +123,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
           <TextField.Root
             {...register("discountPrice")}
             type="number"
+            step="0.01"
             defaultValue={product?.discountPrice}
             placeholder="Veuillez saisir l'ancien prix"
           />
@@ -131,6 +134,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
           <TextField.Root
             {...register("deliveryFees")}
             type="number"
+            step="0.01"
             defaultValue={product?.discountPrice}
             placeholder="Veuillez saisir les frais de livraison"
           />

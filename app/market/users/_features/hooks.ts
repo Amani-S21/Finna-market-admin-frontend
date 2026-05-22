@@ -55,17 +55,21 @@ export const useSearchShop = ({
 type UseSearchGlobalProduct = {
   axios: AxiosInstance;
   term: string;
+  page: number,
+  limit: number,
   enabled: boolean;
 };
 
 export const useSearchGlobalProduct = ({
   axios,
-  term,
+  term, 
+  page,
+  limit, 
   enabled,
 }: UseSearchGlobalProduct) => {
   return useQuery<Product[]>({
-    queryKey: ["searched-global-products", term],
-    queryFn: () => searchGlobalProduct(axios, term),
+    queryKey: ["searched-global-products", term, page, limit],
+    queryFn: () => searchGlobalProduct(axios, term, page, limit),
     staleTime: 60 * 1000 * 5,
     retry: 3,
     enabled,
@@ -101,7 +105,7 @@ type UseFetchUser = {
 };
 
 export const useFetchUser = ({ axios, userId, enabled }: UseFetchUser) => {
-  return useQuery<User>({
+  return useQuery<UsersResponse>({
     queryKey: ["user", userId],
     queryFn: () => fetchUser(axios, userId),
     staleTime: 60 * 1000 * 5,
@@ -123,7 +127,7 @@ export const useFetchUsersByShop = ({ axios, shopId,page, enabled }: UseFetchUse
     queryFn: () => fetchUsersByShop(axios, shopId, page),
     staleTime: 60 * 1000 * 5,
     retry: 3,
-    enabled,
+    enabled, 
   });
 };
 

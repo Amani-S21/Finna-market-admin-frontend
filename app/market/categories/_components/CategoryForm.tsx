@@ -39,20 +39,20 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const categoryFile = useRef<File | null>(null);
   const categoryUrl = useRef<string>("");
 
-  const { mutateAsync: uploadCategoryPicture } = useMutation({
-    mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
-      uploadImgFile(axios, file),
-    retry: 0,
-  });
+  // const { mutateAsync: uploadCategoryPicture } = useMutation({
+  //   mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
+  //     uploadImgFile(axios, file),
+  //   retry: 0,
+  // });
 
-  const uploadPicture = async (): Promise<string> => {
-    const data = await uploadCategoryPicture({
-      axios: axiosMedias,
-      file: categoryFile.current!,
-    });
-    categoryUrl.current = `${data?.imgName}`;
-    return `${data?.imgName}`;
-  };
+  // const uploadPicture = async (): Promise<string> => {
+  //   const data = await uploadCategoryPicture({
+  //     axios: axiosMedias,
+  //     file: categoryFile.current!,
+  //   });
+  //   categoryUrl.current = `${data?.imgName}`;
+  //   return `${data?.imgName}`;
+  // };
 
   useEffect(() => {
     if (category) {
@@ -116,16 +116,16 @@ const CategoryForm = ({ category }: { category?: Category }) => {
           },
           {
             onSuccess: async (category) => {
-              if (!categoryFile.current) return;
+              // if (!categoryFile.current) return;
 
               // ✅ Wait for upload to finish
-              const imageUrl = await uploadPicture();
+              // const imageUrl = await uploadPicture();
 
               // ✅ Update with the uploaded image URL
-              await updateCategoryIcon({
-                id: `${category?.createdCategory.id}`,
-                icon: imageUrl,
-              });
+              // await updateCategoryIcon({
+              //   id: `${category?.createdCategory.id}`,
+              //   icon: imageUrl,
+              // });
 
               queryClient.invalidateQueries({ queryKey: ["categories"] });
               queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
