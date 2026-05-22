@@ -2,7 +2,7 @@
 
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
-import { axiosMedias } from "@/app/lib/axios";
+// import { axiosMedias } from "@/app/lib/axios";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Category, CategorySchema } from "@/app/lib/types";
 import {
@@ -11,10 +11,9 @@ import {
 } from "@/redux/features/categorySlice";
 import { RootState } from "@/redux/store";
 import { Button, Callout, TextField } from "@radix-ui/themes";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosInstance } from "axios";
+import {  useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
@@ -23,10 +22,9 @@ import {
   useCategoryForm,
   useCreateCategories,
   useUpdateCategories,
-  useUpdateCategoryIcon,
 } from "../_features/hooks";
 import SubCategorySelect from "./SubCategorySelect";
-import { uploadImgFile } from "../../products/_features/api";
+// import { uploadImgFile } from "../../products/_features/api";
 
 const CategoryForm = ({ category }: { category?: Category }) => {
   const axios = useAxiosAuth();
@@ -36,8 +34,8 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   // const [image, setImage] = useState<string | undefined>();
-  const categoryFile = useRef<File | null>(null);
-  const categoryUrl = useRef<string>("");
+  // const categoryFile = useRef<File | null>(null);
+  // const categoryUrl = useRef<string>("");
 
   // const { mutateAsync: uploadCategoryPicture } = useMutation({
   //   mutationFn: ({ axios, file }: { axios: AxiosInstance; file: File }) =>
@@ -79,9 +77,9 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       axios,
     });
 
-  const { mutateAsync: updateCategoryIcon } = useUpdateCategoryIcon({
-    axios,
-  });
+  // const { mutateAsync: updateCategoryIcon } = useUpdateCategoryIcon({
+  //   axios,
+  // });
 
   const {
     mutateAsync: updateCategory,
@@ -115,7 +113,7 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               })) ?? [],
           },
           {
-            onSuccess: async (category) => {
+            onSuccess: async () => {
               // if (!categoryFile.current) return;
 
               // ✅ Wait for upload to finish

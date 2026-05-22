@@ -3,18 +3,16 @@
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Category, CategorySchema, SubCategory } from "@/app/lib/types";
+import {  CategorySchema, SubCategory } from "@/app/lib/types";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
   useCreateSubCategories,
   useSubCategoryForm,
   useUpdateSubCategories,
 } from "../_features/hooks";
-import SubCategorySelect from "./CategorySelect";
 
 const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
   const axios = useAxiosAuth();

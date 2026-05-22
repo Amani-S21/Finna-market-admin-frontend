@@ -8,14 +8,13 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { SelectSearchItem } from "../../products/_components";
 import { useSearchSubCategories } from "../_features/hooks";
-import NewSubCategoryDialog from "./NewSubCategoryDialog";
 import { addSubCategory } from "@/redux/features/categorySlice";
 
 const SubCategorySelect = () => {
   const axios = useAxiosAuth();
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
-  const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
+  // const [openSubCategoryDialog, setOpenSubCategoryDialog] = useState(false);
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
   const { data: dataResponse, isLoading } = useSearchSubCategories({

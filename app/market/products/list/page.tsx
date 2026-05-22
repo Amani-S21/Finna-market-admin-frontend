@@ -11,16 +11,16 @@ import { useFetchProducts } from "../_features/hooks";
 import LoadingProductsPage from "./loading";
 
 const BuildProductsPage = () => {
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "";
 
-  const shopAffectation = session?.data.shopAffectations;
-  let shopId = "";
-  if (shopAffectation && shopAffectation.length > 0) {
-    shopId = shopAffectation[0].shopId;
-  }
+  // const shopAffectation = session?.data.shopAffectations;
+  // let shopId = "";
+  // if (shopAffectation && shopAffectation.length > 0) {
+  //   shopId = shopAffectation[0].shopId;
+  // }
 
   const {
     data: productsResponse,

@@ -17,7 +17,7 @@ type Props = {
   >;
   open: boolean;
   setOpen: (val: boolean) => void;
-  onDeleteClick: (category: Category) => void
+  onDeleteClick: (category: Category) => void;
 };
 
 const ShopCategorySelect = ({
@@ -25,7 +25,7 @@ const ShopCategorySelect = ({
   selectedShopCategories,
   setOpen,
   open,
-  onDeleteClick
+  onDeleteClick,
 }: Props) => {
   const axios = useAxiosAuth();
 
@@ -35,6 +35,8 @@ const ShopCategorySelect = ({
   const { data: categoriesResponse, isLoading: isLoadingTypes } =
     useSearchCategories({
       axios,
+      page: 1,
+      limit: 20,
       term: debouncedSearchTerm,
       enabled: !!debouncedSearchTerm,
     });
@@ -53,7 +55,6 @@ const ShopCategorySelect = ({
       return updated;
     });
   };
-
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -96,13 +97,13 @@ const ShopCategorySelect = ({
         </TextField.Root>
 
         {isLoadingTypes ? (
-          <div className="min-h-[60px]">
+          <div className="min-h-15">
             <Text size="1" mt="4">
               Chargement...
             </Text>
           </div>
         ) : (categoriesResponse?.data ?? []).length > 0 ? (
-          <div className="min-h-[60px] mt-2">
+          <div className="min-h-15 mt-2">
             {categoriesResponse?.data?.map((category, index) => (
               <div
                 className={classNames({
@@ -123,7 +124,7 @@ const ShopCategorySelect = ({
             ))}
           </div>
         ) : (
-          <div className="min-h-[60px]">
+          <div className="min-h-15">
             <Text size="1" mt="4" as="p">
               Aucun élément
             </Text>

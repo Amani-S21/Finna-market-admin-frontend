@@ -105,7 +105,7 @@ type UseFetchUser = {
 };
 
 export const useFetchUser = ({ axios, userId, enabled }: UseFetchUser) => {
-  return useQuery<UsersResponse>({
+  return useQuery<User>({
     queryKey: ["user", userId],
     queryFn: () => fetchUser(axios, userId),
     staleTime: 60 * 1000 * 5,
