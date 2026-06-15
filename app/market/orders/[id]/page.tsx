@@ -24,16 +24,18 @@ const BuildOrderDetailsPage = () => {
   const params = useParams<{ id: string }>();
   const id = params.id ?? "";
 
-  const affectations = session?.data?.shopAffectations ?? [];
+  // const affectations = session?.data?.shopAffectations ?? [];
 
   const role = () => {
     if (session?.data.role === "SUPER_ADMIN") {
       return session?.data.role as Roles;
-    } else if (affectations.length > 0) {
-      if (affectations && affectations.length > 0) {
-        return affectations[0].role as Roles;
-      }
-    } else {
+    } 
+    // else if (affectations.length > 0) {
+    //   if (affectations && affectations.length > 0) {
+    //     return affectations[0].role as Roles;
+    //   }
+    // } 
+    else {
       return session?.data.role as Roles;
     }
   };

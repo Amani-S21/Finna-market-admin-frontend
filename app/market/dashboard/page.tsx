@@ -15,12 +15,13 @@ const MarketHomePage = () => {
   const { status, data: session } = useSession();
   const axios = useAxiosAuth();
 
-  const shopAffectation = session?.data.shopAffectations;
-  let shopId = undefined;
+  // const shopAffectation = session?.data.shopAffectations;
+  // let shopId = undefined;
+
   if (session?.data.role !== "SUPER_ADMIN") {
-    if (shopAffectation && shopAffectation.length > 0) {
-      shopId = shopAffectation[0].shop.id;
-    }
+    // if (shopAffectation && shopAffectation.length > 0) {
+    //   shopId = shopAffectation[0].shop.id;
+    // }
   }
 
   const {
@@ -29,14 +30,14 @@ const MarketHomePage = () => {
     error,
   } = useFetchOrdersSummary({
     axios,
-    shopId,
+    shopId : undefined ,
     enabled: status === "authenticated",
   });
 
   const { data: recentOrders, isLoading: isLoadingRecentOrders } =
     useFetchRecentOrders({
       axios,
-      shopId,
+      shopId : undefined,
       enabled: status === "authenticated",
     });
 

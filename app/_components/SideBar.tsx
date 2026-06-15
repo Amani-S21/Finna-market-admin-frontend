@@ -10,17 +10,19 @@ const SideBar = () => {
 
   if (status === "loading") return;
 
-  const affectations = session?.data?.shopAffectations ?? [];
+  // const affectations = session?.data?.shopAffectations ?? [];
 
   const role = () => {
     const userRole = session?.data.role as Roles;
     if (userRole === "SUPER_ADMIN") {
       return userRole;
-    } else if (affectations.length > 0) {
-      if (affectations && affectations.length > 0) {
-        return affectations[0].role as Roles;
-      }
-    } else {
+    } 
+    // else if (affectations.length > 0) {
+    //   if (affectations && affectations.length > 0) {
+    //     return affectations[0].role as Roles;
+    //   }
+    // } 
+    else {
       return userRole;
     }
   };
