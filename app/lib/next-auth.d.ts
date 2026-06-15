@@ -6,18 +6,6 @@ declare module "next-auth" {
       phone: string;
       role: string;
       emailAddress: string;
-      shopAffectations: {
-        shopId: string;
-        role: string;
-        shop: {
-          id: string;
-          name: string;
-          address: string;
-          creatorId: string;
-          createdAt: string;
-          updatedAt: string;
-        };
-      }[];
     };
     accessToken: string;
     refreshToken: string;
@@ -32,18 +20,6 @@ declare module "next-auth/jwt" {
       phone: string;
       role: string;
       emailAddress: string;
-      shopAffectations: {
-        shopId: string;
-        role: string;
-        shop: {
-          id: string;
-          name: string;
-          address: string;
-          creatorId: string;
-          createdAt: string;
-          updatedAt: string;
-        };
-      }[];
     };
     accessToken: string;
     refreshToken: string;
@@ -57,18 +33,6 @@ export interface User {
     phone: string;
     role: string;
     emailAddress: string;
-    shopAffectations: {
-      shopId: string;
-      role: string;
-      shop: {
-        id: string;
-        name: string;
-        address: string;
-        creatorId: string;
-        createdAt: string;
-        updatedAt: string;
-      };
-    }[];
   };
   accessToken: string;
   refreshToken: string;

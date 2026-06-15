@@ -15,31 +15,31 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        console.log("AUTHORIZE START");
-        console.log("CREDENTIALS:", credentials);
+        // console.log("AUTHORIZE START");
+        // console.log("CREDENTIALS:", credentials);
 
         if (!credentials?.phone || !credentials?.password) {
-          console.log("MISSING CREDENTIALS");
+          // console.log("MISSING CREDENTIALS");
           return null;
         }
 
         try {
-          console.log("CALLING API");
+          // console.log("CALLING API");
 
           const res = await axios.post("/auth/signin", {
             phone: credentials.phone,
             password: credentials.password,
           });
 
-          console.log("API STATUS:", res.status);
-          console.log("API DATA:", res.data);
+          // console.log("API STATUS:", res.status);
+          // console.log("API DATA:", res.data);
 
           if (![200, 201, 202].includes(res.status)) {
-            console.log("INVALID STATUS");
+            // console.log("INVALID STATUS");
             return null;
           }
 
-          console.log("RETURNING USER");
+          // console.log("RETURNING USER");
 
           return res.data;
         } catch (error: any) {
@@ -64,9 +64,12 @@ export const authOptions: NextAuthOptions = {
       console.log("USER:", user);
 
       if (user) {
-        const merged = { ...token, ...user };
+        const merged = {
+          ...token,
+          ...user,
+        };
 
-        console.log("MERGED TOKEN:", merged);
+        // console.log("MERGED TOKEN:", merged);
 
         return merged;
       }
@@ -75,14 +78,14 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ token, session }) {
-      console.log("SESSION CALLBACK");
-      console.log("TOKEN:", token);
+      // console.log("SESSION CALLBACK");
+      console.log("SESSION TOKEN:", token);
 
       session.data = token.data;
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
 
-      console.log("FINAL SESSION:", session);
+      // console.log("FINAL SESSION:", session);
 
       return session;
     },
