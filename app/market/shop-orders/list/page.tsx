@@ -15,7 +15,7 @@ import ShopOrdersToolBar from "../_components/ShopOrdersToolBar";
 import LoadingOrdersPage from "./loading";
 
 const BuildShopOrdersPage = () => {
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const axios = useAxiosAuth();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "1";
@@ -28,7 +28,7 @@ const BuildShopOrdersPage = () => {
   } = useFetchShopOrders({
     axios,
     page,
-    shopId: `${session?.data.shopAffectations[0].shopId}`,
+    shopId: `43599fb2-2b3c-4075-8531-8c6ccdc0a5d1`, // Finna shop id
     status: orderStatus,
     enabled: status === "authenticated",
   });

@@ -1,28 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import SearchTaxInput from "./SearchTaxeInput";
 import { ErrorMessage, Spinner } from "@/app/_components";
+import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
+import { Button, Callout, TextField } from "@radix-ui/themes";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
+import toast from "react-hot-toast";
 import {
   useCreateShopTaxes,
   useShopTaxForm,
   useUpdateShopTaxes,
 } from "../_features/hooks";
-import { Button, Callout, TextField } from "@radix-ui/themes";
 import {
   ShopTaxSchema,
   TaxePriceData,
   TaxePriceSubmit,
 } from "../_features/types";
-import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { useSession } from "next-auth/react";
-import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import SearchTaxInput from "./SearchTaxeInput";
 
 const ShopTaxeForm = ({ tax }: { tax?: TaxePriceData }) => {
-  const { data: session } = useSession();
+  
   const axios = useAxiosAuth();
   const [selectedTaxPriceId, setSelectedTaxPriceId] = useState("");
   const queryClient = useQueryClient();
@@ -60,7 +59,7 @@ const ShopTaxeForm = ({ tax }: { tax?: TaxePriceData }) => {
       } finally {}
     } else {
       const dataSubmit: TaxePriceSubmit = {
-        shopId: `${session?.data.shopAffectations[0].shopId}`,
+        shopId: `43599fb2-2b3c-4075-8531-8c6ccdc0a5d1`, // Finna shop id
         taxeId: selectedTaxPriceId,
         price: parseInt(`${data.price}`),
       };

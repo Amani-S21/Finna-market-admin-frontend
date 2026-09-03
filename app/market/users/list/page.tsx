@@ -21,19 +21,20 @@ const BuildUsersPage = () => {
   const role: Roles = searchParams.get("role") as Roles;
 
   const currentUserRole = () => {
-    if (session?.data.role === "SUPER_ADMIN") {
-      return session?.data.role as Roles;
-    } else if (affectations.length > 0) {
-      if (affectations && affectations.length > 0) {
-        return affectations[0].role as Roles;
-      }
-    } else {
-      return session?.data.role as Roles;
-    }
+    return session?.data.role as Roles;
+    // if (session?.data.role === "SUPER_ADMIN") {
+    //   return session?.data.role as Roles;
+    // } else if (affectations.length > 0) {
+    //   if (affectations && affectations.length > 0) {
+    //     return affectations[0].role as Roles;
+    //   }
+    // } else {
+    //   return session?.data.role as Roles;
+    // }
   };
 
-  const affectations = session?.data?.shopAffectations ?? [];
-  const shopId = affectations.length > 0 ? affectations[0]?.shop.id : null;
+  // const affectations = session?.data?.shopAffectations ?? [];
+  const shopId = `43599fb2-2b3c-4075-8531-8c6ccdc0a5d1`; // Finna shop id
 
   const fetchUsers = useFetchUsers({
     axios,

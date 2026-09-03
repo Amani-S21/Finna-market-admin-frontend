@@ -27,16 +27,20 @@ const BuildOrderDetailsPage = () => {
   const params = useParams<{ id: string }>();
   const id = params.id ?? "";
 
-  const affectations = session?.data?.shopAffectations ?? [];
+  // const affectations = session?.data?.shopAffectations ?? [];
+
+  // const role = () => {
+  //   if (affectations.length > 0) {
+  //     if (affectations && affectations.length > 0) {
+  //       return affectations[0].role as Roles;
+  //     }
+  //   } else {
+  //     return session?.data.role as Roles;
+  //   }
+  // };
 
   const role = () => {
-    if (affectations.length > 0) {
-      if (affectations && affectations.length > 0) {
-        return affectations[0].role as Roles;
-      }
-    } else {
-      return session?.data.role as Roles;
-    }
+    return session?.data.role as Roles;
   };
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -57,7 +61,7 @@ const BuildOrderDetailsPage = () => {
     error: shopOrdersProductsError,
   } = useFetchShopOrderProducts({
     axios,
-    shopId: `${session?.data.shopAffectations[0].shopId}`,
+    shopId: `43599fb2-2b3c-4075-8531-8c6ccdc0a5d1`,
     enabled: status === "authenticated",
   });
 
