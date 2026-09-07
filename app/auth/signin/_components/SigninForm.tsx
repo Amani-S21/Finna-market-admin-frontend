@@ -4,10 +4,12 @@ import ErrorMessage from "@/app/_components/ErrorMessage";
 import Spinner from "@/app/_components/Spinner";
 import { signinSchema } from "@/app/lib/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, TextField } from "@radix-ui/themes";
+import { TextField } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import { Key, Phone } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Phone } from "lucide-react";
+import { useState } from "react";
+import styles from "../signin.module.css";
 import { SigninSchema } from "@/app/lib/types";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -19,6 +21,7 @@ const SigninForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<SigninSchema>({ resolver: zodResolver(signinSchema) });
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: SigninSchema) => {
     const result = await signIn("credentials", {
@@ -41,40 +44,59 @@ const SigninForm = () => {
   };
 
   return (
-    <form
-      className="flex flex-col mt-6 w-full max-w-sm"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="flex flex-col space-y-2 mt-5">
-        <p className="text-sm font-bold">Numero de téléphone</p>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.field}>
+        <label htmlFor="signin-phone" className={styles.label}>Numéro de téléphone</label>
         <TextField.Root
           {...register("phone")}
+          id="signin-phone"
+          className={styles.input}
           defaultValue="+243835102434"
-          placeholder="Numero de téléphone"
+          type="tel"
+          autoComplete="username"
+          placeholder="Numéro de téléphone"
+          aria-invalid={!!errors.phone}
+          aria-describedby={errors.phone ? "signin-phone-error" : undefined}
+          data-invalid={!!errors.phone}
         >
-          <TextField.Slot>
-            <Phone size={15} />
-          </TextField.Slot>
+          <TextField.Slot><Phone size={17} aria-hidden="true" /></TextField.Slot>
         </TextField.Root>
-        <ErrorMessage>{errors.phone?.message}</ErrorMessage>
+        {errors.phone && <div id="signin-phone-error"><ErrorMessage>{errors.phone.message}</ErrorMessage></div>}
       </div>
-      <div className="flex flex-col space-y-2 mt-5">
-        <p className="text-sm font-bold">Mot de passe</p>
+      <div className={styles.field}>
+        <label htmlFor="signin-password" className={styles.label}>Mot de passe</label>
         <TextField.Root
           {...register("password")}
+          id="signin-password"
+          className={styles.input}
           defaultValue="12345"
-          type="password"
+          type={showPassword ? "text" : "password"}
+          autoComplete="current-password"
           placeholder="Mot de passe"
+          aria-invalid={!!errors.password}
+          aria-describedby={errors.password ? "signin-password-error" : undefined}
+          data-invalid={!!errors.password}
         >
-          <TextField.Slot>
-            <Key size={15} />
+          <TextField.Slot><LockKeyhole size={17} aria-hidden="true" /></TextField.Slot>
+          <TextField.Slot side="right">
+            <button
+              type="button"
+              className={styles.eyeButton}
+              onClick={() => setShowPassword((visible) => !visible)}
+              aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              aria-controls="signin-password"
+              aria-pressed={showPassword}
+            >
+              {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+            </button>
           </TextField.Slot>
         </TextField.Root>
-        <ErrorMessage>{errors.password?.message}</ErrorMessage>
+        {errors.password && <div id="signin-password-error"><ErrorMessage>{errors.password.message}</ErrorMessage></div>}
       </div>
-      <Button disabled={isSubmitting} mt="5">
-        Connection {isSubmitting && <Spinner />}
-      </Button>
+      <button type="submit" className={styles.submit} disabled={isSubmitting} aria-busy={isSubmitting}>
+        {isSubmitting ? "Connexion en cours..." : "Se connecter"}
+        {isSubmitting ? <Spinner /> : <ArrowRight size={17} aria-hidden="true" />}
+      </button>
     </form>
   );
 };

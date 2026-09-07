@@ -1,0 +1,125 @@
+.page {
+  height: 100svh;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vh, 32px);
+  background: radial-gradient(ellipse at 5% 5%, #eaeafa, transparent 45%), radial-gradient(ellipse at 95% 95%, #f4e8f3, transparent 45%), #f6f7fb;
+  color: #22243c;
+}
+.shell { display: grid; grid-template-columns: 0.95fr 1.05fr; width: 100%; max-width: 1120px; height: 100%; max-height: 760px; min-height: 0; overflow: hidden; border: 1px solid #ffffff; border-radius: 28px; background: #fff; box-shadow: 0 24px 80px -30px #34336135; }
+.brand { position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 38px 42px; color: #fff; background: linear-gradient(145deg, #414fba 0%, #5942a4 52%, #92298e 100%); }
+.brand::after { content: ""; position: absolute; width: 490px; height: 490px; border: 1px solid #ffffff14; border-radius: 50%; right: -290px; bottom: -240px; box-shadow: 0 0 0 65px #ffffff05, 0 0 0 130px #ffffff04; pointer-events: none; }
+.brandHeader, .brandFooter { display: flex; justify-content: space-between; align-items: center; gap: 14px; position: relative; z-index: 1; }
+.wordmark { font-size: 22px; font-weight: 750; letter-spacing: -1px; }
+.wordmark span { font-weight: 400; margin-left: 5px; }
+.brandBadge { font-size: 9px; letter-spacing: 1.5px; border: 1px solid #ffffff40; border-radius: 6px; padding: 7px 9px; }
+.brandContent { position: relative; z-index: 1; padding: 38px 0; }
+.logoFrame { width: 180px; height: 180px; border-radius: 24px; overflow: hidden; margin-bottom: 34px; border: 1px solid #ffffff30; box-shadow: 0 12px 36px #24165020; }
+.logo { display: block; width: 100%; height: 100%; object-fit: contain; }
+.eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: #e1dbff; margin: 0 0 14px; }
+.brandContent h2 { font-size: clamp(28px, 3vw, 38px); font-weight: 650; letter-spacing: -1.4px; line-height: 1.23; margin: 0 0 20px; }
+.brandDescription { max-width: 340px; font-size: 13px; line-height: 1.85; color: #e5dff5; margin: 0; }
+.brandFooter { padding-top: 22px; border-top: 1px solid #ffffff26; font-size: 10px; color: #e5dff5; }
+.formPanel { min-width: 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; padding: 56px 58px 28px; }
+.formContent { width: 100%; max-width: 390px; margin: auto; padding: 30px 0 44px; }
+.accessBadge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 550; color: #5846a5; background: #f2effb; border: 1px solid #e9e3f7; padding: 8px 11px; border-radius: 8px; margin-bottom: 32px; }
+.welcome { font-size: 9px; font-weight: 700; letter-spacing: 1.7px; color: #817693; margin: 0 0 12px; }
+.formHeader h1 { font-size: 34px; line-height: 1.2; font-weight: 700; letter-spacing: -1.3px; margin: 0 0 14px; }
+.formHeader > p:last-child { color: #77788b; font-size: 12px; line-height: 1.9; margin: 0; }
+.form { display: flex; flex-direction: column; gap: 23px; margin-top: 32px; }
+.field { display: flex; flex-direction: column; gap: 9px; }
+.label { font-size: 12px; font-weight: 600; color: #37384e; }
+.input { height: 50px; padding: 0 8px; border-radius: 10px; background: #fcfcfe; box-shadow: inset 0 0 0 1px #dfe0ea; color: #33354e; font-size: 13px; transition: box-shadow 150ms, background 150ms; }
+.input:focus-within { background: #fff; box-shadow: inset 0 0 0 1.5px #6550b7, 0 0 0 3px #6550b712; }
+.input[data-invalid="true"] { box-shadow: inset 0 0 0 1px #c94b60; }
+.input svg { color: #9693aa; }
+.eyeButton { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 7px; background: transparent; cursor: pointer; }
+.eyeButton:hover { background: #eeeaf7; }
+.eyeButton:focus-visible { outline: 2px solid #6550b7; outline-offset: 1px; }
+.submit { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; height: 50px; margin-top: 5px; border: 0; border-radius: 10px; color: #fff; background: linear-gradient(105deg, #4654bb, #7040a4 75%, #882f94); font-family: inherit; font-size: 13px; font-weight: 600; box-shadow: 0 7px 16px #5845aa24; cursor: pointer; transition: filter 150ms, box-shadow 150ms; }
+.submit:hover { filter: brightness(1.08); box-shadow: 0 9px 20px #5845aa35; }
+.submit:focus-visible { outline: 3px solid #b7a6e2; outline-offset: 3px; }
+.submit:disabled { opacity: 0.65; cursor: wait; }
+.securityNote { display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 10px; color: #8b899e; margin: 23px 0 0; }
+.footer { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid #efedf4; padding-top: 20px; color: #9491a3; font-size: 9px; }
+@media (max-width: 900px) { .page { padding: 24px; } .brand { padding: 30px; } .brandHeader { align-items: flex-start; flex-direction: column; } .formPanel { padding: 36px 30px 24px; } }
+@media (max-width: 640px) { .page { padding: 16px; } .shell { grid-template-columns: 1fr; min-height: auto; border-radius: 20px; } .brand { padding: 24px; } .brandHeader { flex-direction: row; align-items: center; } .brandContent { display: grid; grid-template-columns: 72px 1fr; column-gap: 18px; padding: 25px 0 0; align-items: center; } .logoFrame { grid-row: 1 / 3; width: 72px; height: 72px; border-radius: 13px; margin: 0; } .eyebrow { font-size: 8px; letter-spacing: 1px; margin: 0 0 6px; } .brandContent h2 { font-size: 23px; letter-spacing: -0.6px; margin: 0; } .brandDescription, .brandFooter { display: none; } .formPanel { padding: 28px 24px 22px; } .formContent { padding: 0 0 30px; } .accessBadge { margin-bottom: 24px; } .formHeader h1 { font-size: 30px; } .form { margin-top: 26px; } }
+@media (prefers-reduced-motion: reduce) { .input, .submit { transition: none; } }
+
+/* Fit the login to the available viewport, including shorter laptop screens. */
+@media (max-height: 800px) {
+  .brand { padding: 26px 32px; }
+  .brandContent { padding: 20px 0; }
+  .logoFrame { width: 140px; height: 140px; margin-bottom: 22px; }
+  .formPanel { padding: 24px 32px 20px; }
+  .formContent { padding: 0 0 20px; }
+  .accessBadge { margin-bottom: 20px; }
+  .form { gap: 18px; margin-top: 24px; }
+  .securityNote { margin-top: 18px; }
+  .footer { padding-top: 14px; }
+}
+@media (max-width: 640px) {
+  .page { padding: 10px; }
+  .shell { grid-template-rows: auto minmax(0, 1fr); max-height: 860px; }
+  .brand { padding: 16px 22px; }
+  .brandContent { padding: 14px 0 0; }
+  .logoFrame { width: 64px; height: 64px; margin: 0; }
+  .formPanel { padding: 20px 24px 16px; }
+  .formContent { padding: 0 0 14px; }
+  .accessBadge { margin-bottom: 16px; }
+  .form { gap: 16px; margin-top: 20px; }
+  .securityNote { margin-top: 16px; }
+  .footer { padding-top: 12px; }
+  .input { font-size: 16px; }
+}
+@media (max-width: 640px) and (max-height: 740px) {
+  .brand { padding: 12px 18px; }
+  .wordmark { font-size: 19px; }
+  .brandBadge { font-size: 8px; padding: 5px 7px; }
+  .brandContent { grid-template-columns: 48px 1fr; column-gap: 12px; padding-top: 10px; }
+  .logoFrame { width: 48px; height: 48px; border-radius: 10px; }
+  .brandContent h2 { font-size: 19px; }
+  .eyebrow { font-size: 7px; margin-bottom: 3px; }
+  .formPanel { padding: 14px 20px 12px; }
+  .accessBadge { padding: 5px 8px; margin-bottom: 10px; font-size: 10px; }
+  .welcome { margin-bottom: 6px; font-size: 8px; }
+  .formHeader h1 { font-size: 26px; margin-bottom: 8px; }
+  .formHeader > p:last-child { font-size: 11px; line-height: 1.6; }
+  .form { gap: 12px; margin-top: 16px; }
+  .field { gap: 6px; }
+  .input, .submit { height: 44px; }
+  .securityNote { font-size: 9px; margin-top: 12px; }
+  .formContent { padding-bottom: 10px; }
+  .footer { font-size: 8px; padding-top: 10px; }
+}
+/* A side-by-side layout keeps the form usable on phones in landscape. */
+@media (max-height: 540px) and (min-width: 480px) {
+  .page { padding: 8px; }
+  .shell { grid-template-columns: 0.8fr 1.2fr; grid-template-rows: minmax(0, 1fr); border-radius: 16px; }
+  .brand { padding: 16px 24px; }
+  .brandHeader { flex-direction: row; align-items: center; }
+  .brandBadge { font-size: 7px; letter-spacing: 0.5px; padding: 5px; }
+  .wordmark { font-size: 18px; }
+  .brandContent { display: block; padding: 8px 0; }
+  .logoFrame { width: 64px; height: 64px; border-radius: 12px; margin-bottom: 10px; }
+  .eyebrow { font-size: 8px; margin-bottom: 6px; }
+  .brandContent h2 { font-size: 24px; margin-bottom: 10px; }
+  .brandDescription { font-size: 10px; line-height: 1.5; }
+  .brandFooter { padding-top: 10px; font-size: 8px; }
+  .formPanel { padding: 12px 24px; }
+  .formContent { padding-bottom: 8px; }
+  .accessBadge { font-size: 9px; padding: 4px 8px; margin-bottom: 8px; }
+  .welcome { font-size: 8px; margin-bottom: 4px; }
+  .formHeader h1 { font-size: 24px; margin-bottom: 6px; }
+  .formHeader > p:last-child { font-size: 10px; line-height: 1.4; }
+  .form { gap: 8px; margin-top: 10px; }
+  .field { gap: 4px; }
+  .label { font-size: 10px; }
+  .input, .submit { height: 38px; }
+  .input { font-size: 16px; }
+  .securityNote { margin-top: 8px; font-size: 8px; }
+  .footer { padding-top: 6px; font-size: 8px; }
+}
