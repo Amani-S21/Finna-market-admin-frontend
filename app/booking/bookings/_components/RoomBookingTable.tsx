@@ -2,9 +2,9 @@
 
 import { formattedDate } from "@/app/lib/tools";
 import { OrderStatusBadge } from "@/app/market/orders/_components";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { RoomBookingResponse } from "../../dashboard/_features/types";
 import { roomBookingColumns } from "../list/loading";
 
@@ -57,13 +57,11 @@ const RoomBookingTable = ({
               </p>
             </Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => router.push(`/booking/bookings/${roomBooking.id}`)}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

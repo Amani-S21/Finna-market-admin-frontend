@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { Product, Shop, ShopProductSchema } from "@/app/lib/types";
 import { Button, TextField } from "@radix-ui/themes";
 
@@ -71,7 +74,7 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
 
   return (
     <div className="max-w-xl">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <ShopProductSelect
           setSelectedShop={setSelectedShop}
           selectedShop={selectedShop}
@@ -140,10 +143,10 @@ const ShopProductForm = ({ product }: { product?: Product }) => {
           />
           <ErrorMessage>{errors.deliveryFees?.message}</ErrorMessage>
         </div>
-        <Button disabled={isSubmitting} mt="4">
+        <FormActions><Button disabled={isSubmitting} mt="4">
           {product ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

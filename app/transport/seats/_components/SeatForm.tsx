@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
@@ -102,7 +105,7 @@ const VehicleTypeForm = ({ seat, vehicleId }: Props) => {
         </Callout.Root>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Numerotation de la place</p>
           <TextField.Root
@@ -112,10 +115,10 @@ const VehicleTypeForm = ({ seat, vehicleId }: Props) => {
           <ErrorMessage>{errors.seatNumber?.message}</ErrorMessage>
         </div>
 
-        <Button disabled={isSubmitting} mt="4">
+        <FormActions><Button disabled={isSubmitting} mt="4">
           {seat ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

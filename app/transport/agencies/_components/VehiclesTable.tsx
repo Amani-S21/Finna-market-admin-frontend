@@ -1,8 +1,8 @@
 "use client";
 
-import { Badge, IconButton, Table } from "@radix-ui/themes";
+import { Badge, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { VehiclesResponse } from "../_features/type";
 import { vehiclesColumns } from "../[id]/loading";
 
@@ -35,15 +35,13 @@ const VehiclesTable = ({
               {vehicle.visible ? <Badge>Visible</Badge> : <Badge>Caché</Badge>}
             </Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() =>
                   router.push(`/transport/vehicles/${vehicle.id}`)
                 }
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

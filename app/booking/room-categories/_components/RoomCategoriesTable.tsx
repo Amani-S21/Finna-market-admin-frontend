@@ -1,8 +1,8 @@
 "use client";
 
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { RoomCategoriesResponse } from "../_features/types";
 import { roomCategoriesColumns } from "../list/loading";
 import Image from "next/image";
@@ -52,15 +52,13 @@ const RoomCategoriesTable = ({
             </Table.Cell>
             <Table.Cell>{category.totalRooms}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() =>
                   router.push(`/booking/room-categories/${category.id}`)
                 }
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

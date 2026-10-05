@@ -1,3 +1,5 @@
+import { FormDialogContent } from "@/app/_components/FormDialog";
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
 import {
   Button,
   Dialog,
@@ -60,16 +62,11 @@ const NewScheduleLegDialog = ({ setOpen, open }: Props) => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <Button>Ajouter</Button>
+        <Button type="button">Ajouter</Button>
       </Dialog.Trigger>
 
-      <Dialog.Content maxWidth="450px" className="bg-green-500">
-        <Dialog.Title size="4">Ajouter un scale</Dialog.Title>
-        <Dialog.Description size="2">
-          Completez les champs ci dessous pour ajouter un scale a ce voyage
-        </Dialog.Description>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <FormDialogContent title="Ajouter une escale" close={() => setOpen(false)} maxWidth="560px">
+        <ModalForm onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-2 mt-6">
             <p className="text-sm font-bold">Heure de départ</p>
             <TimePickerComponent
@@ -127,21 +124,10 @@ const NewScheduleLegDialog = ({ setOpen, open }: Props) => {
             />
           </div>
 
-          <Button mt="6">Enregistrer</Button>
-        </form>
+          <FormActions><Button mt="6">Enregistrer</Button></FormActions>
+        </ModalForm>
 
-        {/* <Flex gap="4" mt="8"> */}
-        {/* {isPending ? <Text size="1">Chargement...</Text> : <p></p>} */}
-        {/* <Dialog.Close>
-            <Button type="button" variant="surface" color="gray">
-              Annuler
-            </Button>
-          </Dialog.Close>
-          <Button type="submit">
-            <Text>Enregistrer</Text>
-          </Button> */}
-        {/* </Flex> */}
-      </Dialog.Content>
+      </FormDialogContent>
     </Dialog.Root>
   );
 };

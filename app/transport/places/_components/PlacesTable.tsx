@@ -1,8 +1,8 @@
 "use client";
 
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { formattedDate } from "@/app/lib/tools";
 import { PlacesResponse } from "../_features/types";
 import { placesColumns } from "../list/loading";
@@ -33,15 +33,13 @@ const PlacesTable = ({
             <Table.Cell>{place.name}</Table.Cell>
             <Table.Cell>{place.city}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="edit"
                 variant="ghost"
                 ml="4"
                 onClick={() =>
                   router.push(`/transport/places/edit/${place.id}`)
                 }
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

@@ -2,10 +2,10 @@
 
 import { formattedDate } from "@/app/lib/tools";
 import { ProductsListResponse } from "@/app/lib/types";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { productColumns } from "../list/loading";
 import Image from "next/image";
 
@@ -47,13 +47,11 @@ const ProductsTable = ({
             </Table.Cell>
             <Table.Cell>{formattedDate(product.createdAt)}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => router.push(`/market/products/${product.id}`)}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

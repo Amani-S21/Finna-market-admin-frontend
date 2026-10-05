@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -223,7 +226,7 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
         </Callout.Root>
       )} */}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root
@@ -323,10 +326,10 @@ const HotelForm = ({ hotel }: { hotel?: Hotel }) => {
           <ErrorMessage>Veuillez séléctionner des photos</ErrorMessage>
         )} */}
 
-        <Button disabled={isSubmitting} mt="4">
+        <FormActions><Button disabled={isSubmitting} mt="4">
           {hotel ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

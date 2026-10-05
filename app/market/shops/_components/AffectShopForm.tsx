@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import axios from "@/app/lib/axios";
@@ -63,7 +66,7 @@ const AffectShopForm = ({ shopId }: { shopId: string }) => {
           <Callout.Text>{error?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name="userName"
@@ -75,10 +78,10 @@ const AffectShopForm = ({ shopId }: { shopId: string }) => {
             </div>
           )}
         />
-        <Button disabled={isSubmitting || isPending} mt="4">
+        <FormActions><Button disabled={isSubmitting || isPending} mt="4">
           Enregistrer {(isSubmitting || isPending) && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
       
     </div>
   );

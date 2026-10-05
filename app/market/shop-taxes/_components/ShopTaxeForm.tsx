@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Button, Callout, TextField } from "@radix-ui/themes";
@@ -96,7 +99,7 @@ const ShopTaxeForm = ({ tax }: { tax?: TaxePriceData }) => {
         </Callout.Root>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name="taxName"
@@ -122,10 +125,10 @@ const ShopTaxeForm = ({ tax }: { tax?: TaxePriceData }) => {
           <ErrorMessage>{errors.price?.message}</ErrorMessage>
         </div>
 
-        <Button disabled={isSubmitting} mt="2">
+        <FormActions><Button disabled={isSubmitting} mt="2">
           {tax ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

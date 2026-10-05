@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
@@ -136,7 +139,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
         </Callout.Root>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root
@@ -182,7 +185,7 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           />
         </div> */}
 
-        <Button
+        <FormActions><Button
           disabled={
             isSubmitting // || isUploading
           }
@@ -192,8 +195,8 @@ const SubCategoryForm = ({ subCategory }: { subCategory?: SubCategory }) => {
           {isSubmitting && ( // || isUploading
             <Spinner />
           )}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

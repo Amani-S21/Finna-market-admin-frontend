@@ -2,9 +2,9 @@
 
 import { formattedDate } from "@/app/lib/tools";
 import { UsersResponse } from "@/app/lib/types";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { usersColumns } from "../list/loading";
 import UserRoleBadge from "./UserRoleBadge";
 
@@ -37,13 +37,11 @@ const UsersTable = ({
             </Table.Cell>
             <Table.Cell>{formattedDate(`${user?.createdAt}`)}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => router.push(`/market/users/${user.id}`)}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

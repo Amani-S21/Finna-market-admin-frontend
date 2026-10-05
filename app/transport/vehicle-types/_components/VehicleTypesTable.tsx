@@ -1,8 +1,8 @@
 "use client";
 
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { VehicleTypeResponse } from "../../vehicle-types/_features/types";
 import { vehicleColumns } from "../../vehicle-types/list/loading";
 import { formattedDate } from "@/app/lib/tools";
@@ -32,15 +32,13 @@ const VehicleTypesTable = ({
             <Table.Cell>{formattedDate(vehicleType.createdAt)}</Table.Cell>
             <Table.Cell>{vehicleType.name}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="edit"
                 variant="ghost"
                 ml="4"
                 onClick={() =>
                   router.push(`/transport/vehicle-types/edit/${vehicleType.id}`)
                 }
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

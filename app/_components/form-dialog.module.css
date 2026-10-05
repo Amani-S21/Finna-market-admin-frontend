@@ -1,0 +1,30 @@
+﻿:global(.rt-DialogOverlay):has(.dialog) { background: #23193470; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.dialog.dialog { display: flex; flex-direction: column; padding: 0; width: min(940px, calc(100vw - 32px)); max-height: min(860px, calc(100dvh - 48px)); overflow: hidden; border: 1px solid #ede5f5; border-radius: 22px; box-shadow: 0 32px 100px #20112f40; background: #fff; }
+.header { display: flex; align-items: center; gap: 14px; flex-shrink: 0; padding: 22px 26px; border-bottom: 1px solid #eee8f4; background: #fdfbff; }
+.icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; background: #efe8f8; color: #805baa; flex-shrink: 0; }
+.title.title { font-size: 20px; font-weight: 650; letter-spacing: -0.5px; color: #40304f; margin: 0; }
+.description.description { font-size: 11px; line-height: 1.6; margin: 6px 0 0; color: #96849f; }
+.close { display: grid; place-items: center; width: 36px; height: 36px; margin-left: auto; flex-shrink: 0; border: 1px solid #e8deee; border-radius: 10px; background: #fff; color: #8c749a; cursor: pointer; }
+.close:hover { background: #f2eafa; }
+.close:focus-visible { outline: 3px solid #b79ad1; outline-offset: 2px; }
+.body.body { flex: 1 1 auto; min-height: 0; width: 100%; max-width: none; margin: 0; overflow-y: auto; overscroll-behavior: contain; padding: 24px 28px; scrollbar-width: thin; scrollbar-color: #d4c5e1 transparent; }
+.body.body form { border: 0; border-radius: 0; box-shadow: none; padding: 0; width: 100%; max-width: none; }
+.body > div { max-width: 100%; }
+.footer { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 12px; flex-shrink: 0; padding: 18px 26px; border-top: 1px solid #e8dfee; background: #fff; box-shadow: 0 -6px 20px #44225504; }
+.footer :global(.rt-Button) { min-height: 42px; margin: 0; padding-inline: 22px; border-radius: 10px; cursor: pointer; }
+.submitSlot { display: flex; gap: 10px; }
+.submitSlot :global(.rt-Button:not(:disabled)) { background: linear-gradient(110deg, #4654bb, #7040a4 75%, #882f94); }
+@media (max-width: 640px) { .dialog.dialog { width: calc(100vw - 16px); max-height: calc(100dvh - 24px); border-radius: 16px; } .header { padding: 16px; gap: 10px; } .icon { display: none; } .title.title { font-size: 17px; } .body.body { padding: 18px 16px; } .footer { padding: 14px 16px max(14px, env(safe-area-inset-bottom)); } .footer :global(.rt-Button) { padding-inline: 16px; } }
+
+/* Radix handles focus trapping and document scroll; only this region scrolls. */
+:global(.rt-DialogScroll):has(.dialog) { overflow: hidden; }
+:global(.rt-DialogScrollPadding):has(.dialog) { min-height: 100%; padding: 24px 16px; }
+.body { overflow-x: hidden; }
+.body form > :global(.rt-Flex) { min-width: 0; }
+.body form :global(.w-full) { min-width: 0; }
+.body input, .body textarea { scroll-margin-block: 20px; }
+@media (max-width: 640px) {
+  :global(.rt-DialogScrollPadding):has(.dialog) { padding: 12px 8px; }
+  .body form > :global(.rt-Flex:not(.rt-r-fd-column)) { flex-direction: column; }
+  .body form :global(.rt-Flex):has(> img) { flex-wrap: wrap; }
+}

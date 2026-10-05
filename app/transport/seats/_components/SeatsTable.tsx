@@ -1,8 +1,8 @@
 "use client";
 
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { seatsColumns } from "../../vehicles/[id]/loading";
 import { SeatsResponse } from "../_features/types";
 
@@ -27,15 +27,13 @@ const SeatsTable = ({ seatsResponse }: { seatsResponse: SeatsResponse }) => {
             <Table.Cell>{seat.seatNumber}</Table.Cell>
             <Table.Cell>{seat.type}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="edit"
                 variant="ghost"
                 ml="4"
                 onClick={() => {
                   router.push(`/transport/seats/edit/${seat.id}`);
                 }}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

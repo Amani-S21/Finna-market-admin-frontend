@@ -1,3 +1,4 @@
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
 import { ErrorMessage, Spinner } from "@/app/_components";
 import ProductImage from "@/app/_components/ProductImage";
 import { axiosMedias } from "@/app/lib/axios";
@@ -184,7 +185,7 @@ const RoomCategoriesForm = ({
 
   return (
     <div className="max-w-xl">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Type de réservation</p>
           <div className="flex flex-wrap gap-4 mt-2 mb-4">
@@ -326,11 +327,11 @@ const RoomCategoriesForm = ({
           <ErrorMessage>Veuillez séléctionner une photo de la catégorie</ErrorMessage>
         )}
 
-        <Button disabled={isSubmitting || isUploading} mt="4">
+        <FormActions><Button disabled={isSubmitting || isUploading} mt="4">
           {"Enregistrer"}
           {(isSubmitting || isUploading) && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

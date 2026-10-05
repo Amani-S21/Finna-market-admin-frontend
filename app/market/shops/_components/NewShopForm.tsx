@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import axios from "@/app/lib/axios";
@@ -102,7 +105,7 @@ const NewShopForm = () => {
           <Callout.Text>{createError?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <Flex gap="6">
           <div className="w-full">
             <div className="flex flex-col space-y-2 mt-4">
@@ -214,10 +217,10 @@ const NewShopForm = () => {
           </div>
         </Flex>
 
-        <Button disabled={isSubmitting} mt="4">
+        <FormActions><Button disabled={isSubmitting} mt="4">
           Enregistrer {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

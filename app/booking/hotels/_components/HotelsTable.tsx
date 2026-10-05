@@ -1,9 +1,9 @@
 "use client";
 
 import { formattedDate } from "@/app/lib/tools";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { HotelResponse } from "../_features/types";
 import { hotelsColumns } from "../list/loading";
 
@@ -36,13 +36,11 @@ const HotelsTable = ({ hotelResponse }: { hotelResponse: HotelResponse }) => {
             </Table.Cell>
             <Table.Cell>{formattedDate(hotel.createdAt)}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => router.push(`/booking/hotels/${hotel.id}`)}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

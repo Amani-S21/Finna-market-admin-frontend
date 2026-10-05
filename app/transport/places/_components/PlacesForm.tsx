@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { Spinner } from "@/app/_components";
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
@@ -90,7 +93,7 @@ const PlacesForm = ({ placeType }: { placeType?: PlaceType }) => {
         </Callout.Root>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Nom</p>
           <TextField.Root
@@ -111,10 +114,10 @@ const PlacesForm = ({ placeType }: { placeType?: PlaceType }) => {
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
         </div>
 
-        <Button disabled={isSubmitting} mt="4">
+        <FormActions><Button disabled={isSubmitting} mt="4">
           {placeType ? "Modifier" : "Enregistrer"} {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

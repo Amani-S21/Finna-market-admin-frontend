@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Feature, Product, ProductSchema, SubCategory } from "@/app/lib/types";
@@ -345,7 +348,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
           <Callout.Text>{updateError?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <Flex gap="6">
           <div className="w-full">
             <div className="flex flex-col space-y-2 mt-4">
@@ -589,7 +592,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
           </div>
         </Flex>
 
-        <Button
+        <FormActions><Button
           disabled={isSubmitting || isUploading || isPendingSendingLinks}
           mt="4"
         >
@@ -597,8 +600,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
           {(isSubmitting || isUploading || isPendingSendingLinks) && (
             <Spinner />
           )}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };
