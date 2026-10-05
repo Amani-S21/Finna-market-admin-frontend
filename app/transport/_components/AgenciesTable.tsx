@@ -1,8 +1,8 @@
 "use client";
 
-import { Badge, IconButton, Table } from "@radix-ui/themes";
+import { Badge, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { TransportAgencyResponse } from "../agencies/_features/type";
 import { agenciesColumns } from "../agencies/list/loading";
 import { useDispatch } from "react-redux";
@@ -48,16 +48,14 @@ const AgenciesTable = ({
               {agency.visible ? <Badge>Visible</Badge> : <Badge>Caché</Badge>}
             </Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => {
                   dispatch(setAgency(agency));
                   router.push(`/transport/agencies/${agency.id}`);
                 }}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

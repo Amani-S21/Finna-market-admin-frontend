@@ -2,9 +2,9 @@
 
 import { formattedDate } from "@/app/lib/tools";
 import { ShopsListResponse } from "@/app/lib/types";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { shopsColumns } from "../list/loading";
 
 const ShopsTable = ({
@@ -37,13 +37,11 @@ const ShopsTable = ({
             </Table.Cell>
             <Table.Cell>{formattedDate(shop.createdAt)}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => router.push(`/market/shops/${shop.id}`)}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

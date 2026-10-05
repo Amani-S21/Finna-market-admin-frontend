@@ -2,9 +2,9 @@
 
 import { formattedDate } from "@/app/lib/tools";
 import { SubCategoriesResponse } from "@/app/lib/types";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { subCategoriesColumns } from "../list/loading";
 
 const SubCategoriesTable = ({
@@ -43,15 +43,13 @@ const SubCategoriesTable = ({
             <Table.Cell>{subCategory.name}</Table.Cell>
             <Table.Cell>{formattedDate(`${subCategory.createdAt}`)}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() =>
                   router.push(`/market/sub-categories/${subCategory.id}`)
                 }
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

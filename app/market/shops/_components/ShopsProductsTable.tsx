@@ -1,9 +1,9 @@
 "use client";
 
 import { ShopProductWithDetails } from "@/app/lib/types";
-import { IconButton, Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import Image from "next/image";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { shopProductsColumns } from "../list/loading";
 
 type Props = {
@@ -52,13 +52,11 @@ const ShopsProductsTable = ({ products }: Props) => {
               {product.discountPrice}
             </Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view" disabled aria-label="Consultation indisponible"
                 variant="ghost"
                 ml="4"
                 // onClick={() => router.push(`/market/shops/{shop.id}`)}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}

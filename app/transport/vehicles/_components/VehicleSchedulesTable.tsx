@@ -1,8 +1,8 @@
 "use client";
 
-import {  IconButton, Table } from "@radix-ui/themes";
+import {  Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { IoIosMore } from "react-icons/io";
+import ActionIconButton from "@/app/_components/ActionIconButton";
 import { SchedulesResponse } from "../../schedules/_features/types";
 import { vehicleSchedulesColumns } from "../[id]/loading";
 
@@ -31,15 +31,13 @@ const VehicleSchedulesTable = ({
             <Table.Cell>{schedule.from.name}</Table.Cell>
             <Table.Cell>{schedule.to.name}</Table.Cell>
             <Table.Cell>
-              <IconButton
+              <ActionIconButton action="view"
                 variant="ghost"
                 ml="4"
                 onClick={() => {
                   router.push(`/transport/schedules/${schedule.id}`);
                 }}
-              >
-                <IoIosMore size={20} color="black" />
-              </IconButton>
+               />
             </Table.Cell>
           </Table.Row>
         ))}
