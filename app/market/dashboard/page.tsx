@@ -47,7 +47,7 @@ const MarketHomePage = () => {
   if (error) return;
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="4">
+    <Grid className="dashboard-grid" columns={{ initial: "1", md: "2" }} gap="4">
       <Flex direction="column" gap="4">
         <OrdersSummary orderSummaryCounts={orderSummaryCounts!} />
         <OrdersChart orderSummaryCounts={orderSummaryCounts!} />

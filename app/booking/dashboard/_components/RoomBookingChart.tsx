@@ -26,7 +26,7 @@ const RoomBookingsChart = (
   return (
    
     <Card>
-      <ResponsiveContainer width={500} height={440}>
+      <ResponsiveContainer width="100%" height={440}>
         <BarChart data={data}>
           <XAxis dataKey="label" />
           <YAxis />
@@ -38,7 +38,8 @@ const RoomBookingsChart = (
           />
           <Bar
             dataKey="value"
-            barSize={20}
+            barSize={28}
+            radius={[6, 6, 0, 0]}
             style={{ fill: "var(--accent-9)" }}
           />
         </BarChart>

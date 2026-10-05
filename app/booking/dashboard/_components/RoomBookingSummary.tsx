@@ -8,7 +8,7 @@ const RoomBookingSummaryArea = ({
   roomBookingSummaryCounts: RoomBookingSummary;
 }) => {
   return (
-    <Flex gap="4" wrap={{initial : "wrap", md : "nowrap"}} className="">
+    <Flex gap="4" wrap={{initial : "wrap", md : "nowrap"}} className="summary-grid">
       <RoomBookingsSummaryItem
         title="Tout"
         description="Total de toutes les réservations"

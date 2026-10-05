@@ -8,7 +8,7 @@ const OrdersSummary = ({
   orderSummaryCounts: OrderSymmary;
 }) => {
   return (
-    <Flex gap="4" wrap={{initial : "wrap", md : "nowrap"}} className="">
+    <Flex gap="4" wrap={{initial : "wrap", md : "nowrap"}} className="summary-grid">
       <OrdersSummaryItem
         title="Ouverts"
         description="Total des commandes ouverts"

@@ -78,10 +78,6 @@ export const useUpdateCategories = ({ axios }: { axios: AxiosInstance }) => {
 
   return useMutation<void, Error, SubmitCategory>({
     mutationFn: (data: SubmitCategory) => updateCategories(axios, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      queryClient.invalidateQueries({ queryKey: ["category-by-id"] });
-    },
   });
 };
 
