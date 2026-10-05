@@ -1,12 +1,4 @@
-import { Card } from "@radix-ui/themes";
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import DashboardChart from "@/app/_components/DashboardChart";
 import { RoomBookingSummary } from "../_features/types";
 
 const RoomBookingsChart = (
@@ -23,29 +15,7 @@ const RoomBookingsChart = (
     { label: "Annulés", value: roomBookingSummaryCounts.canceled },
   ];
 
-  return (
-   
-    <Card>
-      <ResponsiveContainer width="100%" height={440}>
-        <BarChart data={data}>
-          <XAxis dataKey="label" />
-          <YAxis />
-          <Tooltip
-            wrapperStyle={{
-              width: 100,
-              backgroundColor: "#ccc",
-            }}
-          />
-          <Bar
-            dataKey="value"
-            barSize={28}
-            radius={[6, 6, 0, 0]}
-            style={{ fill: "var(--accent-9)" }}
-          />
-        </BarChart>
-      </ResponsiveContainer>
-    </Card>
-  );
+  return <DashboardChart data={data} title="Réservations par statut" />;
 };
 
 export default RoomBookingsChart;

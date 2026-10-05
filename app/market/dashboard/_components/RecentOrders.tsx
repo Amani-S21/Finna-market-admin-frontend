@@ -1,11 +1,13 @@
-// "use client";
+"use client";
+
+import { ClipboardList, Inbox } from "lucide-react";
+import styles from "@/app/_components/dashboard.module.css";
+
 
 import { Order } from "@/app/lib/types";
 import {
   Badge,
-  Card,
   Flex,
-  Heading,
   IconButton,
   Table,
   Text,
@@ -19,12 +21,10 @@ import { useRouter } from "next/navigation";
 const RecentOrders = ({ orders }: { orders: Order[] }) => {
   const router = useRouter();
   return (
-    <Card className="min-h-full">
+    <section className={styles.panel}>
       <Flex direction="column">
-        <Heading size="4">Commandes récentes</Heading>
-        <Text as="p" size="2" mb="4">
-          La liste des commandes les plus récentes
-        </Text>
+        <div className={styles.panelHeader}><span className={styles.panelIcon}><ClipboardList size={19} aria-hidden="true" /></span><div><h2>Commandes récentes</h2><p>Les dernières commandes enregistrées</p></div></div>
+        <div className={styles.tableScroll}>
         <Table.Root>
           <Table.Header>
             <Table.Row>
@@ -56,19 +56,22 @@ const RecentOrders = ({ orders }: { orders: Order[] }) => {
                 </Table.Cell>
                 <Table.Cell>
                   <IconButton
+                    aria-label="Voir les détails"
                     variant="ghost"
                     ml="4"
                     onClick={() => router.push(`/market/orders/${order.id}`)}
                   >
-                    <GoEye size={18} color="black" />
+                    <GoEye size={18} aria-hidden="true" />
                   </IconButton>
                 </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table.Root>
+        </div>
+        {orders.length === 0 && <div className={styles.empty}><Inbox size={30} aria-hidden="true" /><p>Aucune activité récente à afficher.</p></div>}
       </Flex>
-    </Card>
+    </section>
   );
 };
 
