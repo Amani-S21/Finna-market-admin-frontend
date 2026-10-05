@@ -1,4 +1,4 @@
-﻿.workspace, .home {
+.workspace, .home {
   --finna-ink: #25243c;
   --finna-muted: #7c7b91;
   --finna-border: #e9e7f1;
@@ -53,22 +53,22 @@
 .sectionIntro { margin-bottom: 26px; }
 .sectionIntro p { color: var(--finna-muted); font-size: 12px; margin: 8px 0 0; line-height: 1.7; }
 .sectionIntro h1 { font-size: 26px; font-weight: 650; letter-spacing: -1px; margin: 0; }
-.home { padding: 0 clamp(20px, 6vw, 90px); background: radial-gradient(ellipse at top left, #eeebfb, transparent 55%), #f6f7fb; }
-.homeHeader { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--finna-border); }
-.homeContent { max-width: 1040px; margin: 0 auto; padding: clamp(50px, 10vh, 100px) 0; }
+.home { box-sizing: border-box; height: 100svh; height: 100dvh; min-height: 0; width: 100%; display: flex; flex-direction: column; padding: 0 clamp(16px, 5vw, 80px); background: radial-gradient(ellipse at top left, #eeebfb, transparent 55%), #f6f7fb; }
+.homeHeader { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-shrink: 0; padding: clamp(10px, 2.5dvh, 24px) 0; border-bottom: 1px solid var(--finna-border); }
+.homeContent { width: 100%; min-width: 0; max-width: 1040px; margin: auto; padding: clamp(12px, 3dvh, 32px) 0; }
 .eyebrow { color: #786297; font-size: 10px; letter-spacing: 2px; font-weight: 650; }
 .homeContent h1 { font-size: clamp(30px, 4vw, 46px); letter-spacing: -1.8px; font-weight: 650; line-height: 1.2; margin: 16px 0; }
 .intro { color: #888195; font-size: 13px; line-height: 1.8; }
-.moduleGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 44px; }
-.moduleCard { position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 30px; border-radius: 20px; background: #fff; border: 1px solid var(--finna-border); box-shadow: 0 8px 28px #40315d05; text-decoration: none; transition: transform 180ms, box-shadow 180ms, border-color 180ms; }
+.moduleGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: clamp(14px, 3dvh, 32px); }
+.moduleCard { position: relative; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: clamp(16px, 3dvh, 30px); border-radius: 20px; background: #fff; border: 1px solid var(--finna-border); box-shadow: 0 8px 28px #40315d05; text-decoration: none; transition: transform 180ms, box-shadow 180ms, border-color 180ms; }
 .moduleCard:hover { transform: translateY(-4px); border-color: #cfc0e9; box-shadow: 0 15px 35px #59438614; }
-.moduleIcon { width: 54px; height: 54px; display: grid; place-items: center; background: #eeebfb; color: #6550b2; border-radius: 15px; margin-bottom: 30px; }
+.moduleIcon { width: 54px; height: 54px; display: grid; place-items: center; background: #eeebfb; color: #6550b2; border-radius: 15px; margin-bottom: clamp(12px, 3dvh, 26px); }
 .moduleCard:nth-child(2) .moduleIcon { color: #4654bb; background: #edf0fc; }
 .moduleCard:nth-child(3) .moduleIcon { color: #963b92; background: #f8ecf6; }
 .moduleCard h2 { font-size: 19px; font-weight: 650; color: #38304a; margin: 0 0 10px; letter-spacing: -0.5px; }
-.moduleCard p { font-size: 12px; color: #8b8497; line-height: 1.8; margin: 0 0 30px; }
+.moduleCard p { font-size: 12px; color: #8b8497; line-height: 1.8; margin: 0 0 clamp(12px, 3dvh, 26px); }
 .moduleAction { margin-top: auto; display: flex; align-items: center; justify-content: space-between; width: 100%; color: #6c519e; font-size: 11px; font-weight: 600; border-top: 1px solid #efebf5; padding-top: 18px; }
-.homeFooter { text-align: center; font-size: 10px; color: #9a92a6; padding-bottom: 24px; }
+.homeFooter { text-align: center; font-size: 10px; color: #9a92a6; flex-shrink: 0; padding: 8px 0 max(12px, env(safe-area-inset-bottom)); }
 .brand:focus-visible, .navLink:focus-visible, .profile:focus-visible, .moduleCard:focus-visible { outline: 3px solid #ae96d5; outline-offset: 4px; }
 @media (max-width: 1100px) { .sidebar { width: 220px; padding-inline: 14px; } .topbar { padding-inline: 22px; } .content :global(.dashboard-grid) { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 760px) {
@@ -90,9 +90,47 @@
   .content { padding: 20px 14px; }
   .homeHeader { gap: 12px; }
   .homeHeader .profileText { display: none; }
-  .moduleGrid { grid-template-columns: 1fr; gap: 16px; margin-top: 30px; }
-  .moduleCard { padding: 24px; }
-  .moduleIcon { margin-bottom: 20px; }
-  .homeContent { padding: 42px 0; }
+  .moduleGrid { grid-template-columns: 1fr; gap: 10px; margin-top: 18px; }
+  .moduleCard { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; row-gap: 4px; padding: 14px 16px; border-radius: 14px; }
+  .moduleIcon { grid-row: 1 / 4; width: 40px; height: 40px; border-radius: 11px; margin: 0; align-self: center; }
+  .moduleIcon svg { width: 22px; height: 22px; }
+  .moduleCard h2 { font-size: 15px; margin: 0; }
+  .moduleCard p { grid-column: 2; font-size: 11px; line-height: 1.5; margin: 0; }
+  .moduleAction { grid-column: 2; border: 0; padding-top: 4px; font-size: 10px; }
+  .homeContent { padding: 14px 0; }
+  .homeContent h1 { font-size: 28px; margin: 10px 0; }
+  .intro { font-size: 12px; line-height: 1.6; }
+
 }
 @media (prefers-reduced-motion: reduce) { .navLink, .moduleCard { transition: none; } .moduleCard:hover { transform: none; } }
+
+@media (max-width: 760px) and (max-height: 700px) {
+  .homeHeader { padding: 10px 0; }
+  .homeContent { padding: 8px 0; }
+  .homeContent h1 { font-size: 24px; margin: 6px 0; }
+  .home .eyebrow { font-size: 8px; }
+  .home .intro { font-size: 10px; line-height: 1.5; }
+  .moduleGrid { gap: 8px; margin-top: 12px; }
+  .moduleCard { padding: 10px 12px; row-gap: 2px; }
+  .moduleCard h2 { font-size: 14px; }
+  .moduleCard p { font-size: 10px; }
+  .homeFooter { font-size: 9px; padding-top: 4px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+}
+/* Keep all three destinations visible on short landscape screens. */
+@media (min-width: 540px) and (max-height: 560px) {
+  .homeHeader { padding: 8px 0; }
+  .homeHeader .logo { width: 34px; height: 34px; }
+  .homeContent { padding: 8px 0; }
+  .homeContent h1 { font-size: 24px; margin: 6px 0; }
+  .homeContent h1 br { display: none; }
+  .home .intro { font-size: 11px; line-height: 1.5; }
+  .home .eyebrow { font-size: 8px; }
+  .moduleGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+  .moduleCard { display: flex; gap: 0; padding: 12px; border-radius: 12px; }
+  .moduleIcon { align-self: flex-start; width: 30px; height: 30px; margin-bottom: 8px; border-radius: 8px; }
+  .moduleIcon svg { width: 18px; height: 18px; }
+  .moduleCard h2 { font-size: 14px; margin: 0 0 5px; }
+  .moduleCard p { font-size: 10px; line-height: 1.4; margin-bottom: 8px; }
+  .moduleAction { font-size: 9px; padding-top: 6px; }
+  .homeFooter { font-size: 9px; padding: 4px 0 max(6px, env(safe-area-inset-bottom)); }
+}
