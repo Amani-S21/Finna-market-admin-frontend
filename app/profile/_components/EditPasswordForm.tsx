@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { UpdatePasswordSchema } from "@/app/lib/types";
@@ -61,7 +64,7 @@ const EditPasswordForm = () => {
           <Callout.Text>{error?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <Flex direction="column" gap="2">
           <p className="text-sm font-bold">Ancien mot de passe</p>
           <TextField.Root
@@ -89,10 +92,10 @@ const EditPasswordForm = () => {
           />
           <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
         </Flex>
-        <Button disabled={isSubmitting} mt="5">
+        <FormActions><Button disabled={isSubmitting} mt="5">
           Modifier {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

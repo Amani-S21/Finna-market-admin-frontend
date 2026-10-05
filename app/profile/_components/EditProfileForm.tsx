@@ -1,3 +1,4 @@
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
 import { ErrorMessage, Spinner } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { UpdateUserSchema, User } from "@/app/lib/types";
@@ -59,7 +60,7 @@ const EditProfileForm = ({ user }: { user: User }) => {
           <Callout.Text>{error?.message}</Callout.Text>
         </Callout.Root>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <Flex direction="column" gap="2">
           <p className="text-sm font-bold">Nom compltet</p>
           <TextField.Root
@@ -89,10 +90,10 @@ const EditProfileForm = ({ user }: { user: User }) => {
           />
           <ErrorMessage>{errors.emailAddress?.message}</ErrorMessage>
         </Flex>
-        <Button disabled={isSubmitting} mt="5">
+        <FormActions><Button disabled={isSubmitting} mt="5">
           Modifier {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

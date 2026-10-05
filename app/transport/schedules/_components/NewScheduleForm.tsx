@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
 
 import { ErrorMessage, Spinner } from "@/app/_components";
 import TimePickerComponent from "@/app/_components/TimePicker";
@@ -148,7 +151,7 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
 
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ModalForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col space-y-2 mt-4">
           <p className="text-sm font-bold">Jour</p>
           <Select.Root
@@ -218,11 +221,11 @@ const NewScheduleForm = ({ vehicleId, schedule }: Props) => {
           />
         </div>
 
-        <Button disabled={isSubmitting} mt="6">
+        <FormActions><Button disabled={isSubmitting} mt="6">
           {schedule ? "Modifier l'horaire" : "Enregistrer l'horaire"}{" "}
           {isSubmitting && <Spinner />}
-        </Button>
-      </form>
+        </Button></FormActions>
+      </ModalForm>
     </div>
   );
 };

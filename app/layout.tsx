@@ -23,8 +23,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
   session: any;
 }>) {
   return (
@@ -35,6 +37,7 @@ export default function RootLayout({
             <ReduxProvider>
               <Theme>
                 <main className="bg-[#f9fafb]">{children}</main>
+                {modal}
               </Theme>
               <Toaster
                 position="bottom-center"

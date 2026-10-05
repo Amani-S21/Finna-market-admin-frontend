@@ -1,5 +1,8 @@
 "use client";
 
+import { ModalForm, FormActions } from "@/app/_components/ModalForm";
+
+
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Roles, User, UserSchema } from "@/app/lib/types";
 import { Button, Flex, Select } from "@radix-ui/themes";
@@ -41,7 +44,7 @@ const UserForm = ({ user }: { user?: User }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl">
+    <ModalForm onSubmit={handleSubmit(onSubmit)} className="max-w-xl">
       <Flex direction="column" gap="2">
         <p className="text-sm font-bold">Role</p>
         <Controller
@@ -68,10 +71,10 @@ const UserForm = ({ user }: { user?: User }) => {
           )}
         />
       </Flex>
-      <Button disabled={isSubmitting} mt="4">
+      <FormActions><Button disabled={isSubmitting} mt="4">
         Enregistrer {isSubmitting && <Spinner />}
-      </Button>
-    </form>
+      </Button></FormActions>
+    </ModalForm>
   );
 };
 
