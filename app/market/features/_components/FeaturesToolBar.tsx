@@ -1,25 +1,17 @@
-import { Button, Flex, Link, Text } from "@radix-ui/themes";
+import PageToolbar from "@/app/_components/PageToolbar";
+import { Button, Link } from "@radix-ui/themes";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 
 const FeaturesToolBar = () => {
   return (
-    <Flex justify="between">
-      <div>
-        <div className="flex items-center space-x-4">
-          <MdOutlineFeaturedPlayList />
-          <span className="font-bold">Caractéristiques</span>
-        </div>
-        <Text as="p" size="2">
-          Toutes les caractéristiques disponibles dans l'entreprise
-        </Text>
-      </div>
+    <PageToolbar icon={<MdOutlineFeaturedPlayList />} title="Caractéristiques" description="Toutes les caractéristiques disponibles dans l'entreprise">
 
       <Link href="/market/features/new">
         <Button>
           <span className="text-xs">Nouvelle caractéristique</span>
         </Button>
       </Link>
-    </Flex>
+    </PageToolbar>
   );
 };
 

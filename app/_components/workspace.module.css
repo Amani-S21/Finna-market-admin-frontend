@@ -141,3 +141,29 @@
   overflow: hidden;
   overscroll-behavior: none;
 }
+
+/* Shared surfaces for management forms; authentication is outside this scope. */
+.content form {
+  padding: clamp(18px, 2.5vw, 30px);
+  background: #fff;
+  border: 1px solid #e9e3ef;
+  border-radius: 16px;
+  box-shadow: 0 5px 22px #3c285a04;
+  min-width: 0;
+}
+.content form :global(.rt-TextFieldRoot) { min-height: 42px; background: #fdfcfe; }
+.content form :global(.rt-SelectTrigger) { min-height: 42px; }
+.content form :global(.rt-TextArea) { background: #fdfcfe; }
+.content form :global(.rt-TextFieldRoot):focus-within, .content form :global(.rt-TextArea):focus-within { outline: 3px solid #7c54b010; }
+.content form :global(.font-bold) { font-weight: 550; color: #655470; font-size: 12px; }
+.content form :global(.rt-Button) { min-height: 40px; padding-inline: 20px; }
+.content :global(.rt-TableCell) { vertical-align: middle; }
+.content :global(.rt-TableBody) :global(.rt-TableRow):nth-child(even) { background: #fdfbff; }
+.content :global(.rt-TableBody) :global(.rt-TableRow):hover { background: #f6f1fc; }
+.content :global(.rt-TableCell) :global(.rt-IconButton) { border: 1px solid #ece4f3; border-radius: 8px; background: #fcf9ff; color: #87689f; }
+.content :global(.rt-TableCell) :global(.rt-IconButton):hover { background: #eee5f8; }
+@media (max-width: 760px) {
+  .content form > :global(.rt-Flex:not(.rt-r-fd-column)) { flex-wrap: wrap; }
+  .content form > :global(.rt-Flex) > :global(.w-full) { flex-basis: 100%; min-width: 0; }
+  .content form :global(.rt-TextFieldInput), .content form :global(.rt-TextAreaInput) { font-size: 16px; }
+}

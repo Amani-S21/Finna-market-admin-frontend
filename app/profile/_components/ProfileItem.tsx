@@ -1,4 +1,4 @@
-import { Flex, Text } from "@radix-ui/themes";
+import styles from "@/app/_components/interfaces.module.css";
 
 type Props = {
   title: string;
@@ -7,14 +7,14 @@ type Props = {
 
 const ProfileItem = ({ title, value }: Props) => {
   return (
-    <Flex direction="column" gap="2">
-      <Text as="p" size="1" className="font-bold">
+    <div className={styles.profileItem}>
+      <span>
         {title}
-      </Text>
-      <Text as="p" size="2">
+      </span>
+      <span>
         {value}
-      </Text>
-    </Flex>
+      </span>
+    </div>
   );
 };
 

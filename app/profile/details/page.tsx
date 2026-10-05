@@ -6,12 +6,11 @@ import {
   Flex,
   IconButton,
   Separator,
-  Text,
 } from "@radix-ui/themes";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
-import { FaRegUserCircle } from "react-icons/fa";
-import { BackButton } from "../../_components";
+import AccountPage from "@/app/_components/AccountPage";
+import styles from "@/app/_components/interfaces.module.css";
 import ProfileItem from "../_components/ProfileItem";
 import { useSession } from "next-auth/react";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
@@ -35,34 +34,16 @@ const ProfilePage = () => {
   if (isLoading || status === "loading") return LoadingProfilePage();
 
   return (
-    <div className="min-h-screen">
-      <div className="flex flex-col">
-        <div className="flex items-center border-b border-gray-200 h-[80px] mb-8">
-          <div className="max-w-3xl w-full mx-auto flex justify-between">
-            <Flex align="center" gap="4">
-              <FaRegUserCircle />
-              <Flex direction="column">
-                <Text as="p" className="font-bold">
-                  Profile
-                </Text>
-                <Text as="p" size="1">
-                  Informations du compte
-                </Text>
-              </Flex>
-            </Flex>
-            <BackButton />
-          </div>
-        </div>
-        <div className="max-w-3xl w-full mx-auto flex flex-col">
-          <Flex>
-            <div className="mb-4 bg-green-00 ">
+    <AccountPage title="Mon profil" description="Retrouvez vos informations personnelles et les paramètres de votre compte.">
+      <div className={styles.profileGrid}>
+        <div className={styles.profileAvatar}>
               <Avatar
                 fallback={`${user?.fullName?.substring(0, 2)}`}
                 radius="full"
                 size="8"
               />
             </div>
-            <Flex direction="column" ml="5" className="bg-amber-0 w-full">
+            <div className={styles.profileFields}>
               <ProfileItem title="Nom complet" value={`${user?.fullName}`} />
               <Separator size="4" mt="4" mb="5" />
               <ProfileItem
@@ -78,12 +59,12 @@ const ProfilePage = () => {
               <Flex justify="between" align="center">
                 <ProfileItem title="Mot de passe" value="*******************" />
                 <Link href="/profile/password/edit">
-                  <IconButton variant="ghost">
+                  <IconButton variant="ghost" aria-label="Modifier le mot de passe">
                     <CiEdit />
                   </IconButton>
                 </Link>
               </Flex>
-              <div className="self-start flex gap-4">
+              <div className={styles.profileActions}>
                 <Link href="/profile/edit">
                   <Button mt="8">Editer le profile</Button>
                 </Link>
@@ -96,11 +77,9 @@ const ProfilePage = () => {
                   Se déconnecter
                 </Button>
               </div>
-            </Flex>
-          </Flex>
         </div>
       </div>
-    </div>
+    </AccountPage>
   );
 };
 

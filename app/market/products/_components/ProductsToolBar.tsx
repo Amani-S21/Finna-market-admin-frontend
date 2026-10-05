@@ -1,19 +1,11 @@
-import { Button, Flex, Link, Text } from "@radix-ui/themes";
+import PageToolbar from "@/app/_components/PageToolbar";
+import { Button, Flex, Link } from "@radix-ui/themes";
 // import { Search } from "lucide-react";
 import { IoStorefrontOutline } from "react-icons/io5";
 
 const ProductsToolBar = () => {
   return (
-    <Flex justify="between">
-      <div>
-        <div className="flex items-center space-x-4">
-          <IoStorefrontOutline />
-          <span className="font-bold">Produits</span>
-        </div>
-        <Text as="p" size="2">
-          Tous les produits disponibles dans l'entreprise
-        </Text>
-      </div>
+    <PageToolbar icon={<IoStorefrontOutline />} title="Produits" description="Tous les produits disponibles dans l'entreprise">
 
       <Flex gap="4" align="center">
         {/* <Search size={16} /> */}
@@ -34,7 +26,7 @@ const ProductsToolBar = () => {
           </Link>
         </Flex>
       )} */}
-    </Flex>
+    </PageToolbar>
   );
 };
 
