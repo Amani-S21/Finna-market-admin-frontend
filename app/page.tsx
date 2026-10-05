@@ -1,73 +1,39 @@
 "use client";
 
-import { Card, Grid, Heading } from "@radix-ui/themes";
-import { BadgeDollarSign, BedSingle, Plane } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { ArrowRight, BadgeDollarSign, BedSingle, Plane } from "lucide-react";
+import Link from "next/link";
+import Brand from "./_components/Brand";
+import ProfileLink from "./_components/ProfileLink";
+import styles from "./_components/workspace.module.css";
+
+const modules = [
+  { title: "Marché", description: "Retrouvez vos boutiques, vos utilisateurs et vos commandes.", href: "/market/dashboard", icon: BadgeDollarSign },
+  { title: "Transport", description: "Accédez à la gestion des agences et de vos transports.", href: "/transport/dashboard", icon: Plane },
+  { title: "Réservation", description: "Retrouvez vos établissements et suivez vos réservations.", href: "/booking/dashboard", icon: BedSingle },
+];
 
 export default function Home() {
-  const router = useRouter();
-  const { data: session } = useSession();
-
   return (
-    <div className="h-screen flex flex-col px-8 mx-auto pb-32">
-      <div
-        className="py-4 flex gap-4 items-center"
-        onClick={() => router.push("/profile/details")}
-      >
-        <div className="flex gap-4 items-center ml-auto">
-          <div className="text-right text-sm">
-            <span className="lowercase">{session?.data.fullName}</span>
-            <p className="font-bold">{session?.data.phone}</p>
-          </div>
-          <div className="h-15 w-15 rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
-            <p className="uppercase">
-              {session?.data.fullName.substring(0, 2)}
-            </p>
-          </div>
+    <div className={styles.home}>
+      <header className={styles.homeHeader}>
+        <Brand />
+        <ProfileLink />
+      </header>
+      <section className={styles.homeContent}>
+        <p className={styles.eyebrow}>VOTRE ESPACE DE GESTION</p>
+        <h1>Tout votre univers.<br />Un seul espace.</h1>
+        <p className={styles.intro}>Bienvenue sur Finna Market. Choisissez un espace pour commencer.</p>
+        <div className={styles.moduleGrid}>
+          {modules.map(({ title, description, href, icon: Icon }) => (
+            <Link key={href} href={href} className={styles.moduleCard}>
+              <span className={styles.moduleIcon}><Icon size={26} aria-hidden="true" /></span>
+              <h2>{title}</h2><p>{description}</p>
+              <span className={styles.moduleAction}>Accéder à l’espace<ArrowRight size={17} aria-hidden="true" /></span>
+            </Link>
+          ))}
         </div>
-      </div>
-      <div className="flex justify-center items-center my-auto">
-        <Grid
-          gap="4"
-          columns={{ initial: "1", md: "3" }}
-          className="max-w-3xl my-auto"
-        >
-          <Card
-            className="hover:cursor-pointer hover:bg-gray-300 transition-colors"
-            onClick={() => router.push("/market/dashboard")}
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-4 py-4 px-6">
-              <Heading size="3" color="gray">
-                Marché
-              </Heading>
-              <BadgeDollarSign size={50} color="gray" />
-            </div>
-          </Card>
-          <Card
-            className="hover:cursor-pointer hover:bg-gray-300"
-            onClick={() => router.push("/transport/dashboard")}
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-4 py-4 px-6">
-              <Heading size="3" color="gray">
-                Transport
-              </Heading>
-              <Plane size={50} color="gray" />
-            </div>
-          </Card>
-          <Card
-            className="hover:cursor-pointer hover:bg-gray-300"
-            onClick={() => router.push("/booking/dashboard")}
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-4 py-4 px-6">
-              <Heading size="3" color="gray">
-                Réservation
-              </Heading>
-              <BedSingle size={50} color="gray" />
-            </div>
-          </Card>
-        </Grid>
-      </div>
+      </section>
+      <footer className={styles.homeFooter}>Finna Market · Powered by ksoft ©</footer>
     </div>
   );
 }

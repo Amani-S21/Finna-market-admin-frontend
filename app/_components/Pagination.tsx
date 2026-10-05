@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./interfaces.module.css";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
@@ -26,7 +27,7 @@ const Pagination = ({ itemCount, pageSize, currentPage, className }: Props) => {
   };
 
   return (
-    <Flex className={className} align="center" gap="2">
+    <Flex className={`${styles.pagination} ${className ?? ""}`} align="center" gap="2">
       <Text>
         Page {currentPage} sur {pageCount}
       </Text>
@@ -34,6 +35,7 @@ const Pagination = ({ itemCount, pageSize, currentPage, className }: Props) => {
         color="gray"
         variant="soft"
         disabled={currentPage === 1}
+        aria-label="Première page"
         onClick={() => changePage(1)}
       >
         <RxDoubleArrowLeft />
@@ -42,6 +44,7 @@ const Pagination = ({ itemCount, pageSize, currentPage, className }: Props) => {
         color="gray"
         variant="soft"
         disabled={currentPage === 1}
+        aria-label="Page précédente"
         onClick={() => changePage(currentPage - 1)}
       >
         <GoChevronLeft />
@@ -50,6 +53,7 @@ const Pagination = ({ itemCount, pageSize, currentPage, className }: Props) => {
         color="gray"
         variant="soft"
         disabled={currentPage === pageCount}
+        aria-label="Page suivante"
         onClick={() => changePage(currentPage + 1)}
       >
         <GoChevronRight />
@@ -58,6 +62,7 @@ const Pagination = ({ itemCount, pageSize, currentPage, className }: Props) => {
         color="gray"
         variant="soft"
         disabled={currentPage === pageCount}
+        aria-label="Dernière page"
         onClick={() => changePage(pageCount)}
       >
         <RxDoubleArrowRight />

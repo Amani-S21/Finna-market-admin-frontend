@@ -1,20 +1,9 @@
 "use client";
 
-import { Flex } from "@radix-ui/themes";
-import { ReactNode } from "react";
-import NavBar from "../_components/NavBar";
-import { SideBar } from "../_components";
+import type { ReactNode } from "react";
+import WorkspaceLayout from "../_components/WorkspaceLayout";
+import SideBar from "../_components/SideBar";
 
-const MarketPage = ({ children }: { children: ReactNode }) => {
-  return (
-    <Flex>
-      <SideBar />
-      <div className="flex flex-col w-full bg-gray-50">
-        <NavBar />
-        <div className="p-8">{children}</div>
-      </div>
-    </Flex>
-  );
-};
-
-export default MarketPage;
+export default function Layout({ children }: { children: ReactNode }) {
+  return <WorkspaceLayout sidebar={<SideBar />} title="Marché">{children}</WorkspaceLayout>;
+}

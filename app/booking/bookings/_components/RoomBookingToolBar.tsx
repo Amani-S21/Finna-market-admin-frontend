@@ -1,20 +1,11 @@
-import { Flex, Text } from "@radix-ui/themes";
+import PageToolbar from "@/app/_components/PageToolbar";
 import { TbCategoryMinus } from "react-icons/tb";
 
 const RoomBookingToolBar = () => {
   return (
-    <Flex justify="between">
-      <div>
-        <div className="flex items-center space-x-4">
-          <TbCategoryMinus />
-          <span className="font-bold">Réservations</span>
-        </div>
-        <Text as="p" size="2">
-          Toutes les réservations disponibles
-        </Text>
-      </div>
+    <PageToolbar icon={<TbCategoryMinus />} title="Réservations" description="Toutes les réservations disponibles">
 
-    </Flex>
+    </PageToolbar>
   );
 };
 

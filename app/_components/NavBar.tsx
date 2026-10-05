@@ -1,30 +1,14 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import ProfileLink from "./ProfileLink";
+import styles from "./workspace.module.css";
 
-const NavBar = () => {
-  const { data: session } = useSession();
-
+export default function NavBar({ title = "Administration" }: { title?: string }) {
   return (
-    <div className="h-[80px]  sticky border-b border-gray-200 top-0 bg-gray-50 z-30 flex px-8 items-center">
-      <Link href="/profile/details" className="flex gap-4 items-center ml-auto">
-        <div className="flex gap-4 items-center ml-auto">
-          <div className="text-right text-sm">
-            <p className="lowercase first-letter:uppercase">
-              {session?.data.fullName}
-            </p>
-            <p className="font-bold">{session?.data.phone}</p>
-          </div>
-          <div className="h-[60px] w-[60px] rounded-full bg-white border border-gray-300 flex justify-center items-center hover:cursor-default">
-            <p className="uppercase">
-              {session?.data.fullName.substring(0, 2)}
-            </p>
-          </div>
-        </div>
-      </Link>
-    </div>
+    <header className={styles.topbar}>
+      <div className={styles.breadcrumb}><span>Espace de gestion</span><ChevronRight size={14} aria-hidden="true" /><strong>{title}</strong></div>
+      <ProfileLink />
+    </header>
   );
-};
-
-export default NavBar;
+}

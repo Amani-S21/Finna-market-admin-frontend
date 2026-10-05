@@ -9,7 +9,7 @@ import {
 import OrdersSummary from "./_components/OrdersSummary";
 import LoadingDashboardPage from "./loading";
 import { OrdersChart, RecentOrders } from "./_components";
-import { Flex, Grid } from "@radix-ui/themes";
+import DashboardView from "@/app/_components/DashboardView";
 
 const MarketHomePage = () => {
   const { status, data: session } = useSession();
@@ -47,13 +47,11 @@ const MarketHomePage = () => {
   if (error) return;
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="4">
-      <Flex direction="column" gap="4">
-        <OrdersSummary orderSummaryCounts={orderSummaryCounts!} />
-        <OrdersChart orderSummaryCounts={orderSummaryCounts!} />
-      </Flex>
-      <RecentOrders orders={recentOrders!} />
-    </Grid>
+    <DashboardView title="Tableau de bord du marché" description="Suivez vos commandes et retrouvez les dernières activités de votre marché."
+      summary={<OrdersSummary orderSummaryCounts={orderSummaryCounts!} />}
+      chart={<OrdersChart orderSummaryCounts={orderSummaryCounts!} />}
+      recent={<RecentOrders orders={recentOrders!} />}
+    />
   );
 };
 

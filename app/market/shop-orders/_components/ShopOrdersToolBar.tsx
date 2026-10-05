@@ -1,20 +1,12 @@
-import { Flex, Text } from "@radix-ui/themes";
+import PageToolbar from "@/app/_components/PageToolbar";
+import { Text } from "@radix-ui/themes";
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { OrdersResponse } from "@/app/lib/types";
 import { OrderStatusFilter } from "../../orders/_components";
 
 const ShopOrdersToolBar = ({ order }: { order?: OrdersResponse }) => {
   return (
-    <Flex justify="between">
-      <div>
-        <div className="flex items-center space-x-4">
-          <AiOutlineOrderedList />
-          <span className="font-bold">Commandes boutique</span>
-        </div>
-        <Text as="p" size="2">
-          Toutes les commandes de la boutique
-        </Text>
-      </div>
+    <PageToolbar icon={<AiOutlineOrderedList />} title="Commandes boutique" description="Toutes les commandes de la boutique">
       {/* <Text size="6">{order.totalAmountInFrancs}</Text> */}
 
       <div className="justify-end flex items-center gap-6">
@@ -27,7 +19,7 @@ const ShopOrdersToolBar = ({ order }: { order?: OrdersResponse }) => {
 
         <OrderStatusFilter />
       </div>
-    </Flex>
+    </PageToolbar>
   );
 };
 

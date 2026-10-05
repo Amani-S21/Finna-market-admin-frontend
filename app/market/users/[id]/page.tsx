@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "@/app/_components/interfaces.module.css";
 import { BackButton } from "@/app/_components";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Badge, Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
@@ -28,7 +29,7 @@ const BuildUserDetailsPage = () => {
   return (
     <>
       <BackButton />
-      <Grid columns="3" mt="4">
+      <Grid className={styles.detailPanel} columns="3" mt="4">
         <Flex direction="column" gap="4" className="col-span-2">
           <Flex gap="2" align="center">
             <Badge radius="large" className="uppercase">

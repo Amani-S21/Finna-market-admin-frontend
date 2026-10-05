@@ -1,6 +1,7 @@
 "use client";
 
-import { X } from "lucide-react";
+import styles from "./interfaces.module.css";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const BackButton = () => {
@@ -17,12 +18,13 @@ const BackButton = () => {
   };
 
   return (
-    <div
-      className="flex cursor-pointer items-center justify-center bg-white border border-gray-200 rounded-full h-10 w-10"
+    <button
+      type="button"
+      className={styles.back}
       onClick={handleBack}
     >
-      <X />
-    </div>
+      <ArrowLeft size={15} aria-hidden="true" /> Retour
+    </button>
   );
 };
 

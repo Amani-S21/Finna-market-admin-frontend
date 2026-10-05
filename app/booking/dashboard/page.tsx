@@ -1,7 +1,7 @@
 "use client"
 
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
-import { Flex, Grid } from "@radix-ui/themes";
+import DashboardView from "@/app/_components/DashboardView";
 import RecentRoomBookings from "./_components/RecentRoomBooking";
 import RoomBookingsChart from "./_components/RoomBookingChart";
 import RoomBookingSummaryArea from "./_components/RoomBookingSummary";
@@ -43,17 +43,11 @@ const RoomBookingDashboard = () => {
   if (error) return;
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="4">
-      <Flex direction="column" gap="4">
-        <RoomBookingSummaryArea
-          roomBookingSummaryCounts={roomBookingsSummaryCounts!}
-        />
-        <RoomBookingsChart
-          roomBookingSummaryCounts={roomBookingsSummaryCounts!}
-        />
-      </Flex>
-      <RecentRoomBookings roomBookings={recentRoomBookings!} />
-    </Grid>
+    <DashboardView title="Tableau de bord des réservations" description="Consultez vos indicateurs et les dernières réservations de vos établissements."
+      summary={<RoomBookingSummaryArea roomBookingSummaryCounts={roomBookingsSummaryCounts!} />}
+      chart={<RoomBookingsChart roomBookingSummaryCounts={roomBookingsSummaryCounts!} />}
+      recent={<RecentRoomBookings roomBookings={recentRoomBookings!} />}
+    />
   );
 };
 
