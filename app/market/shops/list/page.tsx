@@ -4,7 +4,7 @@ import Pagination from "@/app/_components/Pagination";
 import useAxiosAuth from "@/app/lib/hooks/useAxiosAuth";
 import { Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { ShopsTable, ShopsToolBar } from "../_components";
 import { useFetchShops } from "../_features/hooks";
@@ -13,6 +13,7 @@ import LoadingShopspPage from "./loading";
 const BuildShopsPage = () => {
   const { status } = useSession();
   const axios = useAxiosAuth();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const page: string = searchParams.get("page") ?? "";
 
@@ -20,7 +21,11 @@ const BuildShopsPage = () => {
     data: shopsResponse,
     isLoading,
     error,
-  } = useFetchShops({ axios, page, enabled: status === "authenticated" });
+  } = useFetchShops({
+    axios,
+    page,
+    enabled: status === "authenticated" && pathname === "/market/shops/list",
+  });
 
   if (isLoading || status === "loading") return <LoadingShopspPage />;
 
